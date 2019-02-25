@@ -88,6 +88,19 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StereoVision\IStereoSolver.cs" />
+    <Compile Include="StereoVision\StereoCorrespondence\CudaStereoBlockMatching.cs" />
+    <Compile Include="StereoVision\StereoCorrespondence\CudaStereoConstantSpaceBeliefPropagation.cs" />
+    <Compile Include="StereoVision\StereoCorrespondence\StereoSemiGlobalBlockMatching.cs" />
+    <Compile Include="StereoVision\StereoCorrespondence\StereoBlockMatching.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\FastRetinaKeypoint.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\Fast.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\OrientedFastAndRotatedBrief.cs" />
+    <Compile Include="StructureFromMotion\FeatureMatcher\BruteForce.cs" />
+    <Compile Include="StructureFromMotion\FeatureMatcher\FlannBased.cs" />
+    <Compile Include="StructureFromMotion\IFeatureDescriptor.cs" />
+    <Compile Include="StructureFromMotion\IFeatureDetector.cs" />
+    <Compile Include="StructureFromMotion\IFeatureMatcher.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -116,6 +129,7 @@
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\EMGU.CUFFT.9.1.0\build\EMGU.CUFFT.targets" Condition="Exists('..\packages\EMGU.CUFFT.9.1.0\build\EMGU.CUFFT.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
