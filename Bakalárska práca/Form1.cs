@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bakalárska_práca.Manager;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,19 @@ namespace Bakalárska_práca
 {
     public partial class Form1 : Form
     {
+        private FileManager fileManager;
+
+
         public Form1()
         {
             InitializeComponent();
+
+            fileManager = new FileManager(this);
+        }
+
+        private void Add_Click(object sender, EventArgs e)
+        {
+            fileManager.AddToListView();
         }
     }
 }
