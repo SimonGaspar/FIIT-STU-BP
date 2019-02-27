@@ -108,6 +108,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Manager\FileManager.cs" />
+    <Compile Include="Model\InputFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StereoVision\IStereoSolver.cs" />

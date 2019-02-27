@@ -47,6 +47,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.LeftViewBox = new Emgu.CV.UI.ImageBox();
+            this.RightViewBox = new Emgu.CV.UI.ImageBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -56,16 +58,15 @@
             this.SwitchRight = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.ListViewer = new System.Windows.Forms.ListView();
-            this.LeftViewBox = new Emgu.CV.UI.ImageBox();
-            this.RightViewBox = new Emgu.CV.UI.ImageBox();
+            this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LeftViewBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RightViewBox)).BeginInit();
+            this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -234,6 +235,24 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1677, 411);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
+            // LeftViewBox
+            // 
+            this.LeftViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LeftViewBox.Location = new System.Drawing.Point(3, 3);
+            this.LeftViewBox.Name = "LeftViewBox";
+            this.LeftViewBox.Size = new System.Drawing.Size(832, 405);
+            this.LeftViewBox.TabIndex = 2;
+            this.LeftViewBox.TabStop = false;
+            // 
+            // RightViewBox
+            // 
+            this.RightViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.RightViewBox.Location = new System.Drawing.Point(841, 3);
+            this.RightViewBox.Name = "RightViewBox";
+            this.RightViewBox.Size = new System.Drawing.Size(833, 405);
+            this.RightViewBox.TabIndex = 2;
+            this.RightViewBox.TabStop = false;
+            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.AutoSize = true;
@@ -270,6 +289,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 243F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1677, 243);
             this.tableLayoutPanel4.TabIndex = 4;
+            this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
             // tableLayoutPanel5
             // 
@@ -358,29 +378,21 @@
             // ListViewer
             // 
             this.ListViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListViewer.LargeImageList = this.ImageList;
             this.ListViewer.Location = new System.Drawing.Point(3, 3);
             this.ListViewer.Name = "ListViewer";
+            this.ListViewer.ShowItemToolTips = true;
             this.ListViewer.Size = new System.Drawing.Size(1503, 237);
+            this.ListViewer.SmallImageList = this.ImageList;
             this.ListViewer.TabIndex = 1;
             this.ListViewer.UseCompatibleStateImageBehavior = false;
+            this.ListViewer.View = System.Windows.Forms.View.SmallIcon;
             // 
-            // LeftViewBox
+            // ImageList
             // 
-            this.LeftViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LeftViewBox.Location = new System.Drawing.Point(3, 3);
-            this.LeftViewBox.Name = "LeftViewBox";
-            this.LeftViewBox.Size = new System.Drawing.Size(832, 405);
-            this.LeftViewBox.TabIndex = 2;
-            this.LeftViewBox.TabStop = false;
-            // 
-            // RightViewBox
-            // 
-            this.RightViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RightViewBox.Location = new System.Drawing.Point(841, 3);
-            this.RightViewBox.Name = "RightViewBox";
-            this.RightViewBox.Size = new System.Drawing.Size(833, 405);
-            this.RightViewBox.TabIndex = 2;
-            this.RightViewBox.TabStop = false;
+            this.ImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ImageList.ImageSize = new System.Drawing.Size(128, 72);
+            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // Form1
             // 
@@ -402,12 +414,12 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LeftViewBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RightViewBox)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.LeftViewBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.RightViewBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -440,9 +452,10 @@
         private System.Windows.Forms.Button SwitchLeft;
         private System.Windows.Forms.Button SwitchRight;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.ListView ListViewer;
+        public System.Windows.Forms.ListView ListViewer;
         private Emgu.CV.UI.ImageBox LeftViewBox;
         private Emgu.CV.UI.ImageBox RightViewBox;
+        public System.Windows.Forms.ImageList ImageList;
     }
 }
 

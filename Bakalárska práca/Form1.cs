@@ -27,5 +27,10 @@ namespace Bakalárska_práca
         {
             fileManager.AddToListView();
         }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
