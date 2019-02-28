@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Bakalárska_práca.Enumerate;
 
 namespace Bakalárska_práca.Model
 {
@@ -27,7 +24,13 @@ namespace Bakalárska_práca.Model
 
         private void Initialize()
         {
-            image = Image.FromFile(fileInfo.FullName);
+            if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
+                image = Image.FromFile(fileInfo.FullName);
+
+            if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
+            {
+                //image = Image.FromFile(fileInfo.FullName);
+            }
         }
     }
 }
