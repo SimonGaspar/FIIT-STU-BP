@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enumerate\EDisplayItem.cs" />
     <Compile Include="Helper\DialogHelper.cs" />
     <Compile Include="Enumerate\EImageFormat.cs" />
     <Compile Include="Enumerate\EVideoFormat.cs" />
@@ -107,7 +108,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Manager\DisplayManager.cs" />
     <Compile Include="Manager\FileManager.cs" />
+    <Compile Include="Manager\MenuManager.cs" />
     <Compile Include="Model\InputFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

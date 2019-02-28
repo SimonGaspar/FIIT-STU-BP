@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.IO;
 using Bakalárska_práca.Enumerate;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace Bakalárska_práca.Model
 {
@@ -27,9 +29,11 @@ namespace Bakalárska_práca.Model
             if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
                 image = Image.FromFile(fileInfo.FullName);
 
-            if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
+            if (Enum.IsDefined(typeof(EVideoFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
             {
-                //image = Image.FromFile(fileInfo.FullName);
+                var capture = new VideoCapture(fileInfo.FullName);
+                var x = capture.QueryFrame();
+                image = x.ToImage<Bgr, byte>().ToBitmap();
             }
         }
     }

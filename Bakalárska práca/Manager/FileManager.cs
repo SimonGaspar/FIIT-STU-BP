@@ -38,7 +38,7 @@ namespace Bakalárska_práca.Manager
                     foreach (var fileName in ofd.FileNames)
                     {
                         var inputFile = new InputFile(fileName);
-                        ListOfInputFile.Add(new InputFile(fileName));
+                        ListOfInputFile.Add(inputFile);
                         _winForm.ImageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
                         _winForm.ListViewer.Items.Add(inputFile.fileInfo.Name, inputFile.fileInfo.Name, _winForm.ImageList.Images.IndexOfKey(inputFile.fileInfo.Name));
                         _winForm.ListViewer.Items[inputFile.fileInfo.Name].ToolTipText = inputFile.fileInfo.Name;
