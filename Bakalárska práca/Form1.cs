@@ -26,7 +26,7 @@ namespace Bakalárska_práca
 
             fileManager = new FileManager(this);
             displayManager = new DisplayManager(this,fileManager);
-            menuManager = new MenuManager(this, displayManager);
+            menuManager = new MenuManager(this, displayManager,fileManager);
         }
 
         private void Add_Click(object sender, EventArgs e)
@@ -46,7 +46,12 @@ namespace Bakalárska_práca
 
         private void DisplayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            menuManager.OnlyOneCheck(sender, e);
+            menuManager.MenuSetDisplaySetting(sender, e);
+        }
+        
+        private void ListViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            menuManager.MenuSetListViewerSetting(sender, e);
         }
     }
 }

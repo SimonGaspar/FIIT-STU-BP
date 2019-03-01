@@ -1,4 +1,5 @@
 ﻿using Bakalárska_práca.Enumerate;
+using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
@@ -31,7 +32,14 @@ namespace Bakalárska_práca.Manager
         {
             if (item.Focused)
             {
-                _lastListViewerImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListOfInputFile.FirstOrDefault(x => x.fileInfo.Name == item.Name).image);
+                List<InputFile> listOfInputFile = null;
+                switch (item.Group.Name.ToUpper())
+                {
+                    case string noGroup when noGroup.Contains("NO"): listOfInputFile = _fileManager.ListOfInputFile; break;
+                    case string rightGroup when rightGroup.Contains("RIGHT"): listOfInputFile = _fileManager.ListOfInputFileForRight; break;
+                    case string leftGroup when leftGroup.Contains("LEFT"): listOfInputFile = _fileManager.ListOfInputFileForLeft; break;
+                }
+                _lastListViewerImage = new Image<Bgr, byte>((Bitmap)listOfInputFile.FirstOrDefault(x => x.fileInfo.Name == item.Text).image);
 
                 Display();
             }

@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enumerate\EDisplayItem.cs" />
+    <Compile Include="Enumerate\EListViewGroup.cs" />
     <Compile Include="Helper\DialogHelper.cs" />
     <Compile Include="Enumerate\EImageFormat.cs" />
     <Compile Include="Enumerate\EVideoFormat.cs" />

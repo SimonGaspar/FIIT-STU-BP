@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +47,11 @@
             this.DisplayRightLeftCameraMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayRightRightCameraMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayRightDepthMapMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.listOfImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.leftCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rightCameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.computeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,7 +140,9 @@
             // 
             this.displayToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DisplayLeft,
-            this.DisplayRight});
+            this.DisplayRight,
+            this.toolStripSeparator2,
+            this.listOfImagesToolStripMenuItem});
             this.displayToolStripMenuItem.Name = "displayToolStripMenuItem";
             this.displayToolStripMenuItem.Size = new System.Drawing.Size(70, 23);
             this.displayToolStripMenuItem.Text = "Display";
@@ -153,28 +163,28 @@
             this.DisplayLeftListViewerMenuItem.Checked = true;
             this.DisplayLeftListViewerMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DisplayLeftListViewerMenuItem.Name = "DisplayLeftListViewerMenuItem";
-            this.DisplayLeftListViewerMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeftListViewerMenuItem.Size = new System.Drawing.Size(172, 26);
             this.DisplayLeftListViewerMenuItem.Text = "List viewer";
             this.DisplayLeftListViewerMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayLeftLeftCameraMenuItem
             // 
             this.DisplayLeftLeftCameraMenuItem.Name = "DisplayLeftLeftCameraMenuItem";
-            this.DisplayLeftLeftCameraMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeftLeftCameraMenuItem.Size = new System.Drawing.Size(172, 26);
             this.DisplayLeftLeftCameraMenuItem.Text = "Left camera";
             this.DisplayLeftLeftCameraMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayLeftRightCameraMenuItem
             // 
             this.DisplayLeftRightCameraMenuItem.Name = "DisplayLeftRightCameraMenuItem";
-            this.DisplayLeftRightCameraMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeftRightCameraMenuItem.Size = new System.Drawing.Size(172, 26);
             this.DisplayLeftRightCameraMenuItem.Text = "Right camera";
             this.DisplayLeftRightCameraMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayLeftDepthMapMenuItem
             // 
             this.DisplayLeftDepthMapMenuItem.Name = "DisplayLeftDepthMapMenuItem";
-            this.DisplayLeftDepthMapMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeftDepthMapMenuItem.Size = new System.Drawing.Size(172, 26);
             this.DisplayLeftDepthMapMenuItem.Text = "Depth map";
             this.DisplayLeftDepthMapMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
@@ -194,30 +204,68 @@
             this.DisplayRightListViewerMenuItem.Checked = true;
             this.DisplayRightListViewerMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DisplayRightListViewerMenuItem.Name = "DisplayRightListViewerMenuItem";
-            this.DisplayRightListViewerMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRightListViewerMenuItem.Size = new System.Drawing.Size(172, 26);
             this.DisplayRightListViewerMenuItem.Text = "List viewer";
             this.DisplayRightListViewerMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayRightLeftCameraMenuItem
             // 
             this.DisplayRightLeftCameraMenuItem.Name = "DisplayRightLeftCameraMenuItem";
-            this.DisplayRightLeftCameraMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRightLeftCameraMenuItem.Size = new System.Drawing.Size(172, 26);
             this.DisplayRightLeftCameraMenuItem.Text = "Left camera";
             this.DisplayRightLeftCameraMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayRightRightCameraMenuItem
             // 
             this.DisplayRightRightCameraMenuItem.Name = "DisplayRightRightCameraMenuItem";
-            this.DisplayRightRightCameraMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRightRightCameraMenuItem.Size = new System.Drawing.Size(172, 26);
             this.DisplayRightRightCameraMenuItem.Text = "Right camera";
             this.DisplayRightRightCameraMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayRightDepthMapMenuItem
             // 
             this.DisplayRightDepthMapMenuItem.Name = "DisplayRightDepthMapMenuItem";
-            this.DisplayRightDepthMapMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRightDepthMapMenuItem.Size = new System.Drawing.Size(172, 26);
             this.DisplayRightDepthMapMenuItem.Text = "Depth map";
             this.DisplayRightDepthMapMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(213, 6);
+            // 
+            // listOfImagesToolStripMenuItem
+            // 
+            this.listOfImagesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noCameraToolStripMenuItem,
+            this.leftCameraToolStripMenuItem,
+            this.rightCameToolStripMenuItem});
+            this.listOfImagesToolStripMenuItem.Name = "listOfImagesToolStripMenuItem";
+            this.listOfImagesToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.listOfImagesToolStripMenuItem.Text = "List of images";
+            // 
+            // noCameraToolStripMenuItem
+            // 
+            this.noCameraToolStripMenuItem.Checked = true;
+            this.noCameraToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.noCameraToolStripMenuItem.Name = "noCameraToolStripMenuItem";
+            this.noCameraToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.noCameraToolStripMenuItem.Text = "No camera";
+            this.noCameraToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
+            // 
+            // leftCameraToolStripMenuItem
+            // 
+            this.leftCameraToolStripMenuItem.Name = "leftCameraToolStripMenuItem";
+            this.leftCameraToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.leftCameraToolStripMenuItem.Text = "Left camera";
+            this.leftCameraToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
+            // 
+            // rightCameToolStripMenuItem
+            // 
+            this.rightCameToolStripMenuItem.Name = "rightCameToolStripMenuItem";
+            this.rightCameToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.rightCameToolStripMenuItem.Text = "Right camera";
+            this.rightCameToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
             // 
             // computeToolStripMenuItem
             // 
@@ -473,6 +521,16 @@
             // ListViewer
             // 
             this.ListViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            listViewGroup4.Header = "ListViewGroup";
+            listViewGroup4.Name = "NoViewGroup";
+            listViewGroup5.Header = "ListViewGroup";
+            listViewGroup5.Name = "LeftViewGroup";
+            listViewGroup6.Header = "ListViewGroup";
+            listViewGroup6.Name = "RightViewGroup";
+            this.ListViewer.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup4,
+            listViewGroup5,
+            listViewGroup6});
             this.ListViewer.LargeImageList = this.ImageList;
             this.ListViewer.Location = new System.Drawing.Point(3, 2);
             this.ListViewer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -561,6 +619,11 @@
         private System.Windows.Forms.ToolStripMenuItem DisplayRightLeftCameraMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DisplayRightRightCameraMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DisplayRightDepthMapMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem listOfImagesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem noCameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem leftCameraToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rightCameToolStripMenuItem;
     }
 }
 
