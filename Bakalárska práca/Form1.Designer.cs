@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("NoGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("LeftGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("RightGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +76,15 @@
             this.button5 = new System.Windows.Forms.Button();
             this.ListViewer = new System.Windows.Forms.ListView();
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
+            this.stereoVisionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.structureFromMotionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.detectFeaturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deskriptorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.matcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stereoBMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stereoSGBMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cudaStereoBMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cudaStereoConstantSBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -155,7 +164,7 @@
             this.DisplayLeftRightCameraMenuItem,
             this.DisplayLeftDepthMapMenuItem});
             this.DisplayLeft.Name = "DisplayLeft";
-            this.DisplayLeft.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeft.Size = new System.Drawing.Size(176, 26);
             this.DisplayLeft.Text = "Left";
             // 
             // DisplayLeftListViewerMenuItem
@@ -196,7 +205,7 @@
             this.DisplayRightRightCameraMenuItem,
             this.DisplayRightDepthMapMenuItem});
             this.DisplayRight.Name = "DisplayRight";
-            this.DisplayRight.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRight.Size = new System.Drawing.Size(176, 26);
             this.DisplayRight.Text = "Right";
             // 
             // DisplayRightListViewerMenuItem
@@ -232,7 +241,7 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(173, 6);
             // 
             // listOfImagesToolStripMenuItem
             // 
@@ -241,7 +250,7 @@
             this.leftCameraToolStripMenuItem,
             this.rightCameToolStripMenuItem});
             this.listOfImagesToolStripMenuItem.Name = "listOfImagesToolStripMenuItem";
-            this.listOfImagesToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.listOfImagesToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
             this.listOfImagesToolStripMenuItem.Text = "List of images";
             // 
             // noCameraToolStripMenuItem
@@ -249,26 +258,29 @@
             this.noCameraToolStripMenuItem.Checked = true;
             this.noCameraToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.noCameraToolStripMenuItem.Name = "noCameraToolStripMenuItem";
-            this.noCameraToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.noCameraToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.noCameraToolStripMenuItem.Text = "No camera";
             this.noCameraToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
             // 
             // leftCameraToolStripMenuItem
             // 
             this.leftCameraToolStripMenuItem.Name = "leftCameraToolStripMenuItem";
-            this.leftCameraToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.leftCameraToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.leftCameraToolStripMenuItem.Text = "Left camera";
             this.leftCameraToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
             // 
             // rightCameToolStripMenuItem
             // 
             this.rightCameToolStripMenuItem.Name = "rightCameToolStripMenuItem";
-            this.rightCameToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.rightCameToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
             this.rightCameToolStripMenuItem.Text = "Right camera";
             this.rightCameToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
             // 
             // computeToolStripMenuItem
             // 
+            this.computeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stereoVisionToolStripMenuItem,
+            this.structureFromMotionToolStripMenuItem});
             this.computeToolStripMenuItem.Name = "computeToolStripMenuItem";
             this.computeToolStripMenuItem.Size = new System.Drawing.Size(82, 23);
             this.computeToolStripMenuItem.Text = "Compute";
@@ -521,12 +533,12 @@
             // ListViewer
             // 
             this.ListViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            listViewGroup4.Header = "ListViewGroup";
-            listViewGroup4.Name = "NoViewGroup";
-            listViewGroup5.Header = "ListViewGroup";
-            listViewGroup5.Name = "LeftViewGroup";
-            listViewGroup6.Header = "ListViewGroup";
-            listViewGroup6.Name = "RightViewGroup";
+            listViewGroup4.Header = "NoGroup";
+            listViewGroup4.Name = "NoGroup";
+            listViewGroup5.Header = "LeftGroup";
+            listViewGroup5.Name = "LeftGroup";
+            listViewGroup6.Header = "RightGroup";
+            listViewGroup6.Name = "RightGroup";
             this.ListViewer.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
             listViewGroup4,
             listViewGroup5,
@@ -547,6 +559,72 @@
             this.ImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.ImageList.ImageSize = new System.Drawing.Size(128, 72);
             this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // stereoVisionToolStripMenuItem
+            // 
+            this.stereoVisionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stereoBMToolStripMenuItem,
+            this.stereoSGBMToolStripMenuItem,
+            this.cudaStereoBMToolStripMenuItem,
+            this.cudaStereoConstantSBToolStripMenuItem});
+            this.stereoVisionToolStripMenuItem.Name = "stereoVisionToolStripMenuItem";
+            this.stereoVisionToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
+            this.stereoVisionToolStripMenuItem.Text = "Stereo vision";
+            // 
+            // structureFromMotionToolStripMenuItem
+            // 
+            this.structureFromMotionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.detectFeaturesToolStripMenuItem,
+            this.deskriptorToolStripMenuItem,
+            this.matcherToolStripMenuItem});
+            this.structureFromMotionToolStripMenuItem.Name = "structureFromMotionToolStripMenuItem";
+            this.structureFromMotionToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
+            this.structureFromMotionToolStripMenuItem.Text = "Structure from Motion";
+            // 
+            // detectFeaturesToolStripMenuItem
+            // 
+            this.detectFeaturesToolStripMenuItem.Name = "detectFeaturesToolStripMenuItem";
+            this.detectFeaturesToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.detectFeaturesToolStripMenuItem.Text = "Detect features";
+            // 
+            // deskriptorToolStripMenuItem
+            // 
+            this.deskriptorToolStripMenuItem.Name = "deskriptorToolStripMenuItem";
+            this.deskriptorToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.deskriptorToolStripMenuItem.Text = "Deskriptor";
+            // 
+            // matcherToolStripMenuItem
+            // 
+            this.matcherToolStripMenuItem.Name = "matcherToolStripMenuItem";
+            this.matcherToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.matcherToolStripMenuItem.Text = "Matcher";
+            // 
+            // stereoBMToolStripMenuItem
+            // 
+            this.stereoBMToolStripMenuItem.Checked = true;
+            this.stereoBMToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.stereoBMToolStripMenuItem.Name = "stereoBMToolStripMenuItem";
+            this.stereoBMToolStripMenuItem.Size = new System.Drawing.Size(236, 26);
+            this.stereoBMToolStripMenuItem.Text = "StereoBM";
+            this.stereoBMToolStripMenuItem.Click += new System.EventHandler();
+            // 
+            // stereoSGBMToolStripMenuItem
+            // 
+            this.stereoSGBMToolStripMenuItem.Name = "stereoSGBMToolStripMenuItem";
+            this.stereoSGBMToolStripMenuItem.Size = new System.Drawing.Size(236, 26);
+            this.stereoSGBMToolStripMenuItem.Text = "StereoSGBM";
+            // 
+            // cudaStereoBMToolStripMenuItem
+            // 
+            this.cudaStereoBMToolStripMenuItem.Name = "cudaStereoBMToolStripMenuItem";
+            this.cudaStereoBMToolStripMenuItem.Size = new System.Drawing.Size(236, 26);
+            this.cudaStereoBMToolStripMenuItem.Text = "CudaStereoBM";
+            // 
+            // cudaStereoConstantSBToolStripMenuItem
+            // 
+            this.cudaStereoConstantSBToolStripMenuItem.Name = "cudaStereoConstantSBToolStripMenuItem";
+            this.cudaStereoConstantSBToolStripMenuItem.Size = new System.Drawing.Size(236, 26);
+            this.cudaStereoConstantSBToolStripMenuItem.Text = "CudaStereoConstantSB";
             // 
             // Form1
             // 
@@ -624,6 +702,15 @@
         private System.Windows.Forms.ToolStripMenuItem noCameraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem leftCameraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rightCameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stereoVisionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem structureFromMotionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem detectFeaturesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deskriptorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem matcherToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stereoBMToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stereoSGBMToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cudaStereoBMToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cudaStereoConstantSBToolStripMenuItem;
     }
 }
 
