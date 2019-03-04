@@ -116,8 +116,9 @@
     <Compile Include="Model\InputFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StereoVision\EStereoVisionAlgorithm.cs" />
+    <Compile Include="StereoVision\EStereoCorrespondenceAlgorithm.cs" />
     <Compile Include="StereoVision\IStereoSolver.cs" />
+    <Compile Include="StereoVision\StereoCorrespondence\AbstractStereoSolver.cs" />
     <Compile Include="StereoVision\StereoCorrespondence\CudaStereoBlockMatching.cs" />
     <Compile Include="StereoVision\StereoCorrespondence\CudaStereoConstantSpaceBeliefPropagation.cs" />
     <Compile Include="StereoVision\StereoCorrespondence\StereoSemiGlobalBlockMatching.cs" />

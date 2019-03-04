@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Bakalárska_práca.StereoVision
 {
-    class EStereoVisionAlgorithm
+    public enum EStereoCorrespondenceAlgorithm
     {
+        StereoBM,
+        StereoSGBM,
+        CudaStereoBM,
+        CudaStereoConstantSpaceBP
     }
 }

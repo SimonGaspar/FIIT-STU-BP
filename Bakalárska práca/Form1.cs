@@ -1,4 +1,5 @@
 ﻿using Bakalárska_práca.Manager;
+using Bakalárska_práca.StereoVision;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
@@ -18,6 +19,7 @@ namespace Bakalárska_práca
         private FileManager fileManager;
         private DisplayManager displayManager;
         private MenuManager menuManager;
+        private StereoVisionManager stereoVisionManager;
 
 
         public Form1()
@@ -26,7 +28,8 @@ namespace Bakalárska_práca
 
             fileManager = new FileManager(this);
             displayManager = new DisplayManager(this,fileManager);
-            menuManager = new MenuManager(this, displayManager,fileManager);
+            stereoVisionManager = new StereoVisionManager(fileManager,displayManager);
+            menuManager = new MenuManager(this, displayManager,fileManager,stereoVisionManager);
         }
 
         private void Add_Click(object sender, EventArgs e)
@@ -52,6 +55,16 @@ namespace Bakalárska_práca
         private void ListViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menuManager.MenuSetListViewerSetting(sender, e);
+        }
+
+        private void stereoCorrespondenceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            stereoVisionManager.SetStereoCorrespondenceAlgorithm(sender, e);
+        }
+
+        private void ComputeStereo_Click(object sender, EventArgs e)
+        {
+            stereoVisionManager.ComputeStereoCorrespondence();
         }
     }
 }

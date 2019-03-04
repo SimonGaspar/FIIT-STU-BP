@@ -21,6 +21,7 @@ namespace Bakalárska_práca.Manager
         private FileManager _fileManager;
         private Form1 _winForm;
         private Image<Bgr, Byte> _lastListViewerImage;
+        public Image<Bgr, Byte> _lastDepthMapImage { get; set; }
 
         public DisplayManager(Form1 WinForm, FileManager FileManager)
         {
@@ -55,7 +56,7 @@ namespace Bakalárska_práca.Manager
         {
             switch (typeOfItem)
             {
-                case EDisplayItem.DepthMap:break;
+                case EDisplayItem.DepthMap: imageBox.Image = _lastDepthMapImage; break;
                 case EDisplayItem.LeftCamera: break;
                 case EDisplayItem.RightCamera: break;
                 case EDisplayItem.ListView: imageBox.Image = _lastListViewerImage; break;

@@ -1,4 +1,6 @@
 ﻿using Bakalárska_práca.Enumerate;
+using Bakalárska_práca.Helper;
+using Bakalárska_práca.StereoVision;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +15,20 @@ namespace Bakalárska_práca.Manager
         private Form1 _winForm;
         private DisplayManager _displayManager;
         private FileManager _fileManager;
+        private StereoVisionManager _stereoVisionManager;
 
-        public MenuManager(Form1 WinForm,DisplayManager displayManager, FileManager fileManager)
+        public MenuManager(Form1 WinForm,DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager)
         {
             this._winForm = WinForm;
             this._displayManager = displayManager;
             this._fileManager = fileManager;
+            this._stereoVisionManager = stereoVisionManager;
         }
 
         public void MenuSetListViewerSetting(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripMenuItem;
-            OnlyOneCheck(sender, e);
+            MenuHelper.OnlyOneCheck(sender, e);
             SetListViewerSetting(currentItem);
         }
 
@@ -43,24 +47,8 @@ namespace Bakalárska_práca.Manager
         public void MenuSetDisplaySetting(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripMenuItem;
-            OnlyOneCheck(sender, e);
+            MenuHelper.OnlyOneCheck(sender, e);
             SetDisplaySetting(currentItem);
-        }
-
-        public void OnlyOneCheck(object sender, EventArgs e)
-        {
-            var currentItem = sender as ToolStripMenuItem;
-            if (currentItem != null)
-            {
-                ((ToolStripMenuItem)currentItem.OwnerItem).DropDownItems
-                     .OfType<ToolStripMenuItem>().ToList()
-                    .ForEach(item =>
-                    {
-                        item.Checked = false;
-                    });
-
-                currentItem.Checked = true;
-            }
         }
 
         private void SetDisplaySetting(ToolStripMenuItem Item)
