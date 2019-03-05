@@ -66,5 +66,10 @@ namespace Bakalárska_práca
         {
             stereoVisionManager.ComputeStereoCorrespondence();
         }
+
+        private void ShowSetting_Click(object sender, EventArgs e)
+        {
+            stereoVisionManager.ShowSettingForStereoSolver();
+        }
     }
 }

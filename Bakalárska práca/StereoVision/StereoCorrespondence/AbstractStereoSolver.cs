@@ -28,6 +28,8 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             return null;
         }
 
+        public virtual void ShowSettingForm() { }
+
         protected void ConvertImageToGray<T>(T leftImage, T rightImage) where T: Image<Bgr,byte>
         {
             LeftImage = leftImage;

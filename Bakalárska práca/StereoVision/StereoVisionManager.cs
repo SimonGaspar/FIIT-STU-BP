@@ -47,5 +47,9 @@ namespace Bakalárska_práca.StereoVision
             }
         }
 
+        public void ShowSettingForStereoSolver()
+        {
+            StereoSolver.ShowSettingForm();
+        }
     }
 }

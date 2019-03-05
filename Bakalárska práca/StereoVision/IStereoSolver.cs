@@ -13,5 +13,6 @@ namespace Bakalárska_práca.StereoVision
     {
         Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage);
         Image ComputeDepthMap(Image leftImage, Image rightImage);
+        void ShowSettingForm();
     }
 }

@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("NoGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("LeftGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("RightGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("NoGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("LeftGroup", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("RightGroup", System.Windows.Forms.HorizontalAlignment.Left);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +81,7 @@
             this.Add = new System.Windows.Forms.Button();
             this.Remove = new System.Windows.Forms.Button();
             this.ComputeStereo = new System.Windows.Forms.Button();
-            this.SwitchRight = new System.Windows.Forms.Button();
+            this.ShowSetting = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.ListViewer = new System.Windows.Forms.ListView();
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
@@ -339,19 +339,19 @@
             // detectFeaturesToolStripMenuItem
             // 
             this.detectFeaturesToolStripMenuItem.Name = "detectFeaturesToolStripMenuItem";
-            this.detectFeaturesToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.detectFeaturesToolStripMenuItem.Size = new System.Drawing.Size(185, 26);
             this.detectFeaturesToolStripMenuItem.Text = "Detect features";
             // 
             // deskriptorToolStripMenuItem
             // 
             this.deskriptorToolStripMenuItem.Name = "deskriptorToolStripMenuItem";
-            this.deskriptorToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.deskriptorToolStripMenuItem.Size = new System.Drawing.Size(185, 26);
             this.deskriptorToolStripMenuItem.Text = "Deskriptor";
             // 
             // matcherToolStripMenuItem
             // 
             this.matcherToolStripMenuItem.Name = "matcherToolStripMenuItem";
-            this.matcherToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.matcherToolStripMenuItem.Size = new System.Drawing.Size(185, 26);
             this.matcherToolStripMenuItem.Text = "Matcher";
             // 
             // inputToolStripMenuItem
@@ -518,7 +518,7 @@
             this.tableLayoutPanel5.Controls.Add(this.Add, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.Remove, 0, 1);
             this.tableLayoutPanel5.Controls.Add(this.ComputeStereo, 0, 2);
-            this.tableLayoutPanel5.Controls.Add(this.SwitchRight, 0, 3);
+            this.tableLayoutPanel5.Controls.Add(this.ShowSetting, 0, 3);
             this.tableLayoutPanel5.Controls.Add(this.button5, 0, 4);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel5.Location = new System.Drawing.Point(1512, 2);
@@ -574,18 +574,19 @@
             this.ComputeStereo.UseVisualStyleBackColor = true;
             this.ComputeStereo.Click += new System.EventHandler(this.ComputeStereo_Click);
             // 
-            // SwitchRight
+            // ShowSetting
             // 
-            this.SwitchRight.AutoSize = true;
-            this.SwitchRight.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.SwitchRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SwitchRight.Location = new System.Drawing.Point(3, 143);
-            this.SwitchRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.SwitchRight.Name = "SwitchRight";
-            this.SwitchRight.Size = new System.Drawing.Size(156, 43);
-            this.SwitchRight.TabIndex = 3;
-            this.SwitchRight.Text = "Switch RIGHT";
-            this.SwitchRight.UseVisualStyleBackColor = true;
+            this.ShowSetting.AutoSize = true;
+            this.ShowSetting.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ShowSetting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ShowSetting.Location = new System.Drawing.Point(3, 143);
+            this.ShowSetting.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ShowSetting.Name = "ShowSetting";
+            this.ShowSetting.Size = new System.Drawing.Size(156, 43);
+            this.ShowSetting.TabIndex = 3;
+            this.ShowSetting.Text = "Show setting";
+            this.ShowSetting.UseVisualStyleBackColor = true;
+            this.ShowSetting.Click += new System.EventHandler(this.ShowSetting_Click);
             // 
             // button5
             // 
@@ -603,16 +604,16 @@
             // ListViewer
             // 
             this.ListViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            listViewGroup4.Header = "NoGroup";
-            listViewGroup4.Name = "NoGroup";
-            listViewGroup5.Header = "LeftGroup";
-            listViewGroup5.Name = "LeftGroup";
-            listViewGroup6.Header = "RightGroup";
-            listViewGroup6.Name = "RightGroup";
+            listViewGroup1.Header = "NoGroup";
+            listViewGroup1.Name = "NoGroup";
+            listViewGroup2.Header = "LeftGroup";
+            listViewGroup2.Name = "LeftGroup";
+            listViewGroup3.Header = "RightGroup";
+            listViewGroup3.Name = "RightGroup";
             this.ListViewer.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup4,
-            listViewGroup5,
-            listViewGroup6});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3});
             this.ListViewer.LargeImageList = this.ImageList;
             this.ListViewer.Location = new System.Drawing.Point(3, 2);
             this.ListViewer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -684,7 +685,7 @@
         private System.Windows.Forms.Button Add;
         private System.Windows.Forms.Button Remove;
         private System.Windows.Forms.Button ComputeStereo;
-        private System.Windows.Forms.Button SwitchRight;
+        private System.Windows.Forms.Button ShowSetting;
         private System.Windows.Forms.Button button5;
         public System.Windows.Forms.ListView ListViewer;
         public Emgu.CV.UI.ImageBox LeftViewBox;
