@@ -37,7 +37,7 @@ namespace Bakalárska_práca.StereoVision.WindowsForm
                 BlockSize = BlockSizeTrackBar.Value
             };
 
-            _stereoBlockMatching.UpdateStereoBM(model);
+            _stereoBlockMatching.UpdateModel(model);
         }
     }
 }

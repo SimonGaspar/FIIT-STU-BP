@@ -1,11 +1,6 @@
-﻿using Emgu.CV;
+﻿using System.Drawing;
+using Emgu.CV;
 using Emgu.CV.Structure;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bakalárska_práca.StereoVision
 {
@@ -13,6 +8,8 @@ namespace Bakalárska_práca.StereoVision
     {
         Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage);
         Image ComputeDepthMap(Image leftImage, Image rightImage);
+
+        void UpdateModel<T>(T model);
         void ShowSettingForm();
     }
 }

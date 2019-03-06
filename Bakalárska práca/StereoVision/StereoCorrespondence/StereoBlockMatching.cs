@@ -7,11 +7,11 @@ using Emgu.CV.Structure;
 
 namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
-    public class StereoBlockMatching : AbstractStereoSolver
+    public class StereoBlockMatching : AbstractStereoSolver, IStereoSolver
     {
         public StereoBlockMatchingModel model = new StereoBlockMatchingModel() { Disparity = 16, BlockSize = 15 };
         private StereoBM _stereoBM;
-        private StereoBMForm _stereoBMForm;
+        protected StereoBMForm _stereoBMForm;
 
         public StereoBlockMatching()
         {
@@ -25,7 +25,6 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             LeftGrayImage.Save(@"D:\Downloads\LImage.png");
             RightGrayImage.Save(@"D:\Downloads\RImage.png");
 
-            _stereoBM = new StereoBM(16, 15);
             Mat imageDisparity = new Mat();
             _stereoBM.Compute(LeftGrayImage, RightGrayImage, imageDisparity);
             imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
@@ -36,31 +35,10 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             return DepthMap;
         }
 
-        public override Image ComputeDepthMap(Image leftImage, Image rightImage)
+        public override void UpdateModel<T>(T model)
         {
-            var depthMapImage = ComputeDepthMap(
-                new Image<Bgr, byte>((Bitmap)leftImage),
-                new Image<Bgr, byte>((Bitmap)rightImage)
-                );
-
-            return depthMapImage.ToBitmap();
-        }
-
-        public void UpdateStereoBM(StereoBlockMatchingModel model)
-        {
-            this.model = model;
-            _stereoBM = new StereoBM(model.Disparity, model.BlockSize);
-        }
-
-        public void UpdateStereoBM(int Disparity, int BlockSize)
-        {
-            UpdateStereoBM(
-                new StereoBlockMatchingModel()
-                {
-                    Disparity = Disparity,
-                    BlockSize = BlockSize
-                }
-            );
+            this.model = model as StereoBlockMatchingModel;
+            _stereoBM = new StereoBM(this.model.Disparity, this.model.BlockSize);
         }
 
         public override void ShowSettingForm()

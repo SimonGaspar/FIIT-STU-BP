@@ -1,11 +1,7 @@
-﻿using Emgu.CV;
-using Emgu.CV.Structure;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
@@ -17,20 +13,30 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         protected Image<Gray, byte> RightGrayImage;
         public Image<Gray, byte> DepthMapGray { get; protected set; }
         public Image<Bgr, byte> DepthMap { get; protected set; }
-        
+
         public virtual Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
             return null;
         }
 
-        public virtual Image ComputeDepthMap(Image leftImage, Image rightImage)
+        public Image ComputeDepthMap(Image leftImage, Image rightImage)
         {
-            return null;
+            var depthMapImage = ComputeDepthMap(
+                new Image<Bgr, byte>((Bitmap)leftImage),
+                new Image<Bgr, byte>((Bitmap)rightImage)
+                );
+
+            return depthMapImage.ToBitmap();
         }
 
         public virtual void ShowSettingForm() { }
 
-        protected void ConvertImageToGray<T>(T leftImage, T rightImage) where T: Image<Bgr,byte>
+        public virtual void UpdateModel<T>(T model)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void ConvertImageToGray<T>(T leftImage, T rightImage) where T : Image<Bgr, byte>
         {
             LeftImage = leftImage;
             RightImage = rightImage;

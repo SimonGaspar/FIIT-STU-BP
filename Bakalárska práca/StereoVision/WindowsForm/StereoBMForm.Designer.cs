@@ -94,7 +94,8 @@
             this.Controls.Add(this.DisparityTrackBar);
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "StereoBMForm";
-            this.Text = "StereoBM";
+            //ACTIVATEFORFULLFORM
+            //this.Text = _stereoBlockMatching.GetType().ToString();
             ((System.ComponentModel.ISupportInitialize)(this.DisparityTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BlockSizeTrackBar)).EndInit();
             this.ResumeLayout(false);
