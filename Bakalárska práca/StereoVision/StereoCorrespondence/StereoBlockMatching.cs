@@ -9,7 +9,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
     public class StereoBlockMatching : AbstractStereoSolver
     {
-        private StereoBlockMatchingModel model = new StereoBlockMatchingModel() { Disparity = 16, BlockSize = 15 };
+        public StereoBlockMatchingModel model = new StereoBlockMatchingModel() { Disparity = 16, BlockSize = 15 };
         private StereoBM _stereoBM;
         private StereoBMForm _stereoBMForm;
 
@@ -17,8 +17,8 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         {
             _stereoBM = new StereoBM(model.Disparity, model.BlockSize);
         }
-        
-        public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage) 
+
+        public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
             ConvertImageToGray(leftImage, rightImage);
 
@@ -31,7 +31,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
             imageDisparity.Save(@"D:\Downloads\Image.png");
             var image = new Image<Bgra, Int32>(leftImage.Size);
-           
+
             CvInvoke.CvtColor(imageDisparity, DepthMap, ColorConversion.Gray2Bgr);
             return DepthMap;
         }
@@ -50,6 +50,17 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         {
             this.model = model;
             _stereoBM = new StereoBM(model.Disparity, model.BlockSize);
+        }
+
+        public void UpdateStereoBM(int Disparity, int BlockSize)
+        {
+            UpdateStereoBM(
+                new StereoBlockMatchingModel()
+                {
+                    Disparity = Disparity,
+                    BlockSize = BlockSize
+                }
+            );
         }
 
         public override void ShowSettingForm()

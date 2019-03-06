@@ -1,13 +1,6 @@
-﻿using Bakalárska_práca.StereoVision.StereoCorrespondence;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using Bakalárska_práca.StereoVision.StereoCorrespondence;
 
 namespace Bakalárska_práca.StereoVision.WindowsForm
 {
@@ -20,6 +13,31 @@ namespace Bakalárska_práca.StereoVision.WindowsForm
             this._stereoBlockMatching = stereoBlockMatching;
 
             InitializeComponent();
+        }
+        
+        private void trackBar_ValueChanged(object sender, EventArgs e)
+        {
+            var trackBar = sender as TrackBar;
+            toolTip1.SetToolTip(trackBar, trackBar.Value.ToString());
+            GetPropertiesAndSetModel();
+        }
+
+        private void trackBar_ValueChangedMultiple16(object sender, EventArgs e)
+        {
+            var trackBar = sender as TrackBar;
+            toolTip1.SetToolTip(trackBar, (trackBar.Value * 16).ToString());
+            GetPropertiesAndSetModel();
+        }
+
+        private void GetPropertiesAndSetModel()
+        {
+            var model = new StereoBlockMatchingModel()
+            {
+                Disparity = DisparityTrackBar.Value * 16,
+                BlockSize = BlockSizeTrackBar.Value
+            };
+
+            _stereoBlockMatching.UpdateStereoBM(model);
         }
     }
 }

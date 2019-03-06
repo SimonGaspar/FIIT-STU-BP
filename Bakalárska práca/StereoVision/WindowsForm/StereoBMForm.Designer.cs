@@ -28,59 +28,75 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.components = new System.ComponentModel.Container();
+            this.DisparityTrackBar = new System.Windows.Forms.TrackBar();
             this.Disparity = new System.Windows.Forms.Label();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
+            this.BlockSizeTrackBar = new System.Windows.Forms.TrackBar();
             this.BlockSize = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.DisparityTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlockSizeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
-            // trackBar1
+            // DisparityTrackBar
             // 
-            this.trackBar1.Location = new System.Drawing.Point(12, 29);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(360, 56);
-            this.trackBar1.TabIndex = 0;
+            this.DisparityTrackBar.LargeChange = 1;
+            this.DisparityTrackBar.Location = new System.Drawing.Point(9, 24);
+            this.DisparityTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DisparityTrackBar.Maximum = 16;
+            this.DisparityTrackBar.Name = "DisparityTrackBar";
+            this.DisparityTrackBar.Size = new System.Drawing.Size(270, 45);
+            this.DisparityTrackBar.TabIndex = 0;
+            //ACTIVATEFORFULLFORM
+            //this.DisparityTrackBar.Value = _stereoBlockMatching.model.Disparity / 16;
+            this.DisparityTrackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChangedMultiple16);
             // 
             // Disparity
             // 
             this.Disparity.AutoSize = true;
-            this.Disparity.Location = new System.Drawing.Point(12, 9);
+            this.Disparity.Location = new System.Drawing.Point(9, 7);
+            this.Disparity.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Disparity.Name = "Disparity";
-            this.Disparity.Size = new System.Drawing.Size(63, 17);
+            this.Disparity.Size = new System.Drawing.Size(47, 13);
             this.Disparity.TabIndex = 1;
             this.Disparity.Text = "Disparity";
             // 
-            // trackBar2
+            // BlockSizeTrackBar
             // 
-            this.trackBar2.Location = new System.Drawing.Point(12, 91);
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(357, 56);
-            this.trackBar2.TabIndex = 2;
+            this.BlockSizeTrackBar.Location = new System.Drawing.Point(9, 74);
+            this.BlockSizeTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BlockSizeTrackBar.Maximum = 51;
+            this.BlockSizeTrackBar.Name = "BlockSizeTrackBar";
+            this.BlockSizeTrackBar.Size = new System.Drawing.Size(268, 45);
+            this.BlockSizeTrackBar.TabIndex = 2;
+            //ACTIVATEFORFULLFORM
+            //this.BlockSizeTrackBar.Value = _stereoBlockMatching.model.BlockSize;
+            this.BlockSizeTrackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChanged);
             // 
             // BlockSize
             // 
             this.BlockSize.AutoSize = true;
-            this.BlockSize.Location = new System.Drawing.Point(12, 68);
+            this.BlockSize.Location = new System.Drawing.Point(9, 55);
+            this.BlockSize.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BlockSize.Name = "BlockSize";
-            this.BlockSize.Size = new System.Drawing.Size(71, 17);
+            this.BlockSize.Size = new System.Drawing.Size(55, 13);
             this.BlockSize.TabIndex = 3;
             this.BlockSize.Text = "Block size";
             // 
-            // StereoBM
+            // StereoBMForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 149);
+            this.ClientSize = new System.Drawing.Size(288, 121);
             this.Controls.Add(this.BlockSize);
-            this.Controls.Add(this.trackBar2);
+            this.Controls.Add(this.BlockSizeTrackBar);
             this.Controls.Add(this.Disparity);
-            this.Controls.Add(this.trackBar1);
-            this.Name = "StereoBM";
+            this.Controls.Add(this.DisparityTrackBar);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Name = "StereoBMForm";
             this.Text = "StereoBM";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DisparityTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BlockSizeTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -88,9 +104,10 @@
 
         #endregion
 
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar DisparityTrackBar;
         private System.Windows.Forms.Label Disparity;
-        private System.Windows.Forms.TrackBar trackBar2;
+        private System.Windows.Forms.TrackBar BlockSizeTrackBar;
         private System.Windows.Forms.Label BlockSize;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

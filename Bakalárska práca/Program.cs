@@ -5,6 +5,10 @@ namespace Bakalárska_práca
 {
     static class Program
     {
+        //Na konci odkomentovat 
+        //
+        //ACTIVATEFORFULLFORM
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
