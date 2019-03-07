@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Bakalárska_práca.StereoVision.WindowsForm;
+﻿using Bakalárska_práca.StereoVision.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -48,6 +46,6 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             _windowsForm = new StereoBMForm(this);
             _windowsForm.Show();
         }
-        
+
     }
 }

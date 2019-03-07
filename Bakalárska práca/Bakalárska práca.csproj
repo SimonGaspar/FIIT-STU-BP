@@ -122,6 +122,7 @@
     <Compile Include="StereoVision\EStereoCorrespondenceAlgorithm.cs" />
     <Compile Include="StereoVision\IStereoSolver.cs" />
     <Compile Include="StereoVision\Model\CudaStereoBlockMatchingModel.cs" />
+    <Compile Include="StereoVision\Model\CudaStereoConstantSpaceBPModel.cs" />
     <Compile Include="StereoVision\Model\StereoBlockMatchingModel.cs" />
     <Compile Include="StereoVision\Model\StereoSemiGlobalBlockMatchingModel.cs" />
     <Compile Include="StereoVision\StereoCorrespondence\AbstractStereoSolver.cs" />
@@ -130,6 +131,12 @@
     <Compile Include="StereoVision\StereoCorrespondence\StereoSemiGlobalBlockMatching.cs" />
     <Compile Include="StereoVision\StereoCorrespondence\StereoBlockMatching.cs" />
     <Compile Include="StereoVision\StereoVisionManager.cs" />
+    <Compile Include="StereoVision\WindowsForm\CudaStereoConstantSpaceBPForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StereoVision\WindowsForm\CudaStereoConstantSpaceBPForm.Designer.cs">
+      <DependentUpon>CudaStereoConstantSpaceBPForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StereoVision\WindowsForm\StereoBMForm.cs">
       <SubType>Form</SubType>
     </Compile>

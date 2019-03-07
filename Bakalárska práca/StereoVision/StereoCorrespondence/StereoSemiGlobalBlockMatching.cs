@@ -9,12 +9,12 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
     public class StereoSemiGlobalBlockMatching : StereoBlockMatching, IStereoSolver
     {
         private StereoSGBM _stereoSGBM;
-        public new StereoSemiGlobalBlockMatchingModel model;
+        public new StereoSemiGlobalBlockMatchingModel model = new StereoSemiGlobalBlockMatchingModel() { MinDispatiries = 0, Disparity = 16, BlockSize = 15 };
         protected new StereoSGBMForm _windowsForm;
 
         public StereoSemiGlobalBlockMatching()
         {
-            _stereoSGBM = new StereoSGBM(0, 16, 15);
+            _stereoSGBM = new StereoSGBM(model.MinDispatiries, model.Disparity, model.BlockSize);
         }
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)

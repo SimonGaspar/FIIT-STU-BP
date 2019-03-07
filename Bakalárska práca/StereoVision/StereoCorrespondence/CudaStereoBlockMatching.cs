@@ -10,7 +10,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
     public class CudaStereoBlockMatching : StereoBlockMatching, IStereoSolver
     {
         private CudaStereoBM _cudaStereoBM;
-        public new CudaStereoBlockMatchingModel model;
+        public new CudaStereoBlockMatchingModel model = new CudaStereoBlockMatchingModel() { Disparity = 16, BlockSize = 15 };
 
         public CudaStereoBlockMatching()
         {
