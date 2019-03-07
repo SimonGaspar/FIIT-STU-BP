@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bakalárska_práca.Extension;
+using Bakalárska_práca.StereoVision.Model;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.CvEnum;
@@ -8,7 +9,8 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
     public class CudaStereoBlockMatching : StereoBlockMatching, IStereoSolver
     {
-        CudaStereoBM _cudaStereoBM;
+        private CudaStereoBM _cudaStereoBM;
+        public new CudaStereoBlockMatchingModel model;
 
         public CudaStereoBlockMatching()
         {
@@ -22,19 +24,18 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             LeftGrayImage.Save(@"D:\Downloads\LImage.png");
             RightGrayImage.Save(@"D:\Downloads\RImage.png");
 
-            Mat imageDisparity = new Mat();
-            _cudaStereoBM.FindStereoCorrespondence(LeftGrayImage, RightGrayImage, imageDisparity);
+            GpuMat imageDisparity = new GpuMat();
+            _cudaStereoBM.FindStereoCorrespondence(LeftGrayImage.ImageToGpuMat(), RightGrayImage.ImageToGpuMat(), imageDisparity);
+
             imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
             imageDisparity.Save(@"D:\Downloads\Image.png");
-            var image = new Image<Bgra, Int32>(leftImage.Size);
 
-            CvInvoke.CvtColor(imageDisparity, DepthMap, ColorConversion.Gray2Bgr);
-            return DepthMap;
+            return new Image<Bgr, byte>(imageDisparity.Bitmap);
         }
 
         public override void UpdateModel<T>(T model)
         {
-            this.model = model as StereoBlockMatchingModel;
+            this.model = model as CudaStereoBlockMatchingModel;
             _cudaStereoBM = new CudaStereoBM(this.model.Disparity, this.model.BlockSize);
         }
     }

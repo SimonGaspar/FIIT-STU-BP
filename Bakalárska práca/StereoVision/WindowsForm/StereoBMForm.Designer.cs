@@ -42,13 +42,11 @@
             // 
             this.DisparityTrackBar.LargeChange = 1;
             this.DisparityTrackBar.Location = new System.Drawing.Point(9, 24);
-            this.DisparityTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DisparityTrackBar.Margin = new System.Windows.Forms.Padding(2);
             this.DisparityTrackBar.Maximum = 16;
             this.DisparityTrackBar.Name = "DisparityTrackBar";
             this.DisparityTrackBar.Size = new System.Drawing.Size(270, 45);
             this.DisparityTrackBar.TabIndex = 0;
-            //ACTIVATEFORFULLFORM
-            //this.DisparityTrackBar.Value = _stereoBlockMatching.model.Disparity / 16;
             this.DisparityTrackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChangedMultiple16);
             // 
             // Disparity
@@ -64,14 +62,12 @@
             // BlockSizeTrackBar
             // 
             this.BlockSizeTrackBar.Location = new System.Drawing.Point(9, 74);
-            this.BlockSizeTrackBar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.BlockSizeTrackBar.Maximum = 51;
+            this.BlockSizeTrackBar.Margin = new System.Windows.Forms.Padding(2);
+            this.BlockSizeTrackBar.Maximum = 25;
             this.BlockSizeTrackBar.Name = "BlockSizeTrackBar";
             this.BlockSizeTrackBar.Size = new System.Drawing.Size(268, 45);
             this.BlockSizeTrackBar.TabIndex = 2;
-            //ACTIVATEFORFULLFORM
-            //this.BlockSizeTrackBar.Value = _stereoBlockMatching.model.BlockSize;
-            this.BlockSizeTrackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChanged);
+            this.BlockSizeTrackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChangedOdd);
             // 
             // BlockSize
             // 
@@ -92,10 +88,8 @@
             this.Controls.Add(this.BlockSizeTrackBar);
             this.Controls.Add(this.Disparity);
             this.Controls.Add(this.DisparityTrackBar);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "StereoBMForm";
-            //ACTIVATEFORFULLFORM
-            //this.Text = _stereoBlockMatching.GetType().ToString();
             ((System.ComponentModel.ISupportInitialize)(this.DisparityTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BlockSizeTrackBar)).EndInit();
             this.ResumeLayout(false);

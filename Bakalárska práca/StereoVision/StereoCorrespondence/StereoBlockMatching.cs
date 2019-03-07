@@ -11,7 +11,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
     {
         public StereoBlockMatchingModel model = new StereoBlockMatchingModel() { Disparity = 16, BlockSize = 15 };
         private StereoBM _stereoBM;
-        protected StereoBMForm _stereoBMForm;
+        protected StereoBMForm _windowsForm;
 
         public StereoBlockMatching()
         {
@@ -29,7 +29,6 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             _stereoBM.Compute(LeftGrayImage, RightGrayImage, imageDisparity);
             imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
             imageDisparity.Save(@"D:\Downloads\Image.png");
-            var image = new Image<Bgra, Int32>(leftImage.Size);
 
             CvInvoke.CvtColor(imageDisparity, DepthMap, ColorConversion.Gray2Bgr);
             return DepthMap;
@@ -38,15 +37,17 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         public override void UpdateModel<T>(T model)
         {
             this.model = model as StereoBlockMatchingModel;
-            _stereoBM = new StereoBM(this.model.Disparity, this.model.BlockSize);
+            _stereoBM = new StereoBM(
+                this.model.Disparity,
+                this.model.BlockSize
+                );
         }
 
         public override void ShowSettingForm()
         {
-            _stereoBMForm = new StereoBMForm(this);
-            _stereoBMForm.Show();
+            _windowsForm = new StereoBMForm(this);
+            _windowsForm.Show();
         }
-
-
+        
     }
 }

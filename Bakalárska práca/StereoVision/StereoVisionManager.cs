@@ -29,8 +29,8 @@ namespace Bakalárska_práca.StereoVision
             {
                 case string cudaStereoBM when cudaStereoBM.Contains(nameof(EStereoCorrespondenceAlgorithm.CudaStereoBM).ToUpper()): StereoSolver = new CudaStereoBlockMatching(); break;
                 case string stereoBM when stereoBM.Contains(nameof(EStereoCorrespondenceAlgorithm.StereoBM).ToUpper()): StereoSolver = new StereoBlockMatching(); break;
-                //case nameof(EStereoCorrespondenceAlgorithm.StereoSGBM): StereoSolver = new StereoSemiGlobalBlockMatching(); break;               
-                //case nameof(EStereoCorrespondenceAlgorithm.CudaStereoConstantSpaceBP): StereoSolver = new CudaStereoConstantSpaceBeliefPropagation(); break;
+                case string stereoSGBM when stereoSGBM.Contains(nameof(EStereoCorrespondenceAlgorithm.StereoSGBM).ToUpper()): StereoSolver = new StereoSemiGlobalBlockMatching(); break;
+                    //case nameof(EStereoCorrespondenceAlgorithm.CudaStereoConstantSpaceBP): StereoSolver = new CudaStereoConstantSpaceBeliefPropagation(); break;
             }
         }
 

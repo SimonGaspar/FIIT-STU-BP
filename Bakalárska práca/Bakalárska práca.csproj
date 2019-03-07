@@ -101,6 +101,7 @@
     <Compile Include="Enumerate\EDisplayItem.cs" />
     <Compile Include="Enumerate\EListViewGroup.cs" />
     <Compile Include="Extension\ImageExtension.cs" />
+    <Compile Include="Extension\WindowsFormExtension.cs" />
     <Compile Include="Helper\DialogHelper.cs" />
     <Compile Include="Enumerate\EImageFormat.cs" />
     <Compile Include="Enumerate\EVideoFormat.cs" />
@@ -111,6 +112,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\MenuHelper.cs" />
+    <Compile Include="Helper\WindowsFormHelper.cs" />
     <Compile Include="Manager\DisplayManager.cs" />
     <Compile Include="Manager\FileManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="StereoVision\IStereoSolver.cs" />
     <Compile Include="StereoVision\Model\CudaStereoBlockMatchingModel.cs" />
     <Compile Include="StereoVision\Model\StereoBlockMatchingModel.cs" />
+    <Compile Include="StereoVision\Model\StereoSemiGlobalBlockMatchingModel.cs" />
     <Compile Include="StereoVision\StereoCorrespondence\AbstractStereoSolver.cs" />
     <Compile Include="StereoVision\StereoCorrespondence\CudaStereoBlockMatching.cs" />
     <Compile Include="StereoVision\StereoCorrespondence\CudaStereoConstantSpaceBeliefPropagation.cs" />
@@ -132,6 +135,12 @@
     </Compile>
     <Compile Include="StereoVision\WindowsForm\StereoBMForm.Designer.cs">
       <DependentUpon>StereoBMForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StereoVision\WindowsForm\StereoSGBMForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StereoVision\WindowsForm\StereoSGBMForm.Designer.cs">
+      <DependentUpon>StereoSGBMForm.cs</DependentUpon>
     </Compile>
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FastRetinaKeypoint.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\Fast.cs" />
@@ -155,6 +164,9 @@
     </Compile>
     <EmbeddedResource Include="StereoVision\WindowsForm\StereoBMForm.resx">
       <DependentUpon>StereoBMForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StereoVision\WindowsForm\StereoSGBMForm.resx">
+      <DependentUpon>StereoSGBMForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
