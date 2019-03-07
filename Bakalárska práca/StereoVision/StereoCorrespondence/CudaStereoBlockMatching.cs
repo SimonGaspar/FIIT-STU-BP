@@ -10,7 +10,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
     public class CudaStereoBlockMatching : StereoBlockMatching, IStereoSolver
     {
         private CudaStereoBM _cudaStereoBM;
-        public new CudaStereoBlockMatchingModel model = new CudaStereoBlockMatchingModel() { Disparity = 16, BlockSize = 15 };
+        public new CudaStereoBlockMatchingModel model = new CudaStereoBlockMatchingModel() { Disparity = 64, BlockSize = 5 };
 
         public CudaStereoBlockMatching()
         {
@@ -25,10 +25,12 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             RightGrayImage.Save(@"D:\Downloads\RImage.png");
 
             GpuMat imageDisparity = new GpuMat();
+            Image<Bgr, byte> disparity = new Image<Bgr, byte>(leftImage.Size);
             _cudaStereoBM.FindStereoCorrespondence(LeftGrayImage.ImageToGpuMat(), RightGrayImage.ImageToGpuMat(), imageDisparity);
 
             imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
-            imageDisparity.Save(@"D:\Downloads\Image.png");
+            imageDisparity.Download(disparity);
+            disparity.Save(@"D:\Downloads\Image.png");
 
             return new Image<Bgr, byte>(imageDisparity.Bitmap);
         }

@@ -27,10 +27,13 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             RightGrayImage.Save(@"D:\Downloads\RImage.png");
 
             GpuMat imageDisparity = new GpuMat();
+            Image<Bgr, byte> disparity = new Image<Bgr, byte>(leftImage.Size);
+                        
             _cudaStereoConstantSpaceBP.FindStereoCorrespondence(LeftGrayImage.ImageToGpuMat(), RightGrayImage.ImageToGpuMat(), imageDisparity);
 
             imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
-            imageDisparity.Save(@"D:\Downloads\Image.png");
+            imageDisparity.Download(disparity);
+            disparity.Save(@"D:\Downloads\Image.png");
 
             return new Image<Bgr, byte>(imageDisparity.Bitmap);
         }
