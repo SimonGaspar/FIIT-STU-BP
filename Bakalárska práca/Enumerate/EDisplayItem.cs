@@ -11,6 +11,7 @@ namespace Bakalárska_práca.Enumerate
         ListView,
         DepthMap,
         LeftCamera,
-        RightCamera
+        RightCamera,
+        PointCloud,
     }
 }

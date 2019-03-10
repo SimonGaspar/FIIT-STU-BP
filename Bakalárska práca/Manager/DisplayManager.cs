@@ -3,6 +3,7 @@ using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
+using Kitware.VTK;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -49,6 +50,8 @@ namespace Bakalárska_práca.Manager
         public void Display()
         {
             ShowItemOnView(_winForm.LeftViewBox, LeftViewItem);
+            ShowItemOnView(_winForm.renderWindowControl1, LeftViewItem);
+            ShowItemOnView(_winForm.renderWindowControl2, RightViewItem);
             ShowItemOnView(_winForm.RightViewBox, RightViewItem);
         }
 
@@ -60,6 +63,14 @@ namespace Bakalárska_práca.Manager
                 case EDisplayItem.LeftCamera: break;
                 case EDisplayItem.RightCamera: break;
                 case EDisplayItem.ListView: imageBox.Image = _lastListViewerImage; break;
+            }
+        }
+
+        public void ShowItemOnView(RenderWindowControl renderWindow, EDisplayItem typeOfItem)
+        {
+            switch (typeOfItem)
+            {
+                case EDisplayItem.PointCloud: _winForm.ReadPLY(renderWindow); break;
             }
         }
     }
