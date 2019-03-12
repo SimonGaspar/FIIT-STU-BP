@@ -15,6 +15,7 @@ namespace Bakalárska_práca
         [STAThread]
         static void Main()
         {
+            new SfM();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

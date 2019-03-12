@@ -129,6 +129,7 @@
     <Compile Include="Model\InputFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SfM.cs" />
     <Compile Include="StereoVision\EStereoCorrespondenceAlgorithm.cs" />
     <Compile Include="StereoVision\IStereoSolver.cs" />
     <Compile Include="StereoVision\Model\CudaStereoBlockMatchingModel.cs" />
