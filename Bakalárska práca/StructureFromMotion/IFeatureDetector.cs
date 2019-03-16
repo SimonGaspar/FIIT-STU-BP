@@ -1,6 +1,10 @@
-﻿namespace Bakalárska_práca.StructureFromMotion
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+
+namespace Bakalárska_práca.StructureFromMotion
 {
-    interface IFeatureDetector
+    public interface IFeatureDetector
     {
+        MKeyPoint[] DetectKeyPoints(IInputArray image);
     }
 }

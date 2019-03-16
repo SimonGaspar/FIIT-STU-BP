@@ -111,6 +111,7 @@
     <Compile Include="Enumerate\EDisplayItem.cs" />
     <Compile Include="Enumerate\EListViewGroup.cs" />
     <Compile Include="Extension\ImageExtension.cs" />
+    <Compile Include="Extension\MatExtension.cs" />
     <Compile Include="Extension\WindowsFormExtension.cs" />
     <Compile Include="Helper\DialogHelper.cs" />
     <Compile Include="Enumerate\EImageFormat.cs" />
@@ -126,10 +127,16 @@
     <Compile Include="Manager\DisplayManager.cs" />
     <Compile Include="Manager\FileManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
+    <Compile Include="Model\Descriptor.cs" />
+    <Compile Include="Model\DescriptorsMatch.cs" />
     <Compile Include="Model\InputFile.cs" />
+    <Compile Include="Model\KeyPoint.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SfM.cs" />
+    <Compile Include="StructureFromMotion\EFeaturesDescriptor.cs" />
+    <Compile Include="StructureFromMotion\EFeaturesDetector.cs" />
+    <Compile Include="StructureFromMotion\EFeaturesMatcher.cs" />
+    <Compile Include="StructureFromMotion\StructureFromMotionManager.cs" />
     <Compile Include="StereoVision\EStereoCorrespondenceAlgorithm.cs" />
     <Compile Include="StereoVision\IStereoSolver.cs" />
     <Compile Include="StereoVision\Model\CudaStereoBlockMatchingModel.cs" />
