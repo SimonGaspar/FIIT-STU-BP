@@ -7,7 +7,7 @@
     <ProjectGuid>{12566868-6EE6-4ED7-AE98-6C7CE81508A0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Bakalárska_práca</RootNamespace>
-    <AssemblyName>Bakalárska práca</AssemblyName>
+    <AssemblyName>Bakalárska_práca</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
