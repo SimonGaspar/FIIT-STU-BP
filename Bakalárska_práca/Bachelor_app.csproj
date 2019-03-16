@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{12566868-6EE6-4ED7-AE98-6C7CE81508A0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Bakalárska_práca</RootNamespace>
-    <AssemblyName>Bakalárska_práca</AssemblyName>
+    <RootNamespace>Bachelor_app</RootNamespace>
+    <AssemblyName>Bachelor_app</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
