@@ -12,7 +12,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
 
         public OrientedFastAndRotatedBrief()
         {
-            _orb = new ORBDetector(20000);
+            _orb = new ORBDetector(120000);
         }
 
         public Mat ComputeDescriptor(KeyPoint keyPoints)
