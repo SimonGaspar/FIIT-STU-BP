@@ -152,29 +152,50 @@ namespace Bakalárska_práca
                 foundedMatch.PerspectiveMatrix = PerspectiveMatrix;
             }
 
+            // Save drawing image
+            Mat output = new Mat();
+            Features2DToolbox.DrawMatches(new Mat(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(foundedMatch.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), foundedMatch.Mask);
+            output.Save(Path.Combine(tempDirectory, $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
+
             if (SaveInMatchNode)
-                SaveMatchString(foundedMatch);
+                SaveMatchString(foundedMatch,true);
 
             if (AddToList)
                 FoundedMatches.Add(foundedMatch);
         }
 
-        private void SaveMatchString(DescriptorsMatch descriptorsMatch)
+        private void SaveMatchString(DescriptorsMatch descriptorsMatch, bool UseMask)
         {
             var leftImageName = descriptorsMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name;
             var rightImageName = descriptorsMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name;
 
             var matchesList = descriptorsMatch.FilteredMatch ? descriptorsMatch.FilteredMatchesList : descriptorsMatch.MatchesList;
 
+
+            int countMaskMatches = 0;
+            if (UseMask)
+            {
+                for (int m = 0; m < matchesList.Count; m++)
+                {
+                    if (descriptorsMatch.Mask.GetValue(0, m) > 0)
+                        countMaskMatches++;
+                }
+            }
+
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(Path.Combine(Path.GetFullPath(tempDirectory),leftImageName));
             sb.AppendLine(Path.Combine(Path.GetFullPath(tempDirectory), rightImageName));
-            sb.AppendLine($"{matchesList.Count}");
-            foreach (var match in matchesList)
-                sb.Append($"{match[0].TrainIdx} ");
+            sb.AppendLine($"{(UseMask ? countMaskMatches : matchesList.Count)}");
+            for(int m = 0; m < matchesList.Count; m++) { 
+                if(!UseMask || descriptorsMatch.Mask.GetValue(0,m)>0)
+                sb.Append($"{matchesList[m][0].TrainIdx} ");
+            }
             sb.AppendLine();
-            foreach (var match in matchesList)
-                sb.Append($"{match[0].QueryIdx} ");
+            for (int m = 0; m < matchesList.Count; m++)
+            {
+                if (!UseMask || descriptorsMatch.Mask.GetValue(0, m) > 0)
+                    sb.Append($"{matchesList[m][0].QueryIdx} ");
+            }
 
             descriptorsMatch.FileFormatMatch = sb.ToString();
         }
@@ -198,7 +219,8 @@ namespace Bakalárska_práca
 
         private float GetMaxPossibleDist()
         {
-            return (ms_MIN_DIST + ((ms_MAX_DIST - ms_MIN_DIST)*0.9F));
+            //return (ms_MIN_DIST + ((ms_MAX_DIST - ms_MIN_DIST)*0.5F));
+            return ((ms_MAX_DIST)*0.95f);
         }
         
         private void FindMinMaxDistInMatches(MDMatch[][] matchesArray, ref float ms_MAX_DIST, ref float ms_MIN_DIST)

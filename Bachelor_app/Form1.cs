@@ -49,7 +49,7 @@ namespace Bakalárska_práca
             // VTK_DATA_ROOT = "C:\VTK\vtkdata-5.8.0"
             vtkTesting test = vtkTesting.New();
             string root = test.GetDataRoot();
-            string filePath = @"C:\Users\Notebook\Desktop\ImageDataset_SceauxCastle-master\Colors.txt";
+            string filePath = @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP\Bachelor_app\Temp\PointCloud.txt";
 
             FileStream fs = null;
             StreamReader sr = null;
