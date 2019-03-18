@@ -590,6 +590,7 @@
             this.Remove.TabIndex = 1;
             this.Remove.Text = "Remove";
             this.Remove.UseVisualStyleBackColor = true;
+            this.Remove.Click += new System.EventHandler(this.StartSFM_Click);
             // 
             // ComputeStereo
             // 

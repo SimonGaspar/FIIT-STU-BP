@@ -29,6 +29,7 @@ namespace Bakalárska_práca
         private DisplayManager displayManager;
         private MenuManager menuManager;
         private StereoVisionManager stereoVisionManager;
+        private SfM structureFromMotionManager;
 
 
         public Form1()
@@ -40,7 +41,8 @@ namespace Bakalárska_práca
             stereoVisionManager = new StereoVisionManager(fileManager,displayManager);
             menuManager = new MenuManager(this, displayManager,fileManager,stereoVisionManager);
 
-            
+            structureFromMotionManager = new SfM(fileManager, displayManager);
+
         }
         
         public void ReadPlainText(RenderWindowControl renderWindowControl)
@@ -49,7 +51,7 @@ namespace Bakalárska_práca
             // VTK_DATA_ROOT = "C:\VTK\vtkdata-5.8.0"
             vtkTesting test = vtkTesting.New();
             string root = test.GetDataRoot();
-            string filePath = @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP\Bachelor_app\Temp\PointCloud.txt";
+            string filePath = Path.Combine($"..\\..\\..\\Temp", $"Result.nvm");
 
             FileStream fs = null;
             StreamReader sr = null;
@@ -70,13 +72,24 @@ namespace Bakalárska_práca
                 vtkUnsignedCharArray colors = vtkUnsignedCharArray.New();
                 colors.SetNumberOfComponents(3);
                 colors.SetName("Colors");
-                
-                while (!sr.EndOfStream)
+
+                // Read point
+                while (!string.IsNullOrEmpty(sr.ReadLine()))
                 {
-                    sLineBuffer = sr.ReadLine();
+                }
+
+                // Read point
+                while (!string.IsNullOrEmpty(sr.ReadLine()))
+                {
+                }
+                sr.ReadLine();
+
+                // Read point
+                while (!string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
+                {
                     cnt++;
                     sXYZ = sLineBuffer.Split(chDelimiter, StringSplitOptions.RemoveEmptyEntries);
-                    if (sXYZ == null || sXYZ.Length != 10)
+                    if (sXYZ == null)
                     {
                         MessageBox.Show("data seems to be in wrong format at line " + cnt, "Format Exception", MessageBoxButtons.OK);
                         return;
@@ -84,12 +97,12 @@ namespace Bakalárska_práca
                     xyz[0] = double.Parse(sXYZ[0], CultureInfo.InvariantCulture);
                     xyz[1] = double.Parse(sXYZ[1], CultureInfo.InvariantCulture);
                     xyz[2] = double.Parse(sXYZ[2], CultureInfo.InvariantCulture);
-                    colors.InsertNextValue(byte.Parse(sXYZ[6], CultureInfo.InvariantCulture));
-                    colors.InsertNextValue(byte.Parse(sXYZ[7], CultureInfo.InvariantCulture));
-                    colors.InsertNextValue(byte.Parse(sXYZ[8], CultureInfo.InvariantCulture));
+                    colors.InsertNextValue(byte.Parse(sXYZ[3], CultureInfo.InvariantCulture));
+                    colors.InsertNextValue(byte.Parse(sXYZ[4], CultureInfo.InvariantCulture));
+                    colors.InsertNextValue(byte.Parse(sXYZ[5], CultureInfo.InvariantCulture));
                     points.InsertNextPoint(xyz[0], xyz[1], xyz[2]);
                 }
-                
+
                 vtkPolyData polydata = vtkPolyData.New();
                 polydata.SetPoints(points);
                 polydata.GetPointData().SetScalars(colors);
@@ -101,7 +114,7 @@ namespace Bakalárska_práca
                 mapper.SetInputConnection(glyphFilter.GetOutputPort());
                 vtkActor actor = vtkActor.New();
                 actor.SetMapper(mapper);
-                actor.GetProperty().SetPointSize(4);
+                actor.GetProperty().SetPointSize(2);
                 // get a reference to the renderwindow of our renderWindowControl1
                 vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
                 // renderer
@@ -157,7 +170,7 @@ namespace Bakalárska_práca
             // VTK_DATA_ROOT = "C:\VTK\vtkdata-5.8.0"
             vtkTesting test = vtkTesting.New();
             string root = test.GetDataRoot();
-            string filePath = @"C:\Users\Notebook\Desktop\ImageDataset_SceauxCastle-master\pokus.ply";
+            string filePath = @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP\Bachelor_app\Temp\Result_CMVS.0.ply";
             vtkOBJReader reader = vtkOBJReader.New();
             reader.SetFileName(filePath);
             reader.Update();
@@ -242,6 +255,10 @@ namespace Bakalárska_práca
         private void ShowSetting_Click(object sender, EventArgs e)
         {
             stereoVisionManager.ShowSettingForStereoSolver();
+        }
+
+        private void StartSFM_Click(object sender, EventArgs e) {
+            structureFromMotionManager.StartSFM();
         }
     }
 }

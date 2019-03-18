@@ -70,6 +70,7 @@ namespace Bakalárska_práca.Manager
         {
             switch (typeOfItem)
             {
+                //case EDisplayItem.PointCloud: _winForm.ReadPLY(renderWindow); break;
                 case EDisplayItem.PointCloud: _winForm.ReadPlainText(renderWindow); break;
             }
         }

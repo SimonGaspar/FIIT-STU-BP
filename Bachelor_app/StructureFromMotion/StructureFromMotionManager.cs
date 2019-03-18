@@ -1,4 +1,5 @@
 ﻿using Bakalárska_práca.Extension;
+using Bakalárska_práca.Manager;
 using Bakalárska_práca.Model;
 using Bakalárska_práca.StructureFromMotion;
 using Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription;
@@ -27,7 +28,7 @@ namespace Bakalárska_práca
         const string path = @"C:\Users\Notebook\Desktop\VisualSFM_windows_cuda_64bit\Example\images";
         const string pathVisualSFM = @"C:\Users\Notebook\Desktop\VisualSFM_windows_cuda_64bit";
 
-        string tempDirectory = $"..\\..\\..\\Temp";
+        string tempDirectory = Path.GetFullPath($"..\\..\\..\\Temp");
         string matchFileName = $"AllFoundedMatches.txt";
 
         public IFeatureDetector _detector;
@@ -39,24 +40,33 @@ namespace Bakalárska_práca
         private List<Descriptor> ComputedDescriptors;
         private List<DescriptorsMatch> FoundedMatches;
 
-        public SfM() {
+        private FileManager fileManager;
+        private DisplayManager displayManager;
+
+        public SfM(FileManager fileManager, DisplayManager displayManager) {
 
             Directory.CreateDirectory(tempDirectory);
             DetectedKeyPoints = new List<KeyPoint>();
             ComputedDescriptors = new List<Descriptor>();
             FoundedMatches = new List<DescriptorsMatch>();
 
-            var list = new List<InputFile>();
+            this.fileManager = fileManager;
+            this.displayManager = displayManager;
 
-            var files = Directory.GetFiles(@"C:\Users\Notebook\Desktop\VisualSFM_windows_cuda_64bit\Example\VisualStudioCodeTest");
-            foreach (var node in files)
-            {
-                var input = new InputFile(new FileInfo(node));
-                list.Add(input);
-                File.Copy(node, Path.Combine(tempDirectory, input.fileInfo.Name),true);
-            }
 
-            ComputeSfM(new OrientedFastAndRotatedBrief(), new OrientedFastAndRotatedBrief(), new BruteForce(), list);
+            //var list = new List<InputFile>();
+
+            //var files = Directory.GetFiles(@"C:\Users\Notebook\Desktop\VisualSFM_windows_cuda_64bit\Example\VisualStudioCodeTest");
+            //foreach (var node in files)
+            //{
+            //    var input = new InputFile(new FileInfo(node));
+            //    list.Add(input);
+            //    File.Copy(node, Path.Combine(tempDirectory, input.fileInfo.Name),true);
+            //}
+
+            //ComputeSfM(new OrientedFastAndRotatedBrief(), new OrientedFastAndRotatedBrief(), new BruteForce(), list);
+
+
 
             //FindAndMatch();
 
@@ -87,6 +97,17 @@ namespace Bakalárska_práca
             //drawMatches.Save(Path.Combine(path, "Pokus.jpg"));
         }
 
+        public void StartSFM() {
+            var list = fileManager.ListOfInputFile;
+
+            foreach (var node in list)
+            {
+                File.Copy(node.fileInfo.FullName, Path.Combine(tempDirectory, node.fileInfo.Name), true);
+            }
+
+            ComputeSfM(new OrientedFastAndRotatedBrief(), new OrientedFastAndRotatedBrief(), new BruteForce(), list);
+        }
+
         public void ComputeSfM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFile> listOfInput)
         {
             foreach (var item in listOfInput)
@@ -99,11 +120,16 @@ namespace Bakalárska_práca
                 ComputeDescriptor(item,descriptor);
             }
 
+            //for (int m = 0; m < ComputedDescriptors.Count; m++)
+            //    for (int n = m + 1; n < ComputedDescriptors.Count; n++)
+            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+
             for (int m = 0; m < ComputedDescriptors.Count; m++)
-                for (int n = m + 1; n < ComputedDescriptors.Count; n++)
+                for (int n = m -2; n <m && n>=0 ; n++)
                     FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
 
             WriteAllMatches(FoundedMatches);
+            RunVisualSFM();
         }
 
         private void WriteAllMatches(List<DescriptorsMatch> findedMatches)
@@ -154,8 +180,9 @@ namespace Bakalárska_práca
 
             // Save drawing image
             Mat output = new Mat();
+            Directory.CreateDirectory($@"{tempDirectory}\DrawMatches");
             Features2DToolbox.DrawMatches(new Mat(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(foundedMatch.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), foundedMatch.Mask);
-            output.Save(Path.Combine(tempDirectory, $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
+            output.Save(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
 
             if (SaveInMatchNode)
                 SaveMatchString(foundedMatch,true);
@@ -327,8 +354,11 @@ namespace Bakalárska_práca
         public void RunVisualSFM()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(pathVisualSFM, "VisualSFM.exe"));
-            startInfo.Arguments = "www.northwindtraders.com";
+            startInfo.Arguments = $"sfm+import {tempDirectory} {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "AllFoundedMatches.txt")}";
             Process process = Process.Start(startInfo);
+
+            displayManager.LeftViewItem = Enumerate.EDisplayItem.PointCloud;
+            displayManager.Display();
         }
 
         //
