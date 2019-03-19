@@ -361,6 +361,17 @@ namespace Bakalárska_práca
             displayManager.Display();
         }
 
+        public void ContinueVisualStudio()
+        {
+            // Poriesit, ako prepisat SIFT subory, pridat novy match file a pridat fiel Result.nvm.txt, ktory bude obsahovat nove obrazky
+            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(pathVisualSFM, "VisualSFM.exe"));
+            startInfo.Arguments = $"sfm+import+resume {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "AllFoundedMatches.txt")}";
+            Process process = Process.Start(startInfo);
+            // Poriesit ako citat point cloud, ked sa prepise
+            displayManager.LeftViewItem = Enumerate.EDisplayItem.PointCloud;
+            displayManager.Display();
+        }
+
         //
         //
         //
