@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using Bachelor_app.Extension;
+using Bachelor_app.Resources;
+using Bakalárska_práca.Enumerate;
 
 namespace Bakalárska_práca
 {
@@ -15,6 +18,8 @@ namespace Bakalárska_práca
         [STAThread]
         static void Main()
         {
+            Localizer.InitLocalizedResource("en-EN", "Bachelor_app.Language.Resources.Resources");
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

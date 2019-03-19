@@ -1,25 +1,10 @@
-﻿using Bakalárska_práca.Manager;
-using Bakalárska_práca.StereoVision;
-using Emgu.CV;
-using Emgu.CV.Structure;
-using Kitware.VTK;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
+using Bakalárska_práca.Manager;
+using Bakalárska_práca.StereoVision;
+using Kitware.VTK;
 
 namespace Bakalárska_práca
 {
@@ -37,14 +22,14 @@ namespace Bakalárska_práca
             InitializeComponent();
 
             fileManager = new FileManager(this);
-            displayManager = new DisplayManager(this,fileManager);
-            stereoVisionManager = new StereoVisionManager(fileManager,displayManager);
-            menuManager = new MenuManager(this, displayManager,fileManager,stereoVisionManager);
+            displayManager = new DisplayManager(this, fileManager);
+            stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
+            menuManager = new MenuManager(this, displayManager, fileManager, stereoVisionManager);
 
             structureFromMotionManager = new SfM(fileManager, displayManager);
 
         }
-        
+
         public void ReadPlainText(RenderWindowControl renderWindowControl)
         {
             // Path to vtk data must be set as an environment variable
@@ -209,7 +194,7 @@ namespace Bakalárska_práca
             vtkActor actor = vtkActor.New();
             actor.SetMapper(mapper);
             actor.GetProperty().SetPointSize(4000000);
-            actor.GetProperty().SetColor(1,1,1);
+            actor.GetProperty().SetColor(1, 1, 1);
             vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
             vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
             renderer.SetBackground(0.2, 1, 0.4);
@@ -236,7 +221,7 @@ namespace Bakalárska_práca
         {
             menuManager.MenuSetDisplaySetting(sender, e);
         }
-        
+
         private void ListViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menuManager.MenuSetListViewerSetting(sender, e);
@@ -257,7 +242,8 @@ namespace Bakalárska_práca
             stereoVisionManager.ShowSettingForStereoSolver();
         }
 
-        private void StartSFM_Click(object sender, EventArgs e) {
+        private void StartSFM_Click(object sender, EventArgs e)
+        {
             structureFromMotionManager.StartSFM();
         }
     }

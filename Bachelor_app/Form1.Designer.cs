@@ -42,11 +42,13 @@
             this.DisplayLeftLeftCameraMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayLeftRightCameraMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayLeftDepthMapMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pointCloudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayRight = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayRightListViewerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayRightLeftCameraMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayRightRightCameraMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DisplayRightDepthMapMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pointCloudToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.listOfImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,10 +75,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.renderWindowControl1 = new Kitware.VTK.RenderWindowControl();
             this.LeftViewBox = new Emgu.CV.UI.ImageBox();
             this.RightViewBox = new Emgu.CV.UI.ImageBox();
-            this.renderWindowControl2 = new Kitware.VTK.RenderWindowControl();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
@@ -87,8 +87,9 @@
             this.button5 = new System.Windows.Forms.Button();
             this.ListViewer = new System.Windows.Forms.ListView();
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
-            this.pointCloudToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pointCloudToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -97,6 +98,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.RightViewBox)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -110,9 +112,9 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel6, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 8;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.330666F));
@@ -123,7 +125,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.330666F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.006F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.330666F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1685, 838);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1264, 681);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // menuStrip1
@@ -138,15 +140,14 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1685, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1264, 22);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(62, 23);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 18);
             this.homeToolStripMenuItem.Text = "Home";
             // 
             // displayToolStripMenuItem
@@ -157,7 +158,7 @@
             this.toolStripSeparator2,
             this.listOfImagesToolStripMenuItem});
             this.displayToolStripMenuItem.Name = "displayToolStripMenuItem";
-            this.displayToolStripMenuItem.Size = new System.Drawing.Size(70, 23);
+            this.displayToolStripMenuItem.Size = new System.Drawing.Size(57, 18);
             this.displayToolStripMenuItem.Text = "Display";
             // 
             // DisplayLeft
@@ -169,7 +170,7 @@
             this.DisplayLeftDepthMapMenuItem,
             this.pointCloudToolStripMenuItem});
             this.DisplayLeft.Name = "DisplayLeft";
-            this.DisplayLeft.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeft.Size = new System.Drawing.Size(147, 22);
             this.DisplayLeft.Text = "Left";
             // 
             // DisplayLeftListViewerMenuItem
@@ -177,30 +178,37 @@
             this.DisplayLeftListViewerMenuItem.Checked = true;
             this.DisplayLeftListViewerMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DisplayLeftListViewerMenuItem.Name = "DisplayLeftListViewerMenuItem";
-            this.DisplayLeftListViewerMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeftListViewerMenuItem.Size = new System.Drawing.Size(144, 22);
             this.DisplayLeftListViewerMenuItem.Text = "List viewer";
             this.DisplayLeftListViewerMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayLeftLeftCameraMenuItem
             // 
             this.DisplayLeftLeftCameraMenuItem.Name = "DisplayLeftLeftCameraMenuItem";
-            this.DisplayLeftLeftCameraMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeftLeftCameraMenuItem.Size = new System.Drawing.Size(144, 22);
             this.DisplayLeftLeftCameraMenuItem.Text = "Left camera";
             this.DisplayLeftLeftCameraMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayLeftRightCameraMenuItem
             // 
             this.DisplayLeftRightCameraMenuItem.Name = "DisplayLeftRightCameraMenuItem";
-            this.DisplayLeftRightCameraMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeftRightCameraMenuItem.Size = new System.Drawing.Size(144, 22);
             this.DisplayLeftRightCameraMenuItem.Text = "Right camera";
             this.DisplayLeftRightCameraMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayLeftDepthMapMenuItem
             // 
             this.DisplayLeftDepthMapMenuItem.Name = "DisplayLeftDepthMapMenuItem";
-            this.DisplayLeftDepthMapMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayLeftDepthMapMenuItem.Size = new System.Drawing.Size(144, 22);
             this.DisplayLeftDepthMapMenuItem.Text = "Depth map";
             this.DisplayLeftDepthMapMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
+            // 
+            // pointCloudToolStripMenuItem
+            // 
+            this.pointCloudToolStripMenuItem.Name = "pointCloudToolStripMenuItem";
+            this.pointCloudToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.pointCloudToolStripMenuItem.Text = "Point cloud";
+            this.pointCloudToolStripMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayRight
             // 
@@ -211,7 +219,7 @@
             this.DisplayRightDepthMapMenuItem,
             this.pointCloudToolStripMenuItem1});
             this.DisplayRight.Name = "DisplayRight";
-            this.DisplayRight.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRight.Size = new System.Drawing.Size(147, 22);
             this.DisplayRight.Text = "Right";
             // 
             // DisplayRightListViewerMenuItem
@@ -219,35 +227,42 @@
             this.DisplayRightListViewerMenuItem.Checked = true;
             this.DisplayRightListViewerMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DisplayRightListViewerMenuItem.Name = "DisplayRightListViewerMenuItem";
-            this.DisplayRightListViewerMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRightListViewerMenuItem.Size = new System.Drawing.Size(144, 22);
             this.DisplayRightListViewerMenuItem.Text = "List viewer";
             this.DisplayRightListViewerMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayRightLeftCameraMenuItem
             // 
             this.DisplayRightLeftCameraMenuItem.Name = "DisplayRightLeftCameraMenuItem";
-            this.DisplayRightLeftCameraMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRightLeftCameraMenuItem.Size = new System.Drawing.Size(144, 22);
             this.DisplayRightLeftCameraMenuItem.Text = "Left camera";
             this.DisplayRightLeftCameraMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayRightRightCameraMenuItem
             // 
             this.DisplayRightRightCameraMenuItem.Name = "DisplayRightRightCameraMenuItem";
-            this.DisplayRightRightCameraMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRightRightCameraMenuItem.Size = new System.Drawing.Size(144, 22);
             this.DisplayRightRightCameraMenuItem.Text = "Right camera";
             this.DisplayRightRightCameraMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // DisplayRightDepthMapMenuItem
             // 
             this.DisplayRightDepthMapMenuItem.Name = "DisplayRightDepthMapMenuItem";
-            this.DisplayRightDepthMapMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.DisplayRightDepthMapMenuItem.Size = new System.Drawing.Size(144, 22);
             this.DisplayRightDepthMapMenuItem.Text = "Depth map";
             this.DisplayRightDepthMapMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
+            // 
+            // pointCloudToolStripMenuItem1
+            // 
+            this.pointCloudToolStripMenuItem1.Name = "pointCloudToolStripMenuItem1";
+            this.pointCloudToolStripMenuItem1.Size = new System.Drawing.Size(144, 22);
+            this.pointCloudToolStripMenuItem1.Text = "Point cloud";
+            this.pointCloudToolStripMenuItem1.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(213, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(144, 6);
             // 
             // listOfImagesToolStripMenuItem
             // 
@@ -256,7 +271,7 @@
             this.leftCameraToolStripMenuItem,
             this.rightCameToolStripMenuItem});
             this.listOfImagesToolStripMenuItem.Name = "listOfImagesToolStripMenuItem";
-            this.listOfImagesToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.listOfImagesToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.listOfImagesToolStripMenuItem.Text = "List of images";
             // 
             // noCameraToolStripMenuItem
@@ -264,21 +279,21 @@
             this.noCameraToolStripMenuItem.Checked = true;
             this.noCameraToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.noCameraToolStripMenuItem.Name = "noCameraToolStripMenuItem";
-            this.noCameraToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
+            this.noCameraToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.noCameraToolStripMenuItem.Text = "No camera";
             this.noCameraToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
             // 
             // leftCameraToolStripMenuItem
             // 
             this.leftCameraToolStripMenuItem.Name = "leftCameraToolStripMenuItem";
-            this.leftCameraToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
+            this.leftCameraToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.leftCameraToolStripMenuItem.Text = "Left camera";
             this.leftCameraToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
             // 
             // rightCameToolStripMenuItem
             // 
             this.rightCameToolStripMenuItem.Name = "rightCameToolStripMenuItem";
-            this.rightCameToolStripMenuItem.Size = new System.Drawing.Size(172, 26);
+            this.rightCameToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.rightCameToolStripMenuItem.Text = "Right camera";
             this.rightCameToolStripMenuItem.Click += new System.EventHandler(this.ListViewerToolStripMenuItem_Click);
             // 
@@ -288,7 +303,7 @@
             this.stereoVisionToolStripMenuItem,
             this.structureFromMotionToolStripMenuItem});
             this.computeToolStripMenuItem.Name = "computeToolStripMenuItem";
-            this.computeToolStripMenuItem.Size = new System.Drawing.Size(82, 23);
+            this.computeToolStripMenuItem.Size = new System.Drawing.Size(69, 18);
             this.computeToolStripMenuItem.Text = "Compute";
             // 
             // stereoVisionToolStripMenuItem
@@ -299,7 +314,7 @@
             this.cudaStereoBMToolStripMenuItem,
             this.cudaStereoConstantSpaceBPToolStripMenuItem});
             this.stereoVisionToolStripMenuItem.Name = "stereoVisionToolStripMenuItem";
-            this.stereoVisionToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
+            this.stereoVisionToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.stereoVisionToolStripMenuItem.Text = "Stereo vision";
             // 
             // stereoBMToolStripMenuItem
@@ -307,28 +322,28 @@
             this.stereoBMToolStripMenuItem.Checked = true;
             this.stereoBMToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.stereoBMToolStripMenuItem.Name = "stereoBMToolStripMenuItem";
-            this.stereoBMToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.stereoBMToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.stereoBMToolStripMenuItem.Text = "StereoBM";
             this.stereoBMToolStripMenuItem.Click += new System.EventHandler(this.stereoCorrespondenceToolStripMenuItem_Click);
             // 
             // stereoSGBMToolStripMenuItem
             // 
             this.stereoSGBMToolStripMenuItem.Name = "stereoSGBMToolStripMenuItem";
-            this.stereoSGBMToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.stereoSGBMToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.stereoSGBMToolStripMenuItem.Text = "StereoSGBM";
             this.stereoSGBMToolStripMenuItem.Click += new System.EventHandler(this.stereoCorrespondenceToolStripMenuItem_Click);
             // 
             // cudaStereoBMToolStripMenuItem
             // 
             this.cudaStereoBMToolStripMenuItem.Name = "cudaStereoBMToolStripMenuItem";
-            this.cudaStereoBMToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.cudaStereoBMToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.cudaStereoBMToolStripMenuItem.Text = "CudaStereoBM";
             this.cudaStereoBMToolStripMenuItem.Click += new System.EventHandler(this.stereoCorrespondenceToolStripMenuItem_Click);
             // 
             // cudaStereoConstantSpaceBPToolStripMenuItem
             // 
             this.cudaStereoConstantSpaceBPToolStripMenuItem.Name = "cudaStereoConstantSpaceBPToolStripMenuItem";
-            this.cudaStereoConstantSpaceBPToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.cudaStereoConstantSpaceBPToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.cudaStereoConstantSpaceBPToolStripMenuItem.Text = "CudaStereoConstantSpaceBP";
             this.cudaStereoConstantSpaceBPToolStripMenuItem.Click += new System.EventHandler(this.stereoCorrespondenceToolStripMenuItem_Click);
             // 
@@ -339,37 +354,37 @@
             this.deskriptorToolStripMenuItem,
             this.matcherToolStripMenuItem});
             this.structureFromMotionToolStripMenuItem.Name = "structureFromMotionToolStripMenuItem";
-            this.structureFromMotionToolStripMenuItem.Size = new System.Drawing.Size(231, 26);
+            this.structureFromMotionToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.structureFromMotionToolStripMenuItem.Text = "Structure from Motion";
             // 
             // detectFeaturesToolStripMenuItem
             // 
             this.detectFeaturesToolStripMenuItem.Name = "detectFeaturesToolStripMenuItem";
-            this.detectFeaturesToolStripMenuItem.Size = new System.Drawing.Size(185, 26);
+            this.detectFeaturesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.detectFeaturesToolStripMenuItem.Text = "Detect features";
             // 
             // deskriptorToolStripMenuItem
             // 
             this.deskriptorToolStripMenuItem.Name = "deskriptorToolStripMenuItem";
-            this.deskriptorToolStripMenuItem.Size = new System.Drawing.Size(185, 26);
+            this.deskriptorToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.deskriptorToolStripMenuItem.Text = "Deskriptor";
             // 
             // matcherToolStripMenuItem
             // 
             this.matcherToolStripMenuItem.Name = "matcherToolStripMenuItem";
-            this.matcherToolStripMenuItem.Size = new System.Drawing.Size(185, 26);
+            this.matcherToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.matcherToolStripMenuItem.Text = "Matcher";
             // 
             // inputToolStripMenuItem
             // 
             this.inputToolStripMenuItem.Name = "inputToolStripMenuItem";
-            this.inputToolStripMenuItem.Size = new System.Drawing.Size(55, 23);
+            this.inputToolStripMenuItem.Size = new System.Drawing.Size(47, 18);
             this.inputToolStripMenuItem.Text = "Input";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 23);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 18);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // toolStrip1
@@ -382,16 +397,16 @@
             this.toolStripLabel2,
             this.toolStripSeparator1,
             this.toolStripButton1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 27);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 22);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1685, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1264, 22);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(73, 24);
+            this.toolStripLabel1.Size = new System.Drawing.Size(55, 19);
             this.toolStripLabel1.Text = "aaaaaaaa";
             // 
             // toolStripSplitButton1
@@ -403,31 +418,31 @@
             this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(39, 24);
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(36, 19);
             this.toolStripSplitButton1.Text = "toolStripSplitButton1";
             // 
             // aToolStripMenuItem
             // 
             this.aToolStripMenuItem.Name = "aToolStripMenuItem";
-            this.aToolStripMenuItem.Size = new System.Drawing.Size(92, 26);
+            this.aToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
             this.aToolStripMenuItem.Text = "a";
             // 
             // sToolStripMenuItem
             // 
             this.sToolStripMenuItem.Name = "sToolStripMenuItem";
-            this.sToolStripMenuItem.Size = new System.Drawing.Size(92, 26);
+            this.sToolStripMenuItem.Size = new System.Drawing.Size(80, 22);
             this.sToolStripMenuItem.Text = "s";
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(59, 24);
+            this.toolStripLabel2.Size = new System.Drawing.Size(47, 19);
             this.toolStripLabel2.Text = "ffffffffff";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 22);
             // 
             // toolStripButton1
             // 
@@ -435,7 +450,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 19);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
             // tableLayoutPanel2
@@ -448,59 +463,34 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 0F));
             this.tableLayoutPanel2.Controls.Add(this.LeftViewBox, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.renderWindowControl1, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.RightViewBox, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.renderWindowControl2, 3, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 58);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 47);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1677, 411);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1258, 334);
             this.tableLayoutPanel2.TabIndex = 2;
-            // 
-            // renderWindowControl1
-            // 
-            this.renderWindowControl1.AddTestActors = false;
-            this.renderWindowControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.renderWindowControl1.Location = new System.Drawing.Point(4, 4);
-            this.renderWindowControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.renderWindowControl1.Name = "renderWindowControl1";
-            this.renderWindowControl1.Size = new System.Drawing.Size(1, 403);
-            this.renderWindowControl1.TabIndex = 3;
-            this.renderWindowControl1.TestText = null;
             // 
             // LeftViewBox
             // 
             this.LeftViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LeftViewBox.Location = new System.Drawing.Point(3, 2);
-            this.LeftViewBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.LeftViewBox.Location = new System.Drawing.Point(2, 2);
+            this.LeftViewBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.LeftViewBox.Name = "LeftViewBox";
-            this.LeftViewBox.Size = new System.Drawing.Size(832, 407);
+            this.LeftViewBox.Size = new System.Drawing.Size(625, 330);
             this.LeftViewBox.TabIndex = 2;
             this.LeftViewBox.TabStop = false;
             // 
             // RightViewBox
             // 
             this.RightViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RightViewBox.Location = new System.Drawing.Point(841, 2);
-            this.RightViewBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RightViewBox.Location = new System.Drawing.Point(631, 2);
+            this.RightViewBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.RightViewBox.Name = "RightViewBox";
-            this.RightViewBox.Size = new System.Drawing.Size(1, 407);
+            this.RightViewBox.Size = new System.Drawing.Size(625, 330);
             this.RightViewBox.TabIndex = 2;
             this.RightViewBox.TabStop = false;
-            // 
-            // renderWindowControl2
-            // 
-            this.renderWindowControl2.AddTestActors = false;
-            this.renderWindowControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.renderWindowControl2.Location = new System.Drawing.Point(842, 4);
-            this.renderWindowControl2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.renderWindowControl2.Name = "renderWindowControl2";
-            this.renderWindowControl2.Size = new System.Drawing.Size(831, 403);
-            this.renderWindowControl2.TabIndex = 4;
-            this.renderWindowControl2.TestText = null;
             // 
             // tableLayoutPanel3
             // 
@@ -511,13 +501,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 809);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 657);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1677, 25);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1258, 21);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
             // tableLayoutPanel4
@@ -530,13 +519,12 @@
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel5, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.ListViewer, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 558);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 453);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 243F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1677, 243);
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 197F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1258, 198);
             this.tableLayoutPanel4.TabIndex = 4;
             this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
@@ -552,8 +540,8 @@
             this.tableLayoutPanel5.Controls.Add(this.ShowSetting, 0, 3);
             this.tableLayoutPanel5.Controls.Add(this.button5, 0, 4);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(1512, 2);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(1134, 2);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 5;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -561,7 +549,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(162, 239);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(122, 194);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // Add
@@ -569,10 +557,10 @@
             this.Add.AutoSize = true;
             this.Add.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Add.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Add.Location = new System.Drawing.Point(3, 2);
-            this.Add.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Add.Location = new System.Drawing.Point(2, 2);
+            this.Add.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Add.Name = "Add";
-            this.Add.Size = new System.Drawing.Size(156, 43);
+            this.Add.Size = new System.Drawing.Size(118, 34);
             this.Add.TabIndex = 0;
             this.Add.Text = "Add";
             this.Add.UseVisualStyleBackColor = true;
@@ -583,10 +571,10 @@
             this.Remove.AutoSize = true;
             this.Remove.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Remove.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Remove.Location = new System.Drawing.Point(3, 49);
-            this.Remove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Remove.Location = new System.Drawing.Point(2, 40);
+            this.Remove.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Remove.Name = "Remove";
-            this.Remove.Size = new System.Drawing.Size(156, 43);
+            this.Remove.Size = new System.Drawing.Size(118, 34);
             this.Remove.TabIndex = 1;
             this.Remove.Text = "Remove";
             this.Remove.UseVisualStyleBackColor = true;
@@ -597,10 +585,10 @@
             this.ComputeStereo.AutoSize = true;
             this.ComputeStereo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ComputeStereo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ComputeStereo.Location = new System.Drawing.Point(3, 96);
-            this.ComputeStereo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ComputeStereo.Location = new System.Drawing.Point(2, 78);
+            this.ComputeStereo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ComputeStereo.Name = "ComputeStereo";
-            this.ComputeStereo.Size = new System.Drawing.Size(156, 43);
+            this.ComputeStereo.Size = new System.Drawing.Size(118, 34);
             this.ComputeStereo.TabIndex = 2;
             this.ComputeStereo.Text = "ComputeStereo";
             this.ComputeStereo.UseVisualStyleBackColor = true;
@@ -611,10 +599,10 @@
             this.ShowSetting.AutoSize = true;
             this.ShowSetting.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ShowSetting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ShowSetting.Location = new System.Drawing.Point(3, 143);
-            this.ShowSetting.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ShowSetting.Location = new System.Drawing.Point(2, 116);
+            this.ShowSetting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ShowSetting.Name = "ShowSetting";
-            this.ShowSetting.Size = new System.Drawing.Size(156, 43);
+            this.ShowSetting.Size = new System.Drawing.Size(118, 34);
             this.ShowSetting.TabIndex = 3;
             this.ShowSetting.Text = "Show setting";
             this.ShowSetting.UseVisualStyleBackColor = true;
@@ -625,10 +613,10 @@
             this.button5.AutoSize = true;
             this.button5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button5.Location = new System.Drawing.Point(3, 190);
-            this.button5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button5.Location = new System.Drawing.Point(2, 154);
+            this.button5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(156, 47);
+            this.button5.Size = new System.Drawing.Size(118, 38);
             this.button5.TabIndex = 4;
             this.button5.Text = "Clear";
             this.button5.UseVisualStyleBackColor = true;
@@ -647,11 +635,11 @@
             listViewGroup2,
             listViewGroup3});
             this.ListViewer.LargeImageList = this.ImageList;
-            this.ListViewer.Location = new System.Drawing.Point(3, 2);
-            this.ListViewer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ListViewer.Location = new System.Drawing.Point(2, 2);
+            this.ListViewer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.ListViewer.Name = "ListViewer";
             this.ListViewer.ShowItemToolTips = true;
-            this.ListViewer.Size = new System.Drawing.Size(1503, 239);
+            this.ListViewer.Size = new System.Drawing.Size(1128, 194);
             this.ListViewer.SmallImageList = this.ImageList;
             this.ListViewer.TabIndex = 1;
             this.ListViewer.UseCompatibleStateImageBehavior = false;
@@ -663,31 +651,51 @@
             this.ImageList.ImageSize = new System.Drawing.Size(128, 72);
             this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // pointCloudToolStripMenuItem
+            // tableLayoutPanel6
             // 
-            this.pointCloudToolStripMenuItem.Name = "pointCloudToolStripMenuItem";
-            this.pointCloudToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-            this.pointCloudToolStripMenuItem.Text = "Point cloud";
-            this.pointCloudToolStripMenuItem.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
+            this.tableLayoutPanel6.ColumnCount = 4;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel6.Controls.Add(this.listBox1, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.listBox2, 3, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 387);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1258, 16);
+            this.tableLayoutPanel6.TabIndex = 5;
             // 
-            // pointCloudToolStripMenuItem1
+            // listBox1
             // 
-            this.pointCloudToolStripMenuItem1.Name = "pointCloudToolStripMenuItem1";
-            this.pointCloudToolStripMenuItem1.Size = new System.Drawing.Size(216, 26);
-            this.pointCloudToolStripMenuItem1.Text = "Point cloud";
-            this.pointCloudToolStripMenuItem1.Click += new System.EventHandler(this.DisplayToolStripMenuItem_Click);
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(506, 3);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(119, 10);
+            this.listBox1.TabIndex = 0;
+            // 
+            // listBox2
+            // 
+            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(1134, 3);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(121, 10);
+            this.listBox2.TabIndex = 1;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1685, 838);
+            this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MinimumSize = new System.Drawing.Size(1701, 873);
+            this.MinimumSize = new System.Drawing.Size(1280, 717);
             this.Name = "Form1";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -703,6 +711,7 @@
             this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
+            this.tableLayoutPanel6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -766,6 +775,9 @@
         public Kitware.VTK.RenderWindowControl renderWindowControl2;
         private System.Windows.Forms.ToolStripMenuItem pointCloudToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pointCloudToolStripMenuItem1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBox2;
     }
 }
 

@@ -117,4 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DepthMap" xml:space="preserve">
+    <value>Depth map  SK</value>
+  </data>
+  <data name="KeyPoints" xml:space="preserve">
+    <value>Key points  SK</value>
+  </data>
+  <data name="KeyPointsMatches" xml:space="preserve">
+    <value>Key points matches  SK</value>
+  </data>
+  <data name="LeftCamera" xml:space="preserve">
+    <value>Left camera SK</value>
+  </data>
+  <data name="ListViewer" xml:space="preserve">
+    <value>List viewer  SK</value>
+  </data>
+  <data name="PointCloud" xml:space="preserve">
+    <value>Point cloud  SK</value>
+  </data>
+  <data name="RightCamera" xml:space="preserve">
+    <value>Right camera  SK</value>
+  </data>
+  <data name="StereoBlockMatching" xml:space="preserve">
+    <value>Stereo Block Matching  SK</value>
+  </data>
+  <data name="StereoBM" xml:space="preserve">
+    <value>StereoBM SK</value>
+  </data>
 </root>

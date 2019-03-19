@@ -80,12 +80,12 @@ namespace Bakalárska_práca.Manager
 
         private EDisplayItem ReturnDisplayEnum(ToolStripMenuItem Item)
         {
-            EDisplayItem DisplayEnumToReturn = EDisplayItem.ListView;
+            EDisplayItem DisplayEnumToReturn = EDisplayItem.ListViewer;
             switch (Item.Name.ToUpper())
             {
                 case string leftCamera when leftCamera.Contains("LEFTCAMERA"): DisplayEnumToReturn = EDisplayItem.LeftCamera; break;
                 case string rightCamera when rightCamera.Contains("RIGHTCAMERA"): DisplayEnumToReturn = EDisplayItem.RightCamera; break;
-                case string listViewer when listViewer.Contains("LISTVIEWER"): DisplayEnumToReturn = EDisplayItem.ListView; break;
+                case string listViewer when listViewer.Contains("LISTVIEWER"): DisplayEnumToReturn = EDisplayItem.ListViewer; break;
                 case string depthMap when depthMap.Contains("DEPTHMAP"): DisplayEnumToReturn = EDisplayItem.DepthMap; break;
                 case string pointCloud when pointCloud.Contains("POINT"): DisplayEnumToReturn = EDisplayItem.PointCloud; break;
             }

@@ -5,22 +5,22 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bachelor_app", "Bachelor_app\Bachelor_app.csproj", "{12566868-6EE6-4ED7-AE98-6C7CE81508A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bachelor_app.Resources", "Bachelor_app.Language\Bachelor_app.Resources.csproj", "{D8CBFAB8-3672-43F6-9281-8DE77EA0AD2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
-		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{12566868-6EE6-4ED7-AE98-6C7CE81508A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12566868-6EE6-4ED7-AE98-6C7CE81508A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12566868-6EE6-4ED7-AE98-6C7CE81508A0}.Debug|x64.ActiveCfg = Debug|x64
 		{12566868-6EE6-4ED7-AE98-6C7CE81508A0}.Debug|x64.Build.0 = Debug|x64
-		{12566868-6EE6-4ED7-AE98-6C7CE81508A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12566868-6EE6-4ED7-AE98-6C7CE81508A0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{12566868-6EE6-4ED7-AE98-6C7CE81508A0}.Release|x64.ActiveCfg = Release|x64
 		{12566868-6EE6-4ED7-AE98-6C7CE81508A0}.Release|x64.Build.0 = Release|x64
+		{D8CBFAB8-3672-43F6-9281-8DE77EA0AD2A}.Debug|x64.ActiveCfg = Debug|x64
+		{D8CBFAB8-3672-43F6-9281-8DE77EA0AD2A}.Debug|x64.Build.0 = Debug|x64
+		{D8CBFAB8-3672-43F6-9281-8DE77EA0AD2A}.Release|x64.ActiveCfg = Release|x64
+		{D8CBFAB8-3672-43F6-9281-8DE77EA0AD2A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

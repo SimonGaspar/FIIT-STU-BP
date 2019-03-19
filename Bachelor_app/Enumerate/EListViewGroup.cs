@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bakalárska_práca.Enumerate
+﻿namespace Bakalárska_práca.Enumerate
 {
+    // Check Resources for string value
     public enum EListViewGroup
     {
         NoGroup,
