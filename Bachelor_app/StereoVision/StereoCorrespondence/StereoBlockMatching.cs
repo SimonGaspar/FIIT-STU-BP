@@ -13,7 +13,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 
         public StereoBlockMatching()
         {
-            _stereoBM = new StereoBM(model.Disparity, model.BlockSize);
+            //_stereoBM = new StereoBM(model.Disparity, model.BlockSize);
         }
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)

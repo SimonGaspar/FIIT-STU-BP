@@ -246,5 +246,10 @@ namespace Bakalárska_práca
         {
             structureFromMotionManager.StartSFM();
         }
+
+        private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
