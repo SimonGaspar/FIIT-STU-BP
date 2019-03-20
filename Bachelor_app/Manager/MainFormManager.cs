@@ -1,43 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Bachelor_app.Extension;
+using Bakalárska_práca;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Helper;
+using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
 
-namespace Bakalárska_práca.Manager
+namespace Bachelor_app.Manager
 {
-    public class MenuManager
+    public class MainFormManager
     {
         private MainForm _winForm;
         private DisplayManager _displayManager;
         private FileManager _fileManager;
         private StereoVisionManager _stereoVisionManager;
 
-        public MenuManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager)
+        public MainFormManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager)
         {
             this._winForm = WinForm;
             this._displayManager = displayManager;
             this._fileManager = fileManager;
             this._stereoVisionManager = stereoVisionManager;
         }
-
-        public void MenuSetListViewerSetting(object sender, EventArgs e)
+        
+        public void SetListViewerDisplay(object sender, EventArgs e)
         {
-            var currentItem = sender as ToolStripMenuItem;
-            MenuHelper.OnlyOneCheck(sender, e);
-            SetListViewerSetting(currentItem);
-        }
-
-        private void SetListViewerSetting(ToolStripMenuItem currentItem)
-        {
-            EListViewGroup ListViewGroup = EListViewGroup.BasicStack;
-            switch (currentItem.Name.ToUpper())
-            {
-                case string noGroup when noGroup.Contains("NO"): ListViewGroup = EListViewGroup.BasicStack; break;
-                case string leftGroup when leftGroup.Contains("LEFT"): ListViewGroup = EListViewGroup.LeftCameraStack; break;
-                case string rightGroup when rightGroup.Contains("RIGHT"): ListViewGroup = EListViewGroup.RightCameraStack; break;
-            }
-            _fileManager.ListViewerDisplay = ListViewGroup;
+            var currentItem = sender as ComboBox;
+            _fileManager.ListViewerDisplay = EnumExtension.ReturnEnumValue<EListViewGroup>(currentItem.SelectedItem.ToString());
         }
 
         public void MenuSetDisplaySetting(object sender, EventArgs e)
@@ -87,5 +81,7 @@ namespace Bakalárska_práca.Manager
             }
             return DisplayEnumToReturn;
         }
+
+
     }
 }

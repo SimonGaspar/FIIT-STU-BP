@@ -119,24 +119,31 @@
   </resheader>
   <data name="DepthMap" xml:space="preserve">
     <value>Depth map</value>
+    <comment>EDisplayItem.DepthMap</comment>
   </data>
   <data name="KeyPoints" xml:space="preserve">
     <value>Key points</value>
+    <comment>EDisplayItem.Keypoints</comment>
   </data>
-  <data name="KeyPointsMatches" xml:space="preserve">
-    <value>Key points matches</value>
+  <data name="DescriptorsMatches" xml:space="preserve">
+    <value>Descriptor matches</value>
+    <comment>EDisplayItem.DescriptorsMatches</comment>
   </data>
   <data name="LeftCamera" xml:space="preserve">
     <value>Left camera</value>
+    <comment>EDisplayItem.LeftCamera</comment>
   </data>
   <data name="ListViewer" xml:space="preserve">
     <value>List viewer</value>
+    <comment>EDisplayItem.ListViewer</comment>
   </data>
   <data name="PointCloud" xml:space="preserve">
     <value>Point cloud</value>
+    <comment>EDisplayItem.PointCloud</comment>
   </data>
   <data name="RightCamera" xml:space="preserve">
     <value>Right camera</value>
+    <comment>EDisplayItem.RightCamera</comment>
   </data>
   <data name="StereoBlockMatching" xml:space="preserve">
     <value>Stereo Block Matching</value>
@@ -144,13 +151,24 @@
   <data name="StereoBM" xml:space="preserve">
     <value>StereoBM</value>
   </data>
-  <data name="LeftListGroup" xml:space="preserve">
+  <data name="LeftCameraStack" xml:space="preserve">
     <value>Stack for left camera</value>
+    <comment>EListViewGroup.LeftCameraStack</comment>
   </data>
-  <data name="NoGroup" xml:space="preserve">
+  <data name="BasicStack" xml:space="preserve">
     <value>Stack</value>
+    <comment>EListViewGroup</comment>
   </data>
-  <data name="RightListGroup" xml:space="preserve">
+  <data name="RightCameraStack" xml:space="preserve">
     <value>Stack for right camera</value>
+    <comment>EListViewGroup.RightCameraStack</comment>
+  </data>
+  <data name="DrawnKeyPoint" xml:space="preserve">
+    <value>Computed keypoints</value>
+    <comment>EListViewGroup.DrawnKeyPoint</comment>
+  </data>
+  <data name="DrawnMatches" xml:space="preserve">
+    <value>Computed descriptor matches</value>
+    <comment>EListViewGroup.DrawnMatches</comment>
   </data>
 </root>

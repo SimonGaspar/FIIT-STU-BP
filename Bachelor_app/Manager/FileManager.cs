@@ -1,39 +1,33 @@
-﻿using Bakalárska_práca.Enumerate;
-using Bakalárska_práca.Model;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using Bakalárska_práca.Enumerate;
+using Bakalárska_práca.Model;
 
 namespace Bakalárska_práca.Manager
 {
     public class FileManager
     {
-        private Form1 _winForm;
+        private MainForm _winForm;
         public List<InputFile> ListOfInputFileForLeft = new List<InputFile>();
         public List<InputFile> ListOfInputFileForRight = new List<InputFile>();
         public List<InputFile> ListOfInputFile = new List<InputFile>();
 
-        public EListViewGroup AddForListType { get; set; } = EListViewGroup.NoGroup;
+        public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.BasicStack;
 
         public FileManager()
         {
         }
 
-        public FileManager(Form1 WinForm)
+        public FileManager(MainForm WinForm)
         {
             this._winForm = WinForm;
         }
 
         public void AddToListView()
         {
-            using (OpenFileDialog ofd = new OpenFileDialog(){Multiselect = true, ValidateNames = true, CheckFileExists = true, CheckPathExists = true, Filter = ""})
+            using (OpenFileDialog ofd = new OpenFileDialog() { Multiselect = true, ValidateNames = true, CheckFileExists = true, CheckPathExists = true, Filter = "" })
             {
-                DialogHelper.AddFilterToDialog<EImageFormat>(ofd,"All Image Files");
+                DialogHelper.AddFilterToDialog<EImageFormat>(ofd, "All Image Files");
                 DialogHelper.AddFilterToDialog<EVideoFormat>(ofd, "All Video Files");
 
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -41,16 +35,16 @@ namespace Bakalárska_práca.Manager
                     foreach (var fileName in ofd.FileNames)
                     {
                         var inputFile = new InputFile(fileName);
-                        switch (AddForListType)
+                        switch (ListViewerDisplay)
                         {
-                            case EListViewGroup.NoGroup:
-                                AddInputFileToList(inputFile,ListOfInputFile); break;
-                            case EListViewGroup.LeftListGroup:
+                            case EListViewGroup.BasicStack:
+                                AddInputFileToList(inputFile, ListOfInputFile); break;
+                            case EListViewGroup.LeftCameraStack:
                                 AddInputFileToList(inputFile, ListOfInputFileForLeft); break;
-                            case EListViewGroup.RightListGroup:
+                            case EListViewGroup.RightCameraStack:
                                 AddInputFileToList(inputFile, ListOfInputFileForRight); break;
                         }
-                        
+
                     }
                 };
             }
@@ -62,13 +56,13 @@ namespace Bakalárska_práca.Manager
 
             var listItem = new ListViewItem(inputFile.fileInfo.Name, _winForm.ImageList.Images.IndexOfKey(inputFile.fileInfo.Name))
             {
-                Group = _winForm.ListViewer.Groups[(int)AddForListType],
+                Group = _winForm.ListViewer.Groups[(int)ListViewerDisplay],
                 ImageKey = inputFile.fileInfo.Name
             };
-            listItem.Group = _winForm.ListViewer.Groups[(int)AddForListType];
+            listItem.Group = _winForm.ListViewer.Groups[(int)ListViewerDisplay];
 
             listOfInput.Add(inputFile);
-            
+
             _winForm.ListViewer.Items.Add(listItem);
         }
     }

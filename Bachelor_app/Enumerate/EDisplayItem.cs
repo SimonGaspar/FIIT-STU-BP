@@ -9,6 +9,6 @@
         RightCamera,
         PointCloud,
         KeyPoints,
-        KeyPointsMatches
+        DescriptorsMatches
     }
 }

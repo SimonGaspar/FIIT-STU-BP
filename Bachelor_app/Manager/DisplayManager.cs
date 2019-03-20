@@ -20,11 +20,11 @@ namespace Bakalárska_práca.Manager
         public EDisplayItem RightViewItem { get; set; }
 
         private FileManager _fileManager;
-        private Form1 _winForm;
+        private MainForm _winForm;
         private Image<Bgr, Byte> _lastListViewerImage;
         public Image<Bgr, Byte> _lastDepthMapImage { get; set; }
 
-        public DisplayManager(Form1 WinForm, FileManager FileManager)
+        public DisplayManager(MainForm WinForm, FileManager FileManager)
         {
             this._winForm = WinForm;
             this._fileManager = FileManager;

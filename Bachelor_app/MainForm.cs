@@ -2,31 +2,35 @@
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
+using Bachelor_app.Manager;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
 using Kitware.VTK;
 
 namespace Bakalárska_práca
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private FileManager fileManager;
         private DisplayManager displayManager;
-        private MenuManager menuManager;
         private StereoVisionManager stereoVisionManager;
         private SfM structureFromMotionManager;
+        private MainFormManager mainFormManager;
 
-
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
             fileManager = new FileManager(this);
             displayManager = new DisplayManager(this, fileManager);
             stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
-            menuManager = new MenuManager(this, displayManager, fileManager, stereoVisionManager);
+            mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager);
 
             structureFromMotionManager = new SfM(fileManager, displayManager);
+
+#if (!DEBUG)
+            InitializeStringForComponents();
+#endif
 
         }
 
@@ -219,12 +223,12 @@ namespace Bakalárska_práca
 
         private void DisplayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            menuManager.MenuSetDisplaySetting(sender, e);
+            //menuManager.MenuSetDisplaySetting(sender, e);
         }
 
         private void ListViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            menuManager.MenuSetListViewerSetting(sender, e);
+            //menuManager.MenuSetListViewerSetting(sender, e);
         }
 
         private void stereoCorrespondenceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -250,6 +254,17 @@ namespace Bakalárska_práca
         private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+
+        private void toolStripComboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetListViewerDisplay(sender, e);
+        }
+
+        private void toolStripComboBox6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetListViewerDisplay(sender, e);
         }
     }
 }

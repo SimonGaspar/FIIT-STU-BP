@@ -61,6 +61,15 @@ namespace Bachelor_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stack.
+        /// </summary>
+        public static string BasicStack {
+            get {
+                return ResourceManager.GetString("BasicStack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Depth map.
         /// </summary>
         public static string DepthMap {
@@ -70,20 +79,38 @@ namespace Bachelor_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Descriptor matches.
+        /// </summary>
+        public static string DescriptorsMatches {
+            get {
+                return ResourceManager.GetString("DescriptorsMatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Computed keypoints.
+        /// </summary>
+        public static string DrawnKeyPoint {
+            get {
+                return ResourceManager.GetString("DrawnKeyPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Computed descriptor matches.
+        /// </summary>
+        public static string DrawnMatches {
+            get {
+                return ResourceManager.GetString("DrawnMatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key points.
         /// </summary>
         public static string KeyPoints {
             get {
                 return ResourceManager.GetString("KeyPoints", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Key points matches.
-        /// </summary>
-        public static string KeyPointsMatches {
-            get {
-                return ResourceManager.GetString("KeyPointsMatches", resourceCulture);
             }
         }
         
@@ -99,9 +126,9 @@ namespace Bachelor_app.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Stack for left camera.
         /// </summary>
-        public static string LeftListGroup {
+        public static string LeftCameraStack {
             get {
-                return ResourceManager.GetString("LeftListGroup", resourceCulture);
+                return ResourceManager.GetString("LeftCameraStack", resourceCulture);
             }
         }
         
@@ -111,15 +138,6 @@ namespace Bachelor_app.Resources {
         public static string ListViewer {
             get {
                 return ResourceManager.GetString("ListViewer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Stack.
-        /// </summary>
-        public static string NoGroup {
-            get {
-                return ResourceManager.GetString("NoGroup", resourceCulture);
             }
         }
         
@@ -144,9 +162,9 @@ namespace Bachelor_app.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Stack for right camera.
         /// </summary>
-        public static string RightListGroup {
+        public static string RightCameraStack {
             get {
-                return ResourceManager.GetString("RightListGroup", resourceCulture);
+                return ResourceManager.GetString("RightCameraStack", resourceCulture);
             }
         }
         

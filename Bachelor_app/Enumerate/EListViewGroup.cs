@@ -3,8 +3,10 @@
     // Check Resources for string value
     public enum EListViewGroup
     {
-        NoGroup,
-        LeftListGroup,
-        RightListGroup
+        BasicStack,
+        LeftCameraStack,
+        RightCameraStack,
+        DrawnKeyPoint,
+        DrawnMatches
     }
 }
