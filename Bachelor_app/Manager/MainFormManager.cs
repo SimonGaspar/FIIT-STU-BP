@@ -30,58 +30,56 @@ namespace Bachelor_app.Manager
         
         public void SetListViewerDisplay(object sender, EventArgs e)
         {
-            var currentItem = sender as ComboBox;
+            var currentItem = sender as ToolStripComboBox;
             _fileManager.ListViewerDisplay = EnumExtension.ReturnEnumValue<EListViewGroup>(currentItem.SelectedItem.ToString());
         }
 
-        public void MenuSetDisplaySetting(object sender, EventArgs e)
+        public void SetDisplaySetting(object sender, EventArgs e, bool LeftWindow)
         {
-            var currentItem = sender as ToolStripMenuItem;
-            MenuHelper.OnlyOneCheck(sender, e);
-            ChangeRenderer(currentItem);
-            SetDisplaySetting(currentItem);
-        }
+            var currentItem = sender as ToolStripComboBox;
+            var enumItem = EnumExtension.ReturnEnumValue<EDisplayItem>(currentItem.SelectedItem.ToString());
 
-        private void ChangeRenderer(ToolStripMenuItem Item)
-        {
-            if (Item.Name.ToUpper().Contains("POINT"))
-                switch (Item.OwnerItem.Name.ToUpper())
-                {
-                    case "DISPLAYLEFT": _winForm.tableLayoutPanel2.ColumnStyles[0].Width = 0F; _winForm.tableLayoutPanel2.ColumnStyles[1].Width = 50F; break;
-                    case "DISPLAYRIGHT": _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 0F; _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 50F; break;
-                }
+            if (LeftWindow)
+                _displayManager.LeftViewWindowItem = enumItem;
             else
-                switch (Item.OwnerItem.Name.ToUpper())
-                {
-                    case "DISPLAYLEFT": _winForm.tableLayoutPanel2.ColumnStyles[0].Width = 50F; _winForm.tableLayoutPanel2.ColumnStyles[1].Width = 0F; break;
-                    case "DISPLAYRIGHT": _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 50F; _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 0F; break;
-                }
-        }
+                _displayManager.RightViewWindowItem = enumItem;
 
-        private void SetDisplaySetting(ToolStripMenuItem Item)
-        {
-            switch (Item.OwnerItem.Name.ToUpper())
-            {
-                case "DISPLAYLEFT": _displayManager.LeftViewItem = ReturnDisplayEnum(Item); break;
-                case "DISPLAYRIGHT": _displayManager.RightViewItem = ReturnDisplayEnum(Item); break;
-            }
+            if (enumItem == EDisplayItem.PointCloud)
+                ChangeRenderer(LeftWindow, true);
+            else
+                ChangeRenderer(LeftWindow, false);
+            
             _displayManager.Display();
         }
 
-        private EDisplayItem ReturnDisplayEnum(ToolStripMenuItem Item)
+        private void ChangeRenderer(bool LeftWindow, bool PointCloud)
         {
-            EDisplayItem DisplayEnumToReturn = EDisplayItem.ListViewer;
-            switch (Item.Name.ToUpper())
+            if (PointCloud)
             {
-                case string leftCamera when leftCamera.Contains("LEFTCAMERA"): DisplayEnumToReturn = EDisplayItem.LeftCamera; break;
-                case string rightCamera when rightCamera.Contains("RIGHTCAMERA"): DisplayEnumToReturn = EDisplayItem.RightCamera; break;
-                case string listViewer when listViewer.Contains("LISTVIEWER"): DisplayEnumToReturn = EDisplayItem.ListViewer; break;
-                case string depthMap when depthMap.Contains("DEPTHMAP"): DisplayEnumToReturn = EDisplayItem.DepthMap; break;
-                case string pointCloud when pointCloud.Contains("POINT"): DisplayEnumToReturn = EDisplayItem.PointCloud; break;
+                if (LeftWindow)
+                {
+                    _winForm.tableLayoutPanel2.ColumnStyles[0].Width = 0F;
+                    _winForm.tableLayoutPanel2.ColumnStyles[1].Width = 50F;
+                }
+                else
+                {
+                    _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 0F;
+                    _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 50F;
+                }
             }
-            return DisplayEnumToReturn;
+            else
+            {
+                if (LeftWindow)
+                {
+                    _winForm.tableLayoutPanel2.ColumnStyles[0].Width = 50F;
+                    _winForm.tableLayoutPanel2.ColumnStyles[1].Width = 0F;
+                }
+                else
+                {
+                    _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 50F;
+                    _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 0F;
+                }
+            }
         }
-
-
     }
 }

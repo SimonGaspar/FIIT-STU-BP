@@ -16,8 +16,8 @@ namespace Bakalárska_práca.Manager
 {
     public class DisplayManager
     {
-        public EDisplayItem LeftViewItem { get; set; }
-        public EDisplayItem RightViewItem { get; set; }
+        public EDisplayItem LeftViewWindowItem { get; set; }
+        public EDisplayItem RightViewWindowItem { get; set; }
 
         private FileManager _fileManager;
         private MainForm _winForm;
@@ -49,10 +49,10 @@ namespace Bakalárska_práca.Manager
         
         public void Display()
         {
-            ShowItemOnView(_winForm.LeftViewBox, LeftViewItem);
-            ShowItemOnView(_winForm.renderWindowControl1, LeftViewItem);
-            ShowItemOnView(_winForm.renderWindowControl2, RightViewItem);
-            ShowItemOnView(_winForm.RightViewBox, RightViewItem);
+            ShowItemOnView(_winForm.LeftViewBox, LeftViewWindowItem);
+            ShowItemOnView(_winForm.renderWindowControl1, LeftViewWindowItem);
+            ShowItemOnView(_winForm.renderWindowControl2, RightViewWindowItem);
+            ShowItemOnView(_winForm.RightViewBox, RightViewWindowItem);
         }
 
         public void ShowItemOnView(ImageBox imageBox, EDisplayItem typeOfItem)

@@ -357,7 +357,7 @@ namespace Bakalárska_práca
             startInfo.Arguments = $"sfm+import {tempDirectory} {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "AllFoundedMatches.txt")}";
             Process process = Process.Start(startInfo);
 
-            displayManager.LeftViewItem = Enumerate.EDisplayItem.PointCloud;
+            displayManager.LeftViewWindowItem = Enumerate.EDisplayItem.PointCloud;
             displayManager.Display();
         }
 
@@ -368,7 +368,7 @@ namespace Bakalárska_práca
             startInfo.Arguments = $"sfm+import+resume {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "AllFoundedMatches.txt")}";
             Process process = Process.Start(startInfo);
             // Poriesit ako citat point cloud, ked sa prepise
-            displayManager.LeftViewItem = Enumerate.EDisplayItem.PointCloud;
+            displayManager.LeftViewWindowItem = Enumerate.EDisplayItem.PointCloud;
             displayManager.Display();
         }
 

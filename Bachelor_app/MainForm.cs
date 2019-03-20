@@ -28,7 +28,7 @@ namespace Bakalárska_práca
 
             structureFromMotionManager = new SfM(fileManager, displayManager);
 
-#if (!DEBUG)
+#if (DEBUG)
             InitializeStringForComponents();
 #endif
 
@@ -259,12 +259,22 @@ namespace Bakalárska_práca
 
         private void toolStripComboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mainFormManager.SetListViewerDisplay(sender, e);
+            mainFormManager.SetDisplaySetting(sender, e,true);
         }
 
         private void toolStripComboBox6_SelectedIndexChanged(object sender, EventArgs e)
         {
+            mainFormManager.SetDisplaySetting(sender, e, false);
+        }
+
+        private void toolStripComboBox7_SelectedIndexChanged(object sender, EventArgs e)
+        {
             mainFormManager.SetListViewerDisplay(sender, e);
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            fileManager.AddToListView();
         }
     }
 }

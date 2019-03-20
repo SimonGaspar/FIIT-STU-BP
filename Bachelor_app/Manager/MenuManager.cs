@@ -68,8 +68,8 @@ namespace Bakalárska_práca.Manager
         {
             switch (Item.OwnerItem.Name.ToUpper())
             {
-                case "DISPLAYLEFT": _displayManager.LeftViewItem = ReturnDisplayEnum(Item); break;
-                case "DISPLAYRIGHT": _displayManager.RightViewItem = ReturnDisplayEnum(Item); break;
+                case "DISPLAYLEFT": _displayManager.LeftViewWindowItem = ReturnDisplayEnum(Item); break;
+                case "DISPLAYRIGHT": _displayManager.RightViewWindowItem = ReturnDisplayEnum(Item); break;
             }
             _displayManager.Display();
         }
