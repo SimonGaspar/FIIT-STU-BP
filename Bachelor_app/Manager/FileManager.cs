@@ -36,18 +36,44 @@ namespace Bakalárska_práca.Manager
                     foreach (var fileName in ofd.FileNames)
                     {
                         var inputFile = new InputFileModel(fileName);
-                        switch (ListViewerDisplay)
-                        {
-                            case EListViewGroup.BasicStack:
-                                AddInputFileToList(inputFile, listViewerModel.BasicStack, _winForm.ImageList0, _winForm.ListViewer0); break;
-                            case EListViewGroup.LeftCameraStack:
-                                AddInputFileToList(inputFile, listViewerModel.LeftCameraStack, _winForm.ImageList1, _winForm.ListViewer1); break;
-                            case EListViewGroup.RightCameraStack:
-                                AddInputFileToList(inputFile, listViewerModel.RightCameraStack, _winForm.ImageList2, _winForm.ListViewer2); break;
-                        }
-
+                        var imageList = _winForm.ImageList[(int)ListViewerDisplay];
+                        var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
+                        
+                        AddInputFileToList(inputFile, listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay], imageList, listViewer); break;
                     }
                 };
+            }
+        }
+
+        public void RemoveFromListView()
+        {
+            var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
+
+            foreach (ListViewItem fileName in currentListView.SelectedItems)
+            {
+                listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.fileInfo.Name == fileName.Text));
+
+                var imageList = _winForm.ImageList[(int)ListViewerDisplay];
+                imageList.Images.RemoveByKey(fileName.Text);
+
+                var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
+                listViewer.Items.Remove(fileName);
+            }
+        }
+
+        public void RemoveAllFromListView()
+        {
+            var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
+
+            foreach (ListViewItem fileName in currentListView.Items)
+            {
+                listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.fileInfo.Name == fileName.Text));
+
+                var imageList = _winForm.ImageList[(int)ListViewerDisplay];
+                imageList.Images.RemoveByKey(fileName.Text);
+
+                var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
+                listViewer.Items.Remove(fileName);
             }
         }
 

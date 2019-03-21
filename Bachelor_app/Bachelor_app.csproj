@@ -258,6 +258,9 @@
       <Name>Bachelor_app.Resources</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StructureFromMotion\WindowsForm\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\EMGU.CUFFT.9.1.0\build\EMGU.CUFFT.targets" Condition="Exists('..\packages\EMGU.CUFFT.9.1.0\build\EMGU.CUFFT.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

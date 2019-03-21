@@ -1,4 +1,10 @@
-﻿using Bakalárska_práca.Extension;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Bakalárska_práca.Extension;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.Model;
 using Bakalárska_práca.StructureFromMotion;
@@ -8,14 +14,6 @@ using Emgu.CV;
 using Emgu.CV.Features2D;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bakalárska_práca
 {
@@ -43,7 +41,8 @@ namespace Bakalárska_práca
         private FileManager fileManager;
         private DisplayManager displayManager;
 
-        public SfM(FileManager fileManager, DisplayManager displayManager) {
+        public SfM(FileManager fileManager, DisplayManager displayManager)
+        {
 
             Directory.CreateDirectory(tempDirectory);
             DetectedKeyPoints = new List<KeyPointModel>();
@@ -97,7 +96,8 @@ namespace Bakalárska_práca
             //drawMatches.Save(Path.Combine(path, "Pokus.jpg"));
         }
 
-        public void StartSFM() {
+        public void StartSFM()
+        {
             var list = fileManager.listViewerModel.BasicStack;
 
             foreach (var node in list)
@@ -112,12 +112,12 @@ namespace Bakalárska_práca
         {
             foreach (var item in listOfInput)
             {
-                FindKeypoint(item,detector);
+                FindKeypoint(item, detector);
             }
 
             foreach (var item in DetectedKeyPoints)
             {
-                ComputeDescriptor(item,descriptor);
+                ComputeDescriptor(item, descriptor);
             }
 
             //for (int m = 0; m < ComputedDescriptors.Count; m++)
@@ -125,8 +125,15 @@ namespace Bakalárska_práca
             //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
 
             for (int m = 0; m < ComputedDescriptors.Count; m++)
-                for (int n = m -2; n <m && n>=0 ; n++)
+                for (int n = m - 2; n < m && n >= 0; n++)
                     FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+
+
+            //Parallel.ForEach(listOfInput, x => FindKeypoint(x, detector));
+            //Parallel.ForEach(DetectedKeyPoints, x => ComputeDescriptor(x, descriptor));
+
+            //for (int m = 0; m < ComputedDescriptors.Count; m++)
+            //    Parallel.For(m - 2, m, x => FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[x]));
 
             WriteAllMatches(FoundedMatches);
             RunVisualSFM();
@@ -145,10 +152,11 @@ namespace Bakalárska_práca
             File.WriteAllText(Path.Combine(tempDirectory, matchFileName), sb.ToString());
         }
 
-        private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList=true, bool FilterMatches=true,bool ComputeHomography=true, bool SaveInMatchNode=true)
+        private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = true)
         {
-            var foundedMatch = new DescriptorsMatchModel() {
-                FilteredMatch =FilterMatches,
+            var foundedMatch = new DescriptorsMatchModel()
+            {
+                FilteredMatch = FilterMatches,
                 LeftDescriptor = leftDescriptor,
                 RightDescriptor = rightDescriptor
             };
@@ -156,7 +164,7 @@ namespace Bakalárska_práca
             var matches = new VectorOfVectorOfDMatch();
             matcher.Add(leftDescriptor.Descriptors);
             matcher.Match(rightDescriptor.Descriptors, matches);
-            
+
             MDMatch[][] matchesArray = matches.ToArrayOfArray();
             foundedMatch.MatchesList = matchesArray.ToList();
 
@@ -172,7 +180,7 @@ namespace Bakalárska_práca
                 var PerspectiveMatrix = new Mat();
                 Mat Mask = new Mat();
 
-                PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints,FilterMatches? foundedMatch.FilteredMatchesList:foundedMatch.MatchesList, Mask);
+                PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList, Mask);
 
                 foundedMatch.Mask = Mask;
                 foundedMatch.PerspectiveMatrix = PerspectiveMatrix;
@@ -185,7 +193,7 @@ namespace Bakalárska_práca
             output.Save(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
 
             if (SaveInMatchNode)
-                SaveMatchString(foundedMatch,true);
+                SaveMatchString(foundedMatch, true);
 
             if (AddToList)
                 FoundedMatches.Add(foundedMatch);
@@ -210,12 +218,13 @@ namespace Bakalárska_práca
             }
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(Path.Combine(Path.GetFullPath(tempDirectory),leftImageName));
+            sb.AppendLine(Path.Combine(Path.GetFullPath(tempDirectory), leftImageName));
             sb.AppendLine(Path.Combine(Path.GetFullPath(tempDirectory), rightImageName));
             sb.AppendLine($"{(UseMask ? countMaskMatches : matchesList.Count)}");
-            for(int m = 0; m < matchesList.Count; m++) { 
-                if(!UseMask || descriptorsMatch.Mask.GetValue(0,m)>0)
-                sb.Append($"{matchesList[m][0].TrainIdx} ");
+            for (int m = 0; m < matchesList.Count; m++)
+            {
+                if (!UseMask || descriptorsMatch.Mask.GetValue(0, m) > 0)
+                    sb.Append($"{matchesList[m][0].TrainIdx} ");
             }
             sb.AppendLine();
             for (int m = 0; m < matchesList.Count; m++)
@@ -233,7 +242,7 @@ namespace Bakalárska_práca
 
             for (int i = 0; i < matchesArray.Length; i++)
             {
-                if(matchesArray[i].Length == 0) continue;
+                if (matchesArray[i].Length == 0) continue;
 
                 if (matchesArray[i][0].Distance < GetMaxPossibleDist())
                 {
@@ -247,9 +256,9 @@ namespace Bakalárska_práca
         private float GetMaxPossibleDist()
         {
             //return (ms_MIN_DIST + ((ms_MAX_DIST - ms_MIN_DIST)*0.5F));
-            return ((ms_MAX_DIST)*0.95f);
+            return ((ms_MAX_DIST) * 0.95f);
         }
-        
+
         private void FindMinMaxDistInMatches(MDMatch[][] matchesArray, ref float ms_MAX_DIST, ref float ms_MIN_DIST)
         {
             for (int i = 0; i < matchesArray.Length; i++)
@@ -268,14 +277,14 @@ namespace Bakalárska_práca
             }
         }
 
-        private void ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList=true, bool SaveOnDisk=true)
+        private void ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList = true, bool SaveOnDisk = true)
         {
             var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
             var descriptorNode = new DescriptorModel()
-                {
-                    Descriptors = computedDescriptor,
-                    KeyPoint = keypoint
-                };
+            {
+                Descriptors = computedDescriptor,
+                KeyPoint = keypoint
+            };
 
             if (AddToList)
                 ComputedDescriptors.Add(descriptorNode);
@@ -284,7 +293,7 @@ namespace Bakalárska_práca
                 SaveSiftFile(descriptorNode);
         }
 
-        private void SaveSiftFile(DescriptorModel Descriptor, bool SaveInTempDirectory= true, bool SaveInDescriptorNode = true )
+        private void SaveSiftFile(DescriptorModel Descriptor, bool SaveInTempDirectory = true, bool SaveInDescriptorNode = true)
         {
             var descriptor = Descriptor.Descriptors;
             var keyPoints = Descriptor.KeyPoint.DetectedKeyPoints;
@@ -306,22 +315,22 @@ namespace Bakalárska_práca
                 sb.AppendLine();
             }
 
-            if(SaveInTempDirectory)
-            File.WriteAllText(Path.Combine(tempDirectory, fileName), sb.ToString());
+            if (SaveInTempDirectory)
+                File.WriteAllText(Path.Combine(tempDirectory, fileName), sb.ToString());
 
             if (SaveInDescriptorNode)
                 Descriptor.FileFormatSIFT = sb.ToString();
         }
 
-        private void FindKeypoint(InputFileModel inputFile, IFeatureDetector detector, bool AddToList=true)
+        private void FindKeypoint(InputFileModel inputFile, IFeatureDetector detector, bool AddToList = true)
         {
             var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.fileInfo.FullName));
-            
+
             if (AddToList)
                 DetectedKeyPoints.Add(new KeyPointModel()
                 {
                     DetectedKeyPoints = new VectorOfKeyPoint(detectedKeyPoints),
-                    InputFile=inputFile
+                    InputFile = inputFile
                 }
                 );
         }
@@ -341,7 +350,7 @@ namespace Bakalárska_práca
             }
 
             Mat homography = CvInvoke.FindHomography(srcPoints, destPoints, Emgu.CV.CvEnum.HomographyMethod.Ransac, 10, Mask);
-            
+
             return homography;
         }
 
@@ -511,8 +520,8 @@ namespace Bakalárska_práca
         //    Features2DToolbox.DrawKeypoints(Image, keyPoints, OutputImage, new Bgr(0, 0, 255), Features2DToolbox.KeypointDrawType.DrawRichKeypoints);
         //    OutputImage.Save(Path.Combine(path, $"{v.Split('.')[0]}X.JPG"));
         //}
-        
 
-        
+
+
     }
 }

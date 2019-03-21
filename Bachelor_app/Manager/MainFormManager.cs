@@ -90,10 +90,49 @@ namespace Bachelor_app.Manager
         #endregion
 
         #region ListViewer
+        public void AddToListView(object sender, EventArgs e)
+        {
+            switch (_fileManager.ListViewerDisplay)
+            {
+                case EListViewGroup.BasicStack:
+                case EListViewGroup.LeftCameraStack:
+                case EListViewGroup.RightCameraStack:
+                    _fileManager.AddToListView(); break;
+                default: break;
+            }
+        }
+
         public void SetListViewerDisplay(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripComboBox;
             _fileManager.ListViewerDisplay = EnumExtension.ReturnEnumValue<EListViewGroup>(currentItem.SelectedItem.ToString());
+            _winForm.ListViews.ForEach(x => x.Visible = false);
+            _winForm.ListViews[(int)_fileManager.ListViewerDisplay].Visible = true;
+        }
+
+        public void RemoveFromListView()
+        {
+            switch (_fileManager.ListViewerDisplay)
+            {
+                case EListViewGroup.BasicStack:
+                case EListViewGroup.LeftCameraStack:
+                case EListViewGroup.RightCameraStack:
+                    _fileManager.RemoveFromListView(); break;
+                default: break;
+            }
+        }
+
+        public void RemoveAllFromListView()
+        {
+
+            switch (_fileManager.ListViewerDisplay)
+            {
+                case EListViewGroup.BasicStack:
+                case EListViewGroup.LeftCameraStack:
+                case EListViewGroup.RightCameraStack:
+                    _fileManager.RemoveAllFromListView(); break;
+                default: break;
+            }
         }
         #endregion
     }

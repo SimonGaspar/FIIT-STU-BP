@@ -25,6 +25,8 @@ namespace Bachelor_app.Model
         public List<InputFileModel> DrawnMatches { get; set; }
         public List<InputFileModel> DepthMap { get; set; }
 
+        public List<List<InputFileModel>> ListOfListInputFolder { get; set; }
+
         public ListViewerModel()
         {
             BasicStack = new List<InputFileModel>();
@@ -33,6 +35,14 @@ namespace Bachelor_app.Model
             DrawnKeypoint = new List<InputFileModel>();
             DrawnMatches = new List<InputFileModel>();
             DepthMap = new List<InputFileModel>();
+
+            ListOfListInputFolder = new List<List<InputFileModel>>();
+            ListOfListInputFolder.Add(BasicStack);
+            ListOfListInputFolder.Add(LeftCameraStack);
+            ListOfListInputFolder.Add(RightCameraStack);
+            ListOfListInputFolder.Add(DrawnKeypoint);
+            ListOfListInputFolder.Add(DrawnMatches);
+            ListOfListInputFolder.Add(DepthMap);
         }
     }
 }

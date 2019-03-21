@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Bakalárska_práca.Enumerate;
-using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
@@ -29,17 +27,7 @@ namespace Bakalárska_práca.Manager
         {
             if (item.Focused)
             {
-                List<InputFileModel> listOfInputFile = null;
-
-                switch (_fileManager.ListViewerDisplay)
-                {
-                    case EListViewGroup.BasicStack: listOfInputFile = _fileManager.listViewerModel.BasicStack; break;
-                    case EListViewGroup.LeftCameraStack: listOfInputFile = _fileManager.listViewerModel.LeftCameraStack; break;
-                    case EListViewGroup.RightCameraStack: listOfInputFile = _fileManager.listViewerModel.RightCameraStack; break;
-                    case EListViewGroup.DrawnKeyPoint: listOfInputFile = _fileManager.listViewerModel.DrawnKeypoint; break;
-                    case EListViewGroup.DrawnMatches: listOfInputFile = _fileManager.listViewerModel.DrawnMatches; break;
-                    case EListViewGroup.DepthMap: listOfInputFile = _fileManager.listViewerModel.DepthMap; break;
-                }
+                var listOfInputFile = _fileManager.listViewerModel.ListOfListInputFolder[(int)_fileManager.ListViewerDisplay];
                 _fileManager.listViewerModel._lastImage = new Image<Bgr, byte>((Bitmap)listOfInputFile.FirstOrDefault(x => x.fileInfo.Name == item.Text).image);
 
                 Display();

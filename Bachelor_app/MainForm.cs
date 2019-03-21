@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -17,6 +18,10 @@ namespace Bakalárska_práca
         private SfM structureFromMotionManager;
         private MainFormManager mainFormManager;
 
+
+        public List<ListView> ListViews = new List<ListView>();
+        public List<ImageList> ImageList = new List<ImageList>();
+
         public MainForm()
         {
             InitializeComponent();
@@ -28,7 +33,7 @@ namespace Bakalárska_práca
 
             structureFromMotionManager = new SfM(fileManager, displayManager);
 
-#if (!DEBUG)
+#if (DEBUG)
             InitializeStringForComponents();
 #endif
 
@@ -205,12 +210,7 @@ namespace Bakalárska_práca
             renderer.AddActor(actor);
             renderer.ResetCamera();
         }
-
-        private void Add_Click(object sender, EventArgs e)
-        {
-            fileManager.AddToListView();
-        }
-
+        
         private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
         {
 
@@ -270,7 +270,7 @@ namespace Bakalárska_práca
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-            fileManager.AddToListView();
+            mainFormManager.AddToListView(sender, e);
         }
 
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -281,6 +281,16 @@ namespace Bakalárska_práca
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             mainFormManager.ShowStereoVisionSettings();
+        }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            mainFormManager.RemoveFromListView();
+        }
+
+        private void toolStripButton9_Click(object sender, EventArgs e)
+        {
+            mainFormManager.RemoveAllFromListView();
         }
     }
 }
