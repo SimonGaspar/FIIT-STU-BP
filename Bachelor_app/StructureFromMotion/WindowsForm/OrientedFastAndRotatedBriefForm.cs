@@ -63,7 +63,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void ShowDefaultModelSetting()
         {
             this.comboBox1.SelectedIndex = (int)defaultModel.ScoreType;
-            this.textBox1.Text = defaultModel.EdgeThreshold.ToString();
+            this.textBox1.Text = defaultModel.NumberOfFeatures.ToString();
             this.textBox2.Text = defaultModel.ScaleFactor.ToString();
             this.textBox3.Text = defaultModel.NLevels.ToString();
             this.textBox4.Text = defaultModel.EdgeThreshold.ToString();

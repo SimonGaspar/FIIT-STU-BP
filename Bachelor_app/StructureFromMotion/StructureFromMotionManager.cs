@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Bakalárska_práca.Extension;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.Model;
@@ -77,30 +78,32 @@ namespace Bakalárska_práca
 
         public void ComputeSfM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
         {
-            foreach (var item in listOfInput)
-            {
-                FindKeypoint(item, detector);
-            }
+            //foreach (var item in listOfInput)
+            //{
+            //    FindKeypoint(item, detector);
+            //}
 
-            foreach (var item in DetectedKeyPoints)
-            {
-                ComputeDescriptor(item, descriptor);
-            }
+            //foreach (var item in DetectedKeyPoints)
+            //{
+            //    ComputeDescriptor(item, descriptor);
+            //}
 
             //for (int m = 0; m < ComputedDescriptors.Count; m++)
             //    for (int n = m + 1; n < ComputedDescriptors.Count; n++)
             //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
 
-            for (int m = 0; m < ComputedDescriptors.Count; m++)
-                for (int n = m - 2; n < m && n >= 0; n++)
-                    FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+            //for (int m = 2; m < ComputedDescriptors.Count; m++)
+            //    for (int n = m - 2; n < m && n >= 0; n++)
+            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
 
 
-            //Parallel.ForEach(listOfInput, x => FindKeypoint(x, detector));
-            //Parallel.ForEach(DetectedKeyPoints, x => ComputeDescriptor(x, descriptor));
+            Parallel.ForEach(listOfInput, x => FindKeypoint(x, detector));
+            Parallel.ForEach(DetectedKeyPoints, x => ComputeDescriptor(x, descriptor));
 
-            //for (int m = 0; m < ComputedDescriptors.Count; m++)
-            //    Parallel.For(m - 2, m, x => FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[x]));
+            for (int m = 2; m < ComputedDescriptors.Count; m++)
+                Parallel.For(m - 2, m, index => {
+                    FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[index]);
+                });
 
             WriteAllMatches(FoundedMatches);
             RunVisualSFM();
@@ -129,9 +132,11 @@ namespace Bakalárska_práca
             };
 
             var matches = new VectorOfVectorOfDMatch();
-            matcher.Add(leftDescriptor.Descriptors);
-            matcher.Match(rightDescriptor.Descriptors, matches);
-
+            lock (matcher)
+            {
+                matcher.Add(leftDescriptor.Descriptors);
+                matcher.Match(rightDescriptor.Descriptors, matches);
+            }
             MDMatch[][] matchesArray = matches.ToArrayOfArray();
             foundedMatch.MatchesList = matchesArray.ToList();
 

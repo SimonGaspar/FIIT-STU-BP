@@ -39,7 +39,7 @@ namespace Bakalárska_práca.Manager
                         var imageList = _winForm.ImageList[(int)ListViewerDisplay];
                         var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
                         
-                        AddInputFileToList(inputFile, listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay], imageList, listViewer); break;
+                        AddInputFileToList(inputFile, listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay], imageList, listViewer);
                     }
                 };
             }
