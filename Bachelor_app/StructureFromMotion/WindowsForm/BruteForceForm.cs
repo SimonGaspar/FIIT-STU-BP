@@ -23,22 +23,22 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             GetPropertiesAndSetModel();
         }
 
-        private void GetPropertiesAndSetModel()
-        {
-            var type =  Enum.GetValues(typeof(DistanceType)).Cast<DistanceType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
-
-            var model = new BruteForceModel()
-            {
-                Type=type,
-                CrossCheck=checkBox1.Checked
-            };
-
-            bruteForce.UpdateModel(model);
-        }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetPropertiesAndSetModel();
+        }
+
+        private void GetPropertiesAndSetModel()
+        {
+            var type = Enum.GetValues(typeof(DistanceType)).Cast<DistanceType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
+
+            var model = new BruteForceModel()
+            {
+                Type = type,
+                CrossCheck = checkBox1.Checked
+            };
+
+            bruteForce.UpdateModel(model);
         }
     }
 }

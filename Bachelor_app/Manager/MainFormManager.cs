@@ -197,6 +197,16 @@ namespace Bachelor_app.Manager
         {
             _sfmManager._matcher.ShowSettingForm();
         }
+
+        public void ShowFeatureDescriptorSettings(object sender, EventArgs e)
+        {
+            _sfmManager._descriptor.ShowSettingForm();
+        }
+
+        public void ShowFeatureDetectorSettings(object sender, EventArgs e)
+        {
+            _sfmManager._detector.ShowSettingForm();
+        }
         #endregion
     }
 }

@@ -155,6 +155,7 @@
     <Compile Include="StructureFromMotion\EFeaturesDescriptor.cs" />
     <Compile Include="StructureFromMotion\EFeaturesDetector.cs" />
     <Compile Include="StructureFromMotion\EFeaturesMatcher.cs" />
+    <Compile Include="StructureFromMotion\Model\OrientedFastAndRotatedBriefModel.cs" />
     <Compile Include="StructureFromMotion\StructureFromMotionManager.cs" />
     <Compile Include="StereoVision\EStereoCorrespondenceAlgorithm.cs" />
     <Compile Include="StereoVision\IStereoSolver.cs" />
@@ -224,6 +225,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StructureFromMotion\WindowsForm\BruteForceForm.resx">
       <DependentUpon>BruteForceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StructureFromMotion\WindowsForm\OrientedFastAndRotatedBriefForm.resx">
+      <DependentUpon>OrientedFastAndRotatedBriefForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config">
