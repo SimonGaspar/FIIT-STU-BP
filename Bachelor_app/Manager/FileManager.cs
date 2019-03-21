@@ -39,11 +39,11 @@ namespace Bakalárska_práca.Manager
                         switch (ListViewerDisplay)
                         {
                             case EListViewGroup.BasicStack:
-                                AddInputFileToList(inputFile, listViewerModel.BasicStack); break;
+                                AddInputFileToList(inputFile, listViewerModel.BasicStack, _winForm.ImageList0, _winForm.ListViewer0); break;
                             case EListViewGroup.LeftCameraStack:
-                                AddInputFileToList(inputFile, listViewerModel.LeftCameraStack); break;
+                                AddInputFileToList(inputFile, listViewerModel.LeftCameraStack, _winForm.ImageList1, _winForm.ListViewer1); break;
                             case EListViewGroup.RightCameraStack:
-                                AddInputFileToList(inputFile, listViewerModel.RightCameraStack); break;
+                                AddInputFileToList(inputFile, listViewerModel.RightCameraStack, _winForm.ImageList2, _winForm.ListViewer2); break;
                         }
 
                     }
@@ -51,20 +51,18 @@ namespace Bakalárska_práca.Manager
             }
         }
 
-        private void AddInputFileToList(InputFileModel inputFile, List<InputFileModel> listOfInput)
+        private void AddInputFileToList(InputFileModel inputFile, List<InputFileModel> listOfInput, ImageList imageList, ListView listView)
         {
-            _winForm.ImageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
+            imageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
 
-            var listItem = new ListViewItem(inputFile.fileInfo.Name, _winForm.ImageList.Images.IndexOfKey(inputFile.fileInfo.Name))
+            var listItem = new ListViewItem(inputFile.fileInfo.Name, imageList.Images.IndexOfKey(inputFile.fileInfo.Name))
             {
-                Group = _winForm.ListViewer.Groups[(int)ListViewerDisplay],
                 ImageKey = inputFile.fileInfo.Name
             };
-            listItem.Group = _winForm.ListViewer.Groups[(int)ListViewerDisplay];
 
             listOfInput.Add(inputFile);
 
-            _winForm.ListViewer.Items.Add(listItem);
+            listView.Items.Add(listItem);
         }
     }
 }

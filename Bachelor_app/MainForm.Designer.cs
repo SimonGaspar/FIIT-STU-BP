@@ -59,8 +59,12 @@ namespace Bakalárska_práca
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.ListViewer = new System.Windows.Forms.ListView();
-            this.ImageList = new System.Windows.Forms.ImageList(this.components);
+            this.ImageList0 = new System.Windows.Forms.ImageList(this.components);
+            this.ImageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.ImageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.ImageList3 = new System.Windows.Forms.ImageList(this.components);
+            this.ImageList4 = new System.Windows.Forms.ImageList(this.components);
+            this.ImageList5 = new System.Windows.Forms.ImageList(this.components);
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
@@ -93,6 +97,12 @@ namespace Bakalárska_práca
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
+            this.ListViewer0 = new System.Windows.Forms.ListView();
+            this.ListViewer1 = new System.Windows.Forms.ListView();
+            this.ListViewer2 = new System.Windows.Forms.ListView();
+            this.ListViewer3 = new System.Windows.Forms.ListView();
+            this.ListViewer4 = new System.Windows.Forms.ListView();
+            this.ListViewer5 = new System.Windows.Forms.ListView();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -329,51 +339,155 @@ namespace Bakalárska_práca
             // 
             this.tableLayoutPanel4.AutoSize = true;
             this.tableLayoutPanel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.61367F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.38633F));
-            this.tableLayoutPanel4.Controls.Add(this.ListViewer, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.richTextBox1, 1, 0);
+            this.tableLayoutPanel4.ColumnCount = 7;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Controls.Add(this.ListViewer0, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.ListViewer1, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.ListViewer2, 2, 0);
+            this.tableLayoutPanel4.Controls.Add(this.ListViewer3, 3, 0);
+            this.tableLayoutPanel4.Controls.Add(this.ListViewer4, 4, 0);
+            this.tableLayoutPanel4.Controls.Add(this.ListViewer5, 5, 0);
+            this.tableLayoutPanel4.Controls.Add(this.richTextBox1, 6, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 450);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 204F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1264, 204);
             this.tableLayoutPanel4.TabIndex = 4;
             this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
-            // ListViewer
+            // ListViewer0
             // 
-            this.ListViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            listViewGroup1.Header = "NoGroup";
-            listViewGroup1.Name = "NoGroup";
-            listViewGroup2.Header = "LeftGroup";
-            listViewGroup2.Name = "LeftGroup";
-            listViewGroup3.Header = "RightGroup";
-            listViewGroup3.Name = "RightGroup";
-            this.ListViewer.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3});
-            this.ListViewer.LargeImageList = this.ImageList;
-            this.ListViewer.Location = new System.Drawing.Point(0, 0);
-            this.ListViewer.Margin = new System.Windows.Forms.Padding(0);
-            this.ListViewer.Name = "ListViewer";
-            this.ListViewer.ShowItemToolTips = true;
-            this.ListViewer.Size = new System.Drawing.Size(841, 204);
-            this.ListViewer.SmallImageList = this.ImageList;
-            this.ListViewer.TabIndex = 1;
-            this.ListViewer.UseCompatibleStateImageBehavior = false;
-            this.ListViewer.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewer_ItemSelectionChanged);
+            this.ListViewer0.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListViewer0.LargeImageList = this.ImageList0;
+            this.ListViewer0.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer0.Margin = new System.Windows.Forms.Padding(0);
+            this.ListViewer0.Name = "ListViewer0";
+            this.ListViewer0.ShowItemToolTips = true;
+            this.ListViewer0.Size = new System.Drawing.Size(841, 204);
+            this.ListViewer0.SmallImageList = this.ImageList0;
+            this.ListViewer0.TabIndex = 1;
+            this.ListViewer0.UseCompatibleStateImageBehavior = false;
+            this.ListViewer0.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewer_ItemSelectionChanged);
             // 
-            // ImageList
+            // ListViewer1
             // 
-            this.ImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.ImageList.ImageSize = new System.Drawing.Size(128, 72);
-            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.ListViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListViewer1.LargeImageList = this.ImageList1;
+            this.ListViewer1.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer1.Margin = new System.Windows.Forms.Padding(0);
+            this.ListViewer1.Name = "ListViewer1";
+            this.ListViewer1.ShowItemToolTips = true;
+            this.ListViewer1.Size = new System.Drawing.Size(841, 204);
+            this.ListViewer1.SmallImageList = this.ImageList1;
+            this.ListViewer1.TabIndex = 2;
+            this.ListViewer1.UseCompatibleStateImageBehavior = false;
+            this.ListViewer1.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewer_ItemSelectionChanged);
+            this.ListViewer1.Visible = false;
+            // 
+            // ListViewer2
+            // 
+            this.ListViewer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListViewer2.LargeImageList = this.ImageList2;
+            this.ListViewer2.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer2.Margin = new System.Windows.Forms.Padding(0);
+            this.ListViewer2.Name = "ListViewer2";
+            this.ListViewer2.ShowItemToolTips = true;
+            this.ListViewer2.Size = new System.Drawing.Size(841, 204);
+            this.ListViewer2.SmallImageList = this.ImageList2;
+            this.ListViewer2.TabIndex = 2;
+            this.ListViewer2.UseCompatibleStateImageBehavior = false;
+            this.ListViewer2.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewer_ItemSelectionChanged);
+            this.ListViewer2.Visible = false;
+            // 
+            // ListViewer3
+            // 
+            this.ListViewer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListViewer3.LargeImageList = this.ImageList3;
+            this.ListViewer3.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer3.Margin = new System.Windows.Forms.Padding(0);
+            this.ListViewer3.Name = "ListViewer3";
+            this.ListViewer3.ShowItemToolTips = true;
+            this.ListViewer3.Size = new System.Drawing.Size(841, 204);
+            this.ListViewer3.SmallImageList = this.ImageList3;
+            this.ListViewer3.TabIndex = 3;
+            this.ListViewer3.UseCompatibleStateImageBehavior = false;
+            this.ListViewer3.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewer_ItemSelectionChanged);
+            this.ListViewer3.Visible = false;
+            // 
+            // ListViewer4
+            // 
+            this.ListViewer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListViewer4.LargeImageList = this.ImageList4;
+            this.ListViewer4.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer4.Margin = new System.Windows.Forms.Padding(0);
+            this.ListViewer4.Name = "ListViewer4";
+            this.ListViewer4.ShowItemToolTips = true;
+            this.ListViewer4.Size = new System.Drawing.Size(841, 204);
+            this.ListViewer4.SmallImageList = this.ImageList4;
+            this.ListViewer4.TabIndex = 4;
+            this.ListViewer4.UseCompatibleStateImageBehavior = false;
+            this.ListViewer4.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewer_ItemSelectionChanged);
+            this.ListViewer4.Visible = false;
+            // 
+            // ListViewer5
+            // 
+            this.ListViewer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ListViewer5.LargeImageList = this.ImageList5;
+            this.ListViewer5.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer5.Margin = new System.Windows.Forms.Padding(0);
+            this.ListViewer5.Name = "ListViewer5";
+            this.ListViewer5.ShowItemToolTips = true;
+            this.ListViewer5.Size = new System.Drawing.Size(841, 204);
+            this.ListViewer5.SmallImageList = this.ImageList5;
+            this.ListViewer5.TabIndex = 5;
+            this.ListViewer5.UseCompatibleStateImageBehavior = false;
+            this.ListViewer5.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ListViewer_ItemSelectionChanged);
+            this.ListViewer5.Visible = false;
+            // 
+            // ImageList0
+            // 
+            this.ImageList0.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ImageList0.ImageSize = new System.Drawing.Size(128, 72);
+            this.ImageList0.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // ImageList1
+            // 
+            this.ImageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ImageList1.ImageSize = new System.Drawing.Size(128, 72);
+            this.ImageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // ImageList2
+            // 
+            this.ImageList2.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ImageList2.ImageSize = new System.Drawing.Size(128, 72);
+            this.ImageList2.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // ImageList3
+            // 
+            this.ImageList3.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ImageList3.ImageSize = new System.Drawing.Size(128, 72);
+            this.ImageList3.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // ImageList4
+            // 
+            this.ImageList4.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ImageList4.ImageSize = new System.Drawing.Size(128, 72);
+            this.ImageList4.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // ImageList5
+            // 
+            this.ImageList5.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.ImageList5.ImageSize = new System.Drawing.Size(128, 72);
+            this.ImageList5.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // richTextBox1
             // 
@@ -689,6 +803,38 @@ namespace Bakalárska_práca
             this.toolStripButton9.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton9.Text = "toolStripButton9";
             // 
+            // ListViewer2
+            // 
+            this.ListViewer2.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer2.Name = "ListViewer2";
+            this.ListViewer2.Size = new System.Drawing.Size(121, 97);
+            this.ListViewer2.TabIndex = 0;
+            this.ListViewer2.UseCompatibleStateImageBehavior = false;
+            // 
+            // ListViewer3
+            // 
+            this.ListViewer3.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer3.Name = "ListViewer3";
+            this.ListViewer3.Size = new System.Drawing.Size(121, 97);
+            this.ListViewer3.TabIndex = 0;
+            this.ListViewer3.UseCompatibleStateImageBehavior = false;
+            // 
+            // ListViewer4
+            // 
+            this.ListViewer4.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer4.Name = "ListViewer4";
+            this.ListViewer4.Size = new System.Drawing.Size(121, 97);
+            this.ListViewer4.TabIndex = 0;
+            this.ListViewer4.UseCompatibleStateImageBehavior = false;
+            // 
+            // ListViewer5
+            // 
+            this.ListViewer5.Location = new System.Drawing.Point(0, 0);
+            this.ListViewer5.Name = "ListViewer5";
+            this.ListViewer5.Size = new System.Drawing.Size(121, 97);
+            this.ListViewer5.TabIndex = 0;
+            this.ListViewer5.UseCompatibleStateImageBehavior = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -758,10 +904,20 @@ namespace Bakalárska_práca
         public System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        public System.Windows.Forms.ListView ListViewer;
+        public System.Windows.Forms.ListView ListViewer0;
+        public System.Windows.Forms.ListView ListViewer1;
+        public System.Windows.Forms.ListView ListViewer2;
+        public System.Windows.Forms.ListView ListViewer3;
+        public System.Windows.Forms.ListView ListViewer4;
+        public System.Windows.Forms.ListView ListViewer5;
         public Emgu.CV.UI.ImageBox LeftViewBox;
         public Emgu.CV.UI.ImageBox RightViewBox;
-        public System.Windows.Forms.ImageList ImageList;
+        public System.Windows.Forms.ImageList ImageList0;
+        public System.Windows.Forms.ImageList ImageList1;
+        public System.Windows.Forms.ImageList ImageList2;
+        public System.Windows.Forms.ImageList ImageList3;
+        public System.Windows.Forms.ImageList ImageList4;
+        public System.Windows.Forms.ImageList ImageList5;
         public Kitware.VTK.RenderWindowControl renderWindowControl1;
         public Kitware.VTK.RenderWindowControl renderWindowControl2;
         private System.Windows.Forms.ToolStripMenuItem settingToolStripMenuItem;

@@ -38,6 +38,7 @@ namespace Bakalárska_práca.Manager
                     case EListViewGroup.RightCameraStack: listOfInputFile = _fileManager.listViewerModel.RightCameraStack; break;
                     case EListViewGroup.DrawnKeyPoint: listOfInputFile = _fileManager.listViewerModel.DrawnKeypoint; break;
                     case EListViewGroup.DrawnMatches: listOfInputFile = _fileManager.listViewerModel.DrawnMatches; break;
+                    case EListViewGroup.DepthMap: listOfInputFile = _fileManager.listViewerModel.DepthMap; break;
                 }
                 _fileManager.listViewerModel._lastImage = new Image<Bgr, byte>((Bitmap)listOfInputFile.FirstOrDefault(x => x.fileInfo.Name == item.Text).image);
 

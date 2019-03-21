@@ -7,6 +7,7 @@
         LeftCameraStack,
         RightCameraStack,
         DrawnKeyPoint,
-        DrawnMatches
+        DrawnMatches,
+        DepthMap
     }
 }

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bachelor_app.Extension;
 using Bakalárska_práca;
 using Bakalárska_práca.Enumerate;
-using Bakalárska_práca.Helper;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
 
@@ -43,7 +38,7 @@ namespace Bachelor_app.Manager
                 ChangeRenderer(LeftWindow, true);
             else
                 ChangeRenderer(LeftWindow, false);
-            
+
             _displayManager.Display();
         }
 
