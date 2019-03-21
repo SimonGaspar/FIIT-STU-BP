@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Bakalárska_práca.Model
 {
-    public class DescriptorsMatch
+    public class DescriptorsMatchModel
     {
-        public Descriptor LeftDescriptor;
-        public Descriptor RightDescriptor;
+        public DescriptorModel LeftDescriptor;
+        public DescriptorModel RightDescriptor;
         public List<MDMatch[]> MatchesList;
         public Mat PerspectiveMatrix;
         public Mat Mask;

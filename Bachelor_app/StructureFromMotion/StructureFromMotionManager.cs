@@ -36,9 +36,9 @@ namespace Bakalárska_práca
         public IFeatureMatcher _matcher;
         float ms_MAX_DIST = 0, ms_MIN_DIST = float.MaxValue;
 
-        private List<KeyPoint> DetectedKeyPoints;
-        private List<Descriptor> ComputedDescriptors;
-        private List<DescriptorsMatch> FoundedMatches;
+        private List<KeyPointModel> DetectedKeyPoints;
+        private List<DescriptorModel> ComputedDescriptors;
+        private List<DescriptorsMatchModel> FoundedMatches;
 
         private FileManager fileManager;
         private DisplayManager displayManager;
@@ -46,9 +46,9 @@ namespace Bakalárska_práca
         public SfM(FileManager fileManager, DisplayManager displayManager) {
 
             Directory.CreateDirectory(tempDirectory);
-            DetectedKeyPoints = new List<KeyPoint>();
-            ComputedDescriptors = new List<Descriptor>();
-            FoundedMatches = new List<DescriptorsMatch>();
+            DetectedKeyPoints = new List<KeyPointModel>();
+            ComputedDescriptors = new List<DescriptorModel>();
+            FoundedMatches = new List<DescriptorsMatchModel>();
 
             this.fileManager = fileManager;
             this.displayManager = displayManager;
@@ -98,7 +98,7 @@ namespace Bakalárska_práca
         }
 
         public void StartSFM() {
-            var list = fileManager.ListOfInputFile;
+            var list = fileManager.listViewerModel.BasicStack;
 
             foreach (var node in list)
             {
@@ -108,7 +108,7 @@ namespace Bakalárska_práca
             ComputeSfM(new OrientedFastAndRotatedBrief(), new OrientedFastAndRotatedBrief(), new BruteForce(), list);
         }
 
-        public void ComputeSfM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFile> listOfInput)
+        public void ComputeSfM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
         {
             foreach (var item in listOfInput)
             {
@@ -132,7 +132,7 @@ namespace Bakalárska_práca
             RunVisualSFM();
         }
 
-        private void WriteAllMatches(List<DescriptorsMatch> findedMatches)
+        private void WriteAllMatches(List<DescriptorsMatchModel> findedMatches)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -145,9 +145,9 @@ namespace Bakalárska_práca
             File.WriteAllText(Path.Combine(tempDirectory, matchFileName), sb.ToString());
         }
 
-        private void FindMatches(IFeatureMatcher matcher, Descriptor leftDescriptor, Descriptor rightDescriptor, bool AddToList=true, bool FilterMatches=true,bool ComputeHomography=true, bool SaveInMatchNode=true)
+        private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList=true, bool FilterMatches=true,bool ComputeHomography=true, bool SaveInMatchNode=true)
         {
-            var foundedMatch = new DescriptorsMatch() {
+            var foundedMatch = new DescriptorsMatchModel() {
                 FilteredMatch =FilterMatches,
                 LeftDescriptor = leftDescriptor,
                 RightDescriptor = rightDescriptor
@@ -191,7 +191,7 @@ namespace Bakalárska_práca
                 FoundedMatches.Add(foundedMatch);
         }
 
-        private void SaveMatchString(DescriptorsMatch descriptorsMatch, bool UseMask)
+        private void SaveMatchString(DescriptorsMatchModel descriptorsMatch, bool UseMask)
         {
             var leftImageName = descriptorsMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name;
             var rightImageName = descriptorsMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name;
@@ -268,10 +268,10 @@ namespace Bakalárska_práca
             }
         }
 
-        private void ComputeDescriptor(KeyPoint keypoint, IFeatureDescriptor descriptor, bool AddToList=true, bool SaveOnDisk=true)
+        private void ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList=true, bool SaveOnDisk=true)
         {
             var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
-            var descriptorNode = new Descriptor()
+            var descriptorNode = new DescriptorModel()
                 {
                     Descriptors = computedDescriptor,
                     KeyPoint = keypoint
@@ -284,7 +284,7 @@ namespace Bakalárska_práca
                 SaveSiftFile(descriptorNode);
         }
 
-        private void SaveSiftFile(Descriptor Descriptor, bool SaveInTempDirectory= true, bool SaveInDescriptorNode = true )
+        private void SaveSiftFile(DescriptorModel Descriptor, bool SaveInTempDirectory= true, bool SaveInDescriptorNode = true )
         {
             var descriptor = Descriptor.Descriptors;
             var keyPoints = Descriptor.KeyPoint.DetectedKeyPoints;
@@ -313,12 +313,12 @@ namespace Bakalárska_práca
                 Descriptor.FileFormatSIFT = sb.ToString();
         }
 
-        private void FindKeypoint(InputFile inputFile, IFeatureDetector detector, bool AddToList=true)
+        private void FindKeypoint(InputFileModel inputFile, IFeatureDetector detector, bool AddToList=true)
         {
             var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.fileInfo.FullName));
             
             if (AddToList)
-                DetectedKeyPoints.Add(new KeyPoint()
+                DetectedKeyPoints.Add(new KeyPointModel()
                 {
                     DetectedKeyPoints = new VectorOfKeyPoint(detectedKeyPoints),
                     InputFile=inputFile

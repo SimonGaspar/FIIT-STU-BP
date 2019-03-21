@@ -1,16 +1,13 @@
-﻿using Bakalárska_práca.Enumerate;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
 using Kitware.VTK;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Bakalárska_práca.Manager
 {
@@ -21,8 +18,6 @@ namespace Bakalárska_práca.Manager
 
         private FileManager _fileManager;
         private MainForm _winForm;
-        private Image<Bgr, Byte> _lastListViewerImage;
-        public Image<Bgr, Byte> _lastDepthMapImage { get; set; }
 
         public DisplayManager(MainForm WinForm, FileManager FileManager)
         {
@@ -34,19 +29,22 @@ namespace Bakalárska_práca.Manager
         {
             if (item.Focused)
             {
-                List<InputFile> listOfInputFile = null;
-                switch (item.Group.Name.ToUpper())
+                List<InputFileModel> listOfInputFile = null;
+
+                switch (_fileManager.ListViewerDisplay)
                 {
-                    case string noGroup when noGroup.Contains("NO"): listOfInputFile = _fileManager.ListOfInputFile; break;
-                    case string rightGroup when rightGroup.Contains("RIGHT"): listOfInputFile = _fileManager.ListOfInputFileForRight; break;
-                    case string leftGroup when leftGroup.Contains("LEFT"): listOfInputFile = _fileManager.ListOfInputFileForLeft; break;
+                    case EListViewGroup.BasicStack: listOfInputFile = _fileManager.listViewerModel.BasicStack; break;
+                    case EListViewGroup.LeftCameraStack: listOfInputFile = _fileManager.listViewerModel.LeftCameraStack; break;
+                    case EListViewGroup.RightCameraStack: listOfInputFile = _fileManager.listViewerModel.RightCameraStack; break;
+                    case EListViewGroup.DrawnKeyPoint: listOfInputFile = _fileManager.listViewerModel.DrawnKeypoint; break;
+                    case EListViewGroup.DrawnMatches: listOfInputFile = _fileManager.listViewerModel.DrawnMatches; break;
                 }
-                _lastListViewerImage = new Image<Bgr, byte>((Bitmap)listOfInputFile.FirstOrDefault(x => x.fileInfo.Name == item.Text).image);
+                _fileManager.listViewerModel._lastImage = new Image<Bgr, byte>((Bitmap)listOfInputFile.FirstOrDefault(x => x.fileInfo.Name == item.Text).image);
 
                 Display();
             }
         }
-        
+
         public void Display()
         {
             ShowItemOnView(_winForm.LeftViewBox, LeftViewWindowItem);
@@ -59,10 +57,10 @@ namespace Bakalárska_práca.Manager
         {
             switch (typeOfItem)
             {
-                case EDisplayItem.DepthMap: imageBox.Image = _lastDepthMapImage; break;
+                case EDisplayItem.DepthMap: imageBox.Image = _fileManager.listViewerModel._lastDepthMapImage; break;
                 case EDisplayItem.LeftCamera: break;
                 case EDisplayItem.RightCamera: break;
-                case EDisplayItem.ListViewer: imageBox.Image = _lastListViewerImage; break;
+                case EDisplayItem.Stack: imageBox.Image = _fileManager.listViewerModel._lastBasicStack; break;
             }
         }
 

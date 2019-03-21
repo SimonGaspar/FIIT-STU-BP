@@ -10,6 +10,6 @@ namespace Bakalárska_práca.StructureFromMotion
 {
     public interface IFeatureDescriptor
     {
-        Mat ComputeDescriptor(KeyPoint keyPoints);
+        Mat ComputeDescriptor(KeyPointModel keyPoints);
     }
 }

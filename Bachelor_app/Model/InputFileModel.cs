@@ -7,18 +7,18 @@ using Emgu.CV.Structure;
 
 namespace Bakalárska_práca.Model
 {
-    public class InputFile
+    public class InputFileModel
     {
         public FileInfo fileInfo { get; set; }
         public Image image { get; set; }
 
-        public InputFile(FileInfo fileInfo)
+        public InputFileModel(FileInfo fileInfo)
         {
             this.fileInfo = fileInfo;
             Initialize();
         }
 
-        public InputFile(string fileName)
+        public InputFileModel(string fileName)
         {
             this.fileInfo = new FileInfo(fileName);
             Initialize();

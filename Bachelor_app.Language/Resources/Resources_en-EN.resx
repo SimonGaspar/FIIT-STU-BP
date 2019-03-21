@@ -133,9 +133,9 @@
     <value>Left camera</value>
     <comment>EDisplayItem.LeftCamera</comment>
   </data>
-  <data name="ListViewer" xml:space="preserve">
-    <value>List viewer</value>
-    <comment>EDisplayItem.ListViewer</comment>
+  <data name="Stack" xml:space="preserve">
+    <value>Stack</value>
+    <comment>EDisplayItem.Stack</comment>
   </data>
   <data name="PointCloud" xml:space="preserve">
     <value>Point cloud</value>
@@ -144,9 +144,6 @@
   <data name="RightCamera" xml:space="preserve">
     <value>Right camera</value>
     <comment>EDisplayItem.RightCamera</comment>
-  </data>
-  <data name="StereoBlockMatching" xml:space="preserve">
-    <value>Stereo Block Matching</value>
   </data>
   <data name="StereoBM" xml:space="preserve">
     <value>Block matching</value>

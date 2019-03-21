@@ -32,11 +32,11 @@ namespace Bakalárska_práca.StereoVision
 
         public void ComputeStereoCorrespondence()
         {
-            for (int i = 0; i < _fileManager.ListOfInputFileForLeft.Count; i++)
+            for (int i = 0; i < _fileManager.listViewerModel.LeftCameraStack.Count; i++)
             {
-                var leftImage = _fileManager.ListOfInputFileForLeft[i];
-                var rightImage = _fileManager.ListOfInputFileForRight[i];
-                _displayManager._lastDepthMapImage = new Image<Bgr, byte>((Bitmap)StereoSolver.ComputeDepthMap(leftImage.image, rightImage.image));
+                var leftImage = _fileManager.listViewerModel.LeftCameraStack[i];
+                var rightImage = _fileManager.listViewerModel.RightCameraStack[i];
+                _fileManager.listViewerModel._lastDepthMapImage = new Image<Bgr, byte>((Bitmap)StereoSolver.ComputeDepthMap(leftImage.image, rightImage.image));
                 _displayManager.Display();
             }
         }

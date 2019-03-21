@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
+using Bachelor_app.Model;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Model;
 
@@ -8,9 +9,9 @@ namespace Bakalárska_práca.Manager
     public class FileManager
     {
         private MainForm _winForm;
-        public List<InputFile> ListOfInputFileForLeft = new List<InputFile>();
-        public List<InputFile> ListOfInputFileForRight = new List<InputFile>();
-        public List<InputFile> ListOfInputFile = new List<InputFile>();
+
+
+        public ListViewerModel listViewerModel = new ListViewerModel();
 
         public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.BasicStack;
 
@@ -34,15 +35,15 @@ namespace Bakalárska_práca.Manager
                 {
                     foreach (var fileName in ofd.FileNames)
                     {
-                        var inputFile = new InputFile(fileName);
+                        var inputFile = new InputFileModel(fileName);
                         switch (ListViewerDisplay)
                         {
                             case EListViewGroup.BasicStack:
-                                AddInputFileToList(inputFile, ListOfInputFile); break;
+                                AddInputFileToList(inputFile, listViewerModel.BasicStack); break;
                             case EListViewGroup.LeftCameraStack:
-                                AddInputFileToList(inputFile, ListOfInputFileForLeft); break;
+                                AddInputFileToList(inputFile, listViewerModel.LeftCameraStack); break;
                             case EListViewGroup.RightCameraStack:
-                                AddInputFileToList(inputFile, ListOfInputFileForRight); break;
+                                AddInputFileToList(inputFile, listViewerModel.RightCameraStack); break;
                         }
 
                     }
@@ -50,7 +51,7 @@ namespace Bakalárska_práca.Manager
             }
         }
 
-        private void AddInputFileToList(InputFile inputFile, List<InputFile> listOfInput)
+        private void AddInputFileToList(InputFileModel inputFile, List<InputFileModel> listOfInput)
         {
             _winForm.ImageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
 

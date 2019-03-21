@@ -15,7 +15,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
             _orb = new ORBDetector(200000);
         }
 
-        public Mat ComputeDescriptor(KeyPoint keyPoints)
+        public Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             Mat result = new Mat();
             Mat image = new Mat(keyPoints.InputFile.fileInfo.FullName);

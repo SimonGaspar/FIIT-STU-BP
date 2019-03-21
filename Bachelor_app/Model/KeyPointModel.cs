@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Bakalárska_práca.Model
 {
-    public class KeyPoint
+    public class KeyPointModel
     {
         public VectorOfKeyPoint DetectedKeyPoints;
-        public InputFile InputFile;
+        public InputFileModel InputFile;
 
     }
 }

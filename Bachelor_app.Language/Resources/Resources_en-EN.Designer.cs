@@ -151,15 +151,6 @@ namespace Bachelor_app.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List viewer.
-        /// </summary>
-        public static string ListViewer {
-            get {
-                return ResourceManager.GetString("ListViewer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Point cloud.
         /// </summary>
         public static string PointCloud {
@@ -187,11 +178,11 @@ namespace Bachelor_app.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stereo Block Matching.
+        ///   Looks up a localized string similar to Stack.
         /// </summary>
-        public static string StereoBlockMatching {
+        public static string Stack {
             get {
-                return ResourceManager.GetString("StereoBlockMatching", resourceCulture);
+                return ResourceManager.GetString("Stack", resourceCulture);
             }
         }
         

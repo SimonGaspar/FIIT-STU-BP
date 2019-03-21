@@ -3,12 +3,12 @@
     // Check Resources for string value
     public enum EDisplayItem
     {
-        ListViewer,
+        Stack,
         DepthMap,
         LeftCamera,
         RightCamera,
         PointCloud,
         KeyPoints,
-        DescriptorsMatches
+        DescriptorsMatches,
     }
 }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Bakalárska_práca.Model
 {
-    public class Descriptor
+    public class DescriptorModel
     {
-        public KeyPoint KeyPoint;
+        public KeyPointModel KeyPoint;
         public Mat Descriptors;
         public string FileFormatSIFT;
     }
