@@ -11,56 +11,13 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
     public partial class OrientedFastAndRotatedBriefForm : Form
     {
         OrientedFastAndRotatedBrief orb;
+        public OrientedFastAndRotatedBriefModel defaultModel = new OrientedFastAndRotatedBriefModel();
+
         public OrientedFastAndRotatedBriefForm(OrientedFastAndRotatedBrief orientedFastAndRotatedBrief)
         {
             orb = orientedFastAndRotatedBrief;
             InitializeComponent();
             InitializeStringForComponents();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void textBox7_TextChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void textBox8_TextChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
         }
 
         private void GetPropertiesAndSetModel()
@@ -84,12 +41,41 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                     ScoreType = type
                 };
                 ConversionOK = true;
+
+                if (ConversionOK)
+                    orb.UpdateModel(model);
+
+                this.Close();
+
             }
-            catch (Exception e) { }
+            catch (Exception e)
+            {
 
-            if (ConversionOK)
-                orb.UpdateModel(model);
+            }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ShowDefaultModelSetting();
+        }
+
+        private void ShowDefaultModelSetting()
+        {
+            this.comboBox1.SelectedIndex = (int)defaultModel.ScoreType;
+            this.textBox1.Text = defaultModel.EdgeThreshold.ToString();
+            this.textBox2.Text = defaultModel.ScaleFactor.ToString();
+            this.textBox3.Text = defaultModel.NLevels.ToString();
+            this.textBox4.Text = defaultModel.EdgeThreshold.ToString();
+            this.textBox5.Text = defaultModel.firstLevel.ToString();
+            this.textBox6.Text = defaultModel.WTK_A.ToString();
+            this.textBox7.Text = defaultModel.PatchSize.ToString();
+            this.textBox8.Text = defaultModel.FastThreshold.ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GetPropertiesAndSetModel();
         }
     }
 }
