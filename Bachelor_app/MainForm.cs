@@ -28,10 +28,12 @@ namespace Bakalárska_práca
 
             fileManager = new FileManager(this);
             displayManager = new DisplayManager(this, fileManager);
-            stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
-            mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager);
 
+            stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
             structureFromMotionManager = new SfM(fileManager, displayManager);
+
+            mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager);
+
 
 #if (DEBUG)
             InitializeStringForComponents();
@@ -210,7 +212,7 @@ namespace Bakalárska_práca
             renderer.AddActor(actor);
             renderer.ResetCamera();
         }
-        
+
         private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
         {
 
@@ -230,7 +232,7 @@ namespace Bakalárska_práca
         {
             //menuManager.MenuSetListViewerSetting(sender, e);
         }
-        
+
 
         private void ComputeStereo_Click(object sender, EventArgs e)
         {
@@ -291,6 +293,32 @@ namespace Bakalárska_práca
         private void toolStripButton9_Click(object sender, EventArgs e)
         {
             mainFormManager.RemoveAllFromListView();
+        }
+
+        private void toolStripButton10_Click(object sender, EventArgs e)
+        {
+            mainFormManager.StartSfM();
+        }
+
+        private void toolStripComboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            mainFormManager.SetFeatureDetector(sender, e);
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            mainFormManager.ShowFeatureMatcherSettings(sender, e);
+        }
+
+        private void toolStripComboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetFeatureDescriptor(sender, e);
+        }
+
+        private void toolStripComboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetFeatureMatcher(sender, e);
         }
     }
 }

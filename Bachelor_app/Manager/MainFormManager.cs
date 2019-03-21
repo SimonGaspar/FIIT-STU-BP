@@ -5,6 +5,9 @@ using Bakalárska_práca;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
+using Bakalárska_práca.StructureFromMotion;
+using Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription;
+using Bakalárska_práca.StructureFromMotion.FeatureMatcher;
 
 namespace Bachelor_app.Manager
 {
@@ -14,13 +17,15 @@ namespace Bachelor_app.Manager
         private DisplayManager _displayManager;
         private FileManager _fileManager;
         private StereoVisionManager _stereoVisionManager;
+        private SfM _sfmManager;
 
-        public MainFormManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager)
+        public MainFormManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager, SfM sfmManager)
         {
             this._winForm = WinForm;
             this._displayManager = displayManager;
             this._fileManager = fileManager;
             this._stereoVisionManager = stereoVisionManager;
+            this._sfmManager = sfmManager;
         }
 
         #region Display views in WinForm
@@ -133,6 +138,64 @@ namespace Bachelor_app.Manager
                     _fileManager.RemoveAllFromListView(); break;
                 default: break;
             }
+        }
+        #endregion
+
+        #region SfM
+
+        public void StartSfM()
+        {
+            _sfmManager.StartSFM();
+        }
+
+        public void SetFeatureDetector(object sender, EventArgs e)
+        {
+            var currentItem = sender as ToolStripComboBox;
+            var enumItem = EnumExtension.ReturnEnumValue<EFeaturesDetector>(currentItem.SelectedItem.ToString());
+
+            IFeatureDetector tempItem = null;
+
+            switch (enumItem)
+            {
+                case EFeaturesDetector.ORB: tempItem = new OrientedFastAndRotatedBrief(); break;
+            }
+
+            _sfmManager._detector = tempItem;
+        }
+
+        public void SetFeatureDescriptor(object sender, EventArgs e)
+        {
+            var currentItem = sender as ToolStripComboBox;
+            var enumItem = EnumExtension.ReturnEnumValue<EFeaturesDescriptor>(currentItem.SelectedItem.ToString());
+
+            IFeatureDescriptor tempItem = null;
+
+            switch (enumItem)
+            {
+                case EFeaturesDescriptor.ORB: tempItem = new OrientedFastAndRotatedBrief(); break;
+            }
+
+            _sfmManager._descriptor = tempItem;
+        }
+
+        public void SetFeatureMatcher(object sender, EventArgs e)
+        {
+            var currentItem = sender as ToolStripComboBox;
+            var enumItem = EnumExtension.ReturnEnumValue<EFeaturesMatcher>(currentItem.SelectedItem.ToString());
+
+            IFeatureMatcher tempItem = null;
+
+            switch (enumItem)
+            {
+                case EFeaturesMatcher.BruteForce: tempItem = new BruteForce(); break;
+            }
+
+            _sfmManager._matcher = tempItem;
+        }
+
+        public void ShowFeatureMatcherSettings(object sender, EventArgs e)
+        {
+            _sfmManager._matcher.ShowSettingForm();
         }
         #endregion
     }

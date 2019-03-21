@@ -181,4 +181,12 @@
     <value>Semi-global block matching</value>
     <comment>EStereoCorrespondenceAlgorithm.StereoSGBM</comment>
   </data>
+  <data name="BruteForce" xml:space="preserve">
+    <value>Brute force</value>
+    <comment>EFeatureMatcher.BruteForce</comment>
+  </data>
+  <data name="ORB" xml:space="preserve">
+    <value>Oriented FAST and Rotated BRIEF</value>
+    <comment>EFeatureDescriptor.ORB, EFeatureDetector.ORB</comment>
+  </data>
 </root>

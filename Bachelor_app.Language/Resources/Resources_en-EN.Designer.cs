@@ -70,6 +70,15 @@ namespace Bachelor_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Brute force.
+        /// </summary>
+        public static string BruteForce {
+            get {
+                return ResourceManager.GetString("BruteForce", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Block matching with CUDA.
         /// </summary>
         public static string CudaStereoBM {
@@ -147,6 +156,15 @@ namespace Bachelor_app.Resources {
         public static string LeftCameraStack {
             get {
                 return ResourceManager.GetString("LeftCameraStack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oriented FAST and Rotated BRIEF.
+        /// </summary>
+        public static string ORB {
+            get {
+                return ResourceManager.GetString("ORB", resourceCulture);
             }
         }
         

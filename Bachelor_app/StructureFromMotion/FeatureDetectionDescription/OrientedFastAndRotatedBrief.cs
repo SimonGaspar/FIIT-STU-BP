@@ -30,5 +30,15 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
 
             return result;
         }
+
+        public void ShowSettingForm()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void UpdateModel<T>(T model)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -12,5 +12,8 @@ namespace Bakalárska_práca.StructureFromMotion
     {
         void Add(Mat Descriptor);
         void Match(Mat Descriptor, VectorOfVectorOfDMatch matches);
+
+        void UpdateModel<T>(T model);
+        void ShowSettingForm();
     }
 }
