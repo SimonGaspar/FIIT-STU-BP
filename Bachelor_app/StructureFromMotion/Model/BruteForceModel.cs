@@ -9,7 +9,7 @@ namespace Bachelor_app.StructureFromMotion
 {
     public class BruteForceModel
     {
-        public DistanceType Type { get; set; }
-        public bool CrossCheck { get; set; }
+        public DistanceType Type { get; set; } = DistanceType.Hamming2;
+        public bool CrossCheck { get; set; } = true;
     }
 }

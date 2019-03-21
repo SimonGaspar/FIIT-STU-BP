@@ -10,22 +10,14 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
     {
 
         BruteForce bruteForce;
+        BruteForceModel defaultModel = new BruteForceModel();
+
         public BruteForceForm(BruteForce bruteForce)
         {
             this.bruteForce = bruteForce;
 
             InitializeComponent();
             InitializeStringForComponents();
-        }
-
-        private void checkBox1_CheckedChanged(object sender, System.EventArgs e)
-        {
-            GetPropertiesAndSetModel();
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GetPropertiesAndSetModel();
         }
 
         private void GetPropertiesAndSetModel()
@@ -39,6 +31,23 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             };
 
             bruteForce.UpdateModel(model);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GetPropertiesAndSetModel();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ShowDefaultModelSetting();
+        }
+
+        private void ShowDefaultModelSetting()
+        {
+            this.comboBox1.SelectedIndex = this.comboBox1.Items.Count-1;
+            this.checkBox1.Checked = defaultModel.CrossCheck;
+
         }
     }
 }
