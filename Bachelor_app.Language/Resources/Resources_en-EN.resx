@@ -149,7 +149,8 @@
     <value>Stereo Block Matching</value>
   </data>
   <data name="StereoBM" xml:space="preserve">
-    <value>StereoBM</value>
+    <value>Block matching</value>
+    <comment>EStereoCorrespondenceAlgorithm.StereoBM</comment>
   </data>
   <data name="LeftCameraStack" xml:space="preserve">
     <value>Stack for left camera</value>
@@ -170,5 +171,17 @@
   <data name="DrawnMatches" xml:space="preserve">
     <value>Computed descriptor matches</value>
     <comment>EListViewGroup.DrawnMatches</comment>
+  </data>
+  <data name="CudaStereoBM" xml:space="preserve">
+    <value>Block matching with CUDA</value>
+    <comment>EStereoCorrespondenceAlgorithm.CudaStereoBM</comment>
+  </data>
+  <data name="CudaStereoConstantSpaceBP" xml:space="preserve">
+    <value>Belief propagation with CUDA</value>
+    <comment>EStereoCorrespondenceAlgorithm.CudaStereoConstantSpaceBP</comment>
+  </data>
+  <data name="StereoSGBM" xml:space="preserve">
+    <value>Semi-global block matching</value>
+    <comment>EStereoCorrespondenceAlgorithm.StereoSGBM</comment>
   </data>
 </root>

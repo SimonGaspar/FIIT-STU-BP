@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Bakalárska_práca.StereoVision
 {
+
+    // Check Resources for string value
     public enum EStereoCorrespondenceAlgorithm
     {
         StereoBM,

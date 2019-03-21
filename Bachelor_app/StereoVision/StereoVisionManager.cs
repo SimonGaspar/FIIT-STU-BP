@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Bakalárska_práca.Helper;
+﻿using System.Drawing;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision.StereoCorrespondence;
 using Emgu.CV;
@@ -21,16 +18,14 @@ namespace Bakalárska_práca.StereoVision
             this._displayManager = displayManager;
         }
 
-        public void SetStereoCorrespondenceAlgorithm(object sender, EventArgs e)
+        public void SetStereoCorrespondenceAlgorithm(EStereoCorrespondenceAlgorithm item)
         {
-            MenuHelper.OnlyOneCheck(sender, e);
-            var currentItem = sender as ToolStripMenuItem;
-            switch (currentItem.Name.ToUpper())
+            switch (item)
             {
-                case string cudaStereoBM when cudaStereoBM.Contains(nameof(EStereoCorrespondenceAlgorithm.CudaStereoBM).ToUpper()): StereoSolver = new CudaStereoBlockMatching(); break;
-                case string stereoBM when stereoBM.Contains(nameof(EStereoCorrespondenceAlgorithm.StereoBM).ToUpper()): StereoSolver = new StereoBlockMatching(); break;
-                case string stereoSGBM when stereoSGBM.Contains(nameof(EStereoCorrespondenceAlgorithm.StereoSGBM).ToUpper()): StereoSolver = new StereoSemiGlobalBlockMatching(); break;
-                case string cudaStereoConstantSpaceBP when cudaStereoConstantSpaceBP.Contains(nameof(EStereoCorrespondenceAlgorithm.CudaStereoConstantSpaceBP).ToUpper()): StereoSolver = new CudaStereoConstantSpaceBeliefPropagation(); break;
+                case EStereoCorrespondenceAlgorithm.CudaStereoBM: StereoSolver = new CudaStereoBlockMatching(); break;
+                case EStereoCorrespondenceAlgorithm.StereoBM: StereoSolver = new StereoBlockMatching(); break;
+                case EStereoCorrespondenceAlgorithm.StereoSGBM: StereoSolver = new StereoSemiGlobalBlockMatching(); break;
+                case EStereoCorrespondenceAlgorithm.CudaStereoConstantSpaceBP: StereoSolver = new CudaStereoConstantSpaceBeliefPropagation(); break;
 
             }
         }

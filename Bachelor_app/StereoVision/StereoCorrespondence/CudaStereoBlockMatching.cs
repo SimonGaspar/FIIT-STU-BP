@@ -14,7 +14,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 
         public CudaStereoBlockMatching()
         {
-            _cudaStereoBM = new CudaStereoBM(model.Disparity, model.BlockSize);
+            //_cudaStereoBM = new CudaStereoBM(model.Disparity, model.BlockSize);
         }
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)

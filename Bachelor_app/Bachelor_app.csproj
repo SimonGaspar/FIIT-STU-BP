@@ -232,6 +232,12 @@
     <Content Include="CUDA_EULA.txt" />
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\Settings_Dave-Gandy.png" />
+    <None Include="Resources\RightArrow_Lyolya.png" />
+    <None Include="Resources\RemoveImage_Srip.png" />
+    <None Include="Resources\LeftArrow_Lyolya.png" />
+    <None Include="Resources\Delete_Alfredo-Hernandez.png" />
+    <None Include="Resources\AddImage_Swifticon.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

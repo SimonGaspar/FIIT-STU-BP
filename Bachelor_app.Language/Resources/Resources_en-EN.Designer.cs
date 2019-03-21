@@ -70,6 +70,24 @@ namespace Bachelor_app.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Block matching with CUDA.
+        /// </summary>
+        public static string CudaStereoBM {
+            get {
+                return ResourceManager.GetString("CudaStereoBM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Belief propagation with CUDA.
+        /// </summary>
+        public static string CudaStereoConstantSpaceBP {
+            get {
+                return ResourceManager.GetString("CudaStereoConstantSpaceBP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Depth map.
         /// </summary>
         public static string DepthMap {
@@ -178,11 +196,20 @@ namespace Bachelor_app.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to StereoBM.
+        ///   Looks up a localized string similar to Block matching.
         /// </summary>
         public static string StereoBM {
             get {
                 return ResourceManager.GetString("StereoBM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Semi-global block matching.
+        /// </summary>
+        public static string StereoSGBM {
+            get {
+                return ResourceManager.GetString("StereoSGBM", resourceCulture);
             }
         }
     }

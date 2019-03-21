@@ -14,7 +14,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 
         public StereoSemiGlobalBlockMatching()
         {
-            _stereoSGBM = new StereoSGBM(model.MinDispatiries, model.Disparity, model.BlockSize);
+            //_stereoSGBM = new StereoSGBM(model.MinDispatiries, model.Disparity, model.BlockSize);
         }
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)

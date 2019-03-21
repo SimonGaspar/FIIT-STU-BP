@@ -16,7 +16,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 
         public CudaStereoConstantSpaceBeliefPropagation()
         {
-            _cudaStereoConstantSpaceBP = new CudaStereoConstantSpaceBP(model.Disparity, model.Iteration, model.Level, model.Plane);
+            //_cudaStereoConstantSpaceBP = new CudaStereoConstantSpaceBP(model.Disparity, model.Iteration, model.Level, model.Plane);
         }
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)

@@ -28,7 +28,7 @@ namespace Bakalárska_práca
 
             structureFromMotionManager = new SfM(fileManager, displayManager);
 
-#if (DEBUG)
+#if (!DEBUG)
             InitializeStringForComponents();
 #endif
 
@@ -230,11 +230,7 @@ namespace Bakalárska_práca
         {
             //menuManager.MenuSetListViewerSetting(sender, e);
         }
-
-        private void stereoCorrespondenceToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            stereoVisionManager.SetStereoCorrespondenceAlgorithm(sender, e);
-        }
+        
 
         private void ComputeStereo_Click(object sender, EventArgs e)
         {
@@ -259,7 +255,7 @@ namespace Bakalárska_práca
 
         private void toolStripComboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mainFormManager.SetDisplaySetting(sender, e,true);
+            mainFormManager.SetDisplaySetting(sender, e, true);
         }
 
         private void toolStripComboBox6_SelectedIndexChanged(object sender, EventArgs e)
@@ -275,6 +271,16 @@ namespace Bakalárska_práca
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
             fileManager.AddToListView();
+        }
+
+        private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetStereoVisionTypeAlgorithm(sender, e);
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            mainFormManager.ShowStereoVisionSettings();
         }
     }
 }

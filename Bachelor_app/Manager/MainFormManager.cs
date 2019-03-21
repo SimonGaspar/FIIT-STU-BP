@@ -27,13 +27,14 @@ namespace Bachelor_app.Manager
             this._fileManager = fileManager;
             this._stereoVisionManager = stereoVisionManager;
         }
-        
+
         public void SetListViewerDisplay(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripComboBox;
             _fileManager.ListViewerDisplay = EnumExtension.ReturnEnumValue<EListViewGroup>(currentItem.SelectedItem.ToString());
         }
 
+        #region Display views in WinForm
         public void SetDisplaySetting(object sender, EventArgs e, bool LeftWindow)
         {
             var currentItem = sender as ToolStripComboBox;
@@ -81,5 +82,22 @@ namespace Bachelor_app.Manager
                 }
             }
         }
+        #endregion
+
+        #region StereoVisionManager
+        public void SetStereoVisionTypeAlgorithm(object sender, EventArgs e)
+        {
+            var currentItem = sender as ToolStripComboBox;
+            var enumItem = EnumExtension.ReturnEnumValue<EStereoCorrespondenceAlgorithm>(currentItem.SelectedItem.ToString());
+
+            _stereoVisionManager.SetStereoCorrespondenceAlgorithm(enumItem);
+        }
+
+        public void ShowStereoVisionSettings()
+        {
+
+            _stereoVisionManager.ShowSettingForStereoSolver();
+        }
+        #endregion
     }
 }
