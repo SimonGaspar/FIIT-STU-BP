@@ -10,11 +10,10 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
     public class CudaStereoBlockMatching : StereoBlockMatching, IStereoSolver
     {
         private CudaStereoBM _cudaStereoBM;
-        public new CudaStereoBlockMatchingModel model = new CudaStereoBlockMatchingModel() { Disparity = 64, BlockSize = 5 };
+        public new CudaStereoBlockMatchingModel model;
 
         public CudaStereoBlockMatching()
         {
-            //_cudaStereoBM = new CudaStereoBM(model.Disparity, model.BlockSize);
         }
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)

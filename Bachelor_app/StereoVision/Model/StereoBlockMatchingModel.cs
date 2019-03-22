@@ -8,7 +8,7 @@ namespace Bakalárska_práca.StereoVision
 {
     public class StereoBlockMatchingModel
     {
-        public int Disparity { get; set; }
-        public int BlockSize { get; set; }
+        public int Disparity { get; set; } = 16;
+        public int BlockSize { get; set; } = 15;
     }
 }

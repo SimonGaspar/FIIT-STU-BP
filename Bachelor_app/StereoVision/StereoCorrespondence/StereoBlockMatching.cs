@@ -7,13 +7,12 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
     public class StereoBlockMatching : AbstractStereoSolver, IStereoSolver
     {
-        public StereoBlockMatchingModel model = new StereoBlockMatchingModel() { Disparity = 16, BlockSize = 15 };
+        public StereoBlockMatchingModel model;
         private StereoBM _stereoBM;
         protected StereoBMForm _windowsForm;
 
         public StereoBlockMatching()
         {
-            //_stereoBM = new StereoBM(model.Disparity, model.BlockSize);
         }
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
