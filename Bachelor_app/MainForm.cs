@@ -222,18 +222,7 @@ namespace Bakalárska_práca
         {
             displayManager.DisplayImageFromListView(e.Item);
         }
-
-        private void DisplayToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //menuManager.MenuSetDisplaySetting(sender, e);
-        }
-
-        private void ListViewerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //menuManager.MenuSetListViewerSetting(sender, e);
-        }
-
-
+        
         private void ComputeStereo_Click(object sender, EventArgs e)
         {
             stereoVisionManager.ComputeStereoCorrespondence();

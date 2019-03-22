@@ -11,11 +11,12 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
     {
         ORBDetector _orb;
         private OrientedFastAndRotatedBriefForm _windowsForm;
-        private OrientedFastAndRotatedBriefModel model;
+        private OrientedFastAndRotatedBriefModel model = new OrientedFastAndRotatedBriefModel();
 
         public OrientedFastAndRotatedBrief()
         {
-            //_orb = new ORBDetector(200000);
+            model.NumberOfFeatures = 200000;
+            UpdateModel(model);
         }
 
         public Mat ComputeDescriptor(KeyPointModel keyPoints)

@@ -18,10 +18,6 @@ namespace Bakalárska_práca
 {
     public class SfM
     {
-        const string leftImageName = "100_7100";
-        const string centerImageName = "100_7102";
-        const string rightImageName = "100_7104";
-
         const string path = @"C:\Users\Notebook\Desktop\VisualSFM_windows_cuda_64bit\Example\images";
         const string pathVisualSFM = @"C:\Users\Notebook\Desktop\VisualSFM_windows_cuda_64bit";
 
@@ -39,6 +35,8 @@ namespace Bakalárska_práca
 
         private FileManager fileManager;
         private DisplayManager displayManager;
+
+        private static object locker = new object();
 
         public SfM(FileManager fileManager, DisplayManager displayManager)
         {
@@ -101,7 +99,8 @@ namespace Bakalárska_práca
             Parallel.ForEach(DetectedKeyPoints, x => ComputeDescriptor(x, descriptor));
 
             for (int m = 2; m < ComputedDescriptors.Count; m++)
-                Parallel.For(m - 2, m, index => {
+                Parallel.For(m - 2, m, index =>
+                {
                     FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[index]);
                 });
 
@@ -132,7 +131,7 @@ namespace Bakalárska_práca
             };
 
             var matches = new VectorOfVectorOfDMatch();
-            lock (matcher)
+            lock (locker)
             {
                 matcher.Add(leftDescriptor.Descriptors);
                 matcher.Match(rightDescriptor.Descriptors, matches);
@@ -152,17 +151,23 @@ namespace Bakalárska_práca
                 var PerspectiveMatrix = new Mat();
                 Mat Mask = new Mat();
 
-                PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList, Mask);
+                lock (locker)
+                {
+                    PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList, Mask);
+                }
 
                 foundedMatch.Mask = Mask;
                 foundedMatch.PerspectiveMatrix = PerspectiveMatrix;
             }
 
             // Save drawing image
-            Mat output = new Mat();
-            Directory.CreateDirectory($@"{tempDirectory}\DrawMatches");
-            Features2DToolbox.DrawMatches(new Mat(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(foundedMatch.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), foundedMatch.Mask);
-            output.Save(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
+            lock (locker)
+            {
+                Mat output = new Mat();
+                Directory.CreateDirectory($@"{tempDirectory}\DrawMatches");
+                Features2DToolbox.DrawMatches(new Mat(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(foundedMatch.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), foundedMatch.Mask);
+                output.Save(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
+            }
 
             if (SaveInMatchNode)
                 SaveMatchString(foundedMatch, true);

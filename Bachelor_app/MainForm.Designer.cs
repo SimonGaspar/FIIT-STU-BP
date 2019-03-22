@@ -118,8 +118,6 @@ namespace Bakalárska_práca
             this.toolStrip4.SuspendLayout();
             this.toolStrip5.SuspendLayout();
             this.SuspendLayout();
-            this.renderWindowControl1 = new Kitware.VTK.RenderWindowControl();
-            this.renderWindowControl2 = new Kitware.VTK.RenderWindowControl();
             // 
             // tableLayoutPanel1
             // 
@@ -148,7 +146,7 @@ namespace Bakalárska_práca
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.330688F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.0062F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.330688F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1685, 838);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1264, 681);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // menuStrip1
@@ -162,33 +160,33 @@ namespace Bakalárska_práca
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
-            this.menuStrip1.Size = new System.Drawing.Size(1685, 27);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.menuStrip1.Size = new System.Drawing.Size(1264, 22);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(62, 27);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 22);
             this.homeToolStripMenuItem.Text = "Home";
             // 
             // inputToolStripMenuItem
             // 
             this.inputToolStripMenuItem.Name = "inputToolStripMenuItem";
-            this.inputToolStripMenuItem.Size = new System.Drawing.Size(55, 27);
+            this.inputToolStripMenuItem.Size = new System.Drawing.Size(47, 22);
             this.inputToolStripMenuItem.Text = "Input";
             // 
             // settingToolStripMenuItem
             // 
             this.settingToolStripMenuItem.Name = "settingToolStripMenuItem";
-            this.settingToolStripMenuItem.Size = new System.Drawing.Size(68, 27);
+            this.settingToolStripMenuItem.Size = new System.Drawing.Size(56, 22);
             this.settingToolStripMenuItem.Text = "Setting";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(53, 27);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // toolStrip1
@@ -204,10 +202,10 @@ namespace Bakalárska_práca
             this.toolStripButton4,
             this.toolStripSeparator7,
             this.toolStripButton11});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 27);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 22);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip1.Size = new System.Drawing.Size(1685, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1264, 22);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -216,19 +214,19 @@ namespace Bakalárska_práca
             this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripLabel1.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(99, 27);
+            this.toolStripLabel1.Size = new System.Drawing.Size(80, 22);
             this.toolStripLabel1.Text = "Stereo vision";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 22);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(76, 27);
+            this.toolStripLabel2.Size = new System.Drawing.Size(61, 22);
             this.toolStripLabel2.Text = "Algorithm";
             // 
             // toolStripComboBox1
@@ -236,7 +234,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox1.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(160, 27);
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 22);
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
             // 
             // toolStripButton4
@@ -246,21 +244,21 @@ namespace Bakalárska_práca
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton4.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton4.Text = "toolStripButton4";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 22);
             // 
             // toolStripButton11
             // 
             this.toolStripButton11.Image = global::Bachelor_app.Properties.Resources.PlayButton_Roundicons;
             this.toolStripButton11.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton11.Name = "toolStripButton11";
-            this.toolStripButton11.Size = new System.Drawing.Size(62, 24);
+            this.toolStripButton11.Size = new System.Drawing.Size(55, 19);
             this.toolStripButton11.Text = "Run ";
             // 
             // tableLayoutPanel2
@@ -273,35 +271,32 @@ namespace Bakalárska_práca
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 0F));
             this.tableLayoutPanel2.Controls.Add(this.LeftViewBox, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.renderWindowControl1, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.renderWindowControl2, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.RightViewBox, 2, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 85);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 69);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1677, 411);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1258, 334);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // LeftViewBox
             // 
             this.LeftViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.LeftViewBox.Location = new System.Drawing.Point(3, 2);
-            this.LeftViewBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.LeftViewBox.Location = new System.Drawing.Point(2, 2);
+            this.LeftViewBox.Margin = new System.Windows.Forms.Padding(2);
             this.LeftViewBox.Name = "LeftViewBox";
-            this.LeftViewBox.Size = new System.Drawing.Size(832, 407);
+            this.LeftViewBox.Size = new System.Drawing.Size(625, 330);
             this.LeftViewBox.TabIndex = 2;
             this.LeftViewBox.TabStop = false;
             // 
             // RightViewBox
             // 
             this.RightViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RightViewBox.Location = new System.Drawing.Point(841, 2);
-            this.RightViewBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RightViewBox.Location = new System.Drawing.Point(631, 2);
+            this.RightViewBox.Margin = new System.Windows.Forms.Padding(2);
             this.RightViewBox.Name = "RightViewBox";
-            this.RightViewBox.Size = new System.Drawing.Size(832, 407);
+            this.RightViewBox.Size = new System.Drawing.Size(625, 330);
             this.RightViewBox.TabIndex = 2;
             this.RightViewBox.TabStop = false;
             // 
@@ -315,13 +310,13 @@ namespace Bakalárska_práca
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.Controls.Add(this.statusStrip1, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 805);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 654);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1685, 33);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1264, 27);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
             // statusStrip1
@@ -334,21 +329,20 @@ namespace Bakalárska_práca
             this.toolStripProgressBar1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(561, 33);
+            this.statusStrip1.Size = new System.Drawing.Size(421, 27);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(79, 28);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(64, 22);
             this.toolStripStatusLabel1.Text = "Processing";
             // 
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(133, 27);
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 21);
             // 
             // tableLayoutPanel4
             // 
@@ -361,7 +355,7 @@ namespace Bakalárska_práca
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 420F));
             this.tableLayoutPanel4.Controls.Add(this.ListViewer0, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.ListViewer1, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.ListViewer2, 2, 0);
@@ -370,12 +364,12 @@ namespace Bakalárska_práca
             this.tableLayoutPanel4.Controls.Add(this.ListViewer5, 5, 0);
             this.tableLayoutPanel4.Controls.Add(this.richTextBox1, 6, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 554);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 450);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1685, 251);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1264, 204);
             this.tableLayoutPanel4.TabIndex = 4;
             this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
@@ -387,7 +381,7 @@ namespace Bakalárska_práca
             this.ListViewer0.Margin = new System.Windows.Forms.Padding(0);
             this.ListViewer0.Name = "ListViewer0";
             this.ListViewer0.ShowItemToolTips = true;
-            this.ListViewer0.Size = new System.Drawing.Size(1120, 251);
+            this.ListViewer0.Size = new System.Drawing.Size(841, 204);
             this.ListViewer0.SmallImageList = this.ImageList0;
             this.ListViewer0.TabIndex = 1;
             this.ListViewer0.UseCompatibleStateImageBehavior = false;
@@ -404,11 +398,11 @@ namespace Bakalárska_práca
             // 
             this.ListViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ListViewer1.LargeImageList = this.ImageList1;
-            this.ListViewer1.Location = new System.Drawing.Point(1120, 0);
+            this.ListViewer1.Location = new System.Drawing.Point(841, 0);
             this.ListViewer1.Margin = new System.Windows.Forms.Padding(0);
             this.ListViewer1.Name = "ListViewer1";
             this.ListViewer1.ShowItemToolTips = true;
-            this.ListViewer1.Size = new System.Drawing.Size(1120, 251);
+            this.ListViewer1.Size = new System.Drawing.Size(841, 204);
             this.ListViewer1.SmallImageList = this.ImageList1;
             this.ListViewer1.TabIndex = 2;
             this.ListViewer1.UseCompatibleStateImageBehavior = false;
@@ -425,11 +419,11 @@ namespace Bakalárska_práca
             // 
             this.ListViewer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ListViewer2.LargeImageList = this.ImageList2;
-            this.ListViewer2.Location = new System.Drawing.Point(2240, 0);
+            this.ListViewer2.Location = new System.Drawing.Point(1682, 0);
             this.ListViewer2.Margin = new System.Windows.Forms.Padding(0);
             this.ListViewer2.Name = "ListViewer2";
             this.ListViewer2.ShowItemToolTips = true;
-            this.ListViewer2.Size = new System.Drawing.Size(1120, 251);
+            this.ListViewer2.Size = new System.Drawing.Size(841, 204);
             this.ListViewer2.SmallImageList = this.ImageList2;
             this.ListViewer2.TabIndex = 1;
             this.ListViewer2.UseCompatibleStateImageBehavior = false;
@@ -446,11 +440,11 @@ namespace Bakalárska_práca
             // 
             this.ListViewer3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ListViewer3.LargeImageList = this.ImageList3;
-            this.ListViewer3.Location = new System.Drawing.Point(3360, 0);
+            this.ListViewer3.Location = new System.Drawing.Point(2523, 0);
             this.ListViewer3.Margin = new System.Windows.Forms.Padding(0);
             this.ListViewer3.Name = "ListViewer3";
             this.ListViewer3.ShowItemToolTips = true;
-            this.ListViewer3.Size = new System.Drawing.Size(1120, 251);
+            this.ListViewer3.Size = new System.Drawing.Size(841, 204);
             this.ListViewer3.SmallImageList = this.ImageList3;
             this.ListViewer3.TabIndex = 2;
             this.ListViewer3.UseCompatibleStateImageBehavior = false;
@@ -467,11 +461,11 @@ namespace Bakalárska_práca
             // 
             this.ListViewer4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ListViewer4.LargeImageList = this.ImageList4;
-            this.ListViewer4.Location = new System.Drawing.Point(4480, 0);
+            this.ListViewer4.Location = new System.Drawing.Point(3364, 0);
             this.ListViewer4.Margin = new System.Windows.Forms.Padding(0);
             this.ListViewer4.Name = "ListViewer4";
             this.ListViewer4.ShowItemToolTips = true;
-            this.ListViewer4.Size = new System.Drawing.Size(1120, 251);
+            this.ListViewer4.Size = new System.Drawing.Size(841, 204);
             this.ListViewer4.SmallImageList = this.ImageList4;
             this.ListViewer4.TabIndex = 1;
             this.ListViewer4.UseCompatibleStateImageBehavior = false;
@@ -488,11 +482,11 @@ namespace Bakalárska_práca
             // 
             this.ListViewer5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ListViewer5.LargeImageList = this.ImageList5;
-            this.ListViewer5.Location = new System.Drawing.Point(5600, 0);
+            this.ListViewer5.Location = new System.Drawing.Point(4205, 0);
             this.ListViewer5.Margin = new System.Windows.Forms.Padding(0);
             this.ListViewer5.Name = "ListViewer5";
             this.ListViewer5.ShowItemToolTips = true;
-            this.ListViewer5.Size = new System.Drawing.Size(1120, 251);
+            this.ListViewer5.Size = new System.Drawing.Size(841, 204);
             this.ListViewer5.SmallImageList = this.ImageList5;
             this.ListViewer5.TabIndex = 2;
             this.ListViewer5.UseCompatibleStateImageBehavior = false;
@@ -509,11 +503,11 @@ namespace Bakalárska_práca
             // 
             this.richTextBox1.BackColor = System.Drawing.Color.White;
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(6720, 0);
+            this.richTextBox1.Location = new System.Drawing.Point(5046, 0);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(0);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(1, 251);
+            this.richTextBox1.Size = new System.Drawing.Size(420, 204);
             this.richTextBox1.TabIndex = 20;
             this.richTextBox1.Text = "";
             // 
@@ -538,10 +532,10 @@ namespace Bakalárska_práca
             this.toolStripButton3,
             this.toolStripSeparator6,
             this.toolStripButton10});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 54);
+            this.toolStrip2.Location = new System.Drawing.Point(0, 44);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip2.Size = new System.Drawing.Size(1685, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(1264, 22);
             this.toolStrip2.TabIndex = 5;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -551,19 +545,19 @@ namespace Bakalárska_práca
             this.toolStripLabel3.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel3.Name = "toolStripLabel3";
             this.toolStripLabel3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabel3.Size = new System.Drawing.Size(168, 27);
+            this.toolStripLabel3.Size = new System.Drawing.Size(135, 22);
             this.toolStripLabel3.Text = "Structure from Motion";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 22);
             // 
             // toolStripLabel4
             // 
             this.toolStripLabel4.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(118, 27);
+            this.toolStripLabel4.Size = new System.Drawing.Size(93, 22);
             this.toolStripLabel4.Text = "Feature detector";
             // 
             // toolStripComboBox2
@@ -571,7 +565,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox2.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox2.Name = "toolStripComboBox2";
-            this.toolStripComboBox2.Size = new System.Drawing.Size(160, 27);
+            this.toolStripComboBox2.Size = new System.Drawing.Size(121, 22);
             this.toolStripComboBox2.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox2_SelectedIndexChanged);
             // 
             // toolStripButton1
@@ -581,20 +575,20 @@ namespace Bakalárska_práca
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton1.Text = "toolStripButton1";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 22);
             // 
             // toolStripLabel5
             // 
             this.toolStripLabel5.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(139, 27);
+            this.toolStripLabel5.Size = new System.Drawing.Size(110, 22);
             this.toolStripLabel5.Text = "Keypoint descriptor";
             // 
             // toolStripComboBox3
@@ -602,7 +596,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox3.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox3.Name = "toolStripComboBox3";
-            this.toolStripComboBox3.Size = new System.Drawing.Size(160, 27);
+            this.toolStripComboBox3.Size = new System.Drawing.Size(121, 22);
             this.toolStripComboBox3.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox3_SelectedIndexChanged);
             // 
             // toolStripButton2
@@ -612,20 +606,20 @@ namespace Bakalárska_práca
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton2.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton2.Text = "toolStripButton2";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 22);
             // 
             // toolStripLabel6
             // 
             this.toolStripLabel6.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel6.Name = "toolStripLabel6";
-            this.toolStripLabel6.Size = new System.Drawing.Size(136, 27);
+            this.toolStripLabel6.Size = new System.Drawing.Size(108, 22);
             this.toolStripLabel6.Text = "Descriptor matcher";
             // 
             // toolStripComboBox4
@@ -633,7 +627,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox4.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox4.Name = "toolStripComboBox4";
-            this.toolStripComboBox4.Size = new System.Drawing.Size(160, 27);
+            this.toolStripComboBox4.Size = new System.Drawing.Size(121, 22);
             this.toolStripComboBox4.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox4_SelectedIndexChanged);
             // 
             // toolStripButton3
@@ -643,21 +637,21 @@ namespace Bakalárska_práca
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton3.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton3.Text = "toolStripButton3";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 22);
             // 
             // toolStripButton10
             // 
             this.toolStripButton10.Image = global::Bachelor_app.Properties.Resources.PlayButton_Roundicons;
             this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton10.Name = "toolStripButton10";
-            this.toolStripButton10.Size = new System.Drawing.Size(58, 24);
+            this.toolStripButton10.Size = new System.Drawing.Size(52, 19);
             this.toolStripButton10.Text = "Run";
             this.toolStripButton10.Click += new System.EventHandler(this.toolStripButton10_Click);
             // 
@@ -670,12 +664,12 @@ namespace Bakalárska_práca
             this.tableLayoutPanel6.Controls.Add(this.toolStrip3, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.toolStrip4, 1, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 500);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 406);
             this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1685, 27);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1264, 22);
             this.tableLayoutPanel6.TabIndex = 6;
             this.tableLayoutPanel6.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel6_Paint);
             // 
@@ -691,7 +685,7 @@ namespace Bakalárska_práca
             this.toolStrip3.Location = new System.Drawing.Point(0, 0);
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip3.Size = new System.Drawing.Size(842, 27);
+            this.toolStrip3.Size = new System.Drawing.Size(632, 22);
             this.toolStrip3.TabIndex = 0;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -700,7 +694,7 @@ namespace Bakalárska_práca
             this.toolStripLabel7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripLabel7.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel7.Name = "toolStripLabel7";
-            this.toolStripLabel7.Size = new System.Drawing.Size(96, 27);
+            this.toolStripLabel7.Size = new System.Drawing.Size(77, 22);
             this.toolStripLabel7.Text = "Left window";
             // 
             // toolStripComboBox5
@@ -708,7 +702,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox5.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox5.Name = "toolStripComboBox5";
-            this.toolStripComboBox5.Size = new System.Drawing.Size(160, 27);
+            this.toolStripComboBox5.Size = new System.Drawing.Size(121, 22);
             this.toolStripComboBox5.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox5_SelectedIndexChanged);
             // 
             // toolStrip4
@@ -720,10 +714,10 @@ namespace Bakalárska_práca
             this.toolStripLabel8,
             this.toolStripComboBox6});
             this.toolStrip4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip4.Location = new System.Drawing.Point(842, 0);
+            this.toolStrip4.Location = new System.Drawing.Point(632, 0);
             this.toolStrip4.Name = "toolStrip4";
             this.toolStrip4.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip4.Size = new System.Drawing.Size(843, 27);
+            this.toolStrip4.Size = new System.Drawing.Size(632, 22);
             this.toolStrip4.TabIndex = 1;
             this.toolStrip4.Text = "toolStrip4";
             // 
@@ -732,7 +726,7 @@ namespace Bakalárska_práca
             this.toolStripLabel8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripLabel8.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel8.Name = "toolStripLabel8";
-            this.toolStripLabel8.Size = new System.Drawing.Size(106, 27);
+            this.toolStripLabel8.Size = new System.Drawing.Size(84, 22);
             this.toolStripLabel8.Text = "Right window";
             // 
             // toolStripComboBox6
@@ -740,7 +734,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox6.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox6.Name = "toolStripComboBox6";
-            this.toolStripComboBox6.Size = new System.Drawing.Size(160, 27);
+            this.toolStripComboBox6.Size = new System.Drawing.Size(121, 22);
             this.toolStripComboBox6.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox6_SelectedIndexChanged);
             // 
             // toolStrip5
@@ -757,10 +751,10 @@ namespace Bakalárska_práca
             this.toolStripButton7,
             this.toolStripButton8,
             this.toolStripButton9});
-            this.toolStrip5.Location = new System.Drawing.Point(0, 527);
+            this.toolStrip5.Location = new System.Drawing.Point(0, 428);
             this.toolStrip5.Name = "toolStrip5";
             this.toolStrip5.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip5.Size = new System.Drawing.Size(1685, 27);
+            this.toolStrip5.Size = new System.Drawing.Size(1264, 22);
             this.toolStrip5.TabIndex = 7;
             this.toolStrip5.Text = "toolStrip5";
             // 
@@ -768,7 +762,7 @@ namespace Bakalárska_práca
             // 
             this.toolStripLabel9.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripLabel9.Name = "toolStripLabel9";
-            this.toolStripLabel9.Size = new System.Drawing.Size(95, 27);
+            this.toolStripLabel9.Size = new System.Drawing.Size(76, 22);
             this.toolStripLabel9.Text = "Items in view";
             // 
             // toolStripComboBox7
@@ -776,13 +770,13 @@ namespace Bakalárska_práca
             this.toolStripComboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox7.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox7.Name = "toolStripComboBox7";
-            this.toolStripComboBox7.Size = new System.Drawing.Size(160, 27);
+            this.toolStripComboBox7.Size = new System.Drawing.Size(121, 22);
             this.toolStripComboBox7.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox7_SelectedIndexChanged);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 22);
             // 
             // toolStripButton5
             // 
@@ -791,7 +785,7 @@ namespace Bakalárska_práca
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton5.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton5.Text = "toolStripButton5";
             this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
@@ -802,7 +796,7 @@ namespace Bakalárska_práca
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton6.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton6.Text = "toolStripButton6";
             this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
             // 
@@ -813,7 +807,7 @@ namespace Bakalárska_práca
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton7.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton7.Text = "toolStripButton7";
             // 
             // toolStripButton8
@@ -823,7 +817,7 @@ namespace Bakalárska_práca
             this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton8.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton8.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton8.Text = "toolStripButton8";
             // 
             // toolStripButton9
@@ -833,21 +827,20 @@ namespace Bakalárska_práca
             this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton9.Margin = new System.Windows.Forms.Padding(1);
             this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton9.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton9.Text = "toolStripButton9";
             this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1685, 838);
+            this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MinimumSize = new System.Drawing.Size(1701, 870);
+            this.MinimumSize = new System.Drawing.Size(1280, 714);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -907,6 +900,11 @@ namespace Bakalárska_práca
             //this.toolStripComboBox4.SelectedItem = EFeaturesMatcher.BruteForce.Display();
 
 
+            this.renderWindowControl1 = new Kitware.VTK.RenderWindowControl();
+            this.renderWindowControl2 = new Kitware.VTK.RenderWindowControl();
+
+            this.tableLayoutPanel2.Controls.Add(this.renderWindowControl1, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.renderWindowControl2, 3, 0);
 
             ListViews.Add(ListViewer0);
             ListViews.Add(ListViewer1);

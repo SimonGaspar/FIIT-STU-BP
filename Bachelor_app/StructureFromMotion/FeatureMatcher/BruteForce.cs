@@ -10,11 +10,11 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
     {
         BFMatcher _bruteForceMatcher;
         private BruteForceForm _windowsForm;
-        private BruteForceModel model;
+        private BruteForceModel model = new BruteForceModel();
 
         public BruteForce()
         {
-            //_bruteForceMatcher = new BFMatcher(DistanceType.Hamming, true);
+            UpdateModel(model);
         }
 
         public void Add(Mat Descriptor)

@@ -49,7 +49,7 @@ namespace Bakalárska_práca.Manager
                 case EDisplayItem.DepthMap: imageBox.Image = _fileManager.listViewerModel._lastDepthMapImage; break;
                 case EDisplayItem.LeftCamera: break;
                 case EDisplayItem.RightCamera: break;
-                case EDisplayItem.Stack: imageBox.Image = _fileManager.listViewerModel._lastBasicStack; break;
+                case EDisplayItem.Stack: imageBox.Image = _fileManager.listViewerModel._lastImage; break;
             }
         }
 
