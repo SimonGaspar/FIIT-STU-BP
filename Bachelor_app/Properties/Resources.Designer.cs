@@ -113,6 +113,16 @@ namespace Bachelor_app.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Repeat_Freepik {
+            get {
+                object obj = ResourceManager.GetObject("Repeat_Freepik", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RightArrow_Lyolya {
             get {
                 object obj = ResourceManager.GetObject("RightArrow_Lyolya", resourceCulture);

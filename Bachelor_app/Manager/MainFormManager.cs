@@ -214,6 +214,11 @@ namespace Bachelor_app.Manager
         {
             _sfmManager._detector.ShowSettingForm();
         }
+
+        public void ResumeSFM()
+        {
+            _sfmManager.StartSFM(true);
+        }
         #endregion
     }
 }

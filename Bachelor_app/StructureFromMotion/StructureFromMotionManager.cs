@@ -62,16 +62,40 @@ namespace Bakalárska_práca
         //    ComputeSfM(new OrientedFastAndRotatedBrief(), new OrientedFastAndRotatedBrief(), new BruteForce(), list);
         //}
 
-        public void StartSFM()
+        public void StartSFM(bool ContinueSFM = false)
         {
-            var list = fileManager.listViewerModel.BasicStack;
+            var list = fileManager.listViewerModel.BasicStack.Where(x => x.UseInSFM == false).ToList();
 
             foreach (var node in list)
             {
                 File.Copy(node.fileInfo.FullName, Path.Combine(tempDirectory, node.fileInfo.Name), true);
+                node.UseInSFM = true;
             }
 
-            ComputeSfM(_detector, _descriptor, _matcher, list);
+            if (ContinueSFM)
+                ContinueInComputingSFM(_detector, _descriptor, _matcher, list);
+            else
+                ComputeSfM(_detector, _descriptor, _matcher, list);
+        }
+
+        public void ContinueInComputingSFM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
+        {
+            var iter = DetectedKeyPoints.Count;
+            var iterMatches = FoundedMatches.Count;
+
+            Parallel.ForEach(listOfInput, x => FindKeypoint(x, detector));
+            Parallel.For(iter, DetectedKeyPoints.Count, x => ComputeDescriptor(DetectedKeyPoints[x], descriptor));
+
+
+
+            for (int m = iter; m < ComputedDescriptors.Count; m++)
+                Parallel.For(m - 2, m, index =>
+                {
+                    FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[index]);
+                });
+
+            AppendMatches(FoundedMatches, iterMatches);
+            ContinueVisualSFM();
         }
 
         public void ComputeSfM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
@@ -106,6 +130,19 @@ namespace Bakalárska_práca
 
             WriteAllMatches(FoundedMatches);
             RunVisualSFM();
+        }
+
+        private void AppendMatches(List<DescriptorsMatchModel> findedMatches, int index)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var node in findedMatches.Skip(index))
+            {
+                sb.AppendLine(node.FileFormatMatch);
+                sb.AppendLine();
+            }
+
+            File.AppendAllText(Path.Combine(tempDirectory, matchFileName), sb.ToString());
         }
 
         private void WriteAllMatches(List<DescriptorsMatchModel> findedMatches)
@@ -345,7 +382,7 @@ namespace Bakalárska_práca
             displayManager.Display();
         }
 
-        public void ContinueVisualStudio()
+        public void ContinueVisualSFM()
         {
             // Poriesit, ako prepisat SIFT subory, pridat novy match file a pridat fiel Result.nvm.txt, ktory bude obsahovat nove obrazky
             ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(pathVisualSFM, "VisualSFM.exe"));

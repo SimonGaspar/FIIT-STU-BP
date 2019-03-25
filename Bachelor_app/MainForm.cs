@@ -222,7 +222,7 @@ namespace Bakalárska_práca
         {
             displayManager.DisplayImageFromListView(e.Item);
         }
-        
+
         private void ComputeStereo_Click(object sender, EventArgs e)
         {
             stereoVisionManager.ComputeStereoCorrespondence();
@@ -318,6 +318,11 @@ namespace Bakalárska_práca
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             mainFormManager.ShowFeatureDetectorSettings(sender, e);
+        }
+
+        private void toolStripButton12_Click(object sender, EventArgs e)
+        {
+            mainFormManager.ResumeSFM();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Bakalárska_práca.Model
         public FileInfo fileInfo { get; set; }
         public Image image { get; set; }
 
+        public bool UseInSFM { get; set; } = false;
+
         public InputFileModel(FileInfo fileInfo)
         {
             this.fileInfo = fileInfo;

@@ -283,6 +283,7 @@
     <Content Include="CUDA_EULA.txt" />
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\Repeat_Freepik.png" />
     <None Include="Resources\PlayButton_Roundicons.png" />
     <None Include="Resources\Settings_Dave-Gandy.png" />
     <None Include="Resources\RightArrow_Lyolya.png" />
