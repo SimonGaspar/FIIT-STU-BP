@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Extension;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.Model;
@@ -13,6 +16,7 @@ using Emgu.CV;
 using Emgu.CV.Features2D;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using static Emgu.CV.Features2D.Features2DToolbox;
 
 namespace Bakalárska_práca
 {
@@ -35,10 +39,11 @@ namespace Bakalárska_práca
 
         private FileManager fileManager;
         private DisplayManager displayManager;
+        private MainForm _winForm;
 
         private static object locker = new object();
 
-        public SfM(FileManager fileManager, DisplayManager displayManager)
+        public SfM(FileManager fileManager, DisplayManager displayManager, MainForm winForm)
         {
 
             Directory.CreateDirectory(tempDirectory);
@@ -48,24 +53,16 @@ namespace Bakalárska_práca
 
             this.fileManager = fileManager;
             this.displayManager = displayManager;
+            this._winForm = winForm;
         }
-
-        //public void StartSFM()
-        //{
-        //    var list = fileManager.listViewerModel.BasicStack;
-
-        //    foreach (var node in list)
-        //    {
-        //        File.Copy(node.fileInfo.FullName, Path.Combine(tempDirectory, node.fileInfo.Name), true);
-        //    }
-
-        //    ComputeSfM(new OrientedFastAndRotatedBrief(), new OrientedFastAndRotatedBrief(), new BruteForce(), list);
-        //}
 
         public void StartSFM(bool ContinueSFM = false)
         {
-            var list = fileManager.listViewerModel.BasicStack.Where(x => x.UseInSFM == false).ToList();
+            var list =  ContinueSFM ? fileManager.listViewerModel.BasicStack.Where(x => x.UseInSFM == false).ToList() : fileManager.listViewerModel.BasicStack;
 
+            if (!ContinueSFM)
+                DeleteAllInPath(tempDirectory);
+            
             foreach (var node in list)
             {
                 File.Copy(node.fileInfo.FullName, Path.Combine(tempDirectory, node.fileInfo.Name), true);
@@ -76,6 +73,20 @@ namespace Bakalárska_práca
                 ContinueInComputingSFM(_detector, _descriptor, _matcher, list);
             else
                 ComputeSfM(_detector, _descriptor, _matcher, list);
+        }
+
+        private void DeleteAllInPath(string path)
+        {
+            DirectoryInfo di = new DirectoryInfo(path);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
         }
 
         public void ContinueInComputingSFM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
@@ -93,9 +104,22 @@ namespace Bakalárska_práca
                 {
                     FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[index]);
                 });
-
+            
+            WriteAddedImages(listOfInput);
             AppendMatches(FoundedMatches, iterMatches);
             ContinueVisualSFM();
+        }
+
+        private void WriteAddedImages(List<InputFileModel> listOfInput)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var node in listOfInput)
+            {
+                sb.AppendLine(Path.Combine(tempDirectory, node.fileInfo.Name));
+            }
+
+            File.WriteAllText(Path.Combine(tempDirectory, "Result.nvm.txt"), sb.ToString());
         }
 
         public void ComputeSfM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
@@ -142,7 +166,7 @@ namespace Bakalárska_práca
                 sb.AppendLine();
             }
 
-            File.AppendAllText(Path.Combine(tempDirectory, matchFileName), sb.ToString());
+            File.WriteAllText(Path.Combine(tempDirectory, matchFileName), sb.ToString());
         }
 
         private void WriteAllMatches(List<DescriptorsMatchModel> findedMatches)
@@ -160,6 +184,11 @@ namespace Bakalárska_práca
 
         private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = true)
         {
+            _winForm.richTextBox1.Invoke((Action)delegate { _winForm.richTextBox1.Text += $"Start computing matches for: \n" +
+                $"\t{leftDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n" +
+                $"\t{rightDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n"; });
+           
+
             var foundedMatch = new DescriptorsMatchModel()
             {
                 FilteredMatch = FilterMatches,
@@ -173,6 +202,13 @@ namespace Bakalárska_práca
                 matcher.Add(leftDescriptor.Descriptors);
                 matcher.Match(rightDescriptor.Descriptors, matches);
             }
+
+            _winForm.richTextBox1.Invoke((Action)delegate {
+                _winForm.richTextBox1.Text += $"FINISH computing matches for: \n" +
+                $"\t{leftDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n" +
+                $"\t{rightDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n";
+            });
+
             MDMatch[][] matchesArray = matches.ToArrayOfArray();
             foundedMatch.MatchesList = matchesArray.ToList();
 
@@ -201,9 +237,15 @@ namespace Bakalárska_práca
             Mat output = new Mat();
             Directory.CreateDirectory($@"{tempDirectory}\DrawMatches");
             Features2DToolbox.DrawMatches(new Mat(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(foundedMatch.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), foundedMatch.Mask);
-            output.Save(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
+            output.Save(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}-{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
+            fileManager.listViewerModel._lastDrawnMatches = new Image<Bgr,byte>(output.Bitmap);
 
+            var inputFile = new InputFileModel(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}-{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
+            var imageList = _winForm.ImageList[(int)EListViewGroup.DrawnMatches];
+            var listViewer = _winForm.ListViews[(int)EListViewGroup.DrawnMatches];
 
+            fileManager.AddInputFileToList(inputFile, fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.DrawnMatches], imageList, listViewer);
+            
             if (SaveInMatchNode)
                 SaveMatchString(foundedMatch, true);
 
@@ -291,12 +333,16 @@ namespace Bakalárska_práca
 
         private void ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList = true, bool SaveOnDisk = true)
         {
+            _winForm.richTextBox1.Invoke((Action)delegate { _winForm.richTextBox1.Text += $"Start computing descriptor for: {keypoint.InputFile.fileInfo.Name.ToString()}\n"; });            
+
             var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
             var descriptorNode = new DescriptorModel()
             {
                 Descriptors = computedDescriptor,
                 KeyPoint = keypoint
             };
+            _winForm.richTextBox1.Invoke((Action)delegate { _winForm.richTextBox1.Text += $"FINISH computing descriptor for: {keypoint.InputFile.fileInfo.Name.ToString()}\n"; });
+            
 
             if (AddToList)
                 ComputedDescriptors.Add(descriptorNode);
@@ -322,8 +368,11 @@ namespace Bakalárska_práca
                 // X a Y su prehodene, teraz je to dobre
                 sb.AppendLine($"{keyPoints[i].Point.Y} {keyPoints[i].Point.X} {keyPoints[i].Size} {keyPoints[i].Angle}");
 
-                for (int j = 0; j < descriptor.Cols; j++)
-                    sb.Append($"{descriptor.GetValue(i, j)} ");
+                for (int j = 0; j < 128; j++)
+                    if (j < descriptor.Cols)
+                        sb.Append($"{descriptor.GetValue(i, j)} ");
+                    else
+                        sb.Append("0 ");
                 sb.AppendLine();
             }
 
@@ -336,6 +385,8 @@ namespace Bakalárska_práca
 
         private void FindKeypoint(InputFileModel inputFile, IFeatureDetector detector, bool AddToList = true)
         {
+            _winForm.richTextBox1.Invoke((Action)delegate{ _winForm.richTextBox1.Text += $"Start finding key points for: {inputFile.fileInfo.Name.ToString()}\n"; });
+            
             var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.fileInfo.FullName));
 
             if (AddToList)
@@ -345,6 +396,22 @@ namespace Bakalárska_práca
                     InputFile = inputFile
                 }
                 );
+
+            _winForm.richTextBox1.Invoke((Action)delegate { _winForm.richTextBox1.Text += $"FINISH finding key points for: {inputFile.fileInfo.Name.ToString()}\n"; });
+            
+
+            // Save drawing image
+            Mat output = new Mat();
+            Directory.CreateDirectory($@"{tempDirectory}\DrawKeypoint");
+            Features2DToolbox.DrawKeypoints(new Mat(inputFile.fileInfo.FullName), new VectorOfKeyPoint(detectedKeyPoints), output,new Bgr(0,0,255),KeypointDrawType.DrawRichKeypoints);
+            output.Save(Path.Combine($@"{tempDirectory}\DrawKeypoint", $"{Path.GetFileNameWithoutExtension(inputFile.fileInfo.Name)}.JPG"));
+            fileManager.listViewerModel._lastDrawnKeypoint = new Image<Bgr, byte>(output.Bitmap);
+
+            var file = new InputFileModel(Path.Combine($@"{tempDirectory}\DrawKeypoint", $"{Path.GetFileNameWithoutExtension(inputFile.fileInfo.Name)}.JPG"));
+            var imageList = _winForm.ImageList[(int)EListViewGroup.DrawnKeyPoint];
+            var listViewer = _winForm.ListViews[(int)EListViewGroup.DrawnKeyPoint];
+
+            fileManager.AddInputFileToList(file, fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.DrawnKeyPoint], imageList, listViewer);
         }
 
         public Mat FindHomography(VectorOfKeyPoint keypointsModel, VectorOfKeyPoint keypointsTest, List<MDMatch[]> matches, Mat Mask)
@@ -374,23 +441,50 @@ namespace Bakalárska_práca
 
         public void RunVisualSFM()
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(pathVisualSFM, "VisualSFM.exe"));
+            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(pathVisualSFM, "VisualSFM.exe"))
+            {
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+                UseShellExecute=false
+            };
             startInfo.Arguments = $"sfm+import {tempDirectory} {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "AllFoundedMatches.txt")}";
             Process process = Process.Start(startInfo);
 
-            displayManager.LeftViewWindowItem = Enumerate.EDisplayItem.PointCloud;
-            displayManager.Display();
+            while (!process.StandardOutput.EndOfStream)
+            {
+                var line = process.StandardOutput.ReadLine();
+                if (string.IsNullOrEmpty(line)) continue;
+                _winForm.richTextBox1.Invoke((Action)delegate {
+                    _winForm.richTextBox1.Text += line + "\n";
+                });
+            }
+
+            process.WaitForExit();
+
+            //displayManager.LeftViewWindowItem = Enumerate.EDisplayItem.PointCloud;
+            //displayManager.Display();
         }
 
         public void ContinueVisualSFM()
         {
-            // Poriesit, ako prepisat SIFT subory, pridat novy match file a pridat fiel Result.nvm.txt, ktory bude obsahovat nove obrazky
-            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(pathVisualSFM, "VisualSFM.exe"));
+            ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(pathVisualSFM, "VisualSFM.exe")) {
+                RedirectStandardOutput = true,
+                CreateNoWindow = true,
+                UseShellExecute=false
+            };
             startInfo.Arguments = $"sfm+import+resume {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "Result.nvm")} {Path.Combine(tempDirectory, "AllFoundedMatches.txt")}";
             Process process = Process.Start(startInfo);
+            while (!process.StandardOutput.EndOfStream)
+            {
+                var line = process.StandardOutput.ReadLine();
+                _winForm.richTextBox1.Invoke((Action)delegate {
+                    _winForm.richTextBox1.Text += line + "\n";
+                });
+            }
+            process.WaitForExit();
             // Poriesit ako citat point cloud, ked sa prepise
-            displayManager.LeftViewWindowItem = Enumerate.EDisplayItem.PointCloud;
-            displayManager.Display();
+            //displayManager.LeftViewWindowItem = Enumerate.EDisplayItem.PointCloud;
+            //displayManager.Display();
         }
     }
 }

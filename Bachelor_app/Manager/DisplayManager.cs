@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Bakalárska_práca.Enumerate;
@@ -34,6 +35,11 @@ namespace Bakalárska_práca.Manager
             }
         }
 
+
+        public void Display(object sender, EventArgs e)
+        {
+            Display();
+        }
         public void Display()
         {
             ShowItemOnView(_winForm.LeftViewBox, LeftViewWindowItem);
@@ -50,6 +56,8 @@ namespace Bakalárska_práca.Manager
                 case EDisplayItem.LeftCamera: break;
                 case EDisplayItem.RightCamera: break;
                 case EDisplayItem.Stack: imageBox.Image = _fileManager.listViewerModel._lastImage; break;
+                case EDisplayItem.KeyPoints: imageBox.Image = _fileManager.listViewerModel._lastDrawnKeypoint; break;
+                case EDisplayItem.DescriptorsMatches: imageBox.Image = _fileManager.listViewerModel._lastDrawnMatches; break;
             }
         }
 

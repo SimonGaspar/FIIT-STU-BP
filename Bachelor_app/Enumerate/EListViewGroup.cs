@@ -8,6 +8,7 @@
         RightCameraStack,
         DrawnKeyPoint,
         DrawnMatches,
-        DepthMap
+        DepthMap,
+        Console
     }
 }

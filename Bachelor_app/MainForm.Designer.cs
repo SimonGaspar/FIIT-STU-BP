@@ -474,6 +474,7 @@ namespace Bakalárska_práca
             this.richTextBox1.Size = new System.Drawing.Size(560, 251);
             this.richTextBox1.TabIndex = 20;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox_TextChanged);
             // 
             // toolStrip2
             // 
@@ -1131,7 +1132,7 @@ namespace Bakalárska_práca
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
         private System.Windows.Forms.ToolStripButton toolStripButton9;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        public System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ToolStripButton toolStripButton10;
         private System.Windows.Forms.ToolStripButton toolStripButton11;
         private System.Windows.Forms.ToolStripButton toolStripButton12;

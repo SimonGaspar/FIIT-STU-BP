@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bachelor_app.Manager;
 using Bakalárska_práca.Manager;
@@ -30,7 +32,7 @@ namespace Bakalárska_práca
             displayManager = new DisplayManager(this, fileManager);
 
             stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
-            structureFromMotionManager = new SfM(fileManager, displayManager);
+            structureFromMotionManager = new SfM(fileManager, displayManager,this);
 
             mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager);
 
@@ -38,7 +40,7 @@ namespace Bakalárska_práca
 #if (DEBUG)
             InitializeStringForComponents();
 #endif
-
+            Application.Idle += new EventHandler(displayManager.Display);
         }
 
         public void ReadPlainText(RenderWindowControl renderWindowControl)
@@ -57,6 +59,8 @@ namespace Bakalárska_práca
             double[] xyz = new double[10];
             vtkPoints points = vtkPoints.New();
             int cnt = 0;
+            int imageNumber;
+            int pointNumber;
 
             try
             {
@@ -69,35 +73,52 @@ namespace Bakalárska_práca
                 colors.SetNumberOfComponents(3);
                 colors.SetName("Colors");
 
-                // Read point
-                while (!string.IsNullOrEmpty(sr.ReadLine()))
-                {
-                }
-
-                // Read point
-                while (!string.IsNullOrEmpty(sr.ReadLine()))
-                {
-                }
-                sr.ReadLine();
-
-                // Read point
-                while (!string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
-                {
-                    cnt++;
-                    sXYZ = sLineBuffer.Split(chDelimiter, StringSplitOptions.RemoveEmptyEntries);
-                    if (sXYZ == null)
+                    // Read point
+                    while (!string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
                     {
-                        MessageBox.Show("data seems to be in wrong format at line " + cnt, "Format Exception", MessageBoxButtons.OK);
-                        return;
+                        var header = sLineBuffer;
                     }
-                    xyz[0] = double.Parse(sXYZ[0], CultureInfo.InvariantCulture);
-                    xyz[1] = double.Parse(sXYZ[1], CultureInfo.InvariantCulture);
-                    xyz[2] = double.Parse(sXYZ[2], CultureInfo.InvariantCulture);
-                    colors.InsertNextValue(byte.Parse(sXYZ[3], CultureInfo.InvariantCulture));
-                    colors.InsertNextValue(byte.Parse(sXYZ[4], CultureInfo.InvariantCulture));
-                    colors.InsertNextValue(byte.Parse(sXYZ[5], CultureInfo.InvariantCulture));
-                    points.InsertNextPoint(xyz[0], xyz[1], xyz[2]);
+
+                while (!sr.EndOfStream)
+                {
+                    // Read point
+                    while (string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
+                    {
+                    }
+                    imageNumber = int.Parse(sLineBuffer);
+                    if (imageNumber == 0) break;
+                    for (int i = 0; i < imageNumber; i++)
+                    {
+                        sr.ReadLine();
+                    }
+
+                    // Read point
+                    while (string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
+                    {
+                    }
+                    pointNumber = int.Parse(sLineBuffer);
+                    if (pointNumber == 0) break;
+
+                    // Read point
+                    while (!string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
+                    {
+                        cnt++;
+                        sXYZ = sLineBuffer.Split(chDelimiter, StringSplitOptions.RemoveEmptyEntries);
+                        if (sXYZ == null)
+                        {
+                            MessageBox.Show("data seems to be in wrong format at line " + cnt, "Format Exception", MessageBoxButtons.OK);
+                            return;
+                        }
+                        xyz[0] = double.Parse(sXYZ[0], CultureInfo.InvariantCulture);
+                        xyz[1] = double.Parse(sXYZ[1], CultureInfo.InvariantCulture);
+                        xyz[2] = double.Parse(sXYZ[2], CultureInfo.InvariantCulture);
+                        colors.InsertNextValue(byte.Parse(sXYZ[3], CultureInfo.InvariantCulture));
+                        colors.InsertNextValue(byte.Parse(sXYZ[4], CultureInfo.InvariantCulture));
+                        colors.InsertNextValue(byte.Parse(sXYZ[5], CultureInfo.InvariantCulture));
+                        points.InsertNextPoint(xyz[0], xyz[1], xyz[2]);
+                    }
                 }
+
 
                 vtkPolyData polydata = vtkPolyData.New();
                 polydata.SetPoints(points);
@@ -286,7 +307,8 @@ namespace Bakalárska_práca
 
         private void toolStripButton10_Click(object sender, EventArgs e)
         {
-            mainFormManager.StartSfM();
+            Thread thread = new Thread(mainFormManager.StartSfM);
+            thread.Start();
         }
 
         private void toolStripComboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -322,7 +344,17 @@ namespace Bakalárska_práca
 
         private void toolStripButton12_Click(object sender, EventArgs e)
         {
-            mainFormManager.ResumeSFM();
+
+            Thread thread = new Thread(mainFormManager.ResumeSFM);
+            thread.Start();
+        }
+
+        private void richTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // set the current caret position to the end
+            richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            // scroll it automatically
+            richTextBox1.ScrollToCaret();
         }
     }
 }

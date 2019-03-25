@@ -113,6 +113,7 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             _fileManager.ListViewerDisplay = EnumExtension.ReturnEnumValue<EListViewGroup>(currentItem.SelectedItem.ToString());
             _winForm.ListViews.ForEach(x => x.Visible = false);
+            if((int)_fileManager.ListViewerDisplay< _winForm.ListViews.Count)
             _winForm.ListViews[(int)_fileManager.ListViewerDisplay].Visible = true;
         }
 

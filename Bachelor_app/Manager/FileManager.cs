@@ -77,7 +77,7 @@ namespace Bakalárska_práca.Manager
             }
         }
 
-        private void AddInputFileToList(InputFileModel inputFile, List<InputFileModel> listOfInput, ImageList imageList, ListView listView)
+        public void AddInputFileToList(InputFileModel inputFile, List<InputFileModel> listOfInput, ImageList imageList, ListView listView)
         {
             imageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
 
