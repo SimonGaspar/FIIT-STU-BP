@@ -8,6 +8,9 @@ namespace Bakalárska_práca.StructureFromMotion
 {
     public enum EFeaturesDescriptor
     {
-        ORB
+        ORB,
+        FAST,
+        FREAK,
+        BRIEF
     }
 }

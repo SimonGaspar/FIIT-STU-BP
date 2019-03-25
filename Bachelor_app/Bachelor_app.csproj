@@ -151,10 +151,16 @@
     <Compile Include="Model\ListViewerModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\BRIEF.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\FREAK.cs" />
+    <Compile Include="StructureFromMotion\Model\BriefModel.cs" />
     <Compile Include="StructureFromMotion\Model\BruteForceModel.cs" />
     <Compile Include="StructureFromMotion\EFeaturesDescriptor.cs" />
     <Compile Include="StructureFromMotion\EFeaturesDetector.cs" />
     <Compile Include="StructureFromMotion\EFeaturesMatcher.cs" />
+    <Compile Include="StructureFromMotion\Model\FastModel.cs" />
+    <Compile Include="StructureFromMotion\Model\FreakModel.cs" />
     <Compile Include="StructureFromMotion\Model\OrientedFastAndRotatedBriefModel.cs" />
     <Compile Include="StructureFromMotion\StructureFromMotionManager.cs" />
     <Compile Include="StereoVision\EStereoCorrespondenceAlgorithm.cs" />
@@ -192,11 +198,29 @@
     <Compile Include="StructureFromMotion\IFeatureDescriptor.cs" />
     <Compile Include="StructureFromMotion\IFeatureDetector.cs" />
     <Compile Include="StructureFromMotion\IFeatureMatcher.cs" />
+    <Compile Include="StructureFromMotion\WindowsForm\BriefForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StructureFromMotion\WindowsForm\BriefForm.Designer.cs">
+      <DependentUpon>BriefForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StructureFromMotion\WindowsForm\BruteForceForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="StructureFromMotion\WindowsForm\BruteForceForm.Designer.cs">
       <DependentUpon>BruteForceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StructureFromMotion\WindowsForm\FastForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StructureFromMotion\WindowsForm\FastForm.Designer.cs">
+      <DependentUpon>FastForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StructureFromMotion\WindowsForm\FreakForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StructureFromMotion\WindowsForm\FreakForm.Designer.cs">
+      <DependentUpon>FreakForm.cs</DependentUpon>
     </Compile>
     <Compile Include="StructureFromMotion\WindowsForm\OrientedFastAndRotatedBriefForm.cs">
       <SubType>Form</SubType>
@@ -223,8 +247,17 @@
     <EmbeddedResource Include="StereoVision\WindowsForm\StereoSGBMForm.resx">
       <DependentUpon>StereoSGBMForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="StructureFromMotion\WindowsForm\BriefForm.resx">
+      <DependentUpon>BriefForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StructureFromMotion\WindowsForm\BruteForceForm.resx">
       <DependentUpon>BruteForceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StructureFromMotion\WindowsForm\FastForm.resx">
+      <DependentUpon>FastForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StructureFromMotion\WindowsForm\FreakForm.resx">
+      <DependentUpon>FreakForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StructureFromMotion\WindowsForm\OrientedFastAndRotatedBriefForm.resx">
       <DependentUpon>OrientedFastAndRotatedBriefForm.cs</DependentUpon>

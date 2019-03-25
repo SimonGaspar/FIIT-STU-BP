@@ -161,13 +161,11 @@ namespace Bakalárska_práca
             }
 
             // Save drawing image
-            lock (locker)
-            {
-                Mat output = new Mat();
-                Directory.CreateDirectory($@"{tempDirectory}\DrawMatches");
-                Features2DToolbox.DrawMatches(new Mat(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(foundedMatch.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), foundedMatch.Mask);
-                output.Save(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
-            }
+            Mat output = new Mat();
+            Directory.CreateDirectory($@"{tempDirectory}\DrawMatches");
+            Features2DToolbox.DrawMatches(new Mat(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), foundedMatch.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(foundedMatch.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), foundedMatch.Mask);
+            output.Save(Path.Combine($@"{tempDirectory}\DrawMatches", $"{Path.GetFileNameWithoutExtension(foundedMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}{Path.GetFileNameWithoutExtension(foundedMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG"));
+
 
             if (SaveInMatchNode)
                 SaveMatchString(foundedMatch, true);
@@ -280,7 +278,7 @@ namespace Bakalárska_práca
             var countDescriptor = descriptor.Cols;
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"{countKeypoint} {countDescriptor}");
+            sb.AppendLine($"{countKeypoint} 128");
 
             for (int i = 0; i < descriptor.Rows; i++)
             {

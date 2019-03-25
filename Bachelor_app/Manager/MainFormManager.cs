@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Bachelor_app.Extension;
+using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
 using Bakalárska_práca;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Manager;
@@ -158,6 +159,9 @@ namespace Bachelor_app.Manager
             switch (enumItem)
             {
                 case EFeaturesDetector.ORB: tempItem = new OrientedFastAndRotatedBrief(); break;
+                case EFeaturesDetector.FAST: tempItem = new FAST(); break;
+                case EFeaturesDetector.FREAK: tempItem = new FREAK(); break;
+                case EFeaturesDetector.BRIEF: tempItem = new BRIEF(); break;
             }
 
             _sfmManager._detector = tempItem;
@@ -173,6 +177,9 @@ namespace Bachelor_app.Manager
             switch (enumItem)
             {
                 case EFeaturesDescriptor.ORB: tempItem = new OrientedFastAndRotatedBrief(); break;
+                case EFeaturesDescriptor.FAST: tempItem = new FAST(); break;
+                case EFeaturesDescriptor.FREAK: tempItem = new FREAK(); break;
+                case EFeaturesDescriptor.BRIEF: tempItem = new BRIEF(); break;
             }
 
             _sfmManager._descriptor = tempItem;
