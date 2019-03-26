@@ -12,6 +12,6 @@ namespace Bakalárska_práca.Model
     {
         public VectorOfKeyPoint DetectedKeyPoints;
         public InputFileModel InputFile;
-
+        public int ID;
     }
 }

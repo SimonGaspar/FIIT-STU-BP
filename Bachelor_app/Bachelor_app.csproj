@@ -154,7 +154,9 @@
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\BRIEF.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FREAK.cs" />
+    <Compile Include="StructureFromMotion\FeatureMatcher\CudaBruteForce.cs" />
     <Compile Include="StructureFromMotion\Model\BriefModel.cs" />
+    <Compile Include="StructureFromMotion\Model\CudaBruteForceModel.cs" />
     <Compile Include="StructureFromMotion\Model\BruteForceModel.cs" />
     <Compile Include="StructureFromMotion\EFeaturesDescriptor.cs" />
     <Compile Include="StructureFromMotion\EFeaturesDetector.cs" />
@@ -204,6 +206,12 @@
     <Compile Include="StructureFromMotion\WindowsForm\BriefForm.Designer.cs">
       <DependentUpon>BriefForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StructureFromMotion\WindowsForm\CudaBruteForceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StructureFromMotion\WindowsForm\CudaBruteForceForm.Designer.cs">
+      <DependentUpon>CudaBruteForceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StructureFromMotion\WindowsForm\BruteForceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,6 +257,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StructureFromMotion\WindowsForm\BriefForm.resx">
       <DependentUpon>BriefForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StructureFromMotion\WindowsForm\CudaBruteForceForm.resx">
+      <DependentUpon>CudaBruteForceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StructureFromMotion\WindowsForm\BruteForceForm.resx">
       <DependentUpon>BruteForceForm.cs</DependentUpon>

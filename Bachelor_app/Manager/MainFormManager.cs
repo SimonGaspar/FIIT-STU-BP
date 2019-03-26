@@ -196,6 +196,7 @@ namespace Bachelor_app.Manager
             switch (enumItem)
             {
                 case EFeaturesMatcher.BruteForce: tempItem = new BruteForce(); break;
+                case EFeaturesMatcher.CudaBruteForce: tempItem = new CudaBruteForce(); break;
             }
 
             _sfmManager._matcher = tempItem;

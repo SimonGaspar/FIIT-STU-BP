@@ -8,6 +8,7 @@ namespace Bakalárska_práca.StructureFromMotion
 {
     public enum EFeaturesMatcher
     {
-        BruteForce
+        BruteForce,
+        CudaBruteForce
     }
 }

@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Bachelor_app.Extension;
 using Bachelor_app.Resources;
 using Bakalárska_práca.Enumerate;
+using Emgu.CV.Cuda;
 
 namespace Bakalárska_práca
 {

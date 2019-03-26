@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Bachelor_app.Manager;
+using Bakalárska_práca.Helper;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
 using Kitware.VTK;
@@ -34,11 +35,9 @@ namespace Bakalárska_práca
             structureFromMotionManager = new SfM(fileManager, displayManager, this);
 
             mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager);
-
-
-#if (DEBUG)
+            WindowsFormHelper.SetWinForm(this);
+            
             InitializeStringForComponents();
-#endif
             Application.Idle += new EventHandler(displayManager.Display);
         }
 
