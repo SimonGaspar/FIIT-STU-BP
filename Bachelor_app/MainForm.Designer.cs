@@ -104,6 +104,8 @@ namespace Bakalárska_práca
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -256,7 +258,7 @@ namespace Bakalárska_práca
             this.tableLayoutPanel2.Controls.Add(this.RightViewBox, 2, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 85);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -674,7 +676,9 @@ namespace Bakalárska_práca
             this.toolStripButton6,
             this.toolStripButton7,
             this.toolStripButton8,
-            this.toolStripButton9});
+            this.toolStripButton9,
+            this.toolStripSeparator2,
+            this.toolStripButton13});
             this.toolStrip5.Location = new System.Drawing.Point(0, 527);
             this.toolStrip5.Name = "toolStrip5";
             this.toolStrip5.Padding = new System.Windows.Forms.Padding(0);
@@ -711,6 +715,7 @@ namespace Bakalárska_práca
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.ToolTipText = "Settings";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
             // toolStripButton11
@@ -750,6 +755,7 @@ namespace Bakalárska_práca
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.ToolTipText = "Settings";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripButton2
@@ -761,6 +767,7 @@ namespace Bakalárska_práca
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.ToolTipText = "Settings";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // toolStripButton3
@@ -772,6 +779,7 @@ namespace Bakalárska_práca
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.ToolTipText = "Settings";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripButton10
@@ -801,6 +809,7 @@ namespace Bakalárska_práca
             this.toolStripButton5.Name = "toolStripButton5";
             this.toolStripButton5.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton5.Text = "toolStripButton5";
+            this.toolStripButton5.ToolTipText = "Add image";
             this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
             // toolStripButton6
@@ -812,6 +821,7 @@ namespace Bakalárska_práca
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton6.Text = "toolStripButton6";
+            this.toolStripButton6.ToolTipText = "Remove image";
             this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
             // 
             // toolStripButton7
@@ -823,6 +833,7 @@ namespace Bakalárska_práca
             this.toolStripButton7.Name = "toolStripButton7";
             this.toolStripButton7.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton7.Text = "toolStripButton7";
+            this.toolStripButton7.ToolTipText = "Switch left";
             // 
             // toolStripButton8
             // 
@@ -833,6 +844,7 @@ namespace Bakalárska_práca
             this.toolStripButton8.Name = "toolStripButton8";
             this.toolStripButton8.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton8.Text = "toolStripButton8";
+            this.toolStripButton8.ToolTipText = "Switch right";
             // 
             // toolStripButton9
             // 
@@ -843,7 +855,24 @@ namespace Bakalárska_práca
             this.toolStripButton9.Name = "toolStripButton9";
             this.toolStripButton9.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton9.Text = "toolStripButton9";
+            this.toolStripButton9.ToolTipText = "Clear";
             this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
+            // 
+            // toolStripButton13
+            // 
+            this.toolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton13.Image = global::Bachelor_app.Properties.Resources.ErasingFile_Freepik;
+            this.toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton13.Name = "toolStripButton13";
+            this.toolStripButton13.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButton13.Text = "toolStripButton13";
+            this.toolStripButton13.ToolTipText = "Clear console";
+            this.toolStripButton13.Click += new System.EventHandler(this.toolStripButton13_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
             // 
             // MainForm
             // 
@@ -854,7 +883,7 @@ namespace Bakalárska_práca
             this.ClientSize = new System.Drawing.Size(1685, 838);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1701, 868);
             this.Name = "MainForm";
             this.Text = "Form1";
@@ -1136,6 +1165,8 @@ namespace Bakalárska_práca
         private System.Windows.Forms.ToolStripButton toolStripButton10;
         private System.Windows.Forms.ToolStripButton toolStripButton11;
         private System.Windows.Forms.ToolStripButton toolStripButton12;
+        private System.Windows.Forms.ToolStripButton toolStripButton13;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 

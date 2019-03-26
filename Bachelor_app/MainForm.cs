@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bachelor_app.Manager;
 using Bakalárska_práca.Manager;
@@ -32,7 +31,7 @@ namespace Bakalárska_práca
             displayManager = new DisplayManager(this, fileManager);
 
             stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
-            structureFromMotionManager = new SfM(fileManager, displayManager,this);
+            structureFromMotionManager = new SfM(fileManager, displayManager, this);
 
             mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager);
 
@@ -73,11 +72,11 @@ namespace Bakalárska_práca
                 colors.SetNumberOfComponents(3);
                 colors.SetName("Colors");
 
-                    // Read point
-                    while (!string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
-                    {
-                        var header = sLineBuffer;
-                    }
+                // Read point
+                while (!string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
+                {
+                    var header = sLineBuffer;
+                }
 
                 while (!sr.EndOfStream)
                 {
@@ -351,10 +350,13 @@ namespace Bakalárska_práca
 
         private void richTextBox_TextChanged(object sender, EventArgs e)
         {
-            // set the current caret position to the end
             richTextBox1.SelectionStart = richTextBox1.Text.Length;
-            // scroll it automatically
             richTextBox1.ScrollToCaret();
+        }
+
+        private void toolStripButton13_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Text = "";
         }
     }
 }
