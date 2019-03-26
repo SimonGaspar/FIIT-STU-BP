@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Bachelor_app.Model;
 using Bakalárska_práca.Enumerate;
@@ -9,7 +10,6 @@ namespace Bakalárska_práca.Manager
     public class FileManager
     {
         private MainForm _winForm;
-
 
         public ListViewerModel listViewerModel = new ListViewerModel();
 
@@ -79,16 +79,21 @@ namespace Bakalárska_práca.Manager
 
         public void AddInputFileToList(InputFileModel inputFile, List<InputFileModel> listOfInput, ImageList imageList, ListView listView)
         {
-            imageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
-
-            var listItem = new ListViewItem(inputFile.fileInfo.Name, imageList.Images.IndexOfKey(inputFile.fileInfo.Name))
+            if (listView.InvokeRequired)
+                listView.Invoke((Action) delegate { AddInputFileToList(inputFile, listOfInput, imageList, listView); });
+            else
             {
-                ImageKey = inputFile.fileInfo.Name
-            };
+                imageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
 
-            listOfInput.Add(inputFile);
+                var listItem = new ListViewItem(inputFile.fileInfo.Name, imageList.Images.IndexOfKey(inputFile.fileInfo.Name))
+                {
+                    ImageKey = inputFile.fileInfo.Name
+                };
 
-            listView.Items.Add(listItem);
+                listOfInput.Add(inputFile);
+
+                listView.Items.Add(listItem);
+            }
         }
     }
 }
