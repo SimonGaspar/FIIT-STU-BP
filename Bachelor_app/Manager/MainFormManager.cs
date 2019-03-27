@@ -113,8 +113,8 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             _fileManager.ListViewerDisplay = EnumExtension.ReturnEnumValue<EListViewGroup>(currentItem.SelectedItem.ToString());
             _winForm.ListViews.ForEach(x => x.Visible = false);
-            if((int)_fileManager.ListViewerDisplay< _winForm.ListViews.Count)
-            _winForm.ListViews[(int)_fileManager.ListViewerDisplay].Visible = true;
+            if ((int)_fileManager.ListViewerDisplay < _winForm.ListViews.Count)
+                _winForm.ListViews[(int)_fileManager.ListViewerDisplay].Visible = true;
         }
 
         public void RemoveFromListView()
@@ -163,6 +163,7 @@ namespace Bachelor_app.Manager
                 case EFeaturesDetector.FAST: tempItem = new FAST(); break;
                 case EFeaturesDetector.FREAK: tempItem = new FREAK(); break;
                 case EFeaturesDetector.BRIEF: tempItem = new BRIEF(); break;
+                case EFeaturesDetector.CudaORB: tempItem = new CudaOrientedFastAndRotatedBrief(); break;
             }
 
             _sfmManager._detector = tempItem;
@@ -181,6 +182,7 @@ namespace Bachelor_app.Manager
                 case EFeaturesDescriptor.FAST: tempItem = new FAST(); break;
                 case EFeaturesDescriptor.FREAK: tempItem = new FREAK(); break;
                 case EFeaturesDescriptor.BRIEF: tempItem = new BRIEF(); break;
+                case EFeaturesDescriptor.CudaORB: tempItem = new CudaOrientedFastAndRotatedBrief(); break;
             }
 
             _sfmManager._descriptor = tempItem;

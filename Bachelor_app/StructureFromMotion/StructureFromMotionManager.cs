@@ -43,9 +43,6 @@ namespace Bakalárska_práca
         private DisplayManager displayManager;
         private MainForm _winForm;
 
-        private static readonly object locker = new object();
-        private static SemaphoreSlim semaphore = new SemaphoreSlim(1,1);
-
         public SfM(FileManager fileManager, DisplayManager displayManager, MainForm winForm)
         {
 
@@ -98,7 +95,7 @@ namespace Bakalárska_práca
             var iterMatches = FoundedMatches.Count;
             countInputFile = DetectedKeyPoints.Count;
 
-            Parallel.For(0,listOfInput.Count, x => FindKeypoint(countInputFile+x,listOfInput[x], detector));
+            Parallel.For(0, listOfInput.Count, x => FindKeypoint(countInputFile + x, listOfInput[x], detector));
             Parallel.For(iter, DetectedKeyPoints.Count, x => ComputeDescriptor(DetectedKeyPoints[x], descriptor));
 
             Parallel.For(iter, ComputedDescriptors.Count, index =>
@@ -153,7 +150,7 @@ namespace Bakalárska_práca
             //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
             countInputFile = 0;
 
-            Parallel.For(0,listOfInput.Count, x => { FindKeypoint(countInputFile + x, listOfInput[x], detector); });
+            Parallel.For(0, listOfInput.Count, x => { FindKeypoint(countInputFile + x, listOfInput[x], detector); });
             Parallel.ForEach(DetectedKeyPoints, x => ComputeDescriptor(x.Value, descriptor));
 
             Parallel.For(2, ComputedDescriptors.Count, index =>
@@ -216,18 +213,14 @@ namespace Bakalárska_práca
 
             var matches = new VectorOfVectorOfDMatch();
 
-            lock (locker)
-            {
-                matcher.Add(leftDescriptor.Descriptors);
-                matcher.Match(rightDescriptor.Descriptors, matches);
-            }
+            matcher.Match(leftDescriptor.Descriptors, rightDescriptor.Descriptors, matches);
 
             WindowsFormHelper.AddLogToConsole(
                 $"FINISH computing matches for: \n" +
                 $"\t{leftDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n" +
                 $"\t{rightDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n"
                 );
-            
+
 
             MDMatch[][] matchesArray = matches.ToArrayOfArray();
             foundedMatch.MatchesList = matchesArray.ToList();
@@ -365,7 +358,7 @@ namespace Bakalárska_práca
 
 
             if (AddToList)
-                ComputedDescriptors.Add(keypoint.ID,descriptorNode);
+                ComputedDescriptors.Add(keypoint.ID, descriptorNode);
 
             if (SaveOnDisk)
                 SaveSiftFile(descriptorNode);
@@ -410,7 +403,7 @@ namespace Bakalárska_práca
             var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.fileInfo.FullName));
 
             if (AddToList)
-                DetectedKeyPoints.Add(ID,new KeyPointModel()
+                DetectedKeyPoints.Add(ID, new KeyPointModel()
                 {
                     DetectedKeyPoints = new VectorOfKeyPoint(detectedKeyPoints),
                     InputFile = inputFile,

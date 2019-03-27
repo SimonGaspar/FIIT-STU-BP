@@ -11,6 +11,7 @@ namespace Bakalárska_práca.StructureFromMotion
         ORB,
         FAST,
         FREAK,
-        BRIEF
+        BRIEF,
+        CudaORB
     }
 }

@@ -5,6 +5,7 @@
         ORB,
         FAST,
         FREAK,
-        BRIEF
+        BRIEF,
+        CudaORB
     }
 }
