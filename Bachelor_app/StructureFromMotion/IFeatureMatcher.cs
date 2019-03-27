@@ -1,17 +1,13 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bakalárska_práca.StructureFromMotion
 {
     public interface IFeatureMatcher
     {
-        void Add(Mat Descriptor);
-        void Match(Mat Descriptor, VectorOfVectorOfDMatch matches);
+        void Add(IInputArray Descriptor);
+        //void Match(Mat Descriptor, VectorOfVectorOfDMatch matches);
+        void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches);
 
         void UpdateModel<T>(T model);
         void ShowSettingForm();

@@ -9,41 +9,37 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
 {
     public class CudaBruteForce : IFeatureMatcher
     {
-        CudaBFMatcher _cudaBruteForceMatcher = new CudaBFMatcher(DistanceType.Hamming);
+        //CudaBFMatcher _cudaBruteForceMatcher = new CudaBFMatcher(DistanceType.Hamming);
         private CudaBruteForceForm _windowsForm;
         private CudaBruteForceModel model = new CudaBruteForceModel();
-        private GpuMat trainDescriptor;
-        private Mat queryDescriptor;
 
         public CudaBruteForce()
         {
             UpdateModel(model);
         }
 
-        public void Add(Mat Descriptor)
+        public void Add(IInputArray Descriptor)
         {
-            trainDescriptor = new GpuMat(Descriptor);
         }
 
-        public void Match(Mat Descriptor, VectorOfVectorOfDMatch matches)
+        public void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            queryDescriptor = Descriptor;
-            _cudaBruteForceMatcher.Add(trainDescriptor);
-            _cudaBruteForceMatcher.KnnMatch(new GpuMat(queryDescriptor),trainDescriptor, matches, 1);
+            var _cudaBruteForceMatcher = new CudaBFMatcher(DistanceType.Hamming);
+            _cudaBruteForceMatcher.KnnMatch(queryDescriptors, trainDescriptors, matches, 1);
         }
 
         public void ShowSettingForm()
         {
-            _windowsForm = new CudaBruteForceForm(this);
-            _windowsForm.Show();
+            //_windowsForm = new CudaBruteForceForm(this);
+            //_windowsForm.Show();
         }
 
         public void UpdateModel<T>(T model)
         {
-            this.model = model as CudaBruteForceModel;
-            _cudaBruteForceMatcher = new CudaBFMatcher(
-                this.model.Type
-                );
+            //this.model = model as CudaBruteForceModel;
+            //_cudaBruteForceMatcher = new CudaBFMatcher(
+            //    this.model.Type
+            //    );
         }
     }
 }

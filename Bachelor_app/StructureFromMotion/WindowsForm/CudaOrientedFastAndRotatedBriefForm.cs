@@ -8,26 +8,26 @@ using static Emgu.CV.Features2D.ORBDetector;
 
 namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
-    public partial class OrientedFastAndRotatedBriefForm : Form
+    public partial class CudaOrientedFastAndRotatedBriefForm : Form
     {
-        OrientedFastAndRotatedBrief orb;
-        public OrientedFastAndRotatedBriefModel defaultModel = new OrientedFastAndRotatedBriefModel();
+        CudaOrientedFastAndRotatedBrief _cudaORB;
+        public CudaOrientedFastAndRotatedBriefModel defaultModel = new CudaOrientedFastAndRotatedBriefModel();
 
-        public OrientedFastAndRotatedBriefForm(OrientedFastAndRotatedBrief orientedFastAndRotatedBrief)
+        public CudaOrientedFastAndRotatedBriefForm(CudaOrientedFastAndRotatedBrief cudaOrientedFastAndRotatedBrief)
         {
-            orb = orientedFastAndRotatedBrief;
+            _cudaORB = cudaOrientedFastAndRotatedBrief;
             InitializeComponent();
             InitializeStringForComponents();
         }
 
         private void GetPropertiesAndSetModel()
         {
-            OrientedFastAndRotatedBriefModel model = null;
+            CudaOrientedFastAndRotatedBriefModel model = null;
             try
             {
                 var type = Enum.GetValues(typeof(ScoreType)).Cast<ScoreType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
 
-                model = new OrientedFastAndRotatedBriefModel()
+                model = new CudaOrientedFastAndRotatedBriefModel()
                 {
                     NumberOfFeatures = int.Parse(textBox1.Text),
                     ScaleFactor = float.Parse(textBox2.Text),
@@ -37,9 +37,11 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                     WTK_A = int.Parse(textBox6.Text),
                     PatchSize = int.Parse(textBox7.Text),
                     FastThreshold = int.Parse(textBox8.Text),
-                    ScoreType = type
+                    ScoreType = type,
+                    BlurForDescriptor = checkBox1.Checked
                 };
-                orb.UpdateModel(model);
+
+                _cudaORB.UpdateModel(model);
 
                 this.Close();
 
@@ -67,6 +69,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.textBox6.Text = defaultModel.WTK_A.ToString();
             this.textBox7.Text = defaultModel.PatchSize.ToString();
             this.textBox8.Text = defaultModel.FastThreshold.ToString();
+            this.checkBox1.Checked = defaultModel.BlurForDescriptor;
         }
 
         private void button1_Click(object sender, EventArgs e)

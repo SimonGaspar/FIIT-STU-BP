@@ -1,4 +1,5 @@
-﻿using Bachelor_app.StructureFromMotion;
+﻿using System.Threading;
+using Bachelor_app.StructureFromMotion;
 using Bachelor_app.StructureFromMotion.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Features2D;
@@ -11,21 +12,25 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         BFMatcher _bruteForceMatcher;
         private BruteForceForm _windowsForm;
         private BruteForceModel model = new BruteForceModel();
+        private static object locker = new object();
 
         public BruteForce()
         {
             UpdateModel(model);
         }
 
-        public void Add(Mat Descriptor)
+        public void Add(IInputArray Descriptor)
         {
             _bruteForceMatcher.Add(Descriptor);
         }
 
-        public void Match(Mat Descriptor, VectorOfVectorOfDMatch matches)
+        public void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            _bruteForceMatcher.KnnMatch(Descriptor, matches, 1, null);
+            Monitor.Enter(locker);
+            Add(trainDescriptors);
+            _bruteForceMatcher.KnnMatch(queryDescriptors, matches, 1, null);
             _bruteForceMatcher.Clear();
+            Monitor.Exit(locker);
         }
 
         public void ShowSettingForm()
