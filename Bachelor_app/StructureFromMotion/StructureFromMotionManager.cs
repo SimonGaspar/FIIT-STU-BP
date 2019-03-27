@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Extension;
@@ -42,6 +41,8 @@ namespace Bakalárska_práca
         private FileManager fileManager;
         private DisplayManager displayManager;
         private MainForm _winForm;
+
+        private static readonly object locker = new object();
 
         public SfM(FileManager fileManager, DisplayManager displayManager, MainForm winForm)
         {
