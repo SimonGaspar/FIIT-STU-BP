@@ -4,34 +4,48 @@ using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
+using System;
 
 namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
 {
     public class CudaOrientedFastAndRotatedBrief : IFeatureDetector, IFeatureDescriptor
     {
-        CudaORBDetector _cudaORB;
         private CudaOrientedFastAndRotatedBriefForm _windowsForm;
         private CudaOrientedFastAndRotatedBriefModel model = new CudaOrientedFastAndRotatedBriefModel();
 
         public CudaOrientedFastAndRotatedBrief()
         {
-            model.NumberOfFeatures = 200000;
-            UpdateModel(model);
+            model.NumberOfFeatures = 30000;
         }
 
         public Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
-            Mat result = new Mat();
-            Mat image = new Mat(keyPoints.InputFile.fileInfo.FullName);
-            _cudaORB.Compute(image, keyPoints.DetectedKeyPoints, result);
-            return result;
+            var cudaORB = CreateDetector();
+            var mat = new Mat(keyPoints.InputFile.fileInfo.FullName);
+            Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
+            GpuMat gpumat = new GpuMat(image);
+
+            GpuMat result = new GpuMat();
+            cudaORB.Compute(gpumat, keyPoints.DetectedKeyPoints, result);
+            var returnResult = result.ToMat();
+            gpumat.Dispose();
+            result.Dispose();
+            cudaORB.Dispose();
+            return returnResult;
         }
 
-        public MKeyPoint[] DetectKeyPoints(IInputArray image)
+        public MKeyPoint[] DetectKeyPoints(IInputArray input)
         {
+            var cudaORB = CreateDetector();
+            var mat = input as Mat;
+            Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
             MKeyPoint[] result;
-            result = _cudaORB.Detect(image);
+            GpuMat gpumat = new GpuMat(image);
 
+
+            result = cudaORB.Detect(gpumat);
+            gpumat.Dispose();
+            cudaORB.Dispose();
             return result;
         }
 
@@ -44,7 +58,11 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
         public void UpdateModel<T>(T model)
         {
             this.model = model as CudaOrientedFastAndRotatedBriefModel;
-            _cudaORB = new CudaORBDetector(
+            
+        }
+
+        public CudaORBDetector CreateDetector() {
+            var _cudaORB = new CudaORBDetector(
                 this.model.NumberOfFeatures,
                 this.model.ScaleFactor,
                 this.model.NLevels,
@@ -56,6 +74,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
                 this.model.FastThreshold,
                 this.model.BlurForDescriptor
                 );
+            return _cudaORB;
         }
     }
 }

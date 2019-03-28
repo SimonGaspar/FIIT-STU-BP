@@ -154,6 +154,13 @@ namespace Bakalárska_práca
             Parallel.For(0, listOfInput.Count, x => { FindKeypoint(countInputFile + x, listOfInput[x], detector); });
             Parallel.ForEach(DetectedKeyPoints, x => ComputeDescriptor(x.Value, descriptor));
 
+            //for (int m = 2; m < ComputedDescriptors.Count; m++)
+            //    for (int n = m - 2; n < m && n >= 0; n++)
+            //    {
+            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+            //    }
+
+
             Parallel.For(2, ComputedDescriptors.Count, index =>
              {
                  Parallel.For(index - 2, index, i =>

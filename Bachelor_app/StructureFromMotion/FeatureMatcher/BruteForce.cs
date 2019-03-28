@@ -9,7 +9,6 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
 {
     public class BruteForce : IFeatureMatcher
     {
-        BFMatcher _bruteForceMatcher;
         private BruteForceForm _windowsForm;
         private BruteForceModel model = new BruteForceModel();
         private static object locker = new object();
@@ -18,19 +17,13 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         {
             UpdateModel(model);
         }
-
-        public void Add(IInputArray Descriptor)
-        {
-            _bruteForceMatcher.Add(Descriptor);
-        }
-
+        
         public void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            Monitor.Enter(locker);
-            Add(trainDescriptors);
+            var _bruteForceMatcher = CreateMatcher();
+            _bruteForceMatcher.Add(trainDescriptors);
             _bruteForceMatcher.KnnMatch(queryDescriptors, matches, 1, null);
             _bruteForceMatcher.Clear();
-            Monitor.Exit(locker);
         }
 
         public void ShowSettingForm()
@@ -42,10 +35,16 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         public void UpdateModel<T>(T model)
         {
             this.model = model as BruteForceModel;
-            _bruteForceMatcher = new BFMatcher(
-                this.model.Type,
-                this.model.CrossCheck
-                );
+           
+        }
+
+        public BFMatcher CreateMatcher()
+        {
+            var _bruteForceMatcher = new BFMatcher(
+               this.model.Type,
+               this.model.CrossCheck
+               );
+            return _bruteForceMatcher;
         }
     }
 }

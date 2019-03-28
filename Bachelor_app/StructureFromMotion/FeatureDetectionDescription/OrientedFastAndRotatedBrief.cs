@@ -9,13 +9,12 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
 {
     public class OrientedFastAndRotatedBrief : IFeatureDetector, IFeatureDescriptor
     {
-        ORBDetector _orb;
         private OrientedFastAndRotatedBriefForm _windowsForm;
         private OrientedFastAndRotatedBriefModel model = new OrientedFastAndRotatedBriefModel();
 
         public OrientedFastAndRotatedBrief()
         {
-            model.NumberOfFeatures = 200000;
+            model.NumberOfFeatures = 30000;
             UpdateModel(model);
         }
 
@@ -23,6 +22,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
         {
             Mat result = new Mat();
             Mat image = new Mat(keyPoints.InputFile.fileInfo.FullName);
+            var _orb = CreateDetector();
             _orb.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;
         }
@@ -30,6 +30,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
         public MKeyPoint[] DetectKeyPoints(IInputArray image)
         {
             MKeyPoint[] result;
+            var _orb = CreateDetector();
             result = _orb.Detect(image);
 
             return result;
@@ -44,7 +45,10 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
         public void UpdateModel<T>(T model)
         {
             this.model = model as OrientedFastAndRotatedBriefModel;
-            _orb = new ORBDetector(
+        }
+
+        public ORBDetector CreateDetector() {
+            var _orb = new ORBDetector(
                 this.model.NumberOfFeatures,
                 this.model.ScaleFactor,
                 this.model.NLevels,
@@ -55,6 +59,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
                 this.model.PatchSize,
                 this.model.FastThreshold
                 );
+            return _orb;
         }
     }
 }

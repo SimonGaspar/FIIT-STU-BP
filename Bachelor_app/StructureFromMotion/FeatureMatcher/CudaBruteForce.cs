@@ -17,15 +17,16 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         {
             UpdateModel(model);
         }
-
-        public void Add(IInputArray Descriptor)
-        {
-        }
-
+        
         public void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            var _cudaBruteForceMatcher = new CudaBFMatcher(DistanceType.Hamming);
-            _cudaBruteForceMatcher.KnnMatch(queryDescriptors, trainDescriptors, matches, 1);
+            var _cudaBruteForceMatcher = CreateMatcher();
+            var left = new GpuMat(queryDescriptors as Mat);
+            var right = new GpuMat(trainDescriptors as Mat);
+            _cudaBruteForceMatcher.KnnMatch(right, left, matches, 1);
+            left.Dispose();
+            right.Dispose();
+            _cudaBruteForceMatcher.Dispose();
         }
 
         public void ShowSettingForm()
@@ -36,10 +37,15 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
 
         public void UpdateModel<T>(T model)
         {
-            //this.model = model as CudaBruteForceModel;
-            //_cudaBruteForceMatcher = new CudaBFMatcher(
-            //    this.model.Type
-            //    );
+            this.model = model as CudaBruteForceModel;
+        }
+
+        public CudaBFMatcher CreateMatcher()
+        {
+            var _cudaBruteForceMatcher = new CudaBFMatcher(
+               this.model.Type
+               );
+            return _cudaBruteForceMatcher;
         }
     }
 }
