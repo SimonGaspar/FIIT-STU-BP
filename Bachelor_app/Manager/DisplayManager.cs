@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Bachelor_app.Manager;
 using Bakalárska_práca.Enumerate;
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -17,11 +18,13 @@ namespace Bakalárska_práca.Manager
 
         private FileManager _fileManager;
         private MainForm _winForm;
+        private CameraManager _cameraManager;
 
-        public DisplayManager(MainForm WinForm, FileManager FileManager)
+        public DisplayManager(MainForm WinForm, FileManager FileManager, CameraManager CameraManager)
         {
             this._winForm = WinForm;
             this._fileManager = FileManager;
+            this._cameraManager = CameraManager;
         }
 
         public void DisplayImageFromListView(ListViewItem item)
@@ -53,8 +56,18 @@ namespace Bakalárska_práca.Manager
             switch (typeOfItem)
             {
                 case EDisplayItem.DepthMap: imageBox.Image = _fileManager.listViewerModel._lastDepthMapImage; break;
-                case EDisplayItem.LeftCamera: break;
-                case EDisplayItem.RightCamera: break;
+                case EDisplayItem.LeftCamera:
+                    Mat inputLeft = new Mat();
+                    _cameraManager.LeftCamera.camera.Grab();
+                    _cameraManager.LeftCamera.camera.Retrieve(inputLeft);
+                    imageBox.Image = new Image<Bgr,byte>(inputLeft.Bitmap);
+                    break;
+                case EDisplayItem.RightCamera:
+                    Mat inputRight = new Mat();
+                    _cameraManager.RightCamera.camera.Grab();
+                    _cameraManager.RightCamera.camera.Retrieve(inputRight);
+                    imageBox.Image = new Image<Bgr, byte>(inputRight.Bitmap);
+                    break;
                 case EDisplayItem.Stack: imageBox.Image = _fileManager.listViewerModel._lastImage; break;
                 case EDisplayItem.KeyPoints: imageBox.Image = _fileManager.listViewerModel._lastDrawnKeypoint; break;
                 case EDisplayItem.DescriptorsMatches: imageBox.Image = _fileManager.listViewerModel._lastDrawnMatches; break;

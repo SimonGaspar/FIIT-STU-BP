@@ -21,8 +21,8 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         public void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
             var _bruteForceMatcher = CreateMatcher();
-            _bruteForceMatcher.Add(trainDescriptors);
-            _bruteForceMatcher.KnnMatch(queryDescriptors, matches, 1, null);
+            _bruteForceMatcher.Add(queryDescriptors);
+            _bruteForceMatcher.KnnMatch(trainDescriptors, matches, 1, null);
             _bruteForceMatcher.Clear();
         }
 

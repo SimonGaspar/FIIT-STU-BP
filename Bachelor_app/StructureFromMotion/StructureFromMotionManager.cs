@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Bachelor_app.Enumerate;
+using Bachelor_app.Manager;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Extension;
 using Bakalárska_práca.Helper;
@@ -36,6 +37,7 @@ namespace Bakalárska_práca
         public bool _useParallel;
         float ms_MAX_DIST = 0, ms_MIN_DIST = float.MaxValue;
         int countInputFile = 0;
+        int countCameraInput = 0;
 
         private SortedList<int, KeyPointModel> DetectedKeyPoints;
         private SortedList<int, DescriptorModel> ComputedDescriptors;
@@ -44,10 +46,11 @@ namespace Bakalárska_práca
         private FileManager fileManager;
         private DisplayManager displayManager;
         private MainForm _winForm;
-
+        private CameraManager cameraManager;
+        public bool stopSFM = false;
         private static readonly object locker = new object();
 
-        public SfM(FileManager fileManager, DisplayManager displayManager, MainForm winForm)
+        public SfM(FileManager fileManager, DisplayManager displayManager, MainForm winForm,CameraManager cameraManager)
         {
 
             Directory.CreateDirectory(tempDirectory);
@@ -58,10 +61,12 @@ namespace Bakalárska_práca
             this.fileManager = fileManager;
             this.displayManager = displayManager;
             this._winForm = winForm;
+            this.cameraManager = cameraManager;
         }
 
         public void StartSFM(bool ContinueSFM = false)
         {
+            stopSFM = false;
             var list = ContinueSFM ? fileManager.listViewerModel.BasicStack.Where(x => x.UseInSFM == false).ToList() : fileManager.listViewerModel.BasicStack;
 
             if (!ContinueSFM)
@@ -95,49 +100,70 @@ namespace Bakalárska_práca
 
         public void ComputeSfM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
         {
-            //foreach (var item in listOfInput)
-            //{
-            //    FindKeypoint(item, detector);
-            //}
-
-            //foreach (var item in DetectedKeyPoints)
-            //{
-            //    ComputeDescriptor(item, descriptor);
-            //}
-
-            //for (int m = 0; m < ComputedDescriptors.Count; m++)
-            //    for (int n = m + 1; n < ComputedDescriptors.Count; n++)
-            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
-
-            //for (int m = 2; m < ComputedDescriptors.Count; m++)
-            //    for (int n = m - 2; n < m && n >= 0; n++)
-            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
             countInputFile = 0;
             DetectedKeyPoints.Clear();
             ComputedDescriptors.Clear();
             FoundedMatches.Clear();
 
-            StartDetectingKeyPoint(0,listOfInput,detector);
-            StartComputingDescriptor(0, descriptor);
-            StartMatching(0, matcher);
+            switch (fileManager._inputType) {
+                case EInput.ListView:
+                    StartDetectingKeyPoint(0, listOfInput, detector);
+                    StartComputingDescriptor(0, descriptor);
+                    StartMatching(0, matcher);
+                    break;
+                case EInput.ConnectedStereoCamera:
+
+                    countInputFile = DetectedKeyPoints.Count;
+                    listOfInput = GetInputFromStereoCamera(countInputFile);
 
 
-            //Parallel.For(2, ComputedDescriptors.Count, index =>
-            // {
-            //     Parallel.For(index - 2, index, i =>
-            //     {
-            //         FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
-            //     });
-            // });
+                    StartDetectingKeyPoint(countInputFile, listOfInput, detector);
+                    StartComputingDescriptor(countInputFile, descriptor);
+                    while (!stopSFM)
+                    {
+                        
+                        countInputFile = DetectedKeyPoints.Count;
+                        listOfInput = GetInputFromStereoCamera(countInputFile);
 
-            //for (int m = 2; m < ComputedDescriptors.Count; m++)
-            //    Parallel.For(m - 2, m, index =>
-            //    {
-            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[index]);
-            //    });
+
+                        StartDetectingKeyPoint(countInputFile, listOfInput, detector);
+                        StartComputingDescriptor(countInputFile, descriptor);
+                        StartMatching(countInputFile, matcher);
+                    }
+                    break;
+            }
 
             WriteAllMatches(FoundedMatches);
             RunVisualSFM();
+        }
+
+        private List<InputFileModel> GetInputFromStereoCamera(int countInputFile)
+        {
+            cameraManager.LeftCamera.camera.Grab();
+            cameraManager.RightCamera.camera.Grab();
+            Mat LeftImage = new Mat();
+            Mat RightImage = new Mat();
+            cameraManager.LeftCamera.camera.Retrieve(LeftImage);
+            cameraManager.LeftCamera.camera.Retrieve(RightImage);
+            LeftImage.Save(Path.Combine($@"{tempDirectory}", $"Left_{countInputFile}.JPG"));
+            RightImage.Save(Path.Combine($@"{tempDirectory}", $"Right_{countInputFile}.JPG"));
+
+
+            var inputFileLeft = new InputFileModel(Path.Combine($@"{tempDirectory}", $"Left_{countInputFile}.JPG"));
+            var imageList = _winForm.ImageList[(int)EListViewGroup.LeftCameraStack];
+            var listViewer = _winForm.ListViews[(int)EListViewGroup.LeftCameraStack];
+            fileManager.AddInputFileToList(inputFileLeft, fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack], imageList, listViewer);
+
+            var inputFileRight = new InputFileModel(Path.Combine($@"{tempDirectory}", $"Right_{countInputFile}.JPG"));
+            imageList = _winForm.ImageList[(int)EListViewGroup.RightCameraStack];
+            listViewer = _winForm.ListViews[(int)EListViewGroup.RightCameraStack];
+            fileManager.AddInputFileToList(inputFileLeft, fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.RightCameraStack], imageList, listViewer);
+
+            var returnList = new List<InputFileModel>();
+            returnList.Add(inputFileLeft);
+            returnList.Add(inputFileRight);
+
+            return returnList;
         }
 
         private void StartMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
@@ -230,21 +256,12 @@ namespace Bakalárska_práca
 
         public void ContinueInComputingSFM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
         {
-            var iter = DetectedKeyPoints.Count;
             var iterMatches = FoundedMatches.Count;
             countInputFile = DetectedKeyPoints.Count;
 
             StartDetectingKeyPoint(countInputFile, listOfInput, detector);
-            StartComputingDescriptor(iter, descriptor);
-            StartMatching(iter, matcher);
-
-            
-
-            //for (int m = iter; m < ComputedDescriptors.Count; m++)
-            //    Parallel.For(m - 2, m, index =>
-            //    {
-            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[index]);
-            //    });
+            StartComputingDescriptor(countInputFile, descriptor);
+            StartMatching(countInputFile, matcher);
 
             WriteAddedImages(listOfInput);
             AppendMatches(FoundedMatches, iterMatches);

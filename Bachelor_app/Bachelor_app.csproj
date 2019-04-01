@@ -312,6 +312,7 @@
     <Content Include="CUDA_EULA.txt" />
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\Stop_Freepik.png" />
     <None Include="Resources\Parallel_Freepik.png" />
     <None Include="Resources\ErasingFile_Freepik.png" />
     <None Include="Resources\Repeat_Freepik.png" />

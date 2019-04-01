@@ -31,10 +31,10 @@ namespace Bakalárska_práca
 
             cameraManager = new CameraManager(this);
             fileManager = new FileManager(this,cameraManager);
-            displayManager = new DisplayManager(this, fileManager);
+            displayManager = new DisplayManager(this, fileManager,cameraManager);
 
             stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
-            structureFromMotionManager = new SfM(fileManager, displayManager, this);
+            structureFromMotionManager = new SfM(fileManager, displayManager, this,cameraManager);
 
 
             mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager, cameraManager);
@@ -378,24 +378,24 @@ namespace Bakalárska_práca
 
         public void SetMaximumProgressBar(string name,int maxValue)
         {
-            if (statusStrip1.InvokeRequired)
-                statusStrip1.Invoke((Action)delegate { SetMaximumProgressBar(name, maxValue); });
-            else
-            {
-                toolStripProgressBar1.Value = 0;
-                toolStripProgressBar1.Maximum = maxValue;
-                toolStripStatusLabel1.Text = name;
-            }
+            //if (statusStrip1.InvokeRequired)
+            //    statusStrip1.Invoke((Action)delegate { SetMaximumProgressBar(name, maxValue); });
+            //else
+            //{
+            //    toolStripProgressBar1.Value = 0;
+            //    toolStripProgressBar1.Maximum = maxValue;
+            //    toolStripStatusLabel1.Text = name;
+            //}
         }
 
         public void IncrementValueProgressBar()
         {
-            if (this.InvokeRequired)
-                this.Invoke((Action)delegate { IncrementValueProgressBar(); });
-            else
-            {
-                this.toolStripProgressBar1.Value++;
-            }
+            //if (this.InvokeRequired)
+            //    this.Invoke((Action)delegate { IncrementValueProgressBar(); });
+            //else
+            //{
+            //    this.toolStripProgressBar1.Value++;
+            //}
         }
 
         private void toolStripComboBox11_SelectedIndexChanged(object sender, EventArgs e)
@@ -411,6 +411,11 @@ namespace Bakalárska_práca
         private void toolStripComboBox10_SelectedIndexChanged(object sender, EventArgs e)
         {
             mainFormManager.SetCamera(sender, e, false);
+        }
+
+        private void toolStripButton15_Click(object sender, EventArgs e)
+        {
+            structureFromMotionManager.stopSFM = true;
         }
     }
 }
