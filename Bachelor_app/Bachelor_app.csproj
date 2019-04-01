@@ -88,6 +88,9 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DirectShowLib, Version=2.1.0.1599, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DirectShowLib.1.0.0\lib\DirectShowLib.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV.UI, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <HintPath>..\packages\EMGU.CV-CUDA.3.4.3.3016\lib\net35\Emgu.CV.UI.dll</HintPath>
     </Reference>
@@ -124,7 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enumerate\EDisplayItem.cs" />
+    <Compile Include="Enumerate\EInput.cs" />
     <Compile Include="Enumerate\EListViewGroup.cs" />
+    <Compile Include="Enumerate\EMatchingType.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
     <Compile Include="Extension\ImageExtension.cs" />
     <Compile Include="Extension\MatExtension.cs" />
@@ -140,10 +145,12 @@
     </Compile>
     <Compile Include="Helper\MenuHelper.cs" />
     <Compile Include="Helper\WindowsFormHelper.cs" />
+    <Compile Include="Manager\CameraManager.cs" />
     <Compile Include="Manager\DisplayManager.cs" />
     <Compile Include="Manager\FileManager.cs" />
     <Compile Include="Manager\MainFormManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
+    <Compile Include="Model\CameraModel.cs" />
     <Compile Include="Model\DescriptorModel.cs" />
     <Compile Include="Model\DescriptorsMatchModel.cs" />
     <Compile Include="Model\InputFileModel.cs" />
@@ -305,6 +312,7 @@
     <Content Include="CUDA_EULA.txt" />
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\Parallel_Freepik.png" />
     <None Include="Resources\ErasingFile_Freepik.png" />
     <None Include="Resources\Repeat_Freepik.png" />
     <None Include="Resources\PlayButton_Roundicons.png" />

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bachelor_app.Enumerate;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Extension;
 using Bakalárska_práca.Helper;
@@ -31,6 +32,8 @@ namespace Bakalárska_práca
         public IFeatureDetector _detector;
         public IFeatureDescriptor _descriptor;
         public IFeatureMatcher _matcher;
+        public EMatchingType _matchingType;
+        public bool _useParallel;
         float ms_MAX_DIST = 0, ms_MIN_DIST = float.MaxValue;
         int countInputFile = 0;
 
@@ -90,46 +93,6 @@ namespace Bakalárska_práca
             }
         }
 
-        public void ContinueInComputingSFM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
-        {
-            var iter = DetectedKeyPoints.Count;
-            var iterMatches = FoundedMatches.Count;
-            countInputFile = DetectedKeyPoints.Count;
-
-            Parallel.For(0, listOfInput.Count, x => FindKeypoint(countInputFile + x, listOfInput[x], detector));
-            Parallel.For(iter, DetectedKeyPoints.Count, x => ComputeDescriptor(DetectedKeyPoints[x], descriptor));
-
-            Parallel.For(iter, ComputedDescriptors.Count, index =>
-            {
-                Parallel.For(index - 2, index, i =>
-                {
-                    FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
-                });
-            });
-
-            //for (int m = iter; m < ComputedDescriptors.Count; m++)
-            //    Parallel.For(m - 2, m, index =>
-            //    {
-            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[index]);
-            //    });
-
-            WriteAddedImages(listOfInput);
-            AppendMatches(FoundedMatches, iterMatches);
-            ContinueVisualSFM();
-        }
-
-        private void WriteAddedImages(List<InputFileModel> listOfInput)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var node in listOfInput)
-            {
-                sb.AppendLine(Path.Combine(tempDirectory, node.fileInfo.Name));
-            }
-
-            File.WriteAllText(Path.Combine(tempDirectory, "Result.nvm.txt"), sb.ToString());
-        }
-
         public void ComputeSfM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
         {
             //foreach (var item in listOfInput)
@@ -150,24 +113,22 @@ namespace Bakalárska_práca
             //    for (int n = m - 2; n < m && n >= 0; n++)
             //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
             countInputFile = 0;
+            DetectedKeyPoints.Clear();
+            ComputedDescriptors.Clear();
+            FoundedMatches.Clear();
 
-            Parallel.For(0, listOfInput.Count, x => { FindKeypoint(countInputFile + x, listOfInput[x], detector); });
-            Parallel.ForEach(DetectedKeyPoints, x => ComputeDescriptor(x.Value, descriptor));
-
-            //for (int m = 2; m < ComputedDescriptors.Count; m++)
-            //    for (int n = m - 2; n < m && n >= 0; n++)
-            //    {
-            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
-            //    }
+            StartDetectingKeyPoint(0,listOfInput,detector);
+            StartComputingDescriptor(0, descriptor);
+            StartMatching(0, matcher);
 
 
-            Parallel.For(2, ComputedDescriptors.Count, index =>
-             {
-                 Parallel.For(index - 2, index, i =>
-                 {
-                     FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
-                 });
-             });
+            //Parallel.For(2, ComputedDescriptors.Count, index =>
+            // {
+            //     Parallel.For(index - 2, index, i =>
+            //     {
+            //         FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+            //     });
+            // });
 
             //for (int m = 2; m < ComputedDescriptors.Count; m++)
             //    Parallel.For(m - 2, m, index =>
@@ -177,6 +138,141 @@ namespace Bakalárska_práca
 
             WriteAllMatches(FoundedMatches);
             RunVisualSFM();
+        }
+
+        private void StartMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
+        {
+            if(_useParallel)
+            StartParallelMatching(countOfExistedKeypoint, matcher);
+            else
+            StartSequenceMatching(countOfExistedKeypoint, matcher);
+        }
+
+        private void StartSequenceMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
+        {
+            switch (_matchingType)
+            {
+                case EMatchingType.OnePrevious:
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                        for (int n = m - 1; n < m && n >= 0; n++)
+                        {
+                            FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+                        }
+                    break;
+                case EMatchingType.TwoPrevious:
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                        for (int n = m - 2; n < m && n >= 0; n++)
+                        {
+                            FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+                        }
+                    break;
+                case EMatchingType.AllWithAll:
+                    throw new NotImplementedException();
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                        for (int n = m + 1; n < ComputedDescriptors.Count; n++)
+                            FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+                    break;
+            }
+        }
+
+        private void StartParallelMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
+        {
+            switch (_matchingType) {
+                case EMatchingType.OnePrevious:
+                    Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        if (index >= 1)
+                        {
+                            Parallel.For(index - 1, index, i =>
+                            {
+                                FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                            });
+                        }
+                    });
+                    break;
+                case EMatchingType.TwoPrevious:
+                    Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        if (index >= 2)
+                        {
+                            Parallel.For(index - 2, index, i =>
+                            {
+                                FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                            });
+                        }
+                    });
+                    break;
+                case EMatchingType.AllWithAll:
+                    throw new NotImplementedException();
+                    Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        Parallel.For(index +1, ComputedDescriptors.Count, i =>
+                        {
+                            FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                        });
+                    });
+                    break;
+            }
+        }
+
+        private void StartDetectingKeyPoint(int countOfInput, List<InputFileModel> listOfInput, IFeatureDetector detector)
+        {
+            _winForm.SetMaximumProgressBar("Detecting keypoints",listOfInput.Count - countInputFile);
+
+            if(_useParallel)
+            Parallel.For(0, listOfInput.Count, x => { FindKeypoint(countOfInput + x, listOfInput[x], detector); });
+            else
+                for(int i=0;i< listOfInput.Count;i++)
+                    FindKeypoint(countOfInput + i, listOfInput[i], detector);
+
+            _winForm.IncrementValueProgressBar();
+        }
+
+        public void ContinueInComputingSFM(IFeatureDetector detector, IFeatureDescriptor descriptor, IFeatureMatcher matcher, List<InputFileModel> listOfInput)
+        {
+            var iter = DetectedKeyPoints.Count;
+            var iterMatches = FoundedMatches.Count;
+            countInputFile = DetectedKeyPoints.Count;
+
+            StartDetectingKeyPoint(countInputFile, listOfInput, detector);
+            StartComputingDescriptor(iter, descriptor);
+            StartMatching(iter, matcher);
+
+            
+
+            //for (int m = iter; m < ComputedDescriptors.Count; m++)
+            //    Parallel.For(m - 2, m, index =>
+            //    {
+            //        FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[index]);
+            //    });
+
+            WriteAddedImages(listOfInput);
+            AppendMatches(FoundedMatches, iterMatches);
+            ContinueVisualSFM();
+        }
+
+        private void StartComputingDescriptor(int countOfExistedKeyPoint, IFeatureDescriptor descriptor)
+        {
+            _winForm.SetMaximumProgressBar("Computing descriptors",DetectedKeyPoints.Count - countInputFile);
+
+            if (_useParallel)
+                Parallel.For(countOfExistedKeyPoint, DetectedKeyPoints.Count, x => ComputeDescriptor(DetectedKeyPoints[x], descriptor));
+            else
+                for (int i = countOfExistedKeyPoint; i < DetectedKeyPoints.Count; i++)
+                    ComputeDescriptor(DetectedKeyPoints[i], descriptor);
+            _winForm.IncrementValueProgressBar();
+        }
+
+        private void WriteAddedImages(List<InputFileModel> listOfInput)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var node in listOfInput)
+            {
+                sb.AppendLine(Path.Combine(tempDirectory, node.fileInfo.Name));
+            }
+
+            File.WriteAllText(Path.Combine(tempDirectory, "Result.nvm.txt"), sb.ToString());
         }
 
         private void AppendMatches(List<DescriptorsMatchModel> findedMatches, int index)

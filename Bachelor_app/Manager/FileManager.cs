@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using Bachelor_app.Enumerate;
+using Bachelor_app.Manager;
 using Bachelor_app.Model;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Model;
@@ -10,18 +12,21 @@ namespace Bakalárska_práca.Manager
     public class FileManager
     {
         private MainForm _winForm;
+        private CameraManager _cameraManager;
 
         public ListViewerModel listViewerModel = new ListViewerModel();
 
         public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.BasicStack;
+        public EInput _inputType;
 
         public FileManager()
         {
         }
 
-        public FileManager(MainForm WinForm)
+        public FileManager(MainForm WinForm, CameraManager CameraManager)
         {
             this._winForm = WinForm;
+            this._cameraManager = CameraManager;
         }
 
         public void AddToListView()
@@ -51,6 +56,9 @@ namespace Bakalárska_práca.Manager
 
             foreach (ListViewItem fileName in currentListView.SelectedItems)
             {
+                if (listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.fileInfo.Name == fileName.Text).UseInSFM == true)
+                    continue;
+
                 listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.fileInfo.Name == fileName.Text));
 
                 var imageList = _winForm.ImageList[(int)ListViewerDisplay];

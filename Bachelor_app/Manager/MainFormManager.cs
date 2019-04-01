@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
 using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
 using Bakalárska_práca;
@@ -19,14 +20,16 @@ namespace Bachelor_app.Manager
         private FileManager _fileManager;
         private StereoVisionManager _stereoVisionManager;
         private SfM _sfmManager;
+        private CameraManager _cameraManager;
 
-        public MainFormManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager, SfM sfmManager)
+        public MainFormManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager, SfM sfmManager, CameraManager cameraManager)
         {
             this._winForm = WinForm;
             this._displayManager = displayManager;
             this._fileManager = fileManager;
             this._stereoVisionManager = stereoVisionManager;
             this._sfmManager = sfmManager;
+            this._cameraManager = cameraManager;
         }
 
         #region Display views in WinForm
@@ -223,6 +226,42 @@ namespace Bachelor_app.Manager
         {
             _sfmManager.StartSFM(true);
         }
+
+        public void SetMatching(object sender, EventArgs e)
+        {
+            var currentItem = sender as ToolStripComboBox;
+            var enumItem = EnumExtension.ReturnEnumValue<EMatchingType>(currentItem.SelectedItem.ToString());
+            
+            _sfmManager._matchingType = enumItem;
+        }
+
+        public void SetUsingParallel()
+        {
+            _sfmManager._useParallel = _winForm.toolStripButton14.Checked;
+        }
+
+        #endregion
+
+        #region Menu
+        public void SetInputType(object sender, EventArgs e)
+        {
+            var currentItem = sender as ToolStripComboBox;
+            var enumItem = EnumExtension.ReturnEnumValue<EInput>(currentItem.SelectedItem.ToString());
+
+            _fileManager._inputType = enumItem;
+        }
+        #endregion
+
+        #region CameraManager
+        public void SetCamera(object sender, EventArgs e, bool IsLeft)
+        {
+            var currentItem = sender as ToolStripComboBox;
+            if(IsLeft)
+                _cameraManager.SetCameraID(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedText);
+            else
+                _cameraManager.SetCameraID(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedText);
+        }
+
         #endregion
     }
 }

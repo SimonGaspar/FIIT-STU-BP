@@ -19,6 +19,7 @@ namespace Bakalárska_práca
         private StereoVisionManager stereoVisionManager;
         private SfM structureFromMotionManager;
         private MainFormManager mainFormManager;
+        private CameraManager cameraManager;
 
 
         public List<ListView> ListViews = new List<ListView>();
@@ -28,13 +29,15 @@ namespace Bakalárska_práca
         {
             InitializeComponent();
 
-            fileManager = new FileManager(this);
+            cameraManager = new CameraManager(this);
+            fileManager = new FileManager(this,cameraManager);
             displayManager = new DisplayManager(this, fileManager);
 
             stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
             structureFromMotionManager = new SfM(fileManager, displayManager, this);
 
-            mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager);
+
+            mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager, cameraManager);
             WindowsFormHelper.SetWinForm(this);
             
             InitializeStringForComponents();
@@ -356,6 +359,58 @@ namespace Bakalárska_práca
         private void toolStripButton13_Click(object sender, EventArgs e)
         {
             richTextBox1.Text = "";
+        }
+
+        private void toolStripComboBox8_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetMatching(sender, e);
+        }
+
+        private void toolStripButton14_Click(object sender, EventArgs e)
+        {
+            if (toolStripButton14.Checked)
+                toolStripButton14.BackColor = System.Drawing.Color.Black;
+            else
+                toolStripButton14.BackColor = default(System.Drawing.Color);
+
+            mainFormManager.SetUsingParallel();
+        }
+
+        public void SetMaximumProgressBar(string name,int maxValue)
+        {
+            if (statusStrip1.InvokeRequired)
+                statusStrip1.Invoke((Action)delegate { SetMaximumProgressBar(name, maxValue); });
+            else
+            {
+                toolStripProgressBar1.Value = 0;
+                toolStripProgressBar1.Maximum = maxValue;
+                toolStripStatusLabel1.Text = name;
+            }
+        }
+
+        public void IncrementValueProgressBar()
+        {
+            if (this.InvokeRequired)
+                this.Invoke((Action)delegate { IncrementValueProgressBar(); });
+            else
+            {
+                this.toolStripProgressBar1.Value++;
+            }
+        }
+
+        private void toolStripComboBox11_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetInputType(sender, e);
+        }
+
+        private void toolStripComboBox9_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetCamera(sender, e, true);
+        }
+
+        private void toolStripComboBox10_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetCamera(sender, e, false);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Bachelor_app.Extension;
+using Bachelor_app.Manager;
 using Bachelor_app.Resources;
 using Bakalárska_práca.Enumerate;
 using Emgu.CV;
@@ -63,9 +64,6 @@ namespace Bakalárska_práca
             //catch (Exception e) {
             //    Console.WriteLine("");
             //}
-
-
-
             Localizer.InitLocalizedResource("en-EN", "Bachelor_app.Language.Resources.Resources");
 
             Application.EnableVisualStyles();

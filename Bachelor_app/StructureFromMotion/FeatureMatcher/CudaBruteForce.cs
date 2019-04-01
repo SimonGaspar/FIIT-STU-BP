@@ -1,9 +1,11 @@
 ﻿using Bachelor_app.StructureFromMotion;
 using Bachelor_app.StructureFromMotion.WindowsForm;
+using Bakalárska_práca.Helper;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Features2D;
 using Emgu.CV.Util;
+using System.Threading;
 
 namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
 {
@@ -12,6 +14,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         //CudaBFMatcher _cudaBruteForceMatcher = new CudaBFMatcher(DistanceType.Hamming);
         private CudaBruteForceForm _windowsForm;
         private CudaBruteForceModel model = new CudaBruteForceModel();
+        private static object locker = new object();
 
         public CudaBruteForce()
         {
@@ -20,6 +23,9 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         
         public void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
+            Monitor.Enter(locker);
+            WindowsFormHelper.AddLogToConsole("In monitor");
+
             var _cudaBruteForceMatcher = CreateMatcher();
             var left = new GpuMat(queryDescriptors as Mat);
             var right = new GpuMat(trainDescriptors as Mat);
@@ -27,6 +33,8 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
             left.Dispose();
             right.Dispose();
             _cudaBruteForceMatcher.Dispose();
+            WindowsFormHelper.AddLogToConsole("Exit monitor");
+            Monitor.Exit(locker);
         }
 
         public void ShowSettingForm()
