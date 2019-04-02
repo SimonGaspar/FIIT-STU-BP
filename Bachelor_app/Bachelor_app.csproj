@@ -112,6 +112,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -158,6 +159,13 @@
     <Compile Include="Model\ListViewerModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StereoVision\Calibration\CalibrationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StereoVision\Calibration\CalibrationForm.Designer.cs">
+      <DependentUpon>CalibrationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StereoVision\Calibration\CalibrationModel.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\BRIEF.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FREAK.cs" />

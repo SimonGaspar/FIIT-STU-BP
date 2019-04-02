@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Bachelor_app.Manager;
+using Bachelor_app.StereoVision.Calibration;
 using Bakalárska_práca.Helper;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
@@ -416,6 +417,12 @@ namespace Bakalárska_práca
         private void toolStripButton15_Click(object sender, EventArgs e)
         {
             structureFromMotionManager.stopSFM = true;
+        }
+
+        private void toolStripButton16_Click(object sender, EventArgs e)
+        {
+            var x = new CalibrationForm();
+            x.Show();
         }
     }
 }

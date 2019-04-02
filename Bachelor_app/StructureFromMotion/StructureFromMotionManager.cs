@@ -128,13 +128,97 @@ namespace Bakalárska_práca
 
                         StartDetectingKeyPoint(countInputFile, listOfInput, detector);
                         StartComputingDescriptor(countInputFile, descriptor);
-                        StartMatching(countInputFile, matcher);
+                        StartStereoMatching(countInputFile, matcher);
                     }
                     break;
             }
 
             WriteAllMatches(FoundedMatches);
             RunVisualSFM();
+        }
+
+        private void StartStereoMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
+        {
+            if (_useParallel)
+                StartStereoParallelMatching(countOfExistedKeypoint, matcher);
+            else
+                StartStereoSequenceMatching(countOfExistedKeypoint, matcher);
+        }
+
+        private void StartStereoSequenceMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
+        {
+            FindMatches(matcher, ComputedDescriptors[countOfExistedKeypoint-2], ComputedDescriptors[countOfExistedKeypoint-1]);
+
+            switch (_matchingType)
+            {
+                case EMatchingType.OnePrevious:
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                        for (int n = m - (1*2); n < m; n+=2)
+                        {
+                            if(n >= 0)
+                            FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+                        }
+                    break;
+                case EMatchingType.TwoPrevious:
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                        for (int n = m - (2*2); n < m; n+=2)
+                        {
+                            if(n >= 0)
+                            FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+                        }
+                    break;
+                case EMatchingType.AllWithAll:
+                    throw new NotImplementedException();
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                        for (int n = m + 1; n < ComputedDescriptors.Count; n++)
+                            FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+                    break;
+            }
+        }
+
+        private void StartStereoParallelMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
+        {
+            FindMatches(matcher, ComputedDescriptors[countOfExistedKeypoint - 2], ComputedDescriptors[countOfExistedKeypoint - 1]);
+
+            switch (_matchingType)
+            {
+                case EMatchingType.OnePrevious:
+                    Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        if (index >= 1*2)
+                        {
+                            Parallel.For(index - (1*2), index, i =>
+                            {
+                                if((index-i) %2 ==0)
+                                FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                            });
+                        }
+                    });
+                    break;
+                case EMatchingType.TwoPrevious:
+                    Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        if (index >= 2*2)
+                        {
+                            Parallel.For(index - (2*2), index, i =>
+                            {
+                                if ((index - i) % 2 == 0)
+                                    FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                            });
+                        }
+                    });
+                    break;
+                case EMatchingType.AllWithAll:
+                    throw new NotImplementedException();
+                    Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        Parallel.For(index + 1, ComputedDescriptors.Count, i =>
+                        {
+                            FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                        });
+                    });
+                    break;
+            }
         }
 
         private List<InputFileModel> GetInputFromStereoCamera(int countInputFile)
@@ -311,6 +395,7 @@ namespace Bakalárska_práca
 
             foreach (var node in findedMatches)
             {
+                if (string.IsNullOrEmpty(node.FileFormatMatch)) continue;
                 sb.AppendLine(node.FileFormatMatch);
                 sb.AppendLine();
             }
@@ -360,11 +445,16 @@ namespace Bakalárska_práca
 
                 lock (locker)
                 {
-                    PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList, Mask);
+                    var matchesForHomography = FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList;
+                    if (matchesForHomography.Count > 0)
+                    {
+                        PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList, Mask);
+                        foundedMatch.Mask = Mask;
+                        foundedMatch.PerspectiveMatrix = PerspectiveMatrix;
+                    }
                 }
 
-                foundedMatch.Mask = Mask;
-                foundedMatch.PerspectiveMatrix = PerspectiveMatrix;
+                
             }
 
             // Save drawing image
@@ -387,13 +477,18 @@ namespace Bakalárska_práca
                 FoundedMatches.Add(foundedMatch);
         }
 
-        private void SaveMatchString(DescriptorsMatchModel descriptorsMatch, bool UseMask)
+        private int SaveMatchString(DescriptorsMatchModel descriptorsMatch, bool UseMask)
         {
             var leftImageName = descriptorsMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name;
             var rightImageName = descriptorsMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name;
 
             var matchesList = descriptorsMatch.FilteredMatch ? descriptorsMatch.FilteredMatchesList : descriptorsMatch.MatchesList;
 
+            if (descriptorsMatch.Mask == null || descriptorsMatch.FilteredMatchesList.Count == 0)
+            {
+                descriptorsMatch.FileFormatMatch = null;
+                return 0;
+            }
 
             int countMaskMatches = 0;
             if (UseMask)
@@ -422,6 +517,7 @@ namespace Bakalárska_práca
             }
 
             descriptorsMatch.FileFormatMatch = sb.ToString();
+            return 0;
         }
 
         private List<MDMatch[]> FilterMatchesByMaxDist(MDMatch[][] matchesArray)
