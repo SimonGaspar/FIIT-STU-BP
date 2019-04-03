@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using Bachelor_app.Manager;
-using Bachelor_app.StereoVision.Calibration;
+using Bachelor_app.StereoVision;
 using Bakalárska_práca.Helper;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
@@ -21,6 +21,7 @@ namespace Bakalárska_práca
         private SfM structureFromMotionManager;
         private MainFormManager mainFormManager;
         private CameraManager cameraManager;
+        private CalibrationManager calibrationManager;
 
 
         public List<ListView> ListViews = new List<ListView>();
@@ -31,16 +32,16 @@ namespace Bakalárska_práca
             InitializeComponent();
 
             cameraManager = new CameraManager(this);
-            fileManager = new FileManager(this,cameraManager);
-            displayManager = new DisplayManager(this, fileManager,cameraManager);
+            fileManager = new FileManager(this, cameraManager);
+            displayManager = new DisplayManager(this, fileManager, cameraManager);
 
-            stereoVisionManager = new StereoVisionManager(fileManager, displayManager);
-            structureFromMotionManager = new SfM(fileManager, displayManager, this,cameraManager);
+            stereoVisionManager = new StereoVisionManager(fileManager, displayManager, cameraManager, this);
+            structureFromMotionManager = new SfM(fileManager, displayManager, this, cameraManager);
 
 
             mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager, cameraManager);
             WindowsFormHelper.SetWinForm(this);
-            
+
             InitializeStringForComponents();
             Application.Idle += new EventHandler(displayManager.Display);
         }
@@ -377,7 +378,7 @@ namespace Bakalárska_práca
             mainFormManager.SetUsingParallel();
         }
 
-        public void SetMaximumProgressBar(string name,int maxValue)
+        public void SetMaximumProgressBar(string name, int maxValue)
         {
             //if (statusStrip1.InvokeRequired)
             //    statusStrip1.Invoke((Action)delegate { SetMaximumProgressBar(name, maxValue); });
@@ -421,8 +422,12 @@ namespace Bakalárska_práca
 
         private void toolStripButton16_Click(object sender, EventArgs e)
         {
-            var x = new CalibrationForm();
-            x.Show();
+            stereoVisionManager.ShowCalibration();
+        }
+
+        private void toolStripButton17_Click(object sender, EventArgs e)
+        {
+            stereoVisionManager.stopStereoCorrespondence = true;
         }
     }
 }

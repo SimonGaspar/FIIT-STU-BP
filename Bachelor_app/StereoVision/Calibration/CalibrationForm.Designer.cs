@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace Bachelor_app.StereoVision.Calibration
+﻿namespace Bachelor_app.StereoVision.Calibration
 {
     partial class CalibrationForm
     {
@@ -377,29 +375,29 @@ namespace Bachelor_app.StereoVision.Calibration
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.PictureBox Video_Source2;
-        private System.Windows.Forms.PictureBox Video_Source1;
-        private System.Windows.Forms.PictureBox DisparityMap;
+        public System.Windows.Forms.PictureBox Video_Source2;
+        public System.Windows.Forms.PictureBox Video_Source1;
+        public System.Windows.Forms.PictureBox DisparityMap;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TrackBar Min_Disparities;
+        public System.Windows.Forms.TrackBar Min_Disparities;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TrackBar Num_Disparities;
+        public System.Windows.Forms.TrackBar Num_Disparities;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TrackBar Disp12MaxDiff;
-        private System.Windows.Forms.TrackBar SAD_Window;
+        public System.Windows.Forms.TrackBar Disp12MaxDiff;
+        public System.Windows.Forms.TrackBar SAD_Window;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TrackBar Speckle_Window;
+        public System.Windows.Forms.TrackBar Speckle_Window;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TrackBar pre_filter_cap;
+        public System.Windows.Forms.TrackBar pre_filter_cap;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TrackBar uniquenessRatio;
+        public System.Windows.Forms.TrackBar uniquenessRatio;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TrackBar specklerange;
+        public System.Windows.Forms.TrackBar specklerange;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button fullDP_State;
+        public System.Windows.Forms.Button fullDP_State;
     }
 }
 

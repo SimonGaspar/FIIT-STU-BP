@@ -45,5 +45,6 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             LeftGrayImage = leftImage.Convert<Gray, byte>();
             RightGrayImage = rightImage.Convert<Gray, byte>();
         }
+
     }
 }
