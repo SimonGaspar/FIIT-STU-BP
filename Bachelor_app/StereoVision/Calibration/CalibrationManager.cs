@@ -113,7 +113,7 @@ namespace Bachelor_app.StereoVision
                 {
                     for (int j = 0; j < chessboardModel.patternSize.Width; j++)
                     {
-                        object_list.Add(new MCvPoint3D32f(j * 20.0F, i * 20.0F, 0.0F));
+                        object_list.Add(new MCvPoint3D32f(j * 25.0F, i * 25.0F, 0.0F));
                     }
                 }
                 corners_object_Points[k] = object_list.ToArray();
@@ -131,8 +131,8 @@ namespace Bachelor_app.StereoVision
                                                                //currentMode = Mode.Calibrated;
 
             //Computes rectification transforms for each head of a calibrated stereo camera.
-            CvInvoke.StereoRectify(calibrationModel.IntrinsicCam1.IntrinsicMatrix, calibrationModel.IntrinsicCam2.IntrinsicMatrix,
-                                     calibrationModel.IntrinsicCam1.DistortionCoeffs, calibrationModel.IntrinsicCam2.DistortionCoeffs,
+            CvInvoke.StereoRectify(calibrationModel.IntrinsicCam1.IntrinsicMatrix, 
+                                     calibrationModel.IntrinsicCam1.DistortionCoeffs, calibrationModel.IntrinsicCam2.IntrinsicMatrix, calibrationModel.IntrinsicCam2.DistortionCoeffs,
                                      frame_S1.Size,
                                      calibrationModel.EX_Param.RotationVector.RotationMatrix, calibrationModel.EX_Param.TranslationVector,
                                      calibrationModel.R1, calibrationModel.R2, calibrationModel.P1, calibrationModel.P2, calibrationModel.Q,
@@ -157,7 +157,7 @@ namespace Bachelor_app.StereoVision
             CvInvoke.FindChessboardCorners(Gray_frame_S2, chessboardModel.patternSize, cornerRight);
 
             chessboardModel.corners_Left = cornerLeft.ToArray();
-            chessboardModel.corners_Left = cornerRight.ToArray();
+            chessboardModel.corners_Right = cornerRight.ToArray();
             //we use this loop so we can show a colour image rather than a gray: //CameraCalibration.DrawChessboardCorners(Gray_Frame, patternSize, corners);
             //we we only do this is the chessboard is present in both images
             if (chessboardModel.corners_Left != null && chessboardModel.corners_Right != null) //chess board found in one of the frames?
