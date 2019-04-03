@@ -118,20 +118,8 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="RightArrow_Lyolya" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightArrow_Lyolya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Settings_Dave-Gandy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Settings_Dave-Gandy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Repeat_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Repeat_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LeftArrow_Lyolya" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeftArrow_Lyolya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PlayButton_Roundicons" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PlayButton_Roundicons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Delete_Alfredo-Hernandez" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Delete_Alfredo-Hernandez.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ErasingFile_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ErasingFile_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,8 +127,11 @@
   <data name="Parallel_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Parallel_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Delete_Alfredo-Hernandez" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Delete_Alfredo-Hernandez.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="PlayButton_Roundicons" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlayButton_Roundicons.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Repeat_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Repeat_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AddImage_Swifticon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddImage_Swifticon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,7 +139,25 @@
   <data name="RemoveImage_Srip" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RemoveImage_Srip.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Settings_Dave-Gandy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Settings_Dave-Gandy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftArrow_Lyolya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftArrow_Lyolya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Stop_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Stop_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Download_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Download_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RightArrow_Lyolya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightArrow_Lyolya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CameraCalibration_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CameraCalibration_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Upload_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Upload_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

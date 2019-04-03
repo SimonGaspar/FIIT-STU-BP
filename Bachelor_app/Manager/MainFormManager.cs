@@ -262,6 +262,15 @@ namespace Bachelor_app.Manager
                 _cameraManager.SetCameraID(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedText);
         }
 
+        public void SetResolution(object sender, EventArgs e)
+        {
+            var currentItem = sender as ToolStripComboBox;
+            var enumItem = EnumExtension.ReturnEnumValue<ECameraResolution>(currentItem.SelectedItem.ToString());
+
+            _cameraManager.resolution = enumItem;
+            _cameraManager.UpdateResolution();
+        }
+
         #endregion
     }
 }

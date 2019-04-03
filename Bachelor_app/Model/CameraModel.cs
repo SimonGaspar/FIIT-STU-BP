@@ -1,11 +1,6 @@
-﻿using Emgu.CV;
+﻿using System.Drawing;
+using Emgu.CV;
 using Emgu.CV.CvEnum;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bachelor_app.Model
 {
@@ -15,12 +10,28 @@ namespace Bachelor_app.Model
         public int ID { get; set; }
         public string Name { get; set; }
 
-        public VideoCapture camera { get; set; }
+        public VideoCapture camera { get; set; } = null;
 
-        public void CreateCameraInstance() {
+        public void CreateCameraInstance()
+        {
             camera = new VideoCapture(ID);
-            camera.SetCaptureProperty(CapProp.FrameWidth, Resolution.Width);
-            camera.SetCaptureProperty(CapProp.FrameHeight, Resolution.Height);
+            UpdateResolution(Resolution);
+        }
+
+        public void UpdateResolution(Size resolution)
+        {
+            Resolution = resolution;
+
+            if (camera != null && Resolution.Height >= 360 && Resolution.Width >= 640)
+            {
+                camera.SetCaptureProperty(CapProp.FrameWidth, Resolution.Width);
+                camera.SetCaptureProperty(CapProp.FrameHeight, Resolution.Height);
+            }
+        }
+        public void UpdateResolution(int Width, int Height)
+        {
+            Resolution = new Size(Width, Height);
+            UpdateResolution(Resolution);
         }
 
     }

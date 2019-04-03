@@ -20,7 +20,7 @@ namespace Bakalárska_práca.StereoVision
         private FileManager _fileManager;
         private DisplayManager _displayManager;
         private CameraManager _cameraManager;
-        private CalibrationManager _cameraCalibration;
+        private CalibrationManager _calibrationManager;
         private MainForm _winForm;
 
 
@@ -34,7 +34,6 @@ namespace Bakalárska_práca.StereoVision
             this._fileManager = fileManager;
             this._displayManager = displayManager;
             this._cameraManager = cameraManager;
-            this._cameraCalibration = new CalibrationManager(cameraManager);
             this._winForm = mainForm;
         }
 
@@ -92,7 +91,7 @@ namespace Bakalárska_práca.StereoVision
         // default was Image<Gray,short> <---- check it
         private void Computer3DPointsFromStereoPair(Image<Gray, byte> disparityMap)
         {
-            MCvPoint3D32f[] points = PointCollection.ReprojectImageTo3D(disparityMap, _cameraCalibration.calibrationModel.Q);
+            MCvPoint3D32f[] points = PointCollection.ReprojectImageTo3D(disparityMap, _calibrationManager.calibrationModel.Q);
         }
 
         private List<InputFileModel> GetInputFromStereoCamera(VideoCapture LeftCamera, VideoCapture RightCamera, int countInputFile = 0)
@@ -124,9 +123,9 @@ namespace Bakalárska_práca.StereoVision
             return returnList;
         }
 
-        internal void ShowCalibration()
+        public void ShowCalibration()
         {
-            throw new NotImplementedException();
+           _calibrationManager = new CalibrationManager(_cameraManager);
         }
     }
 }

@@ -127,6 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enumerate\ECameraResolution.cs" />
     <Compile Include="Enumerate\EDisplayItem.cs" />
     <Compile Include="Enumerate\EInput.cs" />
     <Compile Include="Enumerate\EListViewGroup.cs" />
@@ -323,6 +324,9 @@
     <Content Include="CUDA_EULA.txt" />
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\Upload_Freepik.png" />
+    <None Include="Resources\Download_Freepik.png" />
+    <None Include="Resources\CameraCalibration_Freepik.png" />
     <None Include="Resources\Stop_Freepik.png" />
     <None Include="Resources\Parallel_Freepik.png" />
     <None Include="Resources\ErasingFile_Freepik.png" />

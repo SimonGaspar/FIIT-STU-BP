@@ -1,11 +1,9 @@
-﻿using Bachelor_app.Model;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using Bachelor_app.Enumerate;
+using Bachelor_app.Model;
 using Bakalárska_práca;
 using DirectShowLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bachelor_app.Manager
 {
@@ -16,13 +14,16 @@ namespace Bachelor_app.Manager
         public CameraModel LeftCamera = new CameraModel();
         public CameraModel RightCamera = new CameraModel();
 
+        public ECameraResolution resolution;
+
         public CameraManager(MainForm WinForm)
         {
             this._winForm = WinForm;
             GetListOfWebCam();
         }
 
-        public void GetListOfWebCam() {
+        public void GetListOfWebCam()
+        {
             ListCamerasData = new List<KeyValuePair<int, string>>();
 
             DsDevice[] _SystemCamereas = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
@@ -50,6 +51,20 @@ namespace Bachelor_app.Manager
             cameraModel.Name = name;
             cameraModel.CreateCameraInstance();
             //cameraModel.camera.QueryFrame().Save($@"D:\Downloads\{ID}.JPG");
+        }
+
+        public void UpdateResolution()
+        {
+            Size newResolution = new Size();
+            switch (resolution)
+            {
+                case ECameraResolution.VGA: newResolution = new Size(640, 360); break;
+                case ECameraResolution.HD: newResolution = new Size(1280, 720); break;
+                case ECameraResolution.FullHD: newResolution = new Size(1920, 1080); break;
+            }
+
+            LeftCamera.UpdateResolution(newResolution);
+            RightCamera.UpdateResolution(newResolution);
         }
     }
 }

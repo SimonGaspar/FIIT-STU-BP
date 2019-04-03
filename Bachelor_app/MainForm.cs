@@ -429,5 +429,10 @@ namespace Bakalárska_práca
         {
             stereoVisionManager.stopStereoCorrespondence = true;
         }
+
+        private void toolStripComboBox12_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mainFormManager.SetResolution(sender, e);
+        }
     }
 }
