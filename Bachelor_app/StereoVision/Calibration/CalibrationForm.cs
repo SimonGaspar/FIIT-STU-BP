@@ -12,11 +12,6 @@ namespace Bachelor_app.StereoVision.Calibration
         {
             this._calibrationManager = calibrationManager;
             InitializeComponent();
-
-            //We will only use 1 frame ready event this is not really safe but it fits the purpose
-            _calibrationManager._leftCamera.ImageGrabbed += _calibrationManager.ProcessFrame;
-            _calibrationManager._rightCamera.Start(); //We make sure we start Capture device 2 first
-            _calibrationManager._leftCamera.Start();
         }
 
 

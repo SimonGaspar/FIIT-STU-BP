@@ -22,6 +22,8 @@ namespace Bachelor_app.StereoVision
         public VideoCapture _leftCamera;
         public VideoCapture _rightCamera;
 
+        Thread thread;
+
         #region Image Processing
 
         //Frames
@@ -57,49 +59,39 @@ namespace Bachelor_app.StereoVision
             _rightCamera = new VideoCapture(cameraManager.RightCamera.ID);
 
             _winForm = new CalibrationForm(this);
+
             _winForm.Show();
+
+            thread = new Thread(ProcessFrame);
+            thread.Start();
         }
 
-
-        /// <summary>
-        /// Is called to process frame from camera
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="arg"></param>
-        public void ProcessFrame(object sender, EventArgs arg)
+        public void ProcessFrame()
         {
-            _leftCamera.Retrieve(frame_S1);
-            frameImage_S1 = new Image<Bgr, byte>(frame_S1.Bitmap);
-            Gray_frame_S1 = frameImage_S1.Convert<Gray, Byte>();
-            _rightCamera.Retrieve(frame_S2);
-            frameImage_S2 = new Image<Bgr, byte>(frame_S2.Bitmap);
-            Gray_frame_S2 = frameImage_S2.Convert<Gray, Byte>();
-
-            switch (currentMode)
+            bool StopCalibration = false;
+            while (!StopCalibration)
             {
-                case ECalibrationMode.SavingFrames: SaveImageForCalibration(); break;
-                case ECalibrationMode.Caluculating_Stereo_Intrinsics: ComputeCameraMatrix(); break;
-                case ECalibrationMode.Calibrated: ComputeStereoCorrespondence(); break;
+                _leftCamera.Grab();
+                _leftCamera.Retrieve(frame_S1);
+                frameImage_S1 = new Image<Bgr, byte>(frame_S1.Bitmap);
+                Gray_frame_S1 = frameImage_S1.Convert<Gray, Byte>();
+
+                _rightCamera.Grab();
+                _rightCamera.Retrieve(frame_S2);
+                frameImage_S2 = new Image<Bgr, byte>(frame_S2.Bitmap);
+                Gray_frame_S2 = frameImage_S2.Convert<Gray, Byte>();
+
+                _winForm.Video_Source1.Image = frameImage_S1.Bitmap;
+                _winForm.Video_Source2.Image = frameImage_S2.Bitmap;
+
+                switch (currentMode)
+                {
+                    case ECalibrationMode.SavingFrames: SaveImageForCalibration(); break;
+                    case ECalibrationMode.Caluculating_Stereo_Intrinsics: ComputeCameraMatrix(); break;
+                    case ECalibrationMode.Calibrated: _winForm.Close(); StopCalibration = true; break;
+                }
             }
 
-            _winForm.Video_Source1.Image = frameImage_S1.Bitmap;
-            _winForm.Video_Source2.Image = frameImage_S2.Bitmap;
-
-
-        }
-
-        private void ComputeStereoCorrespondence()
-        {
-            Image<Gray, short> disparityMap;
-
-            Computer3DPointsFromStereoPair(Gray_frame_S1, Gray_frame_S2, out disparityMap, out _points);
-            calibrationModel._points = _points;
-
-            //Display the disparity map
-            _winForm.DisparityMap.Image = disparityMap.ToBitmap();
-            //Draw the accurate area
-            frameImage_S1.Draw(Rec1, new Bgr(Color.LimeGreen), 1);
-            frameImage_S2.Draw(Rec2, new Bgr(Color.LimeGreen), 1);
         }
 
         private void ComputeCameraMatrix()
@@ -131,7 +123,7 @@ namespace Bachelor_app.StereoVision
                                                                //currentMode = Mode.Calibrated;
 
             //Computes rectification transforms for each head of a calibrated stereo camera.
-            CvInvoke.StereoRectify(calibrationModel.IntrinsicCam1.IntrinsicMatrix, 
+            CvInvoke.StereoRectify(calibrationModel.IntrinsicCam1.IntrinsicMatrix,
                                      calibrationModel.IntrinsicCam1.DistortionCoeffs, calibrationModel.IntrinsicCam2.IntrinsicMatrix, calibrationModel.IntrinsicCam2.DistortionCoeffs,
                                      frame_S1.Size,
                                      calibrationModel.EX_Param.RotationVector.RotationMatrix, calibrationModel.EX_Param.TranslationVector,
@@ -200,77 +192,5 @@ namespace Bachelor_app.StereoVision
             chessboardModel.corners_Left = null;
             chessboardModel.corners_Right = null;
         }
-
-        /// <summary>
-        /// Given the left and right image, computer the disparity map and the 3D point cloud.
-        /// </summary>
-        /// <param name="left">The left image</param>
-        /// <param name="right">The right image</param>
-        /// <param name="disparityMap">The left disparity map</param>
-        /// <param name="points">The 3D point cloud within a [-0.5, 0.5] cube</param>
-        private void Computer3DPointsFromStereoPair(Image<Gray, Byte> left, Image<Gray, Byte> right, out Image<Gray, short> disparityMap, out MCvPoint3D32f[] points)
-        {
-            Size size = left.Size;
-
-            disparityMap = new Image<Gray, short>(size);
-            //thread safe calibration values
-
-
-            /*This is maximum disparity minus minimum disparity. Always greater than 0. In the current implementation this parameter must be divisible by 16.*/
-            int numDisparities = _winForm.GetSliderValue(_winForm.Num_Disparities);
-
-            /*The minimum possible disparity value. Normally it is 0, but sometimes rectification algorithms can shift images, so this parameter needs to be adjusted accordingly*/
-            int minDispatities = _winForm.GetSliderValue(_winForm.Min_Disparities);
-
-            /*The matched block size. Must be an odd number >=1 . Normally, it should be somewhere in 3..11 range*/
-            int SAD = _winForm.GetSliderValue(_winForm.SAD_Window);
-
-            /*P1, P2 – Parameters that control disparity smoothness. The larger the values, the smoother the disparity. 
-             * P1 is the penalty on the disparity change by plus or minus 1 between neighbor pixels. 
-             * P2 is the penalty on the disparity change by more than 1 between neighbor pixels. 
-             * The algorithm requires P2 > P1 . 
-             * See stereo_match.cpp sample where some reasonably good P1 and P2 values are shown 
-             * (like 8*number_of_image_channels*SADWindowSize*SADWindowSize and 32*number_of_image_channels*SADWindowSize*SADWindowSize , respectively).*/
-
-            int P1 = 8 * 1 * SAD * SAD;//GetSliderValue(P1_Slider);
-            int P2 = 32 * 1 * SAD * SAD;//GetSliderValue(P2_Slider);
-
-            /* Maximum allowed difference (in integer pixel units) in the left-right disparity check. Set it to non-positive value to disable the check.*/
-            int disp12MaxDiff = _winForm.GetSliderValue(_winForm.Disp12MaxDiff);
-
-            /*Truncation value for the prefiltered image pixels. 
-             * The algorithm first computes x-derivative at each pixel and clips its value by [-preFilterCap, preFilterCap] interval. 
-             * The result values are passed to the Birchfield-Tomasi pixel cost function.*/
-            int PreFilterCap = _winForm.GetSliderValue(_winForm.pre_filter_cap);
-
-            /*The margin in percents by which the best (minimum) computed cost function value should “win” the second best value to consider the found match correct. 
-             * Normally, some value within 5-15 range is good enough*/
-            int UniquenessRatio = _winForm.GetSliderValue(_winForm.uniquenessRatio);
-
-            /*Maximum disparity variation within each connected component. 
-             * If you do speckle filtering, set it to some positive value, multiple of 16. 
-             * Normally, 16 or 32 is good enough*/
-            int Speckle = _winForm.GetSliderValue(_winForm.Speckle_Window);
-
-            /*Maximum disparity variation within each connected component. If you do speckle filtering, set it to some positive value, multiple of 16. Normally, 16 or 32 is good enough.*/
-            int SpeckleRange = _winForm.GetSliderValue(_winForm.specklerange);
-
-            /*Set it to true to run full-scale 2-pass dynamic programming algorithm. It will consume O(W*H*numDisparities) bytes, 
-             * which is large for 640x480 stereo and huge for HD-size pictures. By default this is usually false*/
-            //Set globally for ease
-            //bool fullDP = true;
-
-            using (StereoSGBM stereoSolver = new StereoSGBM(minDispatities, numDisparities, SAD, P1, P2, disp12MaxDiff, PreFilterCap, UniquenessRatio, Speckle, SpeckleRange, StereoSGBM.Mode.HH))
-            //using (StereoBM stereoSolver = new StereoBM(Emgu.CV.CvEnum.STEREO_BM_TYPE.BASIC, 0))
-            {
-                stereoSolver.Compute(left, right, disparityMap);//Computes the disparity map using: 
-                /*GC: graph cut-based algorithm
-                  BM: block matching algorithm
-                  SGBM: modified H. Hirschmuller algorithm HH08*/
-                points = PointCollection.ReprojectImageTo3D(disparityMap, calibrationModel.Q); //Reprojects disparity image to 3D space.
-            }
-        }
-
-
     }
 }

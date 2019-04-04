@@ -422,7 +422,8 @@ namespace Bakalárska_práca
 
         private void toolStripButton16_Click(object sender, EventArgs e)
         {
-            stereoVisionManager.ShowCalibration();
+            Thread thread = new Thread(stereoVisionManager.ShowCalibration);
+            thread.Start();
         }
 
         private void toolStripButton17_Click(object sender, EventArgs e)
@@ -433,6 +434,12 @@ namespace Bakalárska_práca
         private void toolStripComboBox12_SelectedIndexChanged(object sender, EventArgs e)
         {
             mainFormManager.SetResolution(sender, e);
+        }
+
+        private void toolStripButton11_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(stereoVisionManager.ComputeStereoCorrespondence);
+            thread.Start();
         }
     }
 }

@@ -66,11 +66,28 @@ namespace Bakalárska_práca.StereoVision
             while (!stopStereoCorrespondence)
             {
                 var listOfInput = GetInputFromStereoCamera(_cameraManager.LeftCamera.camera, _cameraManager.RightCamera.camera);
-                var DepthMap = new Image<Gray, byte>((Bitmap)StereoSolver.ComputeDepthMap(listOfInput[0].image, listOfInput[1].image));
+                var DepthMap = new Image<Gray, short>((Bitmap)StereoSolver.ComputeDepthMap(listOfInput[0].image, listOfInput[1].image));
                 _fileManager.listViewerModel._lastDepthMapImage = DepthMap.Convert<Bgr, byte>();
+
+                AddDepthMapToListView(DepthMap);
                 Computer3DPointsFromStereoPair(DepthMap);
 
+                new Image<Bgr, byte>((Bitmap)listOfInput[0].image).Draw(_calibrationManager.calibrationModel.Rec1, new Bgr(Color.LimeGreen), 1);
+                new Image<Bgr, byte>((Bitmap)listOfInput[1].image).Draw(_calibrationManager.calibrationModel.Rec2, new Bgr(Color.LimeGreen), 1);
+                listOfInput[0].image.Save(Path.Combine(tempDirectory, "LeftRecImager.JPG"));
+                listOfInput[1].image.Save(Path.Combine(tempDirectory, "RightRecImager.JPG"));
             }
+        }
+
+        private void AddDepthMapToListView(Image<Gray, short> disparityMap)
+        {
+            disparityMap.Save(Path.Combine($@"{tempDirectory}", $"DepthMap_{_fileManager.listViewerModel.LeftCameraStack.Count}.JPG"));
+
+
+            var inputFileLeft = new InputFileModel(Path.Combine($@"{tempDirectory}", $"DepthMap_{_fileManager.listViewerModel.LeftCameraStack.Count}.JPG"));
+            var imageList = _winForm.ImageList[(int)EListViewGroup.DepthMap];
+            var listViewer = _winForm.ListViews[(int)EListViewGroup.DepthMap];
+            _fileManager.AddInputFileToList(inputFileLeft, _fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.DepthMap], imageList, listViewer);
         }
 
         public void ComputeStereoCorrespondenceFromStack()
@@ -79,7 +96,10 @@ namespace Bakalárska_práca.StereoVision
             {
                 var leftImage = _fileManager.listViewerModel.LeftCameraStack[i];
                 var rightImage = _fileManager.listViewerModel.RightCameraStack[i];
-                _fileManager.listViewerModel._lastDepthMapImage = new Image<Bgr, byte>((Bitmap)StereoSolver.ComputeDepthMap(leftImage.image, rightImage.image));
+                var DepthMap = new Image<Gray, short>((Bitmap)StereoSolver.ComputeDepthMap(leftImage.image, rightImage.image));
+                _fileManager.listViewerModel._lastDepthMapImage = DepthMap.Convert<Bgr, byte>();
+
+                AddDepthMapToListView(DepthMap);
             }
         }
 
@@ -88,10 +108,10 @@ namespace Bakalárska_práca.StereoVision
             StereoSolver.ShowSettingForm();
         }
 
-        // default was Image<Gray,short> <---- check it
-        private void Computer3DPointsFromStereoPair(Image<Gray, byte> disparityMap)
+        private MCvPoint3D32f[] Computer3DPointsFromStereoPair(Image<Gray, short> disparityMap)
         {
             MCvPoint3D32f[] points = PointCollection.ReprojectImageTo3D(disparityMap, _calibrationManager.calibrationModel.Q);
+            return points;
         }
 
         private List<InputFileModel> GetInputFromStereoCamera(VideoCapture LeftCamera, VideoCapture RightCamera, int countInputFile = 0)
@@ -125,7 +145,7 @@ namespace Bakalárska_práca.StereoVision
 
         public void ShowCalibration()
         {
-           _calibrationManager = new CalibrationManager(_cameraManager);
+            _calibrationManager = new CalibrationManager(_cameraManager);
         }
     }
 }
