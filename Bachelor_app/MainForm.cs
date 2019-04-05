@@ -6,10 +6,12 @@ using System.Threading;
 using System.Windows.Forms;
 using Bachelor_app.Manager;
 using Bachelor_app.StereoVision;
+using Bachelor_app.StereoVision.Calibration;
 using Bakalárska_práca.Helper;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
 using Kitware.VTK;
+using Newtonsoft.Json;
 
 namespace Bakalárska_práca
 {
@@ -422,8 +424,7 @@ namespace Bakalárska_práca
 
         private void toolStripButton16_Click(object sender, EventArgs e)
         {
-            Thread thread = new Thread(stereoVisionManager.ShowCalibration);
-            thread.Start();
+            stereoVisionManager.ShowCalibration();
         }
 
         private void toolStripButton17_Click(object sender, EventArgs e)
@@ -440,6 +441,19 @@ namespace Bakalárska_práca
         {
             Thread thread = new Thread(stereoVisionManager.ComputeStereoCorrespondence);
             thread.Start();
+        }
+
+        private void toolStripButton18_Click(object sender, EventArgs e)
+        {
+            string json = JsonConvert.SerializeObject(stereoVisionManager._calibrationManager.calibrationModel);
+            File.WriteAllText("CalibrationJSON.json", json);
+        }
+
+        private void toolStripButton19_Click(object sender, EventArgs e)
+        {
+            var json = File.ReadAllText("CalibrationJSON.json");
+            stereoVisionManager._calibrationManager = new CalibrationManager();
+            stereoVisionManager._calibrationManager.calibrationModel = JsonConvert.DeserializeObject<CalibrationModel>(json);
         }
     }
 }

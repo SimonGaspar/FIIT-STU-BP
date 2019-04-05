@@ -10,17 +10,16 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
     public class CudaStereoConstantSpaceBeliefPropagation : AbstractStereoSolver, IStereoSolver
     {
-        private CudaStereoConstantSpaceBP _cudaStereoConstantSpaceBP;
         private CudaStereoConstantSpaceBPForm _windowsForm;
-        public CudaStereoConstantSpaceBPModel model = new CudaStereoConstantSpaceBPModel() { Disparity = 128, Iteration = 8, Level = 4, Plane = 4 };
+        public CudaStereoConstantSpaceBPModel model = new CudaStereoConstantSpaceBPModel();
 
         public CudaStereoConstantSpaceBeliefPropagation()
         {
-            //_cudaStereoConstantSpaceBP = new CudaStereoConstantSpaceBP(model.Disparity, model.Iteration, model.Level, model.Plane);
         }
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
+            CudaStereoConstantSpaceBP _cudaStereoConstantSpaceBP = CreateCudaStereoConstantSpaceBP();
             ConvertImageToGray(leftImage, rightImage);
 
             LeftGrayImage.Save(@"D:\Downloads\LImage.png");
@@ -41,7 +40,10 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         public override void UpdateModel<T>(T model)
         {
             this.model = model as CudaStereoConstantSpaceBPModel;
-            _cudaStereoConstantSpaceBP = new CudaStereoConstantSpaceBP(this.model.Disparity, this.model.Iteration, this.model.Level, this.model.Plane);
+        }
+
+        public CudaStereoConstantSpaceBP CreateCudaStereoConstantSpaceBP() {
+            return new CudaStereoConstantSpaceBP(this.model.Disparity, this.model.Iteration, this.model.Level, this.model.Plane);
         }
 
         public override void ShowSettingForm()

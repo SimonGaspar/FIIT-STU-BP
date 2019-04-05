@@ -19,14 +19,14 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             return null;
         }
 
-        public Image ComputeDepthMap(Image leftImage, Image rightImage)
+        public Image<Bgr,byte> ComputeDepthMap(Image leftImage, Image rightImage)
         {
             var depthMapImage = ComputeDepthMap(
                 new Image<Bgr, byte>((Bitmap)leftImage),
                 new Image<Bgr, byte>((Bitmap)rightImage)
                 );
 
-            return depthMapImage.ToBitmap();
+            return depthMapImage;
         }
 
         public virtual void ShowSettingForm() { }

@@ -9,8 +9,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
     public class CudaStereoBlockMatching : StereoBlockMatching, IStereoSolver
     {
-        private CudaStereoBM _cudaStereoBM;
-        public new CudaStereoBlockMatchingModel model;
+        public new CudaStereoBlockMatchingModel model= new CudaStereoBlockMatchingModel();
 
         public CudaStereoBlockMatching()
         {
@@ -18,6 +17,9 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
+
+
+            CudaStereoBM _cudaStereoBM = CreateCudaStereoBM();
             ConvertImageToGray(leftImage, rightImage);
 
             LeftGrayImage.Save(@"D:\Downloads\LImage.png");
@@ -31,13 +33,16 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             imageDisparity.Download(disparity);
             disparity.Save(@"D:\Downloads\Image.png");
 
-            return new Image<Bgr, byte>(imageDisparity.Bitmap);
+            return disparity;
         }
 
         public override void UpdateModel<T>(T model)
         {
             this.model = model as CudaStereoBlockMatchingModel;
-            _cudaStereoBM = new CudaStereoBM(this.model.Disparity, this.model.BlockSize);
+        }
+
+        public CudaStereoBM CreateCudaStereoBM() {
+            return new CudaStereoBM(this.model.Disparity, this.model.BlockSize);
         }
     }
 }

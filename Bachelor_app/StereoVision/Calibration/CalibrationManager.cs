@@ -55,11 +55,8 @@ namespace Bachelor_app.StereoVision
         public CalibrationManager(CameraManager cameraManager)
         {
             this._cameraManager = cameraManager;
-            _leftCamera = new VideoCapture(cameraManager.LeftCamera.ID);
-            _rightCamera = new VideoCapture(cameraManager.RightCamera.ID);
-
-            _leftCamera.Start();
-            _rightCamera.Start();
+            _leftCamera = cameraManager.LeftCamera.camera;
+            _rightCamera = cameraManager.RightCamera.camera;
 
             _winForm = new CalibrationForm(this);
 
@@ -67,6 +64,10 @@ namespace Bachelor_app.StereoVision
 
             //mozno hodit ako _leftCamera.ImageGrabbed +=  ProcessFrame()
             Task.Run(async () => await ProcessFrame());
+        }
+
+        public CalibrationManager()
+        {
         }
 
         public async Task ProcessFrame()
@@ -86,8 +87,8 @@ namespace Bachelor_app.StereoVision
 
                 switch (currentMode)
                 {
-                    case ECalibrationMode.SavingFrames: await SaveImageForCalibration(); break;
-                    case ECalibrationMode.Caluculating_Stereo_Intrinsics: await ComputeCameraMatrix(); break;
+                    case ECalibrationMode.SavingFrames: SaveImageForCalibration(); break;
+                    case ECalibrationMode.Caluculating_Stereo_Intrinsics: ComputeCameraMatrix(); break;
                     case ECalibrationMode.Calibrated: _winForm.Close(); StopCalibration = true; break;
                 }
 
@@ -96,7 +97,7 @@ namespace Bachelor_app.StereoVision
             }
         }
 
-        private async Task ComputeCameraMatrix()
+        private void ComputeCameraMatrix()
         {
             //fill the MCvPoint3D32f with correct mesurments
             for (int k = 0; k < buffer_length; k++)
@@ -144,23 +145,14 @@ namespace Bachelor_app.StereoVision
 
         private async Task SaveImageForCalibration()
         {
-            VectorOfPointF cornerLeft = null;
-            VectorOfPointF cornerRight = null;
+            VectorOfPointF cornerLeft = new VectorOfPointF();
+            VectorOfPointF cornerRight = new VectorOfPointF();
 
             //Find the chessboard in bothe images
             CvInvoke.FindChessboardCorners(Gray_frame_S1, chessboardModel.patternSize, cornerLeft, CalibCbType.AdaptiveThresh);
             CvInvoke.FindChessboardCorners(Gray_frame_S2, chessboardModel.patternSize, cornerRight, CalibCbType.AdaptiveThresh);
-
-            //// Podla mna chyba je v cornerLeft/Right.ToArray();
-            ////alebo treba overit podmienku,ze cornerLeft nad cornerRight je null
-            //PointF[] corners_Left;
-            //PointF[] corners_Right;
-
-            //corners_Left = cornerLeft.ToArray();
-            //corners_Right = cornerRight.ToArray();
-            //if (corners_Left != null && corners_Right != null)
-
-            if (cornerLeft != null && cornerRight != null) //chess board found in one of the frames?
+            
+            if (cornerLeft.Size >0 && cornerRight.Size>0) //chess board found in one of the frames?
             {
                 PointF[] corners_Left;
                 PointF[] corners_Right;
@@ -201,7 +193,7 @@ namespace Bachelor_app.StereoVision
                 }
                 //calibrate the delay bassed on size of buffer
                 //if buffer small you want a big delay if big small delay
-                await Task.Delay(250);//allow the user to move the board to a different position
+                await Task.Delay(500);//allow the user to move the board to a different position
             }
         }
     }

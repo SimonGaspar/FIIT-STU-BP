@@ -8,8 +8,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
     public class StereoSemiGlobalBlockMatching : StereoBlockMatching, IStereoSolver
     {
-        private StereoSGBM _stereoSGBM;
-        public new StereoSemiGlobalBlockMatchingModel model = new StereoSemiGlobalBlockMatchingModel() { MinDispatiries = 0, Disparity = 16, BlockSize = 15 };
+        public new StereoSemiGlobalBlockMatchingModel model = new StereoSemiGlobalBlockMatchingModel();
         protected new StereoSGBMForm _windowsForm;
 
         public StereoSemiGlobalBlockMatching()
@@ -18,6 +17,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
+            StereoSGBM _stereoSGBM = CreateStereoSGBM();
             ConvertImageToGray(leftImage, rightImage);
 
             LeftGrayImage.Save(@"D:\Downloads\LImage.png");
@@ -35,7 +35,10 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         public override void UpdateModel<T>(T model)
         {
             this.model = model as StereoSemiGlobalBlockMatchingModel;
-            _stereoSGBM = new StereoSGBM(
+        }
+
+        public StereoSGBM CreateStereoSGBM() {
+            return new StereoSGBM(
                 this.model.MinDispatiries,
                 this.model.Disparity,
                 this.model.BlockSize,

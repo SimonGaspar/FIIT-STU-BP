@@ -18,6 +18,5 @@ namespace Bachelor_app.StereoVision.Calibration
         public Matrix<double> R2 { get; set; } = new Matrix<double>(3, 3); //rectification transforms (rotation matrices) for Camera 1.
         public Matrix<double> P1 { get; set; } = new Matrix<double>(3, 4); //projection matrices in the new (rectified) coordinate systems for Camera 1.
         public Matrix<double> P2 { get; set; } = new Matrix<double>(3, 4); //projection matrices in the new (rectified) coordinate systems for Camera 2.
-        public MCvPoint3D32f[] _points { get; set; } //Computer3DPointsFromStereoPair
     }
 }

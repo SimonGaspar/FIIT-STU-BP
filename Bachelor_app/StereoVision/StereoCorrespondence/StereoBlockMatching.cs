@@ -7,8 +7,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
     public class StereoBlockMatching : AbstractStereoSolver, IStereoSolver
     {
-        public StereoBlockMatchingModel model;
-        private StereoBM _stereoBM;
+        public StereoBlockMatchingModel model = new StereoBlockMatchingModel();
         protected StereoBMForm _windowsForm;
 
         public StereoBlockMatching()
@@ -17,6 +16,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 
         public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
+            StereoBM _stereoBM = CreateStereoBM();
             ConvertImageToGray(leftImage, rightImage);
 
             LeftGrayImage.Save(@"D:\Downloads\LImage.png");
@@ -34,12 +34,11 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         public override void UpdateModel<T>(T model)
         {
             this.model = model as StereoBlockMatchingModel;
-            _stereoBM = new StereoBM(
-                this.model.Disparity,
-                this.model.BlockSize
-                );
         }
-
+        public StereoBM CreateStereoBM()
+        {
+            return new StereoBM(this.model.Disparity, this.model.BlockSize);
+        }
         public override void ShowSettingForm()
         {
             _windowsForm = new StereoBMForm(this);
