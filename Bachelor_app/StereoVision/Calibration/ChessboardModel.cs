@@ -10,8 +10,6 @@ namespace Bachelor_app.StereoVision.Calibration
         public const int height = 6;
         public Size patternSize = new Size(width, height); //size of chess board to be detected
         public Bgr[] line_colour_array = new Bgr[width * height]; // just for displaying coloured lines of detected chessboard
-        public PointF[] corners_Left;
-        public PointF[] corners_Right;
         public bool start_Flag = true; //start straight away
 
         public ChessboardModel()
