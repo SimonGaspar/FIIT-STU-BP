@@ -15,21 +15,17 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         {
         }
 
-        public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
+        public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
             StereoSGBM _stereoSGBM = CreateStereoSGBM();
             ConvertImageToGray(leftImage, rightImage);
 
-            LeftGrayImage.Save(@"D:\Downloads\LImage.png");
-            RightGrayImage.Save(@"D:\Downloads\RImage.png");
-
             Mat imageDisparity = new Mat();
+            Mat imageToSave = new Mat();
             _stereoSGBM.Compute(LeftGrayImage, RightGrayImage, imageDisparity);
-            imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
-            imageDisparity.Save(@"D:\Downloads\Image.png");
+            imageDisparity.ConvertTo(imageToSave, DepthType.Cv8U);
 
-            CvInvoke.CvtColor(imageDisparity, DepthMap, ColorConversion.Gray2Bgr);
-            return DepthMap;
+            return imageDisparity;
         }
 
         public override void UpdateModel<T>(T model)

@@ -15,23 +15,20 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         {
         }
 
-        public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
+        public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
-
-
             CudaStereoBM _cudaStereoBM = CreateCudaStereoBM();
             ConvertImageToGray(leftImage, rightImage);
 
-            LeftGrayImage.Save(@"D:\Downloads\LImage.png");
-            RightGrayImage.Save(@"D:\Downloads\RImage.png");
-
             GpuMat imageDisparity = new GpuMat();
-            Image<Bgr, byte> disparity = new Image<Bgr, byte>(leftImage.Size);
+            GpuMat imageToSave = new GpuMat();
+            Image<Bgr, byte> disparityToSave = new Image<Bgr, byte>(leftImage.Size);
+            Mat disparity = new Mat();
             _cudaStereoBM.FindStereoCorrespondence(LeftGrayImage.ImageToGpuMat(), RightGrayImage.ImageToGpuMat(), imageDisparity);
 
-            imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
+            imageDisparity.ConvertTo(imageToSave, DepthType.Cv8U);
+            imageToSave.Download(disparityToSave);
             imageDisparity.Download(disparity);
-            disparity.Save(@"D:\Downloads\Image.png");
 
             return disparity;
         }

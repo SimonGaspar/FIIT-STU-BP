@@ -6,8 +6,8 @@ namespace Bakalárska_práca.StereoVision
 {
     interface IStereoSolver
     {
-        Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage);
-        Image<Bgr,byte> ComputeDepthMap(Image leftImage, Image rightImage);
+        Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage);
+        Mat ComputeDepthMap(Image leftImage, Image rightImage);
         
         void UpdateModel<T>(T model);
         void ShowSettingForm();

@@ -14,12 +14,12 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         public Image<Gray, byte> DepthMapGray { get; protected set; }
         public Image<Bgr, byte> DepthMap { get; protected set; }
 
-        public virtual Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
+        public virtual Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
             return null;
         }
 
-        public Image<Bgr,byte> ComputeDepthMap(Image leftImage, Image rightImage)
+        public Mat ComputeDepthMap(Image leftImage, Image rightImage)
         {
             var depthMapImage = ComputeDepthMap(
                 new Image<Bgr, byte>((Bitmap)leftImage),

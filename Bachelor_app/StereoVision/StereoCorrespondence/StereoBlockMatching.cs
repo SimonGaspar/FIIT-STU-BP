@@ -2,6 +2,7 @@
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using System;
 
 namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
@@ -14,21 +15,17 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         {
         }
 
-        public override Image<Bgr, byte> ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
+        public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
             StereoBM _stereoBM = CreateStereoBM();
             ConvertImageToGray(leftImage, rightImage);
 
-            LeftGrayImage.Save(@"D:\Downloads\LImage.png");
-            RightGrayImage.Save(@"D:\Downloads\RImage.png");
-
             Mat imageDisparity = new Mat();
+            Mat imageToSave = new Mat();
             _stereoBM.Compute(LeftGrayImage, RightGrayImage, imageDisparity);
-            imageDisparity.ConvertTo(imageDisparity, DepthType.Cv8U);
-            imageDisparity.Save(@"D:\Downloads\Image.png");
-
-            CvInvoke.CvtColor(imageDisparity, DepthMap, ColorConversion.Gray2Bgr);
-            return DepthMap;
+            imageDisparity.ConvertTo(imageToSave, DepthType.Cv8U);
+           
+            return imageDisparity;
         }
 
         public override void UpdateModel<T>(T model)
