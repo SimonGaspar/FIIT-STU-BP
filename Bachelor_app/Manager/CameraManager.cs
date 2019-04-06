@@ -29,20 +29,13 @@ namespace Bachelor_app.Manager
             DsDevice[] _SystemCamereas = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
 
             int _DeviceIndex = 0;
-            foreach (DirectShowLib.DsDevice _Camera in _SystemCamereas)
+            foreach (DsDevice _Camera in _SystemCamereas)
             {
+                // Vyriesit ID camery
                 ListCamerasData.Add(new KeyValuePair<int, string>(_DeviceIndex, _Camera.Name));
                 _DeviceIndex++;
             }
-
-            ////-> clear the combobox
-            //ComboBoxCameraList.DataSource = null;
-            //ComboBoxCameraList.Items.Clear();
-
-            ////-> bind the combobox
-            //ComboBoxCameraList.DataSource = new BindingSource(ListCamerasData, null);
-            //ComboBoxCameraList.DisplayMember = "Value";
-            //ComboBoxCameraList.ValueMember = "Key";
+            
         }
 
         public void SetCameraID(CameraModel cameraModel, int ID, string name)

@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using Bachelor_app.Helper;
 using Bachelor_app.Manager;
+using Bachelor_app.Model;
 using Bachelor_app.StereoVision;
 using Bachelor_app.StereoVision.Calibration;
 using Bakalárska_práca.Helper;
@@ -25,6 +28,7 @@ namespace Bakalárska_práca
         private CameraManager cameraManager;
         private CalibrationManager calibrationManager;
 
+        string tempDirectory = Path.GetFullPath($"..\\..\\..\\Temp");
 
         public List<ListView> ListViews = new List<ListView>();
         public List<ImageList> ImageList = new List<ImageList>();
@@ -48,161 +52,82 @@ namespace Bakalárska_práca
             Application.Idle += new EventHandler(displayManager.Display);
         }
 
-        public void ReadPlainText(RenderWindowControl renderWindowControl)
+        public void ReadNVM(RenderWindowControl renderWindowControl)
         {
-            // Path to vtk data must be set as an environment variable
-            // VTK_DATA_ROOT = "C:\VTK\vtkdata-5.8.0"
-            vtkTesting test = vtkTesting.New();
-            string root = test.GetDataRoot();
-            string filePath = Path.Combine($"..\\..\\..\\Temp", $"Result.nvm");
-
-            FileStream fs = null;
-            StreamReader sr = null;
-            String sLineBuffer;
-            String[] sXYZ;
-            char[] chDelimiter = new char[] { ' ', '\t', ';' };
-            double[] xyz = new double[10];
-            vtkPoints points = vtkPoints.New();
-            int cnt = 0;
-            int imageNumber;
-            int pointNumber;
-
-            try
+            var nvmFile = sfmHelper.LoadPointCloud();
+            foreach (var model in nvmFile)
             {
-                // in case file must be open in another application too use "FileShare.ReadWrite"
-                fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                sr = new StreamReader(fs);
+                ReadPointIntoObject(renderWindowControl, model.listPointModel);
 
-                // Setup the colors array
-                vtkUnsignedCharArray colors = vtkUnsignedCharArray.New();
-                colors.SetNumberOfComponents(3);
-                colors.SetName("Colors");
-
-                // Read point
-                while (!string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
-                {
-                    var header = sLineBuffer;
-                }
-
-                while (!sr.EndOfStream)
-                {
-                    // Read point
-                    while (string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
-                    {
-                    }
-                    imageNumber = int.Parse(sLineBuffer);
-                    if (imageNumber == 0) break;
-                    for (int i = 0; i < imageNumber; i++)
-                    {
-                        sr.ReadLine();
-                    }
-
-                    // Read point
-                    while (string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
-                    {
-                    }
-                    pointNumber = int.Parse(sLineBuffer);
-                    if (pointNumber == 0) break;
-
-                    // Read point
-                    while (!string.IsNullOrEmpty(sLineBuffer = sr.ReadLine()))
-                    {
-                        cnt++;
-                        sXYZ = sLineBuffer.Split(chDelimiter, StringSplitOptions.RemoveEmptyEntries);
-                        if (sXYZ == null)
-                        {
-                            MessageBox.Show("data seems to be in wrong format at line " + cnt, "Format Exception", MessageBoxButtons.OK);
-                            return;
-                        }
-                        xyz[0] = double.Parse(sXYZ[0], CultureInfo.InvariantCulture);
-                        xyz[1] = double.Parse(sXYZ[1], CultureInfo.InvariantCulture);
-                        xyz[2] = double.Parse(sXYZ[2], CultureInfo.InvariantCulture);
-                        colors.InsertNextValue(byte.Parse(sXYZ[3], CultureInfo.InvariantCulture));
-                        colors.InsertNextValue(byte.Parse(sXYZ[4], CultureInfo.InvariantCulture));
-                        colors.InsertNextValue(byte.Parse(sXYZ[5], CultureInfo.InvariantCulture));
-                        points.InsertNextPoint(xyz[0], xyz[1], xyz[2]);
-                    }
-                }
-
-
-                vtkPolyData polydata = vtkPolyData.New();
-                polydata.SetPoints(points);
-                polydata.GetPointData().SetScalars(colors);
-                vtkVertexGlyphFilter glyphFilter = vtkVertexGlyphFilter.New();
-                glyphFilter.SetInputConnection(polydata.GetProducerPort());
-
-                // Visualize
-                vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
-                mapper.SetInputConnection(glyphFilter.GetOutputPort());
-                vtkActor actor = vtkActor.New();
-                actor.SetMapper(mapper);
-                actor.GetProperty().SetPointSize(2);
-                // get a reference to the renderwindow of our renderWindowControl1
-                vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
-                // renderer
-                vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
-                // set background color
-                renderer.SetBackground(0.2, 0.3, 0.4);
-                // add our actor to the renderer
-                renderer.AddActor(actor);
-                renderer.ResetCamera();
-            }
-            catch (IOException ex)
-            {
-                MessageBox.Show(ex.Message, "IOException", MessageBoxButtons.OK);
-            }
-            finally
-            {
-                if (sr != null)
-                {
-                    sr.Close();
-                    sr.Dispose();
-                    sr = null;
-                }
+                foreach (var camera in model.listImageModel)
+                    ReadImageIntoObject(renderWindowControl, camera);
             }
         }
-
-        public void SimplePointsReader(RenderWindowControl renderWindowControl)
+        
+        public void ReadImageIntoObject(RenderWindowControl renderWindowControl, nvmImageModel camera)
         {
-            // Path to vtk data must be set as an environment variable
-            // VTK_DATA_ROOT = "C:\VTK\vtkdata-5.8.0"
-            vtkTesting test = vtkTesting.New();
-            string root = test.GetDataRoot();
-            string filePath = @"C:\Users\Notebook\Desktop\ImageDataset_SceauxCastle-master\pokus.txt";
-
-            vtkSimplePointsReader reader = vtkSimplePointsReader.New();
-            reader.SetFileName(filePath);
-            reader.Update();
-            // Visualize
-            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
-            mapper.SetInputConnection(reader.GetOutputPort());
-            vtkActor actor = vtkActor.New();
-            actor.SetMapper(mapper);
-            actor.GetProperty().SetPointSize(4);
             vtkRenderWindow renderWindow = renderWindowControl1.RenderWindow;
             vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
-            renderer.SetBackground(0.2, 0.3, 0.4);
-            renderer.AddActor(actor);
-            renderer.ResetCamera();
-        }
 
-        public void ReadPLY(RenderWindowControl renderWindowControl)
-        {
-            // Path to vtk data must be set as an environment variable
-            // VTK_DATA_ROOT = "C:\VTK\vtkdata-5.8.0"
-            vtkTesting test = vtkTesting.New();
-            string root = test.GetDataRoot();
-            string filePath = @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP\Bachelor_app\Temp\Result_CMVS.0.ply";
-            vtkOBJReader reader = vtkOBJReader.New();
+            string filePath = Path.Combine(tempDirectory, $"{camera.fileName}");
+            vtkJPEGReader reader = vtkJPEGReader.New();
             reader.SetFileName(filePath);
             reader.Update();
-            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
-            mapper.SetInputConnection(reader.GetOutputPort());
+            // Set resolution
+            renderWindow.SetSize(1920, 1080);
 
+            vtkPlaneSource planeSource = vtkPlaneSource.New();
+            vtkTexture texture = new vtkTexture();
+            texture.SetInputConnection(reader.GetOutputPort());
+
+            vtkTextureMapToPlane plane = new vtkTextureMapToPlane();
+            plane.SetInputConnection(planeSource.GetOutputPort());
+            var x = planeSource.GetPoint1();
+            var y = planeSource.GetPoint2();
+            planeSource.SetCenter(camera.cameraCenter.X, camera.cameraCenter.Y, camera.cameraCenter.Z);
+
+            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
+            mapper.SetInputConnection(plane.GetOutputPort());
             vtkActor actor = vtkActor.New();
             actor.SetMapper(mapper);
+            actor.SetTexture(texture);
 
-            actor.GetProperty().SetPointSize(4);
+            renderer.SetBackground(0.2, 0.3, 0.4);
+            renderer.AddActor(actor);
+
+        }
+
+        public void ReadPointIntoObject(RenderWindowControl renderWindowControl, List<nvmPointModel> listPointModel)
+        {
+            vtkUnsignedCharArray colors = vtkUnsignedCharArray.New();
+            colors.SetNumberOfComponents(3);
+            colors.SetName("Colors");
+            vtkPoints points = vtkPoints.New();
+
+            foreach (var point in listPointModel)
+            {
+
+                colors.InsertNextValue(byte.Parse(point.color.X.ToString(), CultureInfo.InvariantCulture));
+                colors.InsertNextValue(byte.Parse(point.color.Y.ToString(), CultureInfo.InvariantCulture));
+                colors.InsertNextValue(byte.Parse(point.color.Z.ToString(), CultureInfo.InvariantCulture));
+                points.InsertNextPoint(
+                    double.Parse(point.position.X.ToString(), CultureInfo.InvariantCulture),
+                    double.Parse(point.position.Y.ToString(), CultureInfo.InvariantCulture),
+                    double.Parse(point.position.Z.ToString(), CultureInfo.InvariantCulture));
+            }
+
+            vtkPolyData polydata = vtkPolyData.New();
+            polydata.SetPoints(points);
+            polydata.GetPointData().SetScalars(colors);
+            vtkVertexGlyphFilter glyphFilter = vtkVertexGlyphFilter.New();
+            glyphFilter.SetInputConnection(polydata.GetProducerPort());
+
+            // Visualize
+            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
+            mapper.SetInputConnection(glyphFilter.GetOutputPort());
+            vtkActor actor = vtkActor.New();
+            actor.SetMapper(mapper);
+            actor.GetProperty().SetPointSize(2);
             // get a reference to the renderwindow of our renderWindowControl1
             vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
             // renderer
@@ -214,30 +139,7 @@ namespace Bakalárska_práca
             renderer.ResetCamera();
         }
 
-        public void Point(RenderWindowControl renderWindowControl)
-        {
-            // Path to vtk data must be set as an environment variable
-            // VTK_DATA_ROOT = "C:\VTK\vtkdata-5.8.0"
-            vtkTesting test = vtkTesting.New();
-            string root = test.GetDataRoot();
-            string filePath = @"C:\Users\Notebook\Desktop\ImageDataset_SceauxCastle-master\lettosuo_final2_group1_densified_point_cloud_part_1 - Cloud.ply";
-
-            vtkSimplePointsReader reader = vtkSimplePointsReader.New();
-            reader.SetFileName(filePath);
-            reader.Update();
-            // Visualize
-            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
-            mapper.SetInputConnection(reader.GetOutputPort());
-            vtkActor actor = vtkActor.New();
-            actor.SetMapper(mapper);
-            actor.GetProperty().SetPointSize(4000000);
-            actor.GetProperty().SetColor(1, 1, 1);
-            vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
-            vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
-            renderer.SetBackground(0.2, 1, 0.4);
-            renderer.AddActor(actor);
-            renderer.ResetCamera();
-        }
+      
 
         private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
         {

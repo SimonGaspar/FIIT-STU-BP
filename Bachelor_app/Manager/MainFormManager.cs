@@ -257,9 +257,9 @@ namespace Bachelor_app.Manager
         {
             var currentItem = sender as ToolStripComboBox;
             if(IsLeft)
-                _cameraManager.SetCameraID(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedText);
+                _cameraManager.SetCameraID(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
             else
-                _cameraManager.SetCameraID(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedText);
+                _cameraManager.SetCameraID(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
         }
 
         public void SetResolution(object sender, EventArgs e)
