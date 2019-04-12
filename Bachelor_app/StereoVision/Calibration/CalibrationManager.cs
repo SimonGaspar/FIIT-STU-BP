@@ -61,9 +61,8 @@ namespace Bachelor_app.StereoVision
             _winForm = new CalibrationForm(this);
 
             _winForm.Show();
-
-            //mozno hodit ako _leftCamera.ImageGrabbed +=  ProcessFrame()
-            Task.Run(async () => await ProcessFrame());
+            
+            Task.Run(async() => await ProcessFrame());
         }
 
         public CalibrationManager()
@@ -180,16 +179,16 @@ namespace Bachelor_app.StereoVision
                 }
 
                 //draw the results
-                frameImage_S1.Draw(new CircleF(corners_Left[0], 3), new Bgr(Color.Yellow), 1);
-                frameImage_S2.Draw(new CircleF(corners_Right[0], 3), new Bgr(Color.Yellow), 1);
+                frameImage_S1.Draw(new CircleF(corners_Left[0], 3), new Bgr(Color.Yellow), 10);
+                frameImage_S2.Draw(new CircleF(corners_Right[0], 3), new Bgr(Color.Yellow), 10);
                 for (int i = 1; i < corners_Left.Length; i++)
                 {
                     //left
-                    frameImage_S1.Draw(new LineSegment2DF(corners_Left[i - 1], corners_Left[i]), chessboardModel.line_colour_array[i], 2);
-                    frameImage_S1.Draw(new CircleF(corners_Left[i], 3), new Bgr(Color.Yellow), 1);
+                    frameImage_S1.Draw(new LineSegment2DF(corners_Left[i - 1], corners_Left[i]), chessboardModel.line_colour_array[i], 10);
+                    frameImage_S1.Draw(new CircleF(corners_Left[i], 3), new Bgr(Color.Yellow), 10);
                     //right
-                    frameImage_S2.Draw(new LineSegment2DF(corners_Right[i - 1], corners_Right[i]), chessboardModel.line_colour_array[i], 2);
-                    frameImage_S2.Draw(new CircleF(corners_Right[i], 3), new Bgr(Color.Yellow), 1);
+                    frameImage_S2.Draw(new LineSegment2DF(corners_Right[i - 1], corners_Right[i]), chessboardModel.line_colour_array[i], 10);
+                    frameImage_S2.Draw(new CircleF(corners_Right[i], 3), new Bgr(Color.Yellow), 10);
                 }
                 //calibrate the delay bassed on size of buffer
                 //if buffer small you want a big delay if big small delay

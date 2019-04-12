@@ -328,6 +328,7 @@
     <Content Include="CUDA_EULA.txt" />
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\Refresh_Freepik.png" />
     <None Include="Resources\Upload_Freepik.png" />
     <None Include="Resources\Download_Freepik.png" />
     <None Include="Resources\CameraCalibration_Freepik.png" />

@@ -143,6 +143,16 @@ namespace Bachelor_app.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Refresh_Freepik {
+            get {
+                object obj = ResourceManager.GetObject("Refresh_Freepik", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RemoveImage_Srip {
             get {
                 object obj = ResourceManager.GetObject("RemoveImage_Srip", resourceCulture);

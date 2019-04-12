@@ -46,8 +46,6 @@ namespace Bakalárska_práca.Manager
         public void Display()
         {
             ShowItemOnView(_winForm.LeftViewBox, LeftViewWindowItem);
-            ShowItemOnView(_winForm.renderWindowControl1, LeftViewWindowItem);
-            ShowItemOnView(_winForm.renderWindowControl2, RightViewWindowItem);
             ShowItemOnView(_winForm.RightViewBox, RightViewWindowItem);
         }
 
@@ -72,6 +70,11 @@ namespace Bakalárska_práca.Manager
                 case EDisplayItem.KeyPoints: imageBox.Image = _fileManager.listViewerModel._lastDrawnKeypoint; break;
                 case EDisplayItem.DescriptorsMatches: imageBox.Image = _fileManager.listViewerModel._lastDrawnMatches; break;
             }
+        }
+
+        public void DisplayPointCloud() {
+            ShowItemOnView(_winForm.renderWindowControl1, LeftViewWindowItem);
+            ShowItemOnView(_winForm.renderWindowControl2, RightViewWindowItem);
         }
 
         public void ShowItemOnView(RenderWindowControl renderWindow, EDisplayItem typeOfItem)

@@ -15,9 +15,11 @@ namespace Bachelor_app.StereoVision.Calibration
         public ChessboardModel()
         {
             Random R = new Random();
-            for (int i = 0; i < line_colour_array.Length; i++)
+            for (int i = 0; i < height; i++)
             {
-                line_colour_array[i] = new Bgr(R.Next(0, 255), R.Next(0, 255), R.Next(0, 255));
+                var color = new Bgr(R.Next(0, 255), R.Next(0, 255), R.Next(0, 255));
+                for (int j=0; j<width;j++)
+                line_colour_array[i*width + j] = color;
             }
         }
     }

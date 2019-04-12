@@ -47,8 +47,6 @@ namespace Bachelor_app.Manager
                 ChangeRenderer(LeftWindow, true);
             else
                 ChangeRenderer(LeftWindow, false);
-
-            _displayManager.Display();
         }
 
         private void ChangeRenderer(bool LeftWindow, bool PointCloud)
@@ -65,6 +63,7 @@ namespace Bachelor_app.Manager
                     _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 0F;
                     _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 50F;
                 }
+                _displayManager.DisplayPointCloud();
             }
             else
             {
@@ -78,6 +77,7 @@ namespace Bachelor_app.Manager
                     _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 50F;
                     _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 0F;
                 }
+                _displayManager.Display();
             }
         }
         #endregion

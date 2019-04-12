@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -57,33 +58,35 @@ namespace Bakalárska_práca
             var nvmFile = sfmHelper.LoadPointCloud();
             foreach (var model in nvmFile)
             {
-                ReadPointIntoObject(renderWindowControl, model.listPointModel);
-
                 foreach (var camera in model.listImageModel)
                     ReadImageIntoObject(renderWindowControl, camera);
+                
+                ReadPointIntoObject(renderWindowControl, model.listPointModel);
             }
         }
         
         public void ReadImageIntoObject(RenderWindowControl renderWindowControl, nvmImageModel camera)
         {
-            vtkRenderWindow renderWindow = renderWindowControl1.RenderWindow;
+            vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
             vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
 
             string filePath = Path.Combine(tempDirectory, $"{camera.fileName}");
             vtkJPEGReader reader = vtkJPEGReader.New();
             reader.SetFileName(filePath);
             reader.Update();
-            // Set resolution
-            renderWindow.SetSize(1920, 1080);
+
+            // Treba poriesit ako nasmerovat obrazky bez pokazenia textury
+            var vectoris = Vector3.Transform(new Vector3(0, 0, 1), camera.quaternion);
 
             vtkPlaneSource planeSource = vtkPlaneSource.New();
             vtkTexture texture = new vtkTexture();
             texture.SetInputConnection(reader.GetOutputPort());
+            vtkTransform transform = new vtkTransform();
+            transform.RotateX(180);
+            texture.SetTransform(transform);
 
             vtkTextureMapToPlane plane = new vtkTextureMapToPlane();
             plane.SetInputConnection(planeSource.GetOutputPort());
-            var x = planeSource.GetPoint1();
-            var y = planeSource.GetPoint2();
             planeSource.SetCenter(camera.cameraCenter.X, camera.cameraCenter.Y, camera.cameraCenter.Z);
 
             vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
