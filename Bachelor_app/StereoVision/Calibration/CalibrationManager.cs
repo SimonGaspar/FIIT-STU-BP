@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Bachelor_app.Enumerate;
 using Bachelor_app.Manager;
 using Bachelor_app.StereoVision.Calibration;
 using Emgu.CV;
@@ -144,9 +145,37 @@ namespace Bachelor_app.StereoVision
             calibrationModel.Rec1 = Rec1;
             calibrationModel.Rec2 = Rec2;
 
+            InitUndistortMatrix();
+
             //This will Show us the usable area from each camera
             //MessageBox.Show("Left: " + Rec1.ToString() + " \nRight: " + Rec2.ToString());
             currentMode = ECalibrationMode.Calibrated;
+        }
+
+        private void InitUndistortMatrix()
+        {
+            Matrix<float> MapX1 = null;
+            Matrix<float> MapY1 = null;
+            Matrix<float> MapX2 = null;
+            Matrix<float> MapY2 = null;
+            switch (_cameraManager.resolution) {
+                case ECameraResolution.VGA:
+                    calibrationModel.IntrinsicCam1.InitUndistortMap(640, 360,out MapX1, out MapY1);
+                    calibrationModel.IntrinsicCam2.InitUndistortMap(640, 360, out MapX2, out MapY2);
+                    break;
+                case ECameraResolution.HD:
+                    calibrationModel.IntrinsicCam1.InitUndistortMap(1280, 720, out MapX1, out MapY1);
+                    calibrationModel.IntrinsicCam2.InitUndistortMap(1280, 720, out MapX2, out MapY2);
+                    break;
+                case ECameraResolution.FullHD:
+                    calibrationModel.IntrinsicCam1.InitUndistortMap(1920, 1080, out MapX1, out MapY1);
+                    calibrationModel.IntrinsicCam2.InitUndistortMap(1920, 1080, out MapX2, out MapY2);
+                    break;
+            }
+            calibrationModel.UndistortCam1.MapX = MapX1;
+            calibrationModel.UndistortCam1.MapY = MapY1;
+            calibrationModel.UndistortCam2.MapX = MapX2;
+            calibrationModel.UndistortCam2.MapY = MapY2;
         }
 
         private async Task SaveImageForCalibration(Mat frame_S1, Mat frame_S2)

@@ -27,7 +27,6 @@ namespace Bakalárska_práca
         private SfM structureFromMotionManager;
         private MainFormManager mainFormManager;
         private CameraManager cameraManager;
-        private CalibrationManager calibrationManager;
 
         string tempDirectory = Path.GetFullPath($"..\\..\\..\\Temp");
 
@@ -379,6 +378,11 @@ namespace Bakalárska_práca
                 toolStripButton22.BackColor = default(System.Drawing.Color);
 
             mainFormManager.SetUsingParallelForStereoVision();
+        }
+
+        private void toolStripButton23_Click(object sender, EventArgs e)
+        {
+            stereoVisionManager._calibrationManager = null;
         }
     }
 }

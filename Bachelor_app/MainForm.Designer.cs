@@ -128,6 +128,7 @@ namespace Bakalárska_práca
             this.toolStripLabel13 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox11 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButton22 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton23 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -189,6 +190,7 @@ namespace Bakalárska_práca
             this.toolStripButton16,
             this.toolStripButton18,
             this.toolStripButton19,
+            this.toolStripButton23,
             this.toolStripSeparator12,
             this.toolStripButton22,
             this.toolStripButton11,
@@ -1073,6 +1075,18 @@ namespace Bakalárska_práca
             this.toolStripButton22.Text = "Parallel";
             this.toolStripButton22.Click += new System.EventHandler(this.toolStripButton22_Click);
             // 
+            // toolStripButton23
+            // 
+            this.toolStripButton23.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton23.Image = global::Bachelor_app.Properties.Resources.Delete_Alfredo_Hernandez;
+            this.toolStripButton23.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton23.Margin = new System.Windows.Forms.Padding(1);
+            this.toolStripButton23.Name = "toolStripButton23";
+            this.toolStripButton23.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton23.Text = "toolStripButton9";
+            this.toolStripButton23.ToolTipText = "Clear";
+            this.toolStripButton23.Click += new System.EventHandler(this.toolStripButton23_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1401,6 +1415,7 @@ namespace Bakalárska_práca
         private System.Windows.Forms.ToolStripButton toolStripButton20;
         private System.Windows.Forms.ToolStripButton toolStripButton21;
         public System.Windows.Forms.ToolStripButton toolStripButton22;
+        private System.Windows.Forms.ToolStripButton toolStripButton23;
     }
 }
 
