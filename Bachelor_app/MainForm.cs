@@ -360,5 +360,25 @@ namespace Bakalárska_práca
             stereoVisionManager._calibrationManager = new CalibrationManager();
             stereoVisionManager._calibrationManager.calibrationModel = JsonConvert.DeserializeObject<CalibrationModel>(json);
         }
+
+        private void toolStripButton20_Click(object sender, EventArgs e)
+        {
+            displayManager.DisplayPointCloud(true);
+        }
+
+        private void toolStripButton21_Click(object sender, EventArgs e)
+        {
+            displayManager.DisplayPointCloud(false);
+        }
+
+        private void toolStripButton22_Click(object sender, EventArgs e)
+        {
+            if (toolStripButton22.Checked)
+                toolStripButton22.BackColor = System.Drawing.Color.Black;
+            else
+                toolStripButton22.BackColor = default(System.Drawing.Color);
+
+            mainFormManager.SetUsingParallelForStereoVision();
+        }
     }
 }

@@ -27,12 +27,13 @@ namespace Bakalárska_práca.StereoVision
 
 
         public bool stopStereoCorrespondence = false;
+        public bool _useParallel = false;
 
         string tempDirectory = Path.GetFullPath($"..\\..\\..\\Temp");
         string tempDepthMapDirectory = Path.GetFullPath($"..\\..\\..\\Temp\\DepthMap");
         string tempLeftStackDirectory = Path.GetFullPath($"..\\..\\..\\Temp\\LeftStack");
         string tempRightStackDirectory = Path.GetFullPath($"..\\..\\..\\Temp\\RightStack");
-
+        
         public StereoVisionManager(FileManager fileManager, DisplayManager displayManager, CameraManager cameraManager, MainForm mainForm)
         {
             this._fileManager = fileManager;

@@ -172,7 +172,8 @@
       <DependentUpon>CalibrationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="StereoVision\Calibration\CalibrationModel.cs" />
-    <Compile Include="StereoVision\Calibration\ChessboardModel.cs" />
+    <Compile Include="StereoVision\Calibration\ECalibrationPattern.cs" />
+    <Compile Include="StereoVision\Calibration\PatternModel.cs" />
     <Compile Include="StereoVision\Calibration\ECalibrationMode.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\BRIEF.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
@@ -280,6 +281,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="StereoVision\Calibration\CalibrationForm.resx">
+      <DependentUpon>CalibrationForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StereoVision\WindowsForm\StereoBMForm.resx">
       <DependentUpon>StereoBMForm.cs</DependentUpon>
     </EmbeddedResource>

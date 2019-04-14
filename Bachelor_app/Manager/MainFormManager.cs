@@ -63,7 +63,7 @@ namespace Bachelor_app.Manager
                     _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 0F;
                     _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 50F;
                 }
-                _displayManager.DisplayPointCloud();
+                _displayManager.DisplayPointCloud(LeftWindow);
             }
             else
             {
@@ -93,9 +93,15 @@ namespace Bachelor_app.Manager
 
         public void ShowStereoVisionSettings()
         {
-
             _stereoVisionManager.ShowSettingForStereoSolver();
         }
+
+
+        public void SetUsingParallelForStereoVision()
+        {
+            _stereoVisionManager._useParallel = _winForm.toolStripButton14.Checked;
+        }
+
         #endregion
 
         #region ListViewer

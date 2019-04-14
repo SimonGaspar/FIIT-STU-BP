@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace Bachelor_app.StereoVision
     public class CalibrationManager
     {
         public CalibrationModel calibrationModel = new CalibrationModel();
-        public ChessboardModel chessboardModel = new ChessboardModel();
+        public PatternModel patternModel = new PatternModel();
 
         private CameraManager _cameraManager;
         private CalibrationForm _winForm;
@@ -24,23 +25,16 @@ namespace Bachelor_app.StereoVision
         public VideoCapture _leftCamera;
         public VideoCapture _rightCamera;
 
+        public Thread CalibrationProcess;
+        private static object locker = new object();
+
         #region Image Processing
-
-        //Frames
-        Mat frame_S1 = new Mat();
-        Image<Bgr, byte> frameImage_S1;
-        Image<Gray, Byte> Gray_frame_S1;
-        Mat frame_S2 = new Mat();
-        Image<Bgr, byte> frameImage_S2;
-        Image<Gray, Byte> Gray_frame_S2;
-
-
         //buffers
-        static int buffer_length = 100; //define the aquasition length of the buffer 
-        int buffer_savepoint = 0; //tracks the filled partition of the buffer
-        MCvPoint3D32f[][] corners_object_Points = new MCvPoint3D32f[buffer_length][]; //stores the calculated size for the chessboard
-        PointF[][] corners_points_Left = new PointF[buffer_length][];//stores the calculated points from chessboard detection Camera 1
-        PointF[][] corners_points_Right = new PointF[buffer_length][];//stores the calculated points from chessboard detection Camera 2
+        int buffer_length; //define the aquasition length of the buffer 
+        int buffer_savepoint; //tracks the filled partition of the buffer
+        MCvPoint3D32f[][] corners_object_Points; //stores the calculated size for the chessboard
+        PointF[][] corners_points_Left;//stores the calculated points from chessboard detection Camera 1
+        PointF[][] corners_points_Right;//stores the calculated points from chessboard detection Camera 2
 
         //Calibration parmeters
         Matrix<double> fundamental; //fundemental output matrix for StereoCalibrate
@@ -48,7 +42,6 @@ namespace Bachelor_app.StereoVision
         Rectangle Rec1 = new Rectangle(); //Rectangle Calibrated in camera 1
         Rectangle Rec2 = new Rectangle(); //Rectangle Caliubrated in camera 2
         ExtrinsicCameraParameters EX_Param = new ExtrinsicCameraParameters(); //Output of Extrinsics for Camera 1 & 2
-        MCvPoint3D32f[] _points; //Computer3DPointsFromStereoPair
         #endregion
 
         ECalibrationMode currentMode = ECalibrationMode.SavingFrames;
@@ -59,55 +52,70 @@ namespace Bachelor_app.StereoVision
             _rightCamera = cameraManager.RightCamera.camera;
 
             _winForm = new CalibrationForm(this);
-
-            _winForm.Show();
-            
-            Task.Run(async() => await ProcessFrame());
+            CalibrationProcess = new Thread(ProcessFrame);
+            _winForm.ShowDialog();
         }
 
         public CalibrationManager()
         {
         }
 
-        public async Task ProcessFrame()
+        public void StartCalibration() {
+
+            buffer_length = patternModel.count;
+            buffer_savepoint = 0;
+            corners_object_Points = new MCvPoint3D32f[buffer_length][];
+            corners_points_Left = new PointF[buffer_length][];
+            corners_points_Right = new PointF[buffer_length][];
+
+            CalibrationProcess.Start();
+        }
+
+        public void ProcessFrame()
         {
+            Mat frame_S1 = new Mat();
+            Mat frame_S2 = new Mat();
             bool StopCalibration = false;
             while (!StopCalibration)
             {
                 _leftCamera.Grab();
-                _leftCamera.Retrieve(frame_S1);
-                frameImage_S1 = new Image<Bgr, byte>(frame_S1.Bitmap);
-                Gray_frame_S1 = frameImage_S1.Convert<Gray, Byte>();
-
                 _rightCamera.Grab();
+                _leftCamera.Retrieve(frame_S1);
                 _rightCamera.Retrieve(frame_S2);
-                frameImage_S2 = new Image<Bgr, byte>(frame_S2.Bitmap);
-                Gray_frame_S2 = frameImage_S2.Convert<Gray, Byte>();
+                
+                _winForm.Video_Source1.Image = frame_S1.Bitmap;
+                _winForm.Video_Source2.Image = frame_S2.Bitmap;
 
                 switch (currentMode)
                 {
-                    case ECalibrationMode.SavingFrames: SaveImageForCalibration(); break;
-                    case ECalibrationMode.Caluculating_Stereo_Intrinsics: ComputeCameraMatrix(); break;
-                    case ECalibrationMode.Calibrated: _winForm.Close(); StopCalibration = true; break;
+                    case ECalibrationMode.SavingFrames:
+                        Task.Run(async () => await SaveImageForCalibration(frame_S1, frame_S2)) ; break;
+                    case ECalibrationMode.Caluculating_Stereo_Intrinsics:
+                        Monitor.Enter(locker);
+                        if(currentMode == ECalibrationMode.Caluculating_Stereo_Intrinsics)
+                        ComputeCameraMatrix(frame_S1, frame_S2);
+                        Monitor.Exit(locker);
+                        break;
+                    case ECalibrationMode.Calibrated:
+                        StopCalibration = true; break;
                 }
-
-                _winForm.Video_Source1.Image = frameImage_S1.Bitmap;
-                _winForm.Video_Source2.Image = frameImage_S2.Bitmap;
+                Thread.Sleep(100);
             }
+            _winForm.ExitWindows();
         }
 
-        private void ComputeCameraMatrix()
+        private void ComputeCameraMatrix(Mat frame_S1, Mat frame_S2)
         {
             //fill the MCvPoint3D32f with correct mesurments
             for (int k = 0; k < buffer_length; k++)
             {
                 //Fill our objects list with the real world mesurments for the intrinsic calculations
                 List<MCvPoint3D32f> object_list = new List<MCvPoint3D32f>();
-                for (int i = 0; i < chessboardModel.patternSize.Height; i++)
+                for (int i = 0; i < patternModel.patternSize.Height; i++)
                 {
-                    for (int j = 0; j < chessboardModel.patternSize.Width; j++)
+                    for (int j = 0; j < patternModel.patternSize.Width; j++)
                     {
-                        object_list.Add(new MCvPoint3D32f(j * 25.0F, i * 25.0F, 0.0F));
+                        object_list.Add(new MCvPoint3D32f(j * patternModel.distance, i * patternModel.distance, 0.0F));
                     }
                 }
                 corners_object_Points[k] = object_list.ToArray();
@@ -137,19 +145,28 @@ namespace Bachelor_app.StereoVision
             calibrationModel.Rec2 = Rec2;
 
             //This will Show us the usable area from each camera
-            MessageBox.Show("Left: " + Rec1.ToString() + " \nRight: " + Rec2.ToString());
+            //MessageBox.Show("Left: " + Rec1.ToString() + " \nRight: " + Rec2.ToString());
             currentMode = ECalibrationMode.Calibrated;
-
         }
 
-        private async Task SaveImageForCalibration()
+        private async Task SaveImageForCalibration(Mat frame_S1, Mat frame_S2)
         {
+            Image<Bgr, byte> frameImage_S1;
+            Image<Gray, Byte> Gray_frame_S1;
+            Image<Bgr, byte> frameImage_S2;
+            Image<Gray, Byte> Gray_frame_S2;
+
+            frameImage_S1 = new Image<Bgr, byte>(frame_S1.Bitmap);
+            Gray_frame_S1 = frameImage_S1.Convert<Gray, Byte>();
+            frameImage_S2 = new Image<Bgr, byte>(frame_S2.Bitmap);
+            Gray_frame_S2 = frameImage_S2.Convert<Gray, Byte>();
+
             VectorOfPointF cornerLeft = new VectorOfPointF();
             VectorOfPointF cornerRight = new VectorOfPointF();
 
             //Find the chessboard in bothe images
-            CvInvoke.FindChessboardCorners(Gray_frame_S1, chessboardModel.patternSize, cornerLeft, CalibCbType.AdaptiveThresh);
-            CvInvoke.FindChessboardCorners(Gray_frame_S2, chessboardModel.patternSize, cornerRight, CalibCbType.AdaptiveThresh);
+            CvInvoke.FindChessboardCorners(Gray_frame_S1, patternModel.patternSize, cornerLeft, CalibCbType.AdaptiveThresh);
+            CvInvoke.FindChessboardCorners(Gray_frame_S2, patternModel.patternSize, cornerRight, CalibCbType.AdaptiveThresh);
             
             if (cornerLeft.Size >0 && cornerRight.Size>0) //chess board found in one of the frames?
             {
@@ -164,7 +181,7 @@ namespace Bachelor_app.StereoVision
                 Gray_frame_S2.FindCornerSubPix(new PointF[1][] { corners_Right }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
 
                 //if go button has been pressed start aquiring frames else we will just display the points
-                if (chessboardModel.start_Flag)
+                if (patternModel.start_Flag)
                 {
                     //save the calculated points into an array
                     corners_points_Left[buffer_savepoint] = corners_Left;
@@ -184,16 +201,27 @@ namespace Bachelor_app.StereoVision
                 for (int i = 1; i < corners_Left.Length; i++)
                 {
                     //left
-                    frameImage_S1.Draw(new LineSegment2DF(corners_Left[i - 1], corners_Left[i]), chessboardModel.line_colour_array[i], 10);
+                    frameImage_S1.Draw(new LineSegment2DF(corners_Left[i - 1], corners_Left[i]), patternModel.line_colour_array[i], 10);
                     frameImage_S1.Draw(new CircleF(corners_Left[i], 3), new Bgr(Color.Yellow), 10);
                     //right
-                    frameImage_S2.Draw(new LineSegment2DF(corners_Right[i - 1], corners_Right[i]), chessboardModel.line_colour_array[i], 10);
+                    frameImage_S2.Draw(new LineSegment2DF(corners_Right[i - 1], corners_Right[i]), patternModel.line_colour_array[i], 10);
                     frameImage_S2.Draw(new CircleF(corners_Right[i], 3), new Bgr(Color.Yellow), 10);
                 }
-                //calibrate the delay bassed on size of buffer
-                //if buffer small you want a big delay if big small delay
-                await Task.Delay(500);//allow the user to move the board to a different position
+
+                _winForm.pictureBox1.Image = frameImage_S1.Bitmap;
+                _winForm.pictureBox2.Image = frameImage_S2.Bitmap;
             }
         }
+
+        public void UpdatePatternModel()
+        {
+            patternModel.width = int.Parse(_winForm.toolStripTextBox1.Text);
+            patternModel.height = int.Parse(_winForm.toolStripTextBox2.Text);
+            patternModel.count = int.Parse(_winForm.toolStripTextBox3.Text);
+            patternModel.distance = float.Parse(_winForm.toolStripTextBox4.Text);
+            patternModel.pattern = Enum.GetValues(typeof(ECalibrationPattern)).Cast<ECalibrationPattern>().First(x => x.ToString() == _winForm.toolStripComboBox1.SelectedItem.ToString());
+        }
+
+
     }
 }

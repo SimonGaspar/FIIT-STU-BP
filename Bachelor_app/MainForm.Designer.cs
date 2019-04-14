@@ -127,6 +127,7 @@ namespace Bakalárska_práca
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel13 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox11 = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButton22 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -189,6 +190,7 @@ namespace Bakalárska_práca
             this.toolStripButton18,
             this.toolStripButton19,
             this.toolStripSeparator12,
+            this.toolStripButton22,
             this.toolStripButton11,
             this.toolStripButton17});
             this.toolStrip1.Location = new System.Drawing.Point(0, 27);
@@ -807,6 +809,7 @@ namespace Bakalárska_práca
             this.toolStripButton20.Name = "toolStripButton20";
             this.toolStripButton20.Size = new System.Drawing.Size(82, 24);
             this.toolStripButton20.Text = "Update";
+            this.toolStripButton20.Click += new System.EventHandler(this.toolStripButton20_Click);
             // 
             // toolStrip4
             // 
@@ -848,6 +851,7 @@ namespace Bakalárska_práca
             this.toolStripButton21.Name = "toolStripButton21";
             this.toolStripButton21.Size = new System.Drawing.Size(82, 24);
             this.toolStripButton21.Text = "Update";
+            this.toolStripButton21.Click += new System.EventHandler(this.toolStripButton21_Click);
             // 
             // toolStrip5
             // 
@@ -1057,6 +1061,17 @@ namespace Bakalárska_práca
             this.toolStripComboBox11.Name = "toolStripComboBox11";
             this.toolStripComboBox11.Size = new System.Drawing.Size(121, 27);
             this.toolStripComboBox11.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox11_SelectedIndexChanged);
+            // 
+            // toolStripButton22
+            // 
+            this.toolStripButton22.BackColor = System.Drawing.SystemColors.Control;
+            this.toolStripButton22.CheckOnClick = true;
+            this.toolStripButton22.Image = global::Bachelor_app.Properties.Resources.Parallel_Freepik;
+            this.toolStripButton22.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton22.Name = "toolStripButton22";
+            this.toolStripButton22.Size = new System.Drawing.Size(81, 24);
+            this.toolStripButton22.Text = "Parallel";
+            this.toolStripButton22.Click += new System.EventHandler(this.toolStripButton22_Click);
             // 
             // MainForm
             // 
@@ -1385,6 +1400,7 @@ namespace Bakalárska_práca
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripButton toolStripButton20;
         private System.Windows.Forms.ToolStripButton toolStripButton21;
+        public System.Windows.Forms.ToolStripButton toolStripButton22;
     }
 }
 

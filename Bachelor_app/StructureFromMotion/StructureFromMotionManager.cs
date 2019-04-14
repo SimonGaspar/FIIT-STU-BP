@@ -34,7 +34,7 @@ namespace Bakalárska_práca
         public IFeatureDescriptor _descriptor;
         public IFeatureMatcher _matcher;
         public EMatchingType _matchingType;
-        public bool _useParallel;
+        public bool _useParallel = false;
         float ms_MAX_DIST = 0, ms_MIN_DIST = float.MaxValue;
         int countInputFile = 0;
         int countCameraInput = 0;

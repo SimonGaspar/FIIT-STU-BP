@@ -72,8 +72,10 @@ namespace Bakalárska_práca.Manager
             }
         }
 
-        public void DisplayPointCloud() {
+        public void DisplayPointCloud(bool LeftViewWindow) {
+            if(LeftViewWindow)
             ShowItemOnView(_winForm.renderWindowControl1, LeftViewWindowItem);
+            else
             ShowItemOnView(_winForm.renderWindowControl2, RightViewWindowItem);
         }
 

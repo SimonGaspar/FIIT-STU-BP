@@ -1,4 +1,8 @@
-﻿namespace Bachelor_app.StereoVision.Calibration
+﻿using Bachelor_app.Extension;
+using System;
+using System.Linq;
+
+namespace Bachelor_app.StereoVision.Calibration
 {
     partial class CalibrationForm
     {
@@ -29,347 +33,248 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.Video_Source2 = new System.Windows.Forms.PictureBox();
             this.Video_Source1 = new System.Windows.Forms.PictureBox();
-            this.DisparityMap = new System.Windows.Forms.PictureBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.fullDP_State = new System.Windows.Forms.Button();
-            this.specklerange = new System.Windows.Forms.TrackBar();
-            this.label9 = new System.Windows.Forms.Label();
-            this.uniquenessRatio = new System.Windows.Forms.TrackBar();
-            this.label8 = new System.Windows.Forms.Label();
-            this.pre_filter_cap = new System.Windows.Forms.TrackBar();
-            this.label7 = new System.Windows.Forms.Label();
-            this.Speckle_Window = new System.Windows.Forms.TrackBar();
-            this.label6 = new System.Windows.Forms.Label();
-            this.SAD_Window = new System.Windows.Forms.TrackBar();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.Disp12MaxDiff = new System.Windows.Forms.TrackBar();
-            this.Num_Disparities = new System.Windows.Forms.TrackBar();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Min_Disparities = new System.Windows.Forms.TrackBar();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextBox4 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.Video_Source2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Video_Source2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Video_Source1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DisparityMap)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.specklerange)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uniquenessRatio)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pre_filter_cap)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Speckle_Window)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SAD_Window)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Disp12MaxDiff)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Num_Disparities)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Min_Disparities)).BeginInit();
+            this.toolStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Video_Source2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.Video_Source2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox2, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.Video_Source1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.DisparityMap, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+            this.tableLayoutPanel1.Controls.Add(this.toolStrip1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.toolStrip2, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.Video_Source2, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(973, 776);
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.22222F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.555555F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.22222F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1262, 673);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // Video_Source2
-            // 
-            this.Video_Source2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Video_Source2.Location = new System.Drawing.Point(489, 3);
-            this.Video_Source2.Name = "Video_Source2";
-            this.Video_Source2.Size = new System.Drawing.Size(481, 382);
-            this.Video_Source2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.Video_Source2.TabIndex = 1;
-            this.Video_Source2.TabStop = false;
             // 
             // Video_Source1
             // 
-            this.Video_Source1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.Video_Source1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Video_Source1.Location = new System.Drawing.Point(3, 3);
+            this.Video_Source1.Location = new System.Drawing.Point(4, 4);
+            this.Video_Source1.Margin = new System.Windows.Forms.Padding(4);
             this.Video_Source1.Name = "Video_Source1";
-            this.Video_Source1.Size = new System.Drawing.Size(480, 382);
+            this.Video_Source1.Size = new System.Drawing.Size(623, 309);
             this.Video_Source1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Video_Source1.TabIndex = 0;
             this.Video_Source1.TabStop = false;
             // 
-            // DisparityMap
+            // toolStrip1
             // 
-            this.DisparityMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1,
+            this.toolStripTextBox1,
+            this.toolStripLabel2,
+            this.toolStripTextBox2,
+            this.toolStripSeparator1,
+            this.toolStripLabel3,
+            this.toolStripTextBox3,
+            this.toolStripLabel4,
+            this.toolStripComboBox1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 317);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(631, 37);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(49, 34);
+            this.toolStripLabel1.Text = "Width";
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(50, 37);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(54, 34);
+            this.toolStripLabel2.Text = "Height";
+            // 
+            // toolStripTextBox2
+            // 
+            this.toolStripTextBox2.Name = "toolStripTextBox2";
+            this.toolStripTextBox2.Size = new System.Drawing.Size(50, 37);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 37);
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(48, 34);
+            this.toolStripLabel3.Text = "Count";
+            // 
+            // toolStripTextBox3
+            // 
+            this.toolStripTextBox3.Name = "toolStripTextBox3";
+            this.toolStripTextBox3.Size = new System.Drawing.Size(50, 37);
+            // 
+            // toolStripLabel4
+            // 
+            this.toolStripLabel4.Name = "toolStripLabel4";
+            this.toolStripLabel4.Size = new System.Drawing.Size(55, 34);
+            this.toolStripLabel4.Text = "Pattern";
+            // 
+            // toolStripComboBox1
+            // 
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 37);
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel5,
+            this.toolStripTextBox4,
+            this.toolStripSeparator2,
+            this.toolStripButton1});
+            this.toolStrip2.Location = new System.Drawing.Point(631, 317);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(631, 27);
+            this.toolStrip2.TabIndex = 3;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStripLabel5
+            // 
+            this.toolStripLabel5.Name = "toolStripLabel5";
+            this.toolStripLabel5.Size = new System.Drawing.Size(66, 24);
+            this.toolStripLabel5.Text = "Distance";
+            // 
+            // toolStripTextBox4
+            // 
+            this.toolStripTextBox4.Name = "toolStripTextBox4";
+            this.toolStripTextBox4.Size = new System.Drawing.Size(100, 27);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::Bachelor_app.Properties.Resources.PlayButton_Roundicons;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(64, 24);
+            this.toolStripButton1.Text = "Start";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // Video_Source2
+            // 
+            this.Video_Source2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DisparityMap.Location = new System.Drawing.Point(489, 391);
-            this.DisparityMap.Name = "DisparityMap";
-            this.DisparityMap.Size = new System.Drawing.Size(481, 382);
-            this.DisparityMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.DisparityMap.TabIndex = 2;
-            this.DisparityMap.TabStop = false;
+            this.Video_Source2.Location = new System.Drawing.Point(635, 4);
+            this.Video_Source2.Margin = new System.Windows.Forms.Padding(4);
+            this.Video_Source2.Name = "Video_Source2";
+            this.Video_Source2.Size = new System.Drawing.Size(623, 309);
+            this.Video_Source2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Video_Source2.TabIndex = 1;
+            this.Video_Source2.TabStop = false;
             // 
-            // panel1
+            // pictureBox1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.fullDP_State);
-            this.panel1.Controls.Add(this.specklerange);
-            this.panel1.Controls.Add(this.label9);
-            this.panel1.Controls.Add(this.uniquenessRatio);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.pre_filter_cap);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.Speckle_Window);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.SAD_Window);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.Disp12MaxDiff);
-            this.panel1.Controls.Add(this.Num_Disparities);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.Min_Disparities);
-            this.panel1.Location = new System.Drawing.Point(3, 391);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(480, 382);
-            this.panel1.TabIndex = 3;
+            this.pictureBox1.Location = new System.Drawing.Point(635, 358);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(623, 311);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
             // 
-            // label10
+            // pictureBox2
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(72, 466);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(58, 16);
-            this.label10.TabIndex = 21;
-            this.label10.Text = "FullDP:";
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.Location = new System.Drawing.Point(4, 358);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(623, 311);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
             // 
-            // fullDP_State
+            // CalibrationForm
             // 
-            this.fullDP_State.Location = new System.Drawing.Point(136, 459);
-            this.fullDP_State.Name = "fullDP_State";
-            this.fullDP_State.Size = new System.Drawing.Size(313, 30);
-            this.fullDP_State.TabIndex = 20;
-            this.fullDP_State.Text = "False";
-            this.fullDP_State.UseVisualStyleBackColor = true;
-            this.fullDP_State.Click += new System.EventHandler(this.fullDP_State_Click);
-            // 
-            // specklerange
-            // 
-            this.specklerange.Location = new System.Drawing.Point(136, 415);
-            this.specklerange.Maximum = 160;
-            this.specklerange.Name = "specklerange";
-            this.specklerange.Size = new System.Drawing.Size(313, 45);
-            this.specklerange.TabIndex = 19;
-            this.specklerange.TickFrequency = 16;
-            this.specklerange.Scroll += new System.EventHandler(this.specklerange_Scroll);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(11, 415);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(119, 16);
-            this.label9.TabIndex = 18;
-            this.label9.Text = "Speckle Range:";
-            // 
-            // uniquenessRatio
-            // 
-            this.uniquenessRatio.Location = new System.Drawing.Point(136, 316);
-            this.uniquenessRatio.Maximum = 30;
-            this.uniquenessRatio.Name = "uniquenessRatio";
-            this.uniquenessRatio.Size = new System.Drawing.Size(313, 45);
-            this.uniquenessRatio.TabIndex = 17;
-            this.uniquenessRatio.TickFrequency = 2;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(43, 316);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(94, 16);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Uniqueness:";
-            // 
-            // pre_filter_cap
-            // 
-            this.pre_filter_cap.Location = new System.Drawing.Point(136, 265);
-            this.pre_filter_cap.Maximum = 1000;
-            this.pre_filter_cap.Name = "pre_filter_cap";
-            this.pre_filter_cap.Size = new System.Drawing.Size(313, 45);
-            this.pre_filter_cap.TabIndex = 15;
-            this.pre_filter_cap.TickFrequency = 100;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(55, 265);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(75, 16);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Pre Filter:";
-            // 
-            // Speckle_Window
-            // 
-            this.Speckle_Window.Location = new System.Drawing.Point(136, 364);
-            this.Speckle_Window.Maximum = 64;
-            this.Speckle_Window.Name = "Speckle_Window";
-            this.Speckle_Window.Size = new System.Drawing.Size(313, 45);
-            this.Speckle_Window.TabIndex = 13;
-            this.Speckle_Window.TickFrequency = 8;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(3, 364);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(127, 16);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Speckle Window:";
-            // 
-            // SAD_Window
-            // 
-            this.SAD_Window.Location = new System.Drawing.Point(136, 163);
-            this.SAD_Window.Maximum = 19;
-            this.SAD_Window.Minimum = 1;
-            this.SAD_Window.Name = "SAD_Window";
-            this.SAD_Window.Size = new System.Drawing.Size(313, 45);
-            this.SAD_Window.SmallChange = 2;
-            this.SAD_Window.TabIndex = 11;
-            this.SAD_Window.TickFrequency = 2;
-            this.SAD_Window.Value = 1;
-            this.SAD_Window.Scroll += new System.EventHandler(this.SAD_Window_Scroll);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(29, 163);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 16);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "SAD Window:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(59, 214);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 16);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Max Diff :";
-            // 
-            // Disp12MaxDiff
-            // 
-            this.Disp12MaxDiff.Location = new System.Drawing.Point(136, 214);
-            this.Disp12MaxDiff.Maximum = 100;
-            this.Disp12MaxDiff.Minimum = -1;
-            this.Disp12MaxDiff.Name = "Disp12MaxDiff";
-            this.Disp12MaxDiff.Size = new System.Drawing.Size(313, 45);
-            this.Disp12MaxDiff.TabIndex = 8;
-            this.Disp12MaxDiff.TickFrequency = 10;
-            this.Disp12MaxDiff.Value = -1;
-            // 
-            // Num_Disparities
-            // 
-            this.Num_Disparities.Location = new System.Drawing.Point(136, 61);
-            this.Num_Disparities.Maximum = 160;
-            this.Num_Disparities.Minimum = 16;
-            this.Num_Disparities.Name = "Num_Disparities";
-            this.Num_Disparities.Size = new System.Drawing.Size(313, 45);
-            this.Num_Disparities.TabIndex = 7;
-            this.Num_Disparities.TickFrequency = 16;
-            this.Num_Disparities.Value = 64;
-            this.Num_Disparities.Scroll += new System.EventHandler(this.Num_Disparities_Scroll);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(43, 61);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(87, 16);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Disparities:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(15, 112);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 16);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Min Disparities:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(180, 8);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 24);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Calibration";
-            // 
-            // Min_Disparities
-            // 
-            this.Min_Disparities.Location = new System.Drawing.Point(136, 112);
-            this.Min_Disparities.Maximum = 159;
-            this.Min_Disparities.Name = "Min_Disparities";
-            this.Min_Disparities.Size = new System.Drawing.Size(313, 45);
-            this.Min_Disparities.TabIndex = 0;
-            this.Min_Disparities.TickFrequency = 16;
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(997, 800);
+            this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "Form1";
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "CalibrationForm";
             this.Text = "Form1";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Video_Source2)).EndInit();
+            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Video_Source1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DisparityMap)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.specklerange)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.uniquenessRatio)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pre_filter_cap)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Speckle_Window)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.SAD_Window)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Disp12MaxDiff)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Num_Disparities)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Min_Disparities)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Video_Source2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        private void InitializeString()
+        {
+            toolStripTextBox1.Text = _calibrationManager.patternModel.width.ToString();
+            toolStripTextBox2.Text = _calibrationManager.patternModel.height.ToString();
+            toolStripTextBox3.Text = _calibrationManager.patternModel.count.ToString();
+            toolStripTextBox4.Text = _calibrationManager.patternModel.distance.ToString();
+
+            this.toolStripComboBox1.Items.AddRange(Enum.GetValues(typeof(ECalibrationPattern)).Cast<ECalibrationPattern>().Select(x => x.Display()).ToArray());
+            this.toolStripComboBox1.SelectedItem = ECalibrationPattern.Chessboard.Display();
         }
 
         #endregion
@@ -377,27 +282,23 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         public System.Windows.Forms.PictureBox Video_Source2;
         public System.Windows.Forms.PictureBox Video_Source1;
-        public System.Windows.Forms.PictureBox DisparityMap;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TrackBar Min_Disparities;
-        private System.Windows.Forms.Label label3;
-        public System.Windows.Forms.TrackBar Num_Disparities;
-        private System.Windows.Forms.Label label4;
-        public System.Windows.Forms.TrackBar Disp12MaxDiff;
-        public System.Windows.Forms.TrackBar SAD_Window;
-        private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.TrackBar Speckle_Window;
-        private System.Windows.Forms.Label label6;
-        public System.Windows.Forms.TrackBar pre_filter_cap;
-        private System.Windows.Forms.Label label7;
-        public System.Windows.Forms.TrackBar uniquenessRatio;
-        private System.Windows.Forms.Label label8;
-        public System.Windows.Forms.TrackBar specklerange;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        public System.Windows.Forms.Button fullDP_State;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        public System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        public System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        public System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        public System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel5;
+        public System.Windows.Forms.ToolStripTextBox toolStripTextBox4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        public System.Windows.Forms.PictureBox pictureBox2;
+        public System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
