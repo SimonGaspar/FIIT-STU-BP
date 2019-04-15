@@ -2,6 +2,9 @@
 
 namespace Bakalárska_práca.StereoVision.Model
 {
+    /// <summary>
+    /// Model for StereoSGBM
+    /// </summary>
     public class StereoSemiGlobalBlockMatchingModel : StereoBlockMatchingModel
     {
         public int MinDispatiries { get; set; } = 0;

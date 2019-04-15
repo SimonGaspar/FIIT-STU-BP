@@ -1,4 +1,5 @@
-﻿using Bachelor_app.StructureFromMotion.Model;
+﻿using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
+using Bachelor_app.StructureFromMotion.Model;
 using Bachelor_app.StructureFromMotion.WindowsForm;
 using Bakalárska_práca.Model;
 using Emgu.CV;
@@ -7,7 +8,10 @@ using Emgu.CV.Structure;
 
 namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
 {
-    public class OrientedFastAndRotatedBrief : IFeatureDetector, IFeatureDescriptor
+    /// <summary>
+    /// ORB algorithm
+    /// </summary>
+    public class OrientedFastAndRotatedBrief : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
         private OrientedFastAndRotatedBriefForm _windowsForm;
         private OrientedFastAndRotatedBriefModel model = new OrientedFastAndRotatedBriefModel();
@@ -18,36 +22,37 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
             UpdateModel(model);
         }
 
-        public Mat ComputeDescriptor(KeyPointModel keyPoints)
+        public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             Mat result = new Mat();
             Mat image = new Mat(keyPoints.InputFile.fileInfo.FullName);
-            var _orb = CreateDetector();
+            var _orb = CreateDetectorExtractor();
             _orb.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;
         }
 
-        public MKeyPoint[] DetectKeyPoints(IInputArray image)
+        public override MKeyPoint[] DetectKeyPoints(IInputArray image)
         {
             MKeyPoint[] result;
-            var _orb = CreateDetector();
+            var _orb = CreateDetectorExtractor();
             result = _orb.Detect(image);
 
             return result;
         }
 
-        public void ShowSettingForm()
+        public override void ShowSettingForm()
         {
             _windowsForm = new OrientedFastAndRotatedBriefForm(this);
             _windowsForm.Show();
         }
 
-        public void UpdateModel<T>(T model)
+        public override void UpdateModel<T>(T model)
         {
             this.model = model as OrientedFastAndRotatedBriefModel;
         }
 
-        public ORBDetector CreateDetector() {
+        public ORBDetector CreateDetectorExtractor()
+        {
             var _orb = new ORBDetector(
                 this.model.NumberOfFeatures,
                 this.model.ScaleFactor,

@@ -34,7 +34,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 cudaBruteForce.UpdateModel(model);
                 this.Close();
             }
-            catch (Exception e) { }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unable to set these parameters.");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,7 +52,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.comboBox1.SelectedIndex = this.comboBox1.Items.Count-1;
+            this.comboBox1.SelectedIndex = this.comboBox1.Items.Count - 1;
         }
     }
 }

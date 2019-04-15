@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bachelor_app.StereoVision.Calibration
+﻿namespace Bachelor_app.StereoVision.Calibration
 {
+    /// <summary>
+    /// Calibration pattern
+    /// </summary>
     public enum ECalibrationPattern
     {
         Chessboard

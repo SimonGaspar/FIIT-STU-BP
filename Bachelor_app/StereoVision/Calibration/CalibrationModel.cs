@@ -1,9 +1,11 @@
 ﻿using System.Drawing;
 using Emgu.CV;
-using Emgu.CV.Structure;
 
 namespace Bachelor_app.StereoVision.Calibration
 {
+    /// <summary>
+    /// Calibration model
+    /// </summary>
     public class CalibrationModel
     {
         public IntrinsicCameraParameters IntrinsicCam1 { get; set; } = new IntrinsicCameraParameters(); //Camera 1
@@ -22,8 +24,12 @@ namespace Bachelor_app.StereoVision.Calibration
         public Matrix<double> P2 { get; set; } = new Matrix<double>(3, 4); //projection matrices in the new (rectified) coordinate systems for Camera 2.
     }
 
-    public class UndistortCameraParameters {
+    /// <summary>
+    /// Undistort parameters for camera. Used in stereo vision by remap images.
+    /// </summary>
+    public class UndistortCameraParameters
+    {
         public Matrix<float> MapX { get; set; }
         public Matrix<float> MapY { get; set; }
-    } 
+    }
 }

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
 using Bachelor_app.StructureFromMotion.Model;
@@ -30,13 +23,16 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             {
                 var model = new BriefModel()
                 {
-                   DescriptorSize = int.Parse(textBox1.Text)
+                    DescriptorSize = int.Parse(textBox1.Text)
                 };
 
                 _brief.UpdateModel(model);
                 this.Close();
             }
-            catch (Exception e) { }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unable to set these parameters.");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -52,7 +48,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void ShowDefaultModelSetting()
         {
             this.textBox1.Text = defaultModel.DescriptorSize.ToString();
-           
+
         }
     }
 }

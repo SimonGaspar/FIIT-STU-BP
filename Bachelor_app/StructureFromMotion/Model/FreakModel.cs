@@ -1,5 +1,8 @@
 ﻿namespace Bachelor_app.StructureFromMotion.Model
 {
+    /// <summary>
+    /// Model for FREAK
+    /// </summary>
     public class FreakModel
     {
         public bool OrientationNormalized { get; set; } = true;

@@ -1,5 +1,8 @@
 ﻿namespace Bakalárska_práca.StereoVision.Model
 {
+    /// <summary>
+    /// Model for CudaStereoConstantSpaceBP
+    /// </summary>
     public class CudaStereoConstantSpaceBPModel
     {
         public int Disparity { get; set; } = 128;

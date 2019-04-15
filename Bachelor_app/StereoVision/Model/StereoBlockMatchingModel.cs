@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bakalárska_práca.StereoVision
+﻿namespace Bakalárska_práca.StereoVision
 {
+    /// <summary>
+    /// Model for StereoBM
+    /// </summary>
     public class StereoBlockMatchingModel
     {
         public int Disparity { get; set; } = 16;

@@ -175,6 +175,7 @@
     <Compile Include="StereoVision\Calibration\ECalibrationPattern.cs" />
     <Compile Include="StereoVision\Calibration\PatternModel.cs" />
     <Compile Include="StereoVision\Calibration\ECalibrationMode.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\AbstractFeatureDetectorDescriptor.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\BRIEF.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FREAK.cs" />

@@ -46,7 +46,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             }
             catch (Exception e)
             {
-
+                MessageBox.Show("Unable to set these parameters.");
             }
 
         }

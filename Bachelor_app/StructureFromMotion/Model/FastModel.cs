@@ -2,6 +2,9 @@
 
 namespace Bachelor_app.StructureFromMotion.Model
 {
+    /// <summary>
+    /// Model for FAST
+    /// </summary>
     public class FastModel
     {
         public int Threshold { get; set; } = 10;

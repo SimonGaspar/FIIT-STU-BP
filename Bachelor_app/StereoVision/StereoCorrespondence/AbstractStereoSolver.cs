@@ -5,6 +5,9 @@ using Emgu.CV.Structure;
 
 namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
+    /// <summary>
+    /// Abstract class for stereo correspondence
+    /// </summary>
     public abstract class AbstractStereoSolver : IStereoSolver
     {
         protected Image<Bgr, byte> LeftImage;
@@ -14,11 +17,23 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         public Image<Gray, byte> DepthMapGray { get; protected set; }
         public Image<Bgr, byte> DepthMap { get; protected set; }
 
+        /// <summary>
+        /// Compute depth map from images
+        /// </summary>
+        /// <param name="leftImage">Left image</param>
+        /// <param name="rightImage">Right image</param>
+        /// <returns>Depth map</returns>
         public virtual Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
             return null;
         }
 
+        /// <summary>
+        /// Compute depth map from images
+        /// </summary>
+        /// <param name="leftImage">Left image</param>
+        /// <param name="rightImage">Right image</param>
+        /// <returns>Depth map</returns>
         public Mat ComputeDepthMap(Image leftImage, Image rightImage)
         {
             var depthMapImage = ComputeDepthMap(
@@ -29,13 +44,27 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             return depthMapImage;
         }
 
+        /// <summary>
+        /// Show WinForm(settings)
+        /// </summary>
         public virtual void ShowSettingForm() { }
 
+        /// <summary>
+        /// Update model with WinForm value
+        /// </summary>
+        /// <typeparam name="T">Type of model</typeparam>
+        /// <param name="model">New model</param>
         public virtual void UpdateModel<T>(T model)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Convert image to gray
+        /// </summary>
+        /// <typeparam name="T">Type of image</typeparam>
+        /// <param name="leftImage">Left image</param>
+        /// <param name="rightImage">Right image</param>
         protected void ConvertImageToGray<T>(T leftImage, T rightImage) where T : Image<Bgr, byte>
         {
             LeftImage = leftImage;

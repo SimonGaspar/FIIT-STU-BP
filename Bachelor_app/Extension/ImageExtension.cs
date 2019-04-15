@@ -16,7 +16,7 @@ namespace Bakalárska_práca.Extension
         /// <typeparam name="T">Input type of image</typeparam>
         /// <param name="image">EmguCV Image</param>
         /// <returns>Image</returns>
-        public static Image ImageBGR2Image<T>(this T image) where T : IImage
+        public static Image ImageBGR2Image<T>(this T image) where T : IImage, IInputArray
         {
             return image.Bitmap;
         }

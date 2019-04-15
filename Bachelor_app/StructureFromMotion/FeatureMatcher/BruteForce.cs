@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Bachelor_app.StructureFromMotion;
+﻿using Bachelor_app.StructureFromMotion;
 using Bachelor_app.StructureFromMotion.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Features2D;
@@ -7,6 +6,9 @@ using Emgu.CV.Util;
 
 namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
 {
+    /// <summary>
+    /// BFMatcher algorithm
+    /// </summary>
     public class BruteForce : IFeatureMatcher
     {
         private BruteForceForm _windowsForm;
@@ -17,7 +19,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         {
             UpdateModel(model);
         }
-        
+
         public void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
             var _bruteForceMatcher = CreateMatcher();
@@ -35,7 +37,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
         public void UpdateModel<T>(T model)
         {
             this.model = model as BruteForceModel;
-           
+
         }
 
         public BFMatcher CreateMatcher()

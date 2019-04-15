@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bachelor_app.StructureFromMotion.Model;
+﻿using Bachelor_app.StructureFromMotion.Model;
 using Bachelor_app.StructureFromMotion.WindowsForm;
 using Bakalárska_práca.Model;
 using Bakalárska_práca.StructureFromMotion;
 using Emgu.CV;
-using Emgu.CV.Structure;
 using Emgu.CV.XFeatures2D;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
-    public class BRIEF : IFeatureDetector, IFeatureDescriptor
+    /// <summary>
+    /// BRIEF algorithm
+    /// </summary>
+    public class BRIEF : AbstractFeatureDetectorDescriptor, IFeatureDescriptor
     {
-        BriefDescriptorExtractor _brief;
         private BriefForm _windowsForm;
         private BriefModel model = new BriefModel();
 
@@ -24,34 +20,31 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             UpdateModel(model);
         }
 
-        public Mat ComputeDescriptor(KeyPointModel keyPoints)
+        public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             Mat result = new Mat();
             Mat image = new Mat(keyPoints.InputFile.fileInfo.FullName);
+
+            var _brief = CreatExtractor();
             _brief.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;
         }
 
-        public MKeyPoint[] DetectKeyPoints(IInputArray image)
-        {
-            MKeyPoint[] result;
-            result = _brief.Detect(image);
-
-            return result;
-        }
-
-        public void ShowSettingForm()
+        public override void ShowSettingForm()
         {
             _windowsForm = new BriefForm(this);
             _windowsForm.Show();
         }
 
-        public void UpdateModel<T>(T model)
+        public override void UpdateModel<T>(T model)
         {
             this.model = model as BriefModel;
-            _brief = new BriefDescriptorExtractor(
-                
-                );
+        }
+
+        private BriefDescriptorExtractor CreatExtractor()
+        {
+            var _brief = new BriefDescriptorExtractor(this.model.DescriptorSize);
+            return _brief;
         }
     }
 }

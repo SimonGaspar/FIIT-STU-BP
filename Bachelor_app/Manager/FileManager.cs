@@ -9,6 +9,9 @@ using Bakalárska_práca.Model;
 
 namespace Bakalárska_práca.Manager
 {
+    /// <summary>
+    /// File management
+    /// </summary>
     public class FileManager
     {
         private MainForm _winForm;

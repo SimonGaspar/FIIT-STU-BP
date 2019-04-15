@@ -33,6 +33,8 @@ namespace Bachelor_app.StereoVision.Calibration
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Video_Source1 = new System.Windows.Forms.PictureBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -50,15 +52,14 @@ namespace Bachelor_app.StereoVision.Calibration
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.Video_Source2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Video_Source1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Video_Source2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -80,18 +81,41 @@ namespace Bachelor_app.StereoVision.Calibration
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.22222F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.555555F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.22222F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1262, 673);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(946, 547);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.Location = new System.Drawing.Point(3, 291);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(467, 253);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 5;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.Location = new System.Drawing.Point(476, 291);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(467, 253);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
             // 
             // Video_Source1
             // 
             this.Video_Source1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Video_Source1.Location = new System.Drawing.Point(4, 4);
-            this.Video_Source1.Margin = new System.Windows.Forms.Padding(4);
+            this.Video_Source1.Location = new System.Drawing.Point(3, 3);
             this.Video_Source1.Name = "Video_Source1";
-            this.Video_Source1.Size = new System.Drawing.Size(623, 309);
+            this.Video_Source1.Size = new System.Drawing.Size(467, 252);
             this.Video_Source1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Video_Source1.TabIndex = 0;
             this.Video_Source1.TabStop = false;
@@ -110,60 +134,60 @@ namespace Bachelor_app.StereoVision.Calibration
             this.toolStripTextBox3,
             this.toolStripLabel4,
             this.toolStripComboBox1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 317);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 258);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(631, 37);
+            this.toolStrip1.Size = new System.Drawing.Size(473, 30);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(49, 34);
+            this.toolStripLabel1.Size = new System.Drawing.Size(39, 27);
             this.toolStripLabel1.Text = "Width";
             // 
             // toolStripTextBox1
             // 
             this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(50, 37);
+            this.toolStripTextBox1.Size = new System.Drawing.Size(38, 30);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(54, 34);
+            this.toolStripLabel2.Size = new System.Drawing.Size(43, 27);
             this.toolStripLabel2.Text = "Height";
             // 
             // toolStripTextBox2
             // 
             this.toolStripTextBox2.Name = "toolStripTextBox2";
-            this.toolStripTextBox2.Size = new System.Drawing.Size(50, 37);
+            this.toolStripTextBox2.Size = new System.Drawing.Size(38, 30);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 37);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
             // 
             // toolStripLabel3
             // 
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(48, 34);
+            this.toolStripLabel3.Size = new System.Drawing.Size(40, 27);
             this.toolStripLabel3.Text = "Count";
             // 
             // toolStripTextBox3
             // 
             this.toolStripTextBox3.Name = "toolStripTextBox3";
-            this.toolStripTextBox3.Size = new System.Drawing.Size(50, 37);
+            this.toolStripTextBox3.Size = new System.Drawing.Size(38, 30);
             // 
             // toolStripLabel4
             // 
             this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(55, 34);
+            this.toolStripLabel4.Size = new System.Drawing.Size(45, 27);
             this.toolStripLabel4.Text = "Pattern";
             // 
             // toolStripComboBox1
             // 
             this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 37);
+            this.toolStripComboBox1.Size = new System.Drawing.Size(92, 30);
             // 
             // toolStrip2
             // 
@@ -171,24 +195,25 @@ namespace Bachelor_app.StereoVision.Calibration
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel5,
             this.toolStripTextBox4,
+            this.toolStripLabel6,
             this.toolStripSeparator2,
             this.toolStripButton1});
-            this.toolStrip2.Location = new System.Drawing.Point(631, 317);
+            this.toolStrip2.Location = new System.Drawing.Point(473, 258);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(631, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(473, 27);
             this.toolStrip2.TabIndex = 3;
             this.toolStrip2.Text = "toolStrip2";
             // 
             // toolStripLabel5
             // 
             this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(66, 24);
+            this.toolStripLabel5.Size = new System.Drawing.Size(52, 24);
             this.toolStripLabel5.Text = "Distance";
             // 
             // toolStripTextBox4
             // 
             this.toolStripTextBox4.Name = "toolStripTextBox4";
-            this.toolStripTextBox4.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBox4.Size = new System.Drawing.Size(76, 27);
             // 
             // toolStripSeparator2
             // 
@@ -200,7 +225,7 @@ namespace Bachelor_app.StereoVision.Calibration
             this.toolStripButton1.Image = global::Bachelor_app.Properties.Resources.PlayButton_Roundicons;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(64, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(55, 24);
             this.toolStripButton1.Text = "Start";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -209,59 +234,37 @@ namespace Bachelor_app.StereoVision.Calibration
             this.Video_Source2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Video_Source2.Location = new System.Drawing.Point(635, 4);
-            this.Video_Source2.Margin = new System.Windows.Forms.Padding(4);
+            this.Video_Source2.Location = new System.Drawing.Point(476, 3);
             this.Video_Source2.Name = "Video_Source2";
-            this.Video_Source2.Size = new System.Drawing.Size(623, 309);
+            this.Video_Source2.Size = new System.Drawing.Size(467, 252);
             this.Video_Source2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Video_Source2.TabIndex = 1;
             this.Video_Source2.TabStop = false;
             // 
-            // pictureBox1
+            // toolStripLabel6
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(635, 358);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(623, 311);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.Location = new System.Drawing.Point(4, 358);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(623, 311);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
+            this.toolStripLabel6.Name = "toolStripLabel6";
+            this.toolStripLabel6.Size = new System.Drawing.Size(29, 24);
+            this.toolStripLabel6.Text = "mm";
             // 
             // CalibrationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 673);
+            this.ClientSize = new System.Drawing.Size(946, 547);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CalibrationForm";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Video_Source1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Video_Source2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -299,6 +302,7 @@ namespace Bachelor_app.StereoVision.Calibration
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         public System.Windows.Forms.PictureBox pictureBox2;
         public System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel6;
     }
 }
 

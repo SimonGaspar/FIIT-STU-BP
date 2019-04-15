@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DirectShowLib;
+using Emgu.CV;
 
 namespace Bachelor_app.Helper
 {
@@ -26,6 +27,21 @@ namespace Bachelor_app.Helper
                 _DeviceIndex++;
             }
             return ListCamerasData;
+        }
+
+        /// <summary>
+        /// Get stereo image
+        /// </summary>
+        /// <param name="LeftCamera">Left camera</param>
+        /// <param name="RightCamera">Right camera</param>
+        /// <param name="LeftImage">Mat for left image</param>
+        /// <param name="RightImage">Mat for right image</param>
+        public static void GetStereoImage(VideoCapture LeftCamera, VideoCapture RightCamera, ref Mat LeftImage, ref Mat RightImage)
+        {
+            LeftCamera.Grab();
+            RightCamera.Grab();
+            LeftCamera.Retrieve(LeftImage);
+            RightCamera.Retrieve(RightImage);
         }
     }
 }

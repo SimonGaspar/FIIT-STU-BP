@@ -1,14 +1,17 @@
-﻿using Bachelor_app.StructureFromMotion.Model;
+﻿using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
+using Bachelor_app.StructureFromMotion.Model;
 using Bachelor_app.StructureFromMotion.WindowsForm;
 using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
-using System;
 
 namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
 {
-    public class CudaOrientedFastAndRotatedBrief : IFeatureDetector, IFeatureDescriptor
+    /// <summary>
+    /// CudaORB algorithm
+    /// </summary>
+    public class CudaOrientedFastAndRotatedBrief : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
         private CudaOrientedFastAndRotatedBriefForm _windowsForm;
         private CudaOrientedFastAndRotatedBriefModel model = new CudaOrientedFastAndRotatedBriefModel();
@@ -18,9 +21,9 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
             model.NumberOfFeatures = 30000;
         }
 
-        public Mat ComputeDescriptor(KeyPointModel keyPoints)
+        public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
-            var cudaORB = CreateDetector();
+            var cudaORB = CreateDetectorExtractor();
             var mat = new Mat(keyPoints.InputFile.fileInfo.FullName);
             Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
             GpuMat gpumat = new GpuMat(image);
@@ -28,40 +31,36 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
             GpuMat result = new GpuMat();
             cudaORB.Compute(gpumat, keyPoints.DetectedKeyPoints, result);
             var returnResult = result.ToMat();
-            gpumat.Dispose();
-            result.Dispose();
-            cudaORB.Dispose();
+
             return returnResult;
         }
 
-        public MKeyPoint[] DetectKeyPoints(IInputArray input)
+        public override MKeyPoint[] DetectKeyPoints(IInputArray input)
         {
-            var cudaORB = CreateDetector();
+            var cudaORB = CreateDetectorExtractor();
             var mat = input as Mat;
             Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
             MKeyPoint[] result;
             GpuMat gpumat = new GpuMat(image);
 
-
             result = cudaORB.Detect(gpumat);
-            gpumat.Dispose();
-            cudaORB.Dispose();
+
             return result;
         }
 
-        public void ShowSettingForm()
+        public override void ShowSettingForm()
         {
             _windowsForm = new CudaOrientedFastAndRotatedBriefForm(this);
             _windowsForm.Show();
         }
 
-        public void UpdateModel<T>(T model)
+        public override void UpdateModel<T>(T model)
         {
             this.model = model as CudaOrientedFastAndRotatedBriefModel;
-            
         }
 
-        public CudaORBDetector CreateDetector() {
+        private CudaORBDetector CreateDetectorExtractor()
+        {
             var _cudaORB = new CudaORBDetector(
                 this.model.NumberOfFeatures,
                 this.model.ScaleFactor,

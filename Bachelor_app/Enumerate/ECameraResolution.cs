@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Bachelor_app.Enumerate
 {
@@ -38,8 +39,7 @@ namespace Bachelor_app.Enumerate
                     returnValue = new Size(1920, 1080);
                     break;
                 default:
-                    returnValue = new Size(640, 360);
-                    break;
+                    throw new NotImplementedException();
             }
 
             return returnValue;

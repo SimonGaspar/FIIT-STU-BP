@@ -6,6 +6,9 @@ using Emgu.CV.Structure;
 
 namespace Bakalárska_práca.StereoVision.StereoCorrespondence
 {
+    /// <summary>
+    /// StereoSGBM algorithm.
+    /// </summary>
     public class StereoSemiGlobalBlockMatching : StereoBlockMatching, IStereoSolver
     {
         public new StereoSemiGlobalBlockMatchingModel model = new StereoSemiGlobalBlockMatchingModel();
@@ -15,6 +18,12 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         {
         }
 
+        /// <summary>
+        /// Compute depth map from images
+        /// </summary>
+        /// <param name="leftImage">Left image</param>
+        /// <param name="rightImage">Right image</param>
+        /// <returns>Depth map</returns>
         public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
             StereoSGBM _stereoSGBM = CreateStereoSGBM();
@@ -28,12 +37,22 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             return imageDisparity;
         }
 
+        /// <summary>
+        /// Update model with WinForm value
+        /// </summary>
+        /// <typeparam name="T">Type of model</typeparam>
+        /// <param name="model">New model</param>
         public override void UpdateModel<T>(T model)
         {
             this.model = model as StereoSemiGlobalBlockMatchingModel;
         }
 
-        public StereoSGBM CreateStereoSGBM() {
+        /// <summary>
+        /// Create new instance of using algorithm.
+        /// </summary>
+        /// <returns>New instance</returns>
+        public StereoSGBM CreateStereoSGBM()
+        {
             return new StereoSGBM(
                 this.model.MinDispatiries,
                 this.model.Disparity,
@@ -49,6 +68,9 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
                 );
         }
 
+        /// <summary>
+        /// Show WinForm(settings)
+        /// </summary>
         public override void ShowSettingForm()
         {
             _windowsForm = new StereoSGBMForm(this);

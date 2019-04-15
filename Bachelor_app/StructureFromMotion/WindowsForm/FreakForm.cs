@@ -32,7 +32,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 _freak.UpdateModel(model);
                 this.Close();
             }
-            catch (Exception e) { }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unable to set these parameters.");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

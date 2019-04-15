@@ -7,6 +7,9 @@ using Bakalárska_práca;
 
 namespace Bachelor_app.Manager
 {
+    /// <summary>
+    /// Manager for camera
+    /// </summary>
     public class CameraManager
     {
         public List<KeyValuePair<int, string>> ListCamerasData;

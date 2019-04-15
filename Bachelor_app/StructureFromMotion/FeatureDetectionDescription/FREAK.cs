@@ -3,14 +3,15 @@ using Bachelor_app.StructureFromMotion.WindowsForm;
 using Bakalárska_práca.Model;
 using Bakalárska_práca.StructureFromMotion;
 using Emgu.CV;
-using Emgu.CV.Structure;
 using Emgu.CV.XFeatures2D;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
-    public class FREAK : IFeatureDetector, IFeatureDescriptor
+    /// <summary>
+    /// FREAK algorithm
+    /// </summary>
+    public class FREAK : AbstractFeatureDetectorDescriptor, IFeatureDescriptor
     {
-        Freak _freak;
         private FreakForm _windowsForm;
         private FreakModel model = new FreakModel();
 
@@ -19,37 +20,35 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             UpdateModel(model);
         }
 
-        public Mat ComputeDescriptor(KeyPointModel keyPoints)
+        public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
+            var _freak = CreateExtractor();
             Mat result = new Mat();
             Mat image = new Mat(keyPoints.InputFile.fileInfo.FullName);
             _freak.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;
         }
 
-        public MKeyPoint[] DetectKeyPoints(IInputArray image)
-        {
-            MKeyPoint[] result;
-            result = _freak.Detect(image);
-
-            return result;
-        }
-
-        public void ShowSettingForm()
+        public override void ShowSettingForm()
         {
             _windowsForm = new FreakForm(this);
             _windowsForm.Show();
         }
 
-        public void UpdateModel<T>(T model)
+        public override void UpdateModel<T>(T model)
         {
             this.model = model as FreakModel;
-            _freak = new Freak(
+        }
+
+        private Freak CreateExtractor()
+        {
+            var _freak = new Freak(
                 this.model.OrientationNormalized,
                 this.model.ScaleNormalized,
                 this.model.PatternScale,
                 this.model.NOctaves
                 );
+            return _freak;
         }
     }
 }

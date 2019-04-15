@@ -10,11 +10,6 @@ namespace Bakalárska_práca.StereoVision.WindowsForm
 {
     public partial class StereoSGBMForm : Form
     {
-        public StereoSGBMForm()
-        {
-            InitializeComponent();
-        }
-
         private StereoSemiGlobalBlockMatching _stereoSemiGlobalBlockMatching;
 
         public StereoSGBMForm(StereoSemiGlobalBlockMatching stereoSemiGlobalBlockMatching)
@@ -24,6 +19,7 @@ namespace Bakalárska_práca.StereoVision.WindowsForm
             InitializeComponent();
         }
 
+        #region TrackBar
         private void trackBar_ValueChangedOdd(object sender, EventArgs e)
         {
             WindowsFormHelper.trackBar_ValueChangedOdd(sender as TrackBar, toolTip1, GetPropertiesAndSetModel);
@@ -33,7 +29,11 @@ namespace Bakalárska_práca.StereoVision.WindowsForm
         {
             WindowsFormHelper.trackBar_ValueChangedMultiple16(sender as TrackBar, toolTip1, GetPropertiesAndSetModel);
         }
+        #endregion
 
+        /// <summary>
+        /// Create model from WinForm values and update.
+        /// </summary>
         private void GetPropertiesAndSetModel()
         {
             var model = new StereoSemiGlobalBlockMatchingModel()

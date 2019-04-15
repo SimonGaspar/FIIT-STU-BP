@@ -2,6 +2,9 @@
 
 namespace Bachelor_app.Model
 {
+    /// <summary>
+    /// Model for camera
+    /// </summary>
     public class CameraModel
     {
         public int ID { get; set; }

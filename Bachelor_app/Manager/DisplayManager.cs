@@ -14,7 +14,7 @@ using Kitware.VTK;
 namespace Bakalárska_práca.Manager
 {
     /// <summary>
-    /// Manager for dipslay in MainForm, which show things from EDisplayItem
+    /// Manager for displays in MainForm, which show things from EDisplayItem
     /// </summary>
     public class DisplayManager
     {
