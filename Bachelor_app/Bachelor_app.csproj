@@ -132,34 +132,34 @@
     <Compile Include="Enumerate\EInput.cs" />
     <Compile Include="Enumerate\EListViewGroup.cs" />
     <Compile Include="Enumerate\EMatchingType.cs" />
+    <Compile Include="Extension\CameraExtension.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
     <Compile Include="Extension\ImageExtension.cs" />
     <Compile Include="Extension\MatExtension.cs" />
     <Compile Include="Extension\WindowsFormExtension.cs" />
+    <Compile Include="Helper\CameraHelper.cs" />
     <Compile Include="Helper\DialogHelper.cs" />
     <Compile Include="Enumerate\EImageFormat.cs" />
     <Compile Include="Enumerate\EVideoFormat.cs" />
-    <Compile Include="Helper\sfmHelper.cs" />
+    <Compile Include="Helper\SfMHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper\MenuHelper.cs" />
     <Compile Include="Helper\WindowsFormHelper.cs" />
     <Compile Include="Manager\CameraManager.cs" />
     <Compile Include="Manager\DisplayManager.cs" />
     <Compile Include="Manager\FileManager.cs" />
     <Compile Include="Manager\MainFormManager.cs" />
-    <Compile Include="Manager\MenuManager.cs" />
     <Compile Include="Model\CameraModel.cs" />
     <Compile Include="Model\DescriptorModel.cs" />
-    <Compile Include="Model\DescriptorsMatchModel.cs" />
+    <Compile Include="Model\MatchModel.cs" />
     <Compile Include="Model\InputFileModel.cs" />
     <Compile Include="Model\KeyPointModel.cs" />
     <Compile Include="Model\ListViewerModel.cs" />
-    <Compile Include="Model\nvmImageModel.cs" />
+    <Compile Include="Model\nvmCameraModel.cs" />
     <Compile Include="Model\nvmModel.cs" />
     <Compile Include="Model\nvmPointModel.cs" />
     <Compile Include="Program.cs" />

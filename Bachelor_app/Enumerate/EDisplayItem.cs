@@ -1,13 +1,16 @@
 ﻿namespace Bakalárska_práca.Enumerate
 {
-    // Check Resources for string value
+    /// <summary>
+    /// Enum for the view object in aplication (MainForm) to display specific item.
+    /// </summary>
     public enum EDisplayItem
     {
         Stack,
         DepthMap,
         LeftCamera,
         RightCamera,
-        PointCloud,
+        SfMPointCloud,
+        DepthMapPointCloud,
         KeyPoints,
         DescriptorsMatches,
     }

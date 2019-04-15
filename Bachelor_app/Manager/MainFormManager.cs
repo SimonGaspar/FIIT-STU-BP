@@ -43,7 +43,7 @@ namespace Bachelor_app.Manager
             else
                 _displayManager.RightViewWindowItem = enumItem;
 
-            if (enumItem == EDisplayItem.PointCloud)
+            if (enumItem == EDisplayItem.SfMPointCloud)
                 ChangeRenderer(LeftWindow, true);
             else
                 ChangeRenderer(LeftWindow, false);
@@ -263,9 +263,9 @@ namespace Bachelor_app.Manager
         {
             var currentItem = sender as ToolStripComboBox;
             if(IsLeft)
-                _cameraManager.SetCameraID(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
+                _cameraManager.SetCanera(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
             else
-                _cameraManager.SetCameraID(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
+                _cameraManager.SetCanera(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
         }
 
         public void SetResolution(object sender, EventArgs e)

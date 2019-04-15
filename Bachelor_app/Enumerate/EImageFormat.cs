@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bakalárska_práca.Enumerate
+﻿namespace Bakalárska_práca.Enumerate
 {
+    /// <summary>
+    /// File extensions for filtering files. Only these image extensions are able for application.
+    /// </summary>
     public enum EImageFormat
     {
         BMP,

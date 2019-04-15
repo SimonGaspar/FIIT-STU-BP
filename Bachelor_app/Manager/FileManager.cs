@@ -19,22 +19,23 @@ namespace Bakalárska_práca.Manager
         public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.BasicStack;
         public EInput _inputType;
 
-        public FileManager()
-        {
-        }
-
         public FileManager(MainForm WinForm, CameraManager CameraManager)
         {
             this._winForm = WinForm;
             this._cameraManager = CameraManager;
         }
 
+        /// <summary>
+        /// Show dialog to find image files and add to current stack in ListViewerDisplay
+        /// </summary>
         public void AddToListView()
         {
             using (OpenFileDialog ofd = new OpenFileDialog() { Multiselect = true, ValidateNames = true, CheckFileExists = true, CheckPathExists = true, Filter = "" })
             {
                 DialogHelper.AddFilterToDialog<EImageFormat>(ofd, "All Image Files");
-                DialogHelper.AddFilterToDialog<EVideoFormat>(ofd, "All Video Files");
+                // NOT IMPLEMENTED
+                // DELETE these, when not using.
+                // DialogHelper.AddFilterToDialog<EVideoFormat>(ofd, "All Video Files");
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
@@ -43,13 +44,16 @@ namespace Bakalárska_práca.Manager
                         var inputFile = new InputFileModel(fileName);
                         var imageList = _winForm.ImageList[(int)ListViewerDisplay];
                         var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
-                        
+
                         AddInputFileToList(inputFile, listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay], imageList, listViewer);
                     }
                 };
             }
         }
 
+        /// <summary>
+        /// Remove checked files from current stack in ListViewerDisplay
+        /// </summary>
         public void RemoveFromListView()
         {
             var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
@@ -69,6 +73,9 @@ namespace Bakalárska_práca.Manager
             }
         }
 
+        /// <summary>
+        /// Remove all files from current stack in ListViewerDisplay
+        /// </summary>
         public void RemoveAllFromListView()
         {
             var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
@@ -85,10 +92,17 @@ namespace Bakalárska_práca.Manager
             }
         }
 
+        /// <summary>
+        /// Add files from dialog into ListView and InputFileModel
+        /// </summary>
+        /// <param name="inputFile">Image file to add</param>
+        /// <param name="listOfInput">List in which add file</param>
+        /// <param name="imageList">Image list in which add image from file</param>
+        /// <param name="listView">ListView in which add item</param>
         public void AddInputFileToList(InputFileModel inputFile, List<InputFileModel> listOfInput, ImageList imageList, ListView listView)
         {
             if (listView.InvokeRequired)
-                listView.Invoke((Action) delegate { AddInputFileToList(inputFile, listOfInput, imageList, listView); });
+                listView.Invoke((Action)delegate { AddInputFileToList(inputFile, listOfInput, imageList, listView); });
             else
             {
                 imageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
@@ -99,7 +113,6 @@ namespace Bakalárska_práca.Manager
                 };
 
                 listOfInput.Add(inputFile);
-
                 listView.Items.Add(listItem);
             }
         }

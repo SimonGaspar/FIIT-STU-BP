@@ -1,13 +1,10 @@
-﻿using Emgu.CV.Structure;
-using Emgu.CV.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Emgu.CV.Util;
 
 namespace Bakalárska_práca.Model
 {
+    /// <summary>
+    /// KeyPoint model
+    /// </summary>
     public class KeyPointModel
     {
         public VectorOfKeyPoint DetectedKeyPoints;

@@ -54,7 +54,7 @@ namespace Bakalárska_práca
 
         public void ReadNVM(RenderWindowControl renderWindowControl)
         {
-            var nvmFile = sfmHelper.LoadPointCloud();
+            var nvmFile = SfMHelper.LoadPointCloud();
             foreach (var model in nvmFile)
             {
                 foreach (var camera in model.listImageModel)
@@ -64,7 +64,7 @@ namespace Bakalárska_práca
             }
         }
         
-        public void ReadImageIntoObject(RenderWindowControl renderWindowControl, nvmImageModel camera)
+        public void ReadImageIntoObject(RenderWindowControl renderWindowControl, nvmCameraModel camera)
         {
             vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
             vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();

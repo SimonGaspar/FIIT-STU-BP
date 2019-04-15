@@ -6,6 +6,9 @@ using Emgu.CV.Structure;
 
 namespace Bachelor_app.Model
 {
+    /// <summary>
+    /// ListView model for all needed list to show
+    /// </summary>
     public class ListViewerModel
     {
 

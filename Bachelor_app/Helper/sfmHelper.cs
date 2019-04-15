@@ -1,25 +1,28 @@
-﻿using Bachelor_app.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using Bachelor_app.Model;
 
 namespace Bachelor_app.Helper
 {
-    public static class sfmHelper
+    /// <summary>
+    /// Helper for SfM (Structure from Motion)
+    /// </summary>
+    public static class SfMHelper
     {
+        /// <summary>
+        /// Loading point cloud from nvm file.
+        /// </summary>
+        /// <returns>List of nvm models<returns>
         public static List<nvmModel> LoadPointCloud()
         {
-            string header;
-
             string filePath = Path.Combine($"..\\..\\..\\Temp", $"Result.nvm");
             var subjectString = File.ReadAllText(filePath);
             var lineArray = subjectString.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             var resultList = new List<nvmModel>();
+            string header = lineArray[0];
 
             for (int i = 1; i < lineArray.Count();)
             {
@@ -28,7 +31,7 @@ namespace Bachelor_app.Helper
 
                 if (model.imageCount == 0) break;
 
-                i = AddCameraModelFromFile(i, lineArray, model.imageCount,model);
+                i = AddCameraModelFromFile(i, lineArray, model.imageCount, model);
 
 
                 model.pointCount = int.Parse(lineArray[i++]);
@@ -38,11 +41,19 @@ namespace Bachelor_app.Helper
 
                 resultList.Add(model);
             }
-            
+
 
             return resultList;
         }
 
+        /// <summary>
+        /// Loading points from nvm file.
+        /// </summary>
+        /// <param name="i">Number of line</param>
+        /// <param name="lineArray">Array of lines (nvm file)</param>
+        /// <param name="pointCount">Number of points in file</param>
+        /// <param name="model">Current model in which we add 3D points.</param>
+        /// <returns>Number of line, where it ends.</returns>
         private static int AddPointModelFromFile(int i, string[] lineArray, int pointCount, nvmModel model)
         {
             int y = 0;
@@ -67,13 +78,21 @@ namespace Bachelor_app.Helper
             return y;
         }
 
-        private static int AddCameraModelFromFile(int iter, string[] lineArray, int cameraCount, nvmModel model )
+        /// <summary>
+        /// Loading cameras from nvm file
+        /// </summary>
+        /// /// <param name="i">Number of line</param>
+        /// <param name="lineArray">Array of lines (nvm file)</param>
+        /// <param name="cameraCount">Number of cameras in file</param>
+        /// <param name="model">Current model in which we add 3D points.</param>
+        /// <returns>Number of line, where it ends.</returns>
+        private static int AddCameraModelFromFile(int i, string[] lineArray, int cameraCount, nvmModel model)
         {
             int x = 0;
-            for (x = iter; x < iter + cameraCount; x++)
+            for (x = i; x < i + cameraCount; x++)
             {
                 var camera = lineArray[x].Split();
-                var imageModel = new nvmImageModel()
+                var imageModel = new nvmCameraModel()
                 {
                     fileName = camera[0],
                     focalLength = float.Parse(camera[1]),

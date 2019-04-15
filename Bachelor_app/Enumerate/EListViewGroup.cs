@@ -1,6 +1,8 @@
 ﻿namespace Bakalárska_práca.Enumerate
 {
-    // Check Resources for string value
+    /// <summary>
+    /// Type of group in ListView (MainForm)
+    /// </summary>
     public enum EListViewGroup
     {
         BasicStack,

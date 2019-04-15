@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bachelor_app.Enumerate
+﻿namespace Bachelor_app.Enumerate
 {
+    /// <summary>
+    /// Type of possible match. Using in SfM.
+    /// </summary>
     public enum EMatchingType
     {
         OnePrevious,

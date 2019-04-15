@@ -1,16 +1,21 @@
-﻿using Emgu.CV;
+﻿using System.Runtime.InteropServices;
+using Emgu.CV;
 using Emgu.CV.CvEnum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bakalárska_práca.Extension
 {
+    /// <summary>
+    /// Extension for manipulation with Mat
+    /// </summary>
     public static class MatExtension
     {
+        /// <summary>
+        /// Method to get value from Mat
+        /// </summary>
+        /// <param name="mat">Mat</param>
+        /// <param name="row">Row in Mat</param>
+        /// <param name="col">Column in Mat</param>
+        /// <returns>Value from Mat</returns>
         public static dynamic GetValue(this Mat mat, int row, int col)
         {
             var value = CreateElement(mat.Depth);
@@ -18,11 +23,24 @@ namespace Bakalárska_práca.Extension
             return value[0];
         }
 
+        /// <summary>
+        /// Method to set value in Mat
+        /// </summary>
+        /// <param name="mat">Mat</param>
+        /// <param name="row">Row in Mat</param>
+        /// <param name="col">Column in Mat</param>
         public static void SetValue(this Mat mat, int row, int col, dynamic value)
         {
             var target = CreateElement(mat.Depth, value);
             Marshal.Copy(target, 0, mat.DataPointer + (row * mat.Cols + col) * mat.ElementSize, 1);
         }
+
+        /// <summary>
+        /// Get type of value
+        /// </summary>
+        /// <param name="depthType">Depth type of Mat</param>
+        /// <param name="value">Primary nothing</param>
+        /// <returns>Array of C# type from depth type</returns>
         private static dynamic CreateElement(DepthType depthType, dynamic value)
         {
             var element = CreateElement(depthType);
@@ -30,37 +48,24 @@ namespace Bakalárska_práca.Extension
             return element;
         }
 
+        /// <summary>
+        /// Types of value in Mat
+        /// </summary>
+        /// <param name="depthType">Depth of Mat</param>
+        /// <returns>C# object of deoth type</returns>
         private static dynamic CreateElement(DepthType depthType)
         {
-            if (depthType == DepthType.Cv8S)
+            switch (depthType)
             {
-                return new sbyte[1];
+                case DepthType.Cv8S: return new sbyte[1];
+                case DepthType.Cv8U: return new byte[1];
+                case DepthType.Cv16S: return new short[1];
+                case DepthType.Cv16U: return new ushort[1];
+                case DepthType.Cv32S: return new int[1];
+                case DepthType.Cv32F: return new sbyte[1];
+                case DepthType.Cv64F: return new double[1];
+                default: return new float[1];
             }
-            if (depthType == DepthType.Cv8U)
-            {
-                return new byte[1];
-            }
-            if (depthType == DepthType.Cv16S)
-            {
-                return new short[1];
-            }
-            if (depthType == DepthType.Cv16U)
-            {
-                return new ushort[1];
-            }
-            if (depthType == DepthType.Cv32S)
-            {
-                return new int[1];
-            }
-            if (depthType == DepthType.Cv32F)
-            {
-                return new float[1];
-            }
-            if (depthType == DepthType.Cv64F)
-            {
-                return new double[1];
-            }
-            return new float[1];
         }
     }
 }

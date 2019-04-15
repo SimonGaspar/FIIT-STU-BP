@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace Bachelor_app.Model
 {
-    public class nvmImageModel
+    /// <summary>
+    /// Model for camera (.nvm file)
+    /// </summary>
+    public class nvmCameraModel
     {
         public string fileName { get; set; }
         public float focalLength { get; set; }

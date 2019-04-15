@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bachelor_app.Enumerate
+﻿namespace Bachelor_app.Enumerate
 {
+    /// <summary>
+    /// Type of able input for application
+    /// </summary>
     public enum EInput
     {
         ConnectedStereoCamera,

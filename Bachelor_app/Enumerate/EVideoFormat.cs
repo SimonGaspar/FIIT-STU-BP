@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bakalárska_práca.Enumerate
+﻿namespace Bakalárska_práca.Enumerate
 {
+    /// <summary>
+    /// Now not used, but in future, we can use video for SfM and stereo correspondence.
+    /// DELETE these, when not using.
+    /// </summary>
     public enum EVideoFormat
     {
         AVI,

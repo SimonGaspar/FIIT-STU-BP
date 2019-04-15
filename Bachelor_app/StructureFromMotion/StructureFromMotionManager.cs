@@ -41,7 +41,7 @@ namespace Bakalárska_práca
 
         private SortedList<int, KeyPointModel> DetectedKeyPoints;
         private SortedList<int, DescriptorModel> ComputedDescriptors;
-        private List<DescriptorsMatchModel> FoundedMatches;
+        private List<MatchModel> FoundedMatches;
 
         private FileManager fileManager;
         private DisplayManager displayManager;
@@ -56,7 +56,7 @@ namespace Bakalárska_práca
             Directory.CreateDirectory(tempDirectory);
             DetectedKeyPoints = new SortedList<int, KeyPointModel>();
             ComputedDescriptors = new SortedList<int, DescriptorModel>();
-            FoundedMatches = new List<DescriptorsMatchModel>();
+            FoundedMatches = new List<MatchModel>();
 
             this.fileManager = fileManager;
             this.displayManager = displayManager;
@@ -376,7 +376,7 @@ namespace Bakalárska_práca
             File.WriteAllText(Path.Combine(tempDirectory, "Result.nvm.txt"), sb.ToString());
         }
 
-        private void AppendMatches(List<DescriptorsMatchModel> findedMatches, int index)
+        private void AppendMatches(List<MatchModel> findedMatches, int index)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -389,7 +389,7 @@ namespace Bakalárska_práca
             File.WriteAllText(Path.Combine(tempDirectory, matchFileName), sb.ToString());
         }
 
-        private void WriteAllMatches(List<DescriptorsMatchModel> findedMatches)
+        private void WriteAllMatches(List<MatchModel> findedMatches)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -410,7 +410,7 @@ namespace Bakalárska_práca
                     $"\t{rightDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n");
 
 
-            var foundedMatch = new DescriptorsMatchModel()
+            var foundedMatch = new MatchModel()
             {
                 FilteredMatch = FilterMatches,
                 LeftDescriptor = leftDescriptor,
@@ -477,7 +477,7 @@ namespace Bakalárska_práca
                 FoundedMatches.Add(foundedMatch);
         }
 
-        private int SaveMatchString(DescriptorsMatchModel descriptorsMatch, bool UseMask)
+        private int SaveMatchString(MatchModel descriptorsMatch, bool UseMask)
         {
             var leftImageName = descriptorsMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name;
             var rightImageName = descriptorsMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name;
