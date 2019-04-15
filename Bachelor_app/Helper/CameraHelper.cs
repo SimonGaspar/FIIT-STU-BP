@@ -26,6 +26,7 @@ namespace Bachelor_app.Helper
                 ListCamerasData.Add(new KeyValuePair<int, string>(_DeviceIndex, _Camera.Name));
                 _DeviceIndex++;
             }
+
             return ListCamerasData;
         }
 

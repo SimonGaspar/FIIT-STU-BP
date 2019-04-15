@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Bachelor_app.StructureFromMotion;
+using Bachelor_app.StructureFromMotion.FeatureMatcher;
 using Bachelor_app.StructureFromMotion.WindowsForm;
 using Bakalárska_práca.Helper;
 using Emgu.CV;
@@ -11,9 +12,8 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
     /// <summary>
     /// CudaBFMatcher algorithm
     /// </summary>
-    public class CudaBruteForce : IFeatureMatcher
+    public class CudaBruteForce : AbstractMatcher, IFeatureMatcher
     {
-        //CudaBFMatcher _cudaBruteForceMatcher = new CudaBFMatcher(DistanceType.Hamming);
         private CudaBruteForceForm _windowsForm;
         private CudaBruteForceModel model = new CudaBruteForceModel();
         private static object locker = new object();
@@ -23,29 +23,23 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
             UpdateModel(model);
         }
 
-        public void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
+        public override void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
             Monitor.Enter(locker);
-            WindowsFormHelper.AddLogToConsole("In monitor");
-
             var _cudaBruteForceMatcher = CreateMatcher();
             var left = new GpuMat(queryDescriptors as Mat);
             var right = new GpuMat(trainDescriptors as Mat);
             _cudaBruteForceMatcher.KnnMatch(right, left, matches, 1);
-            left.Dispose();
-            right.Dispose();
-            _cudaBruteForceMatcher.Dispose();
-            WindowsFormHelper.AddLogToConsole("Exit monitor");
             Monitor.Exit(locker);
         }
 
-        public void ShowSettingForm()
+        public override void ShowSettingForm()
         {
-            //_windowsForm = new CudaBruteForceForm(this);
-            //_windowsForm.Show();
+            _windowsForm = new CudaBruteForceForm(this);
+            _windowsForm.Show();
         }
 
-        public void UpdateModel<T>(T model)
+        public override void UpdateModel<T>(T model)
         {
             this.model = model as CudaBruteForceModel;
         }

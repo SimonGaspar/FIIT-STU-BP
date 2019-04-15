@@ -127,6 +127,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration.cs" />
     <Compile Include="Enumerate\ECameraResolution.cs" />
     <Compile Include="Enumerate\EDisplayItem.cs" />
     <Compile Include="Enumerate\EInput.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FREAK.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\CudaOrientedFastAndRotatedBrief.cs" />
+    <Compile Include="StructureFromMotion\FeatureMatcher\AbstractMatcher.cs" />
     <Compile Include="StructureFromMotion\FeatureMatcher\CudaBruteForce.cs" />
     <Compile Include="StructureFromMotion\Model\BriefModel.cs" />
     <Compile Include="StructureFromMotion\Model\CudaBruteForceModel.cs" />

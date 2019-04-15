@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Bachelor_app;
 using Bachelor_app.Resources;
 
 namespace Bakalárska_práca
@@ -13,6 +14,7 @@ namespace Bakalárska_práca
         static void Main()
         {
             Localizer.InitLocalizedResource("en-EN", "Bachelor_app.Language.Resources.Resources");
+            Configuration.GenerateFolders();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

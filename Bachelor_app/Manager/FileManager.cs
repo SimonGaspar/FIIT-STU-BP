@@ -119,5 +119,19 @@ namespace Bakalárska_práca.Manager
                 listView.Items.Add(listItem);
             }
         }
+        
+        /// <summary>
+        /// Add files from disk into ListView and InputFileModel
+        /// </summary>
+        /// <param name="PathToFile">Path to image file</param>
+        /// <param name="type">Type of ListView gorup</param>
+        public void AddInputFileToList(string PathToFile, EListViewGroup type)
+        {
+            var id = (int)type;
+            var inputFileLeft = new InputFileModel(PathToFile);
+            var imageList = _winForm.ImageList[id];
+            var listViewer = _winForm.ListViews[id];
+            AddInputFileToList(inputFileLeft, listViewerModel.ListOfListInputFolder[id], imageList, listViewer);
+        }
     }
 }
