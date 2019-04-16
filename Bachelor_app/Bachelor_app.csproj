@@ -336,6 +336,24 @@
     <Content Include="CUDA_EULA.txt" />
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
+    <Content Include="Tools\VisualSFM_Cuda\cudart64_40_17.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\VisualSFM_Cuda\glew64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\VisualSFM_Cuda\pba_x64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\VisualSFM_Cuda\README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\VisualSFM_Cuda\SiftGPU64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\VisualSFM_Cuda\VisualSFM.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\Refresh_Freepik.png" />
     <None Include="Resources\Upload_Freepik.png" />
     <None Include="Resources\Download_Freepik.png" />

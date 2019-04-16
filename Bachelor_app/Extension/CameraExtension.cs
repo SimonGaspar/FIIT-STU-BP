@@ -25,8 +25,11 @@ namespace Bachelor_app.Extension
 
         public static void UpdateResolution(this VideoCapture camera, Size resolution)
         {
-            camera.SetCaptureProperty(CapProp.FrameWidth, resolution.Width);
-            camera.SetCaptureProperty(CapProp.FrameHeight, resolution.Height);
+            if (camera != null)
+            {
+                camera.SetCaptureProperty(CapProp.FrameWidth, resolution.Width);
+                camera.SetCaptureProperty(CapProp.FrameHeight, resolution.Height);
+            }
         }
         public static void UpdateResolution(this VideoCapture camera, int Width, int Height)
         {

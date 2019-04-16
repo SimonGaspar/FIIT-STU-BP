@@ -62,7 +62,7 @@ namespace Bakalárska_práca.StereoVision
             switch (_fileManager._inputType)
             {
                 case EInput.ConnectedStereoCamera: ComputeStereoCorrespondenceFromConnectedStereoCamera(); break;
-                case EInput.ListView: ComputeStereoCorrespondenceFromStack(); break;
+                case EInput.ListViewBasicStack: ComputeStereoCorrespondenceFromStack(); break;
                 default: throw new NotImplementedException();
             }
         }

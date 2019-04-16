@@ -15,8 +15,9 @@ namespace Bachelor_app
         public static string MatchFilePath { get; } = Path.Combine(TempDirectoryPath, MatchFileName);
 
         public static string ToolsPath { get; private set; } = Path.GetFullPath(".\\Tools");
-        public static string VisualSFMTool { get; } = "";
-        public static string VisualSFMToolPath { get; } = Path.Combine(ToolsPath, VisualSFMTool);
+        public static string VisualSFMTool { get; } = "VisualSFM.exe";
+        public static string VisualSFMPath { get; } = Path.Combine(ToolsPath, "VisualSFM_Cuda");
+        public static string VisualSFMToolPath { get; } = Path.Combine(VisualSFMPath, VisualSFMTool);
 
         public static string VisualSFMResult { get; } = "Result.nvm";
         public static string VisualSFMResultPath { get; } = Path.Combine(Configuration.TempDirectoryPath, VisualSFMResult);

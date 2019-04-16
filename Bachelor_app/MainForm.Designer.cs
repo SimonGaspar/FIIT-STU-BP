@@ -1154,13 +1154,13 @@ namespace Bakalárska_práca
             this.toolStripComboBox8.SelectedItem = EMatchingType.TwoPrevious.Display();
 
             this.toolStripComboBox11.Items.AddRange(Enum.GetValues(typeof(EInput)).Cast<EInput>().Select(x => x.Display()).ToArray());
-            this.toolStripComboBox11.SelectedItem = EInput.ListView.Display();
+            this.toolStripComboBox11.SelectedItem = EInput.ListViewBasicStack.Display();
 
             this.toolStripComboBox10.Items.AddRange(cameraManager.ListCamerasData.Select(x => x.Value).ToArray());
-            this.toolStripComboBox10.SelectedItem = EInput.ListView.Display();
+            this.toolStripComboBox10.SelectedItem = EInput.ListViewBasicStack.Display();
 
             this.toolStripComboBox9.Items.AddRange(cameraManager.ListCamerasData.Select(x => x.Value).ToArray());
-            this.toolStripComboBox9.SelectedItem = EInput.ListView.Display();
+            this.toolStripComboBox9.SelectedItem = EInput.ListViewBasicStack.Display();
 
             this.toolStripComboBox12.Items.AddRange(Enum.GetValues(typeof(ECameraResolution)).Cast<ECameraResolution>().Select(x => x.Display()).ToArray());
             this.toolStripComboBox12.SelectedItem = ECameraResolution.FullHD.Display();

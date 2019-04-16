@@ -6,7 +6,7 @@
     public enum EInput
     {
         ConnectedStereoCamera,
-        ListView,
+        ListViewBasicStack,
         ConnectedLeftCamera,
         ConnectedRightCamera
     }

@@ -7,7 +7,6 @@ namespace Bachelor_app.Tools
     {
         public static void RunVisualSFM(bool ContinueProcess)
         {
-            // pouzit z Configuration
             ProcessStartInfo startInfo = new ProcessStartInfo(Configuration.VisualSFMToolPath)
             {
                 RedirectStandardOutput = true,
@@ -25,7 +24,7 @@ namespace Bachelor_app.Tools
             while (!process.StandardOutput.EndOfStream)
             {
                 var line = process.StandardOutput.ReadLine();
-                //if (string.IsNullOrEmpty(line)) continue;
+                if (!string.IsNullOrEmpty(line))
                 WindowsFormHelper.AddLogToConsole(line + "\n");
             }
 

@@ -22,8 +22,6 @@ namespace Bakalárska_práca
         private MainFormManager mainFormManager;
         private CameraManager cameraManager;
 
-        string tempDirectory = Path.GetFullPath($"..\\..\\..\\Temp");
-
         public List<ListView> ListViews = new List<ListView>();
         public List<ImageList> ImageList = new List<ImageList>();
 
@@ -31,8 +29,8 @@ namespace Bakalárska_práca
         {
             InitializeComponent();
 
-            cameraManager = new CameraManager(this);
-            fileManager = new FileManager(this, cameraManager);
+            fileManager = new FileManager(this);
+            cameraManager = new CameraManager(this,fileManager);
             displayManager = new DisplayManager(this, fileManager, cameraManager);
 
             stereoVisionManager = new StereoVisionManager(fileManager, displayManager, cameraManager, this);

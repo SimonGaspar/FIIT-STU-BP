@@ -15,17 +15,15 @@ namespace Bakalárska_práca.Manager
     public class FileManager
     {
         private MainForm _winForm;
-        private CameraManager _cameraManager;
 
         public ListViewerModel listViewerModel = new ListViewerModel();
 
         public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.BasicStack;
         public EInput _inputType;
 
-        public FileManager(MainForm WinForm, CameraManager CameraManager)
+        public FileManager(MainForm WinForm)
         {
             this._winForm = WinForm;
-            this._cameraManager = CameraManager;
         }
 
         /// <summary>

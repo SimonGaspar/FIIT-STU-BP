@@ -76,17 +76,35 @@ namespace Bakalárska_práca
 
             switch (fileManager._inputType)
             {
-                case EInput.ListView:
+                case EInput.ListViewBasicStack:
                     listOfInput = GetListFromListView(ContinueSFM);
                     ComputeSfM(startSFMFrom, listOfInput);
                     break;
                 case EInput.ConnectedStereoCamera:
                     while (!stopSFM)
                     {
-                        var cameraStereoOutput = cameraManager.GetInputFromStereoCamera(countInputFile);
+                        var cameraStereoOutput = cameraManager.GetInputFromStereoCamera(countInputFile++);
                         listOfInput.AddRange(cameraStereoOutput);
 
-                        ComputeSfM(countInputFile++, cameraStereoOutput);
+                        ComputeSfM(DetectedKeyPoints.Count, cameraStereoOutput);
+                    }
+                    break;
+                case EInput.ConnectedRightCamera:
+                    while (!stopSFM)
+                    {
+                        var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.LeftCamera.camera,countInputFile++);
+                        listOfInput.AddRange(cameraOutput);
+
+                        ComputeSfM(DetectedKeyPoints.Count, cameraOutput);
+                    }
+                    break;
+                case EInput.ConnectedLeftCamera:
+                    while (!stopSFM)
+                    {
+                        var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.RightCamera.camera,countInputFile++);
+                        listOfInput.AddRange(cameraOutput);
+
+                        ComputeSfM(DetectedKeyPoints.Count, cameraOutput);
                     }
                     break;
             }
@@ -133,7 +151,7 @@ namespace Bakalárska_práca
 
         private void StartStereoMatchingSequence(int countOfExistedKeypoint, IFeatureMatcher matcher)
         {
-            //FindMatches(matcher, ComputedDescriptors[countOfExistedKeypoint - 2], ComputedDescriptors[countOfExistedKeypoint - 1]);
+            FindMatches(matcher, ComputedDescriptors[countOfExistedKeypoint - 2], ComputedDescriptors[countOfExistedKeypoint - 1]);
             int startMatchingFromPrevious;
 
             switch (_matchingType)
@@ -157,7 +175,7 @@ namespace Bakalárska_práca
 
         private void StartStereoMatchingParallel(int countOfExistedKeypoint, IFeatureMatcher matcher)
         {
-            //FindMatches(matcher, ComputedDescriptors[countOfExistedKeypoint - 2], ComputedDescriptors[countOfExistedKeypoint - 1]);
+            FindMatches(matcher, ComputedDescriptors[countOfExistedKeypoint - 2], ComputedDescriptors[countOfExistedKeypoint - 1]);
             int startMatchingFromPrevious = 0;
 
             switch (_matchingType)
@@ -379,53 +397,10 @@ namespace Bakalárska_práca
                 foundedMatch.DrawAndSave(fileManager);
 
             if (SaveInMatchNode)
-                SaveMatchString(foundedMatch, true);
+                foundedMatch.SaveMatchString();
 
             if (AddToList)
                 FoundedMatches.Add(foundedMatch);
-        }
-
-        private int SaveMatchString(MatchModel descriptorsMatch, bool UseMask)
-        {
-            var leftImageName = descriptorsMatch.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name;
-            var rightImageName = descriptorsMatch.RightDescriptor.KeyPoint.InputFile.fileInfo.Name;
-
-            var matchesList = descriptorsMatch.FilteredMatch ? descriptorsMatch.FilteredMatchesList : descriptorsMatch.MatchesList;
-
-            if (descriptorsMatch.Mask == null || descriptorsMatch.FilteredMatchesList.Count == 0)
-            {
-                descriptorsMatch.FileFormatMatch = null;
-                return 0;
-            }
-
-            int countMaskMatches = 0;
-            if (UseMask)
-            {
-                for (int m = 0; m < matchesList.Count; m++)
-                {
-                    if (descriptorsMatch.Mask.GetValue(0, m) > 0)
-                        countMaskMatches++;
-                }
-            }
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(Path.Combine(Path.GetFullPath(Configuration.TempDirectoryPath), leftImageName));
-            sb.AppendLine(Path.Combine(Path.GetFullPath(Configuration.TempDirectoryPath), rightImageName));
-            sb.AppendLine($"{(UseMask ? countMaskMatches : matchesList.Count)}");
-            for (int m = 0; m < matchesList.Count; m++)
-            {
-                if (!UseMask || descriptorsMatch.Mask.GetValue(0, m) > 0)
-                    sb.Append($"{matchesList[m][0].TrainIdx} ");
-            }
-            sb.AppendLine();
-            for (int m = 0; m < matchesList.Count; m++)
-            {
-                if (!UseMask || descriptorsMatch.Mask.GetValue(0, m) > 0)
-                    sb.Append($"{matchesList[m][0].QueryIdx} ");
-            }
-
-            descriptorsMatch.FileFormatMatch = sb.ToString();
-            return 0;
         }
 
         private List<MDMatch[]> FilterMatchesByMaxDist(MDMatch[][] matchesArray)
@@ -441,7 +416,6 @@ namespace Bakalárska_práca
                     filteredMatchesList.Add(matchesArray[i]);
                 }
             }
-
             return filteredMatchesList;
         }
 
@@ -471,7 +445,9 @@ namespace Bakalárska_práca
 
         private void ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList = true, bool SaveOnDisk = true)
         {
-            WindowsFormHelper.AddLogToConsole($"Start computing descriptor for: {keypoint.InputFile.fileInfo.Name.ToString()}\n");
+            var fileName = keypoint.InputFile.fileInfo.Name;
+
+            WindowsFormHelper.AddLogToConsole($"Start computing descriptor for: {fileName}\n");
 
             var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
             var descriptorNode = new DescriptorModel()
@@ -479,56 +455,25 @@ namespace Bakalárska_práca
                 Descriptors = computedDescriptor,
                 KeyPoint = keypoint
             };
-            WindowsFormHelper.AddLogToConsole($"FINISH computing descriptor for: {keypoint.InputFile.fileInfo.Name.ToString()}\n");
-
-
+            WindowsFormHelper.AddLogToConsole($"FINISH computing descriptor for: {fileName}\n");
+            
             if (AddToList)
                 ComputedDescriptors.Add(keypoint.ID, descriptorNode);
 
             if (SaveOnDisk)
-                SaveSiftFile(descriptorNode);
-        }
-
-        private void SaveSiftFile(DescriptorModel Descriptor, bool SaveInTempDirectory = true, bool SaveInDescriptorNode = true)
-        {
-            var descriptor = Descriptor.Descriptors;
-            var keyPoints = Descriptor.KeyPoint.DetectedKeyPoints;
-            var fileName = $"{Path.GetFileNameWithoutExtension(Descriptor.KeyPoint.InputFile.fileInfo.Name)}.SIFT";
-
-            var countKeypoint = keyPoints.Size;
-            var countDescriptor = descriptor.Cols;
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"{countKeypoint} 128");
-
-            for (int i = 0; i < descriptor.Rows; i++)
-            {
-                // X a Y su prehodene, teraz je to dobre
-                sb.AppendLine($"{keyPoints[i].Point.Y} {keyPoints[i].Point.X} {keyPoints[i].Size} {keyPoints[i].Angle}");
-
-                for (int j = 0; j < 128; j++)
-                    if (j < descriptor.Cols)
-                        sb.Append($"{descriptor.GetValue(i, j)} ");
-                    else
-                        sb.Append("0 ");
-                sb.AppendLine();
-            }
-
-            if (SaveInTempDirectory)
-                File.WriteAllText(Path.Combine(Configuration.TempDirectoryPath, fileName), sb.ToString());
-
-            if (SaveInDescriptorNode)
-                Descriptor.FileFormatSIFT = sb.ToString();
+                descriptorNode.SaveSiftFile();
         }
 
         private void FindKeypoint(int ID, InputFileModel inputFile, IFeatureDetector detector, bool AddToList = true, bool DrawAndSave = true)
         {
-            WindowsFormHelper.AddLogToConsole($"Start finding key points for: {inputFile.fileInfo.Name.ToString()}\n");
+            var fileName = inputFile.fileInfo.Name;
+
+            WindowsFormHelper.AddLogToConsole($"Start finding key points for: {fileName}\n");
 
             var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.fileInfo.FullName));
 
             WindowsFormHelper.AddLogToConsole(
-                $"FINISH finding key points for: {inputFile.fileInfo.Name.ToString()}\n" +
+                $"FINISH finding key points for: {fileName}\n" +
                 $"Count of key points: {detectedKeyPoints.Length}\n");
 
             var newItem = new KeyPointModel()

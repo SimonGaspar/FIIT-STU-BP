@@ -23,7 +23,7 @@ namespace Bachelor_app.Manager
         public CameraModel LeftCamera = new CameraModel();
         public CameraModel RightCamera = new CameraModel();
         public ECameraResolution resolution;
-
+        
         public CameraManager(MainForm WinForm, FileManager fileManager)
         {
             this._winForm = WinForm;
@@ -77,6 +77,23 @@ namespace Bachelor_app.Manager
             var returnList = new List<InputFileModel>();
             returnList.Add(inputFileLeft);
             returnList.Add(inputFileRight);
+
+            return returnList;
+        }
+
+        public List<InputFileModel> GetInputFromCamera(VideoCapture camera, int countInputFile = 0)
+        {
+            string ImagePath = Path.Combine($@"{Configuration.TempDirectoryPath}", $"Image_{countInputFile}.JPG");
+            Mat Image = camera.GetImageInMat();
+
+            Image.Save(ImagePath);
+
+            _fileManager.AddInputFileToList(ImagePath, EListViewGroup.BasicStack);
+
+            var inputFile = new InputFileModel(ImagePath);
+
+            var returnList = new List<InputFileModel>();
+            returnList.Add(inputFile);
 
             return returnList;
         }

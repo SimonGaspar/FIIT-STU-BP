@@ -104,7 +104,6 @@ namespace Bakalárska_práca.Manager
                 case EDisplayItem.DescriptorsMatches:
                     imageBox.Image = _fileManager.listViewerModel._lastDrawnMatches;
                     break;
-                default: throw new NotImplementedException();
             }
         }
 
