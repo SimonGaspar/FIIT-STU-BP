@@ -55,18 +55,31 @@ namespace Bachelor_app.Manager
             RightCamera.camera.UpdateResolution(resolution);
         }
 
-        public List<InputFileModel> GetInputFromStereoCamera(int countInputFile = 0)
+        public List<InputFileModel> GetInputFromStereoCamera(bool IsSFM, int countInputFile = 0, bool Save=true)
         {
             Mat LeftImage = new Mat();
             Mat RightImage = new Mat();
-
-            string LeftImagePath = Path.Combine($@"{Configuration.TempLeftStackDirectoryPath}", $"Left_{countInputFile}.JPG");
-            string RightImagePath = Path.Combine($@"{Configuration.TempRightStackDirectoryPath}", $"Right_{countInputFile}.JPG");
+            string LeftImagePath;
+            string RightImagePath;
 
             CameraHelper.GetStereoImage(LeftCamera.camera, RightCamera.camera, ref LeftImage, ref RightImage);
 
-            LeftImage.Save(LeftImagePath);
-            RightImage.Save(RightImagePath);
+            if (IsSFM)
+            {
+                LeftImagePath = Path.Combine($@"{Configuration.TempDirectoryPath}", $"Left_{countInputFile}.JPG");
+                RightImagePath = Path.Combine($@"{Configuration.TempDirectoryPath}", $"Right_{countInputFile}.JPG");
+            }
+            else
+            {
+                LeftImagePath = Path.Combine($@"{Configuration.TempLeftStackDirectoryPath}", $"Left_{countInputFile}.JPG");
+                RightImagePath = Path.Combine($@"{Configuration.TempRightStackDirectoryPath}", $"Right_{countInputFile}.JPG");
+            }
+            // Ak je to SFM tak to basic folder ak stereo tak zvlast
+            if (Save)
+            {
+                LeftImage.Save(LeftImagePath);
+                RightImage.Save(RightImagePath);
+            }
 
             _fileManager.AddInputFileToList(LeftImagePath, EListViewGroup.LeftCameraStack);
             _fileManager.AddInputFileToList(RightImagePath, EListViewGroup.RightCameraStack);

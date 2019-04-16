@@ -36,7 +36,6 @@ namespace Bakalárska_práca.Model
             {
                 Mat output = new Mat();
                 var fileName = $"{Path.GetFileNameWithoutExtension(model.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}_{Path.GetFileNameWithoutExtension(model.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG";
-                var filePath = Path.Combine(Configuration.TempDirectoryPath, fileName);
                 var savePath = Path.Combine(Configuration.TempDrawMatches, fileName);
 
                 Features2DToolbox.DrawMatches(new Mat(model.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), model.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(model.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), model.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(model.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), model.Mask);

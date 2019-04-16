@@ -74,7 +74,7 @@ namespace Bakalárska_práca.StereoVision
         {
             while (!stopStereoCorrespondence)
             {
-                var listOfInput = _cameraManager.GetInputFromStereoCamera(_fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack].Count);
+                var listOfInput = _cameraManager.GetInputFromStereoCamera(false,_fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack].Count);
 
                 var leftImage = new Mat(listOfInput[0].fileInfo.FullName).Image2ImageBGR();
                 var rightImage = new Mat(listOfInput[1].fileInfo.FullName).Image2ImageBGR();

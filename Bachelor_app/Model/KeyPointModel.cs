@@ -31,7 +31,7 @@ namespace Bakalárska_práca.Model
             try
             {
                 var fileName = $"{Path.GetFileNameWithoutExtension(model.InputFile.fileInfo.Name)}.JPG";
-                var filePath = Path.Combine(Configuration.TempDirectoryPath, fileName);
+                var filePath = model.InputFile.fileInfo.FullName;
                 var savePath = Path.Combine(Configuration.TempDrawKeypoint, fileName);
 
                 Mat output = new Mat();

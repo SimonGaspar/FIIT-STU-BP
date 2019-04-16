@@ -83,7 +83,7 @@ namespace Bakalárska_práca
                 case EInput.ConnectedStereoCamera:
                     while (!stopSFM)
                     {
-                        var cameraStereoOutput = cameraManager.GetInputFromStereoCamera(countInputFile++);
+                        var cameraStereoOutput = cameraManager.GetInputFromStereoCamera(true, countInputFile++);
                         listOfInput.AddRange(cameraStereoOutput);
 
                         ComputeSfM(DetectedKeyPoints.Count, cameraStereoOutput);
@@ -129,6 +129,7 @@ namespace Bakalárska_práca
             foreach (var node in list)
             {
                 File.Copy(node.fileInfo.FullName, Path.Combine(Configuration.TempDirectoryPath, node.fileInfo.Name), true);
+                node.fileInfo = new FileInfo(Path.Combine(Configuration.TempDirectoryPath, node.fileInfo.Name));
                 node.UseInSFM = true;
             }
             return list;
