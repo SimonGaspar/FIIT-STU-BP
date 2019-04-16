@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -28,7 +29,7 @@ namespace Bachelor_app.Model
         public List<InputFileModel> DrawnMatches { get; set; }
         public List<InputFileModel> DepthMap { get; set; }
 
-        public List<List<InputFileModel>> ListOfListInputFolder { get; set; }
+        public SortedList<int, List<InputFileModel>> ListOfListInputFolder { get; set; }
 
         public ListViewerModel()
         {
@@ -39,13 +40,13 @@ namespace Bachelor_app.Model
             DrawnMatches = new List<InputFileModel>();
             DepthMap = new List<InputFileModel>();
 
-            ListOfListInputFolder = new List<List<InputFileModel>>();
-            ListOfListInputFolder.Add(BasicStack);
-            ListOfListInputFolder.Add(LeftCameraStack);
-            ListOfListInputFolder.Add(RightCameraStack);
-            ListOfListInputFolder.Add(DrawnKeypoint);
-            ListOfListInputFolder.Add(DrawnMatches);
-            ListOfListInputFolder.Add(DepthMap);
+            ListOfListInputFolder = new SortedList<int, List<InputFileModel>>();
+            ListOfListInputFolder.Add((int)EListViewGroup.BasicStack, BasicStack);
+            ListOfListInputFolder.Add((int)EListViewGroup.LeftCameraStack, LeftCameraStack);
+            ListOfListInputFolder.Add((int)EListViewGroup.RightCameraStack, RightCameraStack);
+            ListOfListInputFolder.Add((int)EListViewGroup.DrawnKeyPoint, DrawnKeypoint);
+            ListOfListInputFolder.Add((int)EListViewGroup.DrawnMatches, DrawnMatches);
+            ListOfListInputFolder.Add((int)EListViewGroup.DepthMap, DepthMap);
         }
     }
 }

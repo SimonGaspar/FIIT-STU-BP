@@ -35,7 +35,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 bruteForce.UpdateModel(model);
                 this.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Unable to set these parameters.");
             }

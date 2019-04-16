@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Windows.Forms;
+using Bachelor_app;
 using Bachelor_app.Extension;
+using Bachelor_app.Helper;
 using Bachelor_app.Manager;
+using Bachelor_app.Model;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Extension;
 using Emgu.CV;
@@ -122,10 +129,101 @@ namespace Bakalárska_práca.Manager
         {
             switch (typeOfItem)
             {
-                case EDisplayItem.SfMPointCloud: _winForm.ReadNVM(renderWindow); break;
+                case EDisplayItem.SfMPointCloud: DisplayPointCloudNVM(renderWindow); break;
                 case EDisplayItem.DepthMapPointCloud: throw new NotImplementedException();
                 default: throw new NotImplementedException();
             }
         }
+
+        public void DisplayPointCloudNVM(RenderWindowControl renderWindowControl)
+        {
+            var nvmFile = SfMHelper.LoadPointCloud();
+            foreach (var model in nvmFile)
+            {
+                foreach (var camera in model.listImageModel)
+                    ReadCameraIntoObject(renderWindowControl, camera);
+
+                ReadPointIntoObject(renderWindowControl, model.listPointModel);
+            }
+        }
+
+        #region VTK loading methods
+        public void ReadCameraIntoObject(RenderWindowControl renderWindowControl, nvmCameraModel camera)
+        {
+            vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
+            vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
+
+            string filePath = Path.Combine(Configuration.TempDirectoryPath, $"{camera.fileName}");
+            vtkJPEGReader reader = vtkJPEGReader.New();
+            reader.SetFileName(filePath);
+            reader.Update();
+
+            // Treba poriesit ako nasmerovat obrazky bez pokazenia textury
+            var vectoris = Vector3.Transform(new Vector3(0, 0, 1), camera.quaternion);
+
+            vtkPlaneSource planeSource = vtkPlaneSource.New();
+            vtkTexture texture = new vtkTexture();
+            texture.SetInputConnection(reader.GetOutputPort());
+            vtkTransform transform = new vtkTransform();
+            transform.RotateX(180);
+            texture.SetTransform(transform);
+
+            vtkTextureMapToPlane plane = new vtkTextureMapToPlane();
+            plane.SetInputConnection(planeSource.GetOutputPort());
+            planeSource.SetCenter(camera.cameraCenter.X, camera.cameraCenter.Y, camera.cameraCenter.Z);
+
+            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
+            mapper.SetInputConnection(plane.GetOutputPort());
+            vtkActor actor = vtkActor.New();
+            actor.SetMapper(mapper);
+            actor.SetTexture(texture);
+
+            renderer.SetBackground(0.2, 0.3, 0.4);
+            renderer.AddActor(actor);
+
+        }
+
+        public void ReadPointIntoObject(RenderWindowControl renderWindowControl, List<nvmPointModel> listPointModel)
+        {
+            vtkUnsignedCharArray colors = vtkUnsignedCharArray.New();
+            colors.SetNumberOfComponents(3);
+            colors.SetName("Colors");
+            vtkPoints points = vtkPoints.New();
+
+            foreach (var point in listPointModel)
+            {
+
+                colors.InsertNextValue(byte.Parse(point.color.X.ToString(), CultureInfo.InvariantCulture));
+                colors.InsertNextValue(byte.Parse(point.color.Y.ToString(), CultureInfo.InvariantCulture));
+                colors.InsertNextValue(byte.Parse(point.color.Z.ToString(), CultureInfo.InvariantCulture));
+                points.InsertNextPoint(
+                    double.Parse(point.position.X.ToString(), CultureInfo.InvariantCulture),
+                    double.Parse(point.position.Y.ToString(), CultureInfo.InvariantCulture),
+                    double.Parse(point.position.Z.ToString(), CultureInfo.InvariantCulture));
+            }
+
+            vtkPolyData polydata = vtkPolyData.New();
+            polydata.SetPoints(points);
+            polydata.GetPointData().SetScalars(colors);
+            vtkVertexGlyphFilter glyphFilter = vtkVertexGlyphFilter.New();
+            glyphFilter.SetInputConnection(polydata.GetProducerPort());
+
+            // Visualize
+            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
+            mapper.SetInputConnection(glyphFilter.GetOutputPort());
+            vtkActor actor = vtkActor.New();
+            actor.SetMapper(mapper);
+            actor.GetProperty().SetPointSize(2);
+            // get a reference to the renderwindow of our renderWindowControl1
+            vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
+            // renderer
+            vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
+            // set background color
+            renderer.SetBackground(0.2, 0.3, 0.4);
+            // add our actor to the renderer
+            renderer.AddActor(actor);
+            renderer.ResetCamera();
+        }
+        #endregion
     }
 }

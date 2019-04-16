@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using Bachelor_app;
 using Bachelor_app.Enumerate;
-using Bachelor_app.Helper;
 using Bachelor_app.Manager;
 using Bachelor_app.StereoVision;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Extension;
 using Bakalárska_práca.Manager;
-using Bakalárska_práca.Model;
 using Bakalárska_práca.StereoVision.StereoCorrespondence;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -27,7 +24,7 @@ namespace Bakalárska_práca.StereoVision
         private CameraManager _cameraManager;
         public CalibrationManager _calibrationManager;
         private MainForm _winForm;
-        
+
         public bool stopStereoCorrespondence = false;
         public bool _useParallel = false;
 
@@ -77,10 +74,10 @@ namespace Bakalárska_práca.StereoVision
         {
             while (!stopStereoCorrespondence)
             {
-                var listOfInput = GetInputFromStereoCamera(_fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack].Count);
+                var listOfInput = _cameraManager.GetInputFromStereoCamera(_fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack].Count);
 
-                var leftImage = listOfInput[0];
-                var rightImage = listOfInput[1];
+                var leftImage = new Mat(listOfInput[0].fileInfo.FullName).Image2ImageBGR();
+                var rightImage = new Mat(listOfInput[1].fileInfo.FullName).Image2ImageBGR();
 
                 if (_calibrationManager != null && _calibrationManager.calibrationModel != null)
                 {
@@ -98,10 +95,11 @@ namespace Bakalárska_práca.StereoVision
                 Computer3DPointsFromStereoPair(DepthMap);
 
                 //Vymazat ak sa nic nenakresli
-                listOfInput[0].Draw(_calibrationManager.calibrationModel.Rec1, new Bgr(Color.LimeGreen), 20);
-                listOfInput[1].Draw(_calibrationManager.calibrationModel.Rec2, new Bgr(Color.LimeGreen), 20);
-                listOfInput[0].Save(Path.Combine(Configuration.TempDirectoryPath, "LeftRecImager.JPG"));
-                listOfInput[1].Save(Path.Combine(Configuration.TempDirectoryPath, "RightRecImager.JPG"));
+                //DELETE these, when not using.
+                leftImage.Draw(_calibrationManager.calibrationModel.Rec1, new Bgr(Color.LimeGreen), 20);
+                rightImage.Draw(_calibrationManager.calibrationModel.Rec2, new Bgr(Color.LimeGreen), 20);
+                leftImage.Save(Path.Combine(Configuration.TempDirectoryPath, "LeftRecImager.JPG"));
+                rightImage.Save(Path.Combine(Configuration.TempDirectoryPath, "RightRecImager.JPG"));
             }
         }
 
@@ -142,7 +140,7 @@ namespace Bakalárska_práca.StereoVision
                 var leftImage = new Image<Bgr, byte>((Bitmap)_fileManager.listViewerModel.LeftCameraStack[i].image);
                 var rightImage = new Image<Bgr, byte>((Bitmap)_fileManager.listViewerModel.RightCameraStack[i].image);
 
-                if (_calibrationManager != null && _calibrationManager.calibrationModel != null )
+                if (_calibrationManager != null && _calibrationManager.calibrationModel != null)
                 {
                     CvInvoke.Remap(leftImage, leftImage, _calibrationManager.calibrationModel.UndistortCam1.MapX, _calibrationManager.calibrationModel.UndistortCam1.MapY, Inter.Linear);
                     CvInvoke.Remap(rightImage, rightImage, _calibrationManager.calibrationModel.UndistortCam2.MapX, _calibrationManager.calibrationModel.UndistortCam2.MapY, Inter.Linear);
@@ -202,33 +200,6 @@ namespace Bakalárska_práca.StereoVision
                 MCvPoint3D32f[] points = PointCollection.ReprojectImageTo3D(disparityMap, _calibrationManager.calibrationModel.Q);
             }
             return null;
-        }
-
-        /// <summary>
-        /// Get frames from stereo camera
-        /// </summary>
-        /// <param name="countInputFile">Number of saved frames</param>
-        /// <returns></returns>
-        private List<Image<Bgr,byte>> GetInputFromStereoCamera(int countInputFile = 0)
-        {
-            Mat LeftImage = new Mat();
-            Mat RightImage = new Mat();
-            var LeftImagePath = Path.Combine(Configuration.TempLeftStackDirectoryPath, $"Left_{countInputFile}.JPG");
-            var RightImagePath = Path.Combine(Configuration.TempRightStackDirectoryPath, $"Right_{countInputFile}.JPG");
-
-            CameraHelper.GetStereoImage(_cameraManager.LeftCamera.camera, _cameraManager.RightCamera.camera, ref LeftImage, ref RightImage);
-
-            LeftImage.Save(LeftImagePath);
-            RightImage.Save(RightImagePath);
-            
-            _fileManager.AddInputFileToList(LeftImagePath, EListViewGroup.LeftCameraStack);
-            _fileManager.AddInputFileToList(RightImagePath,EListViewGroup.RightCameraStack);
-
-            var returnList = new List<Image<Bgr,byte>>();
-            returnList.Add(LeftImage.Image2ImageBGR());
-            returnList.Add(RightImage.Image2ImageBGR());
-
-            return returnList;
         }
 
         /// <summary>

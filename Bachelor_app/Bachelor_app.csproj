@@ -186,9 +186,9 @@
     <Compile Include="StructureFromMotion\Model\BriefModel.cs" />
     <Compile Include="StructureFromMotion\Model\CudaBruteForceModel.cs" />
     <Compile Include="StructureFromMotion\Model\BruteForceModel.cs" />
-    <Compile Include="StructureFromMotion\EFeaturesDescriptor.cs" />
-    <Compile Include="StructureFromMotion\EFeaturesDetector.cs" />
-    <Compile Include="StructureFromMotion\EFeaturesMatcher.cs" />
+    <Compile Include="StructureFromMotion\EFeatureDescriptor.cs" />
+    <Compile Include="StructureFromMotion\EFeatureDetector.cs" />
+    <Compile Include="StructureFromMotion\EFeatureMatcher.cs" />
     <Compile Include="StructureFromMotion\Model\FastModel.cs" />
     <Compile Include="StructureFromMotion\Model\FreakModel.cs" />
     <Compile Include="StructureFromMotion\Model\CudaOrientedFastAndRotatedBriefModel.cs" />
@@ -271,6 +271,7 @@
     <Compile Include="StructureFromMotion\WindowsForm\OrientedFastAndRotatedBriefForm.Designer.cs">
       <DependentUpon>OrientedFastAndRotatedBriefForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\ToolHelper.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

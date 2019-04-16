@@ -2,14 +2,11 @@
 using System.Windows.Forms;
 using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
-using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
 using Bakalárska_práca;
 using Bakalárska_práca.Enumerate;
 using Bakalárska_práca.Manager;
 using Bakalárska_práca.StereoVision;
 using Bakalárska_práca.StructureFromMotion;
-using Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription;
-using Bakalárska_práca.StructureFromMotion.FeatureMatcher;
 
 namespace Bachelor_app.Manager
 {
@@ -21,6 +18,10 @@ namespace Bachelor_app.Manager
         private StereoVisionManager _stereoVisionManager;
         private SfM _sfmManager;
         private CameraManager _cameraManager;
+
+
+        private const float ShowWindowSize = 50F;
+        private const float HideWindowSize = 0F;
 
         public MainFormManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager, SfM sfmManager, CameraManager cameraManager)
         {
@@ -53,32 +54,42 @@ namespace Bachelor_app.Manager
         {
             if (PointCloud)
             {
-                if (LeftWindow)
-                {
-                    _winForm.tableLayoutPanel2.ColumnStyles[0].Width = 0F;
-                    _winForm.tableLayoutPanel2.ColumnStyles[1].Width = 50F;
-                }
-                else
-                {
-                    _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 0F;
-                    _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 50F;
-                }
-                _displayManager.DisplayPointCloud(LeftWindow);
+                ShowPointCloudRenderer(LeftWindow);
             }
             else
             {
-                if (LeftWindow)
-                {
-                    _winForm.tableLayoutPanel2.ColumnStyles[0].Width = 50F;
-                    _winForm.tableLayoutPanel2.ColumnStyles[1].Width = 0F;
-                }
-                else
-                {
-                    _winForm.tableLayoutPanel2.ColumnStyles[2].Width = 50F;
-                    _winForm.tableLayoutPanel2.ColumnStyles[3].Width = 0F;
-                }
-                _displayManager.Display();
+                ShowImageRenderer(LeftWindow);
             }
+        }
+
+        private void ShowImageRenderer(bool LeftWindow)
+        {
+            if (LeftWindow)
+            {
+                _winForm.tableLayoutPanel2.ColumnStyles[0].Width = ShowWindowSize;
+                _winForm.tableLayoutPanel2.ColumnStyles[1].Width = HideWindowSize;
+            }
+            else
+            {
+                _winForm.tableLayoutPanel2.ColumnStyles[2].Width = ShowWindowSize;
+                _winForm.tableLayoutPanel2.ColumnStyles[3].Width = HideWindowSize;
+            }
+            _displayManager.Display();
+        }
+
+        private void ShowPointCloudRenderer(bool LeftWindow)
+        {
+            if (LeftWindow)
+            {
+                _winForm.tableLayoutPanel2.ColumnStyles[0].Width = HideWindowSize;
+                _winForm.tableLayoutPanel2.ColumnStyles[1].Width = ShowWindowSize;
+            }
+            else
+            {
+                _winForm.tableLayoutPanel2.ColumnStyles[2].Width = HideWindowSize;
+                _winForm.tableLayoutPanel2.ColumnStyles[3].Width = ShowWindowSize;
+            }
+            _displayManager.DisplayPointCloud(LeftWindow);
         }
         #endregion
 
@@ -140,7 +151,6 @@ namespace Bachelor_app.Manager
 
         public void RemoveAllFromListView()
         {
-
             switch (_fileManager.ListViewerDisplay)
             {
                 case EListViewGroup.BasicStack:
@@ -153,7 +163,6 @@ namespace Bachelor_app.Manager
         #endregion
 
         #region SfM
-
         public void StartSfM()
         {
             _sfmManager.StartSFM();
@@ -162,55 +171,25 @@ namespace Bachelor_app.Manager
         public void SetFeatureDetector(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripComboBox;
-            var enumItem = EnumExtension.ReturnEnumValue<EFeaturesDetector>(currentItem.SelectedItem.ToString());
+            var enumItem = EnumExtension.ReturnEnumValue<EFeatureDetector>(currentItem.SelectedItem.ToString());
 
-            IFeatureDetector tempItem = null;
-
-            switch (enumItem)
-            {
-                case EFeaturesDetector.ORB: tempItem = new OrientedFastAndRotatedBrief(); break;
-                case EFeaturesDetector.FAST: tempItem = new FAST(); break;
-                case EFeaturesDetector.FREAK: tempItem = new FREAK(); break;
-                case EFeaturesDetector.BRIEF: tempItem = new BRIEF(); break;
-                case EFeaturesDetector.CudaORB: tempItem = new CudaOrientedFastAndRotatedBrief(); break;
-            }
-
-            _sfmManager._detector = tempItem;
+            _sfmManager._detector = enumItem.GetDetectorInstance();
         }
 
         public void SetFeatureDescriptor(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripComboBox;
-            var enumItem = EnumExtension.ReturnEnumValue<EFeaturesDescriptor>(currentItem.SelectedItem.ToString());
+            var enumItem = EnumExtension.ReturnEnumValue<EFeatureDescriptor>(currentItem.SelectedItem.ToString());
 
-            IFeatureDescriptor tempItem = null;
-
-            switch (enumItem)
-            {
-                case EFeaturesDescriptor.ORB: tempItem = new OrientedFastAndRotatedBrief(); break;
-                case EFeaturesDescriptor.FAST: tempItem = new FAST(); break;
-                case EFeaturesDescriptor.FREAK: tempItem = new FREAK(); break;
-                case EFeaturesDescriptor.BRIEF: tempItem = new BRIEF(); break;
-                case EFeaturesDescriptor.CudaORB: tempItem = new CudaOrientedFastAndRotatedBrief(); break;
-            }
-
-            _sfmManager._descriptor = tempItem;
+            _sfmManager._descriptor = enumItem.GetDescriptorInstance();
         }
 
         public void SetFeatureMatcher(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripComboBox;
-            var enumItem = EnumExtension.ReturnEnumValue<EFeaturesMatcher>(currentItem.SelectedItem.ToString());
+            var enumItem = EnumExtension.ReturnEnumValue<EFeatureMatcher>(currentItem.SelectedItem.ToString());
 
-            IFeatureMatcher tempItem = null;
-
-            switch (enumItem)
-            {
-                case EFeaturesMatcher.BruteForce: tempItem = new BruteForce(); break;
-                case EFeaturesMatcher.CudaBruteForce: tempItem = new CudaBruteForce(); break;
-            }
-
-            _sfmManager._matcher = tempItem;
+            _sfmManager._matcher = enumItem.GetMatcherInstance();
         }
 
         public void ShowFeatureMatcherSettings(object sender, EventArgs e)
@@ -237,7 +216,7 @@ namespace Bachelor_app.Manager
         {
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EMatchingType>(currentItem.SelectedItem.ToString());
-            
+
             _sfmManager._matchingType = enumItem;
         }
 
@@ -248,7 +227,7 @@ namespace Bachelor_app.Manager
 
         #endregion
 
-        #region Menu
+        #region FileManager 
         public void SetInputType(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripComboBox;
@@ -262,10 +241,10 @@ namespace Bachelor_app.Manager
         public void SetCamera(object sender, EventArgs e, bool IsLeft)
         {
             var currentItem = sender as ToolStripComboBox;
-            if(IsLeft)
-                _cameraManager.SetCanera(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
+            if (IsLeft)
+                _cameraManager.SetCamera(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
             else
-                _cameraManager.SetCanera(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
+                _cameraManager.SetCamera(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
         }
 
         public void SetResolution(object sender, EventArgs e)

@@ -345,7 +345,7 @@ namespace Bakalárska_práca
             // 
             this.LeftViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LeftViewBox.Location = new System.Drawing.Point(2, 2);
-            this.LeftViewBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LeftViewBox.Margin = new System.Windows.Forms.Padding(2);
             this.LeftViewBox.Name = "LeftViewBox";
             this.LeftViewBox.Size = new System.Drawing.Size(625, 330);
             this.LeftViewBox.TabIndex = 2;
@@ -355,7 +355,7 @@ namespace Bakalárska_práca
             // 
             this.RightViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.RightViewBox.Location = new System.Drawing.Point(631, 2);
-            this.RightViewBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RightViewBox.Margin = new System.Windows.Forms.Padding(2);
             this.RightViewBox.Name = "RightViewBox";
             this.RightViewBox.Size = new System.Drawing.Size(625, 330);
             this.RightViewBox.TabIndex = 2;
@@ -434,7 +434,6 @@ namespace Bakalárska_práca
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1264, 204);
             this.tableLayoutPanel4.TabIndex = 4;
-            this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
             // ListViewer0
             // 
@@ -790,7 +789,6 @@ namespace Bakalárska_práca
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(1264, 22);
             this.tableLayoutPanel6.TabIndex = 6;
-            this.tableLayoutPanel6.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel6_Paint);
             // 
             // toolStrip3
             // 
@@ -1143,14 +1141,14 @@ namespace Bakalárska_práca
             this.toolStripComboBox1.Items.AddRange(Enum.GetValues(typeof(EStereoCorrespondenceAlgorithm)).Cast<EStereoCorrespondenceAlgorithm>().Select(x => x.Display()).ToArray());
             this.toolStripComboBox1.SelectedItem = EStereoCorrespondenceAlgorithm.StereoBM.Display();
 
-            this.toolStripComboBox2.Items.AddRange(Enum.GetValues(typeof(EFeaturesDetector)).Cast<EFeaturesDetector>().Select(x => x.Display()).ToArray());
-            this.toolStripComboBox2.SelectedItem = EFeaturesDetector.ORB.Display();
+            this.toolStripComboBox2.Items.AddRange(Enum.GetValues(typeof(EFeatureDetector)).Cast<EFeatureDetector>().Select(x => x.Display()).ToArray());
+            this.toolStripComboBox2.SelectedItem = EFeatureDetector.ORB.Display();
 
-            this.toolStripComboBox3.Items.AddRange(Enum.GetValues(typeof(EFeaturesDescriptor)).Cast<EFeaturesDescriptor>().Select(x => x.Display()).ToArray());
-            this.toolStripComboBox3.SelectedItem = EFeaturesDescriptor.ORB.Display();
+            this.toolStripComboBox3.Items.AddRange(Enum.GetValues(typeof(EFeatureDescriptor)).Cast<EFeatureDescriptor>().Select(x => x.Display()).ToArray());
+            this.toolStripComboBox3.SelectedItem = EFeatureDescriptor.ORB.Display();
 
-            this.toolStripComboBox4.Items.AddRange(Enum.GetValues(typeof(EFeaturesMatcher)).Cast<EFeaturesMatcher>().Select(x => x.Display()).ToArray());
-            this.toolStripComboBox4.SelectedItem = EFeaturesMatcher.BruteForce.Display();
+            this.toolStripComboBox4.Items.AddRange(Enum.GetValues(typeof(EFeatureMatcher)).Cast<EFeatureMatcher>().Select(x => x.Display()).ToArray());
+            this.toolStripComboBox4.SelectedItem = EFeatureMatcher.BruteForce.Display();
 
             this.toolStripComboBox8.Items.AddRange(Enum.GetValues(typeof(EMatchingType)).Cast<EMatchingType>().Select(x => x.Display()).ToArray());
             this.toolStripComboBox8.SelectedItem = EMatchingType.TwoPrevious.Display();

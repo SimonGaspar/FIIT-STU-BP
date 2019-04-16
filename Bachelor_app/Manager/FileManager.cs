@@ -44,11 +44,7 @@ namespace Bakalárska_práca.Manager
                 {
                     foreach (var fileName in ofd.FileNames)
                     {
-                        var inputFile = new InputFileModel(fileName);
-                        var imageList = _winForm.ImageList[(int)ListViewerDisplay];
-                        var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
-
-                        AddInputFileToList(inputFile, listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay], imageList, listViewer);
+                        AddInputFileToList(fileName, ListViewerDisplay);
                     }
                 };
             }
@@ -57,11 +53,13 @@ namespace Bakalárska_práca.Manager
         /// <summary>
         /// Remove checked files from current stack in ListViewerDisplay
         /// </summary>
-        public void RemoveFromListView()
+        /// <param name="listViewToRemove">List with item to remove</param>
+        public void RemoveFromListView(ListView listViewToRemove = null)
         {
-            var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
+            if (listViewToRemove == null)
+                listViewToRemove = _winForm.ListViews[(int)ListViewerDisplay];
 
-            foreach (ListViewItem fileName in currentListView.SelectedItems)
+            foreach (ListViewItem fileName in listViewToRemove.SelectedItems)
             {
                 if (listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.fileInfo.Name == fileName.Text).UseInSFM == true)
                     continue;
@@ -82,17 +80,7 @@ namespace Bakalárska_práca.Manager
         public void RemoveAllFromListView()
         {
             var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
-
-            foreach (ListViewItem fileName in currentListView.Items)
-            {
-                listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.fileInfo.Name == fileName.Text));
-
-                var imageList = _winForm.ImageList[(int)ListViewerDisplay];
-                imageList.Images.RemoveByKey(fileName.Text);
-
-                var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
-                listViewer.Items.Remove(fileName);
-            }
+            RemoveFromListView(currentListView);
         }
 
         /// <summary>
@@ -119,7 +107,7 @@ namespace Bakalárska_práca.Manager
                 listView.Items.Add(listItem);
             }
         }
-        
+
         /// <summary>
         /// Add files from disk into ListView and InputFileModel
         /// </summary>
