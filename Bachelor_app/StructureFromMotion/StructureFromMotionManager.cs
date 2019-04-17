@@ -19,8 +19,6 @@ namespace Bachelor_app
 {
     public class SfM
     {
-        const string pathVisualSFM = @"C:\Users\Notebook\Desktop\VisualSFM_windows_cuda_64bit";
-
         public IFeatureDetector _detector;
         public IFeatureDescriptor _descriptor;
         public IFeatureMatcher _matcher;
@@ -34,21 +32,17 @@ namespace Bachelor_app
         private List<MatchModel> FoundedMatches;
 
         private FileManager fileManager;
-        private DisplayManager displayManager;
-        private MainForm _winForm;
         private CameraManager cameraManager;
         public bool stopSFM = false;
-        private static object locker = new object();
+        //private static object locker = new object();
 
-        public SfM(FileManager fileManager, DisplayManager displayManager, MainForm winForm, CameraManager cameraManager)
+        public SfM(FileManager fileManager, CameraManager cameraManager)
         {
             DetectedKeyPoints = new SortedList<int, KeyPointModel>();
             ComputedDescriptors = new SortedList<int, DescriptorModel>();
             FoundedMatches = new List<MatchModel>();
 
             this.fileManager = fileManager;
-            this.displayManager = displayManager;
-            this._winForm = winForm;
             this.cameraManager = cameraManager;
         }
 
@@ -378,18 +372,16 @@ namespace Bachelor_app
                 var PerspectiveMatrix = new Mat();
                 Mat Mask = new Mat();
 
-                lock (locker)
+                //lock (locker)
+                //{
+                var matchesForHomography = FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList;
+                if (matchesForHomography.Count > 0)
                 {
-                    var matchesForHomography = FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList;
-                    if (matchesForHomography.Count > 0)
-                    {
-                        PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList, Mask);
-                        foundedMatch.Mask = Mask;
-                        foundedMatch.PerspectiveMatrix = PerspectiveMatrix;
-                    }
+                    PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList, Mask);
+                    foundedMatch.Mask = Mask;
+                    foundedMatch.PerspectiveMatrix = PerspectiveMatrix;
                 }
-
-
+                //}
             }
 
             if (DrawAndSave)

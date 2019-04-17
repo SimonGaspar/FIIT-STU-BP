@@ -1,6 +1,4 @@
-﻿using Bachelor_app.StructureFromMotion;
-using Bachelor_app.StructureFromMotion.FeatureMatcher;
-using Bachelor_app.StructureFromMotion.WindowsForm;
+﻿using Bachelor_app.StructureFromMotion.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Features2D;
 using Emgu.CV.Util;

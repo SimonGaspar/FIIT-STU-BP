@@ -49,7 +49,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.button2.TabIndex = 25;
             this.button2.Text = "Default";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // button1
             // 
@@ -60,7 +60,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.button1.TabIndex = 24;
             this.button1.Text = "Apply";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // comboBox1
             // 
@@ -78,7 +78,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(160, 22);
             this.textBox1.TabIndex = 20;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // label4
             // 
@@ -89,7 +89,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.label4.Size = new System.Drawing.Size(72, 17);
             this.label4.TabIndex = 19;
             this.label4.Text = "Threshold";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.label4.Click += new System.EventHandler(this.Label4_Click);
             // 
             // checkBox1
             // 

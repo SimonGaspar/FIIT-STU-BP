@@ -27,13 +27,12 @@ namespace Bachelor_app
 
             fileManager = new FileManager(this);
             cameraManager = new CameraManager(fileManager);
-            displayManager = new DisplayManager(this, fileManager, cameraManager);
 
             stereoVisionManager = new StereoVisionManager(fileManager, cameraManager);
-            structureFromMotionManager = new SfM(fileManager, displayManager, this, cameraManager);
-
-
+            structureFromMotionManager = new SfM(fileManager, cameraManager);
+            displayManager = new DisplayManager(this, fileManager, cameraManager);
             mainFormManager = new MainFormManager(this, displayManager, fileManager, stereoVisionManager, structureFromMotionManager, cameraManager);
+
             WindowsFormHelper.SetWinForm(this);
 
             InitializeStringForComponents();

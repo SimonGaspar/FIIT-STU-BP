@@ -34,18 +34,18 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 cudaBruteForce.UpdateModel(model);
                 this.Close();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show("Unable to set these parameters.");
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             GetPropertiesAndSetModel();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             ShowDefaultModelSetting();
         }

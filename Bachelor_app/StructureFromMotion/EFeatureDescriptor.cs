@@ -18,18 +18,18 @@ namespace Bachelor_app.StructureFromMotion
     {
         public static IFeatureDescriptor GetDescriptorInstance(this EFeatureDescriptor type)
         {
-            IFeatureDescriptor returnType = null;
+            IFeatureDescriptor returnItem = null;
 
             switch (type)
             {
-                case EFeatureDescriptor.ORB: returnType = new OrientedFastAndRotatedBrief(); break;
-                case EFeatureDescriptor.FAST: returnType = new FAST(); break;
-                case EFeatureDescriptor.FREAK: returnType = new FREAK(); break;
-                case EFeatureDescriptor.BRIEF: returnType = new BRIEF(); break;
-                case EFeatureDescriptor.CudaORB: returnType = new CudaOrientedFastAndRotatedBrief(); break;
+                case EFeatureDescriptor.ORB: returnItem = new OrientedFastAndRotatedBrief(); break;
+                case EFeatureDescriptor.FAST: returnItem = new FAST(); break;
+                case EFeatureDescriptor.FREAK: returnItem = new FREAK(); break;
+                case EFeatureDescriptor.BRIEF: returnItem = new BRIEF(); break;
+                case EFeatureDescriptor.CudaORB: returnItem = new CudaOrientedFastAndRotatedBrief(); break;
             }
 
-            return returnType;
+            return returnItem;
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                 this.model.ScaleFactor,
                 this.model.NLevels,
                 this.model.EdgeThreshold,
-                this.model.firstLevel,
+                this.model.FirstLevel,
                 this.model.WTK_A,
                 this.model.ScoreType,
                 this.model.PatchSize,

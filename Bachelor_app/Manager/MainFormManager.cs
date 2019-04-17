@@ -15,7 +15,7 @@ namespace Bachelor_app.Manager
         private StereoVisionManager _stereoVisionManager;
         private SfM _sfmManager;
         private CameraManager _cameraManager;
-        
+
         private const float ShowWindowSize = 50F;
         private const float HideWindowSize = 0F;
 

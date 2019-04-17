@@ -11,7 +11,7 @@ namespace Bachelor_app.StructureFromMotion.Model
         public float ScaleFactor { get; set; } = 1.2F;
         public int NLevels { get; set; } = 8;
         public int EdgeThreshold { get; set; } = 31;
-        public int firstLevel { get; set; } = 0;
+        public int FirstLevel { get; set; } = 0;
         public int WTK_A { get; set; } = 2;
         public ScoreType ScoreType { get; set; } = ScoreType.Harris;
         public int PatchSize { get; set; } = 31;

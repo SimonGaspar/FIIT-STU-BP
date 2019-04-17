@@ -115,7 +115,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(132, 22);
             this.textBox4.TabIndex = 7;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.textBox4.TextChanged += new System.EventHandler(this.TextBox4_TextChanged);
             // 
             // label4
             // 
@@ -126,7 +126,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.label4.Size = new System.Drawing.Size(104, 17);
             this.label4.TabIndex = 6;
             this.label4.Text = "Edge threshold";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.label4.Click += new System.EventHandler(this.Label4_Click);
             // 
             // textBox5
             // 
@@ -189,7 +189,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(132, 22);
             this.textBox8.TabIndex = 15;
-            this.textBox8.TextChanged += new System.EventHandler(this.textBox8_TextChanged);
+            this.textBox8.TextChanged += new System.EventHandler(this.TextBox8_TextChanged);
             // 
             // label8
             // 
@@ -200,7 +200,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.label8.Size = new System.Drawing.Size(98, 17);
             this.label8.TabIndex = 14;
             this.label8.Text = "Fast threshold";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
+            this.label8.Click += new System.EventHandler(this.Label8_Click);
             // 
             // comboBox1
             // 
@@ -210,7 +210,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(160, 24);
             this.comboBox1.TabIndex = 16;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // button1
             // 
@@ -221,7 +221,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.button1.TabIndex = 17;
             this.button1.Text = "Apply";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // button2
             // 
@@ -232,7 +232,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.button2.TabIndex = 18;
             this.button2.Text = "Default";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // checkBox1
             // 
