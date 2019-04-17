@@ -17,6 +17,9 @@ namespace Bachelor_app.Extension
         /// <returns>Frame in Mat</returns>
         public static Mat GetImageInMat(this VideoCapture camera)
         {
+            if (camera == null)
+                return null;
+
             var input = new Mat();
             camera.Grab();
             camera.Retrieve(input);

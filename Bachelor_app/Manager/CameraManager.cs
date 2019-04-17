@@ -32,9 +32,7 @@ namespace Bachelor_app.Manager
         /// <param name="deviceName"></param>
         public void SetCamera(CameraModel cameraModel, int deviceId, string deviceName)
         {
-            cameraModel.DeviceId = deviceId;
-            cameraModel.DeviceName = deviceName;
-            cameraModel.CreateCameraInstance();
+            cameraModel.CreateCameraInstance(deviceId, deviceName);
             cameraModel.Camera.UpdateResolution(resolution);
         }
 
@@ -63,6 +61,9 @@ namespace Bachelor_app.Manager
             string LeftImagePath = Path.Combine($@"{(IsSFM ? Configuration.TempDirectoryPath : Configuration.TempLeftStackDirectoryPath)}", $"Left_{countInputFile}.JPG");
             string RightImagePath = Path.Combine($@"{(IsSFM ? Configuration.TempDirectoryPath : Configuration.TempRightStackDirectoryPath)}", $"Right_{countInputFile}.JPG");
 
+            if (LeftImage == null || RightImage == null)
+                throw new EmptyFrameException("Empty frame was captured from camera.");
+
             LeftImage.Save(LeftImagePath);
             RightImage.Save(RightImagePath);
 
@@ -89,6 +90,12 @@ namespace Bachelor_app.Manager
             string ImagePath = Path.Combine($@"{Configuration.TempDirectoryPath}", $"Image_{countInputFile}.JPG");
 
             Mat Image = camera.GetImageInMat();
+
+            if (Image == null)
+            {
+                throw new EmptyFrameException("Empty frame was captured from camera.");
+            }
+
             Image.Save(ImagePath);
 
             _fileManager.AddInputFileToList(ImagePath, EListViewGroup.BasicStack);

@@ -334,20 +334,16 @@ namespace Bachelor_app
 
         private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = true, bool DrawAndSave = true)
         {
+            var filteredMatchesList = new List<MDMatch[]>();
+            var matchesList = new List<MDMatch[]>();
+            var perspectiveMatrix = new Mat();
+            var mask = new Mat();
+
             WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
                     $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                     $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
 
-
-            var foundedMatch = new MatchModel()
-            {
-                FilteredMatch = FilterMatches,
-                LeftDescriptor = leftDescriptor,
-                RightDescriptor = rightDescriptor
-            };
-
             var matches = new VectorOfVectorOfDMatch();
-
             matcher.Match(leftDescriptor.Descriptors, rightDescriptor.Descriptors, matches);
 
             WindowsFormHelper.AddLogToConsole(
@@ -358,31 +354,36 @@ namespace Bachelor_app
 
 
             MDMatch[][] matchesArray = matches.ToArrayOfArray();
-            foundedMatch.MatchesList = matchesArray.ToList();
+            matchesList = matchesArray.ToList();
 
             if (FilterMatches)
             {
                 FindMinMaxDistInMatches(matchesArray, ref ms_MAX_DIST, ref ms_MIN_DIST);
-                List<MDMatch[]> filteredMatchesList = FilterMatchesByMaxDist(matchesArray);
-                foundedMatch.FilteredMatchesList = filteredMatchesList;
+                filteredMatchesList = FilterMatchesByMaxDist(matchesArray);
             }
 
             if (ComputeHomography)
             {
-                var PerspectiveMatrix = new Mat();
-                Mat Mask = new Mat();
-
                 //lock (locker)
                 //{
-                var matchesForHomography = FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList;
+                var matchesForHomography = FilterMatches ? filteredMatchesList : matchesList;
                 if (matchesForHomography.Count > 0)
                 {
-                    PerspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? foundedMatch.FilteredMatchesList : foundedMatch.MatchesList, Mask);
-                    foundedMatch.Mask = Mask;
-                    foundedMatch.PerspectiveMatrix = PerspectiveMatrix;
+                    perspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? filteredMatchesList : matchesList, mask);                    
                 }
                 //}
             }
+
+            var foundedMatch = new MatchModel(
+                leftDescriptor, 
+                rightDescriptor, 
+                matchesList, 
+                perspectiveMatrix, 
+                mask, 
+                null, 
+                filteredMatchesList,
+                FilterMatches
+                );
 
             if (DrawAndSave)
                 foundedMatch.DrawAndSave(fileManager);
@@ -441,11 +442,8 @@ namespace Bachelor_app
             WindowsFormHelper.AddLogToConsole($"Start computing descriptor for: {fileName}\n");
 
             var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
-            var descriptorNode = new DescriptorModel()
-            {
-                Descriptors = computedDescriptor,
-                KeyPoint = keypoint
-            };
+            var descriptorNode = new DescriptorModel(keypoint, computedDescriptor);
+
             WindowsFormHelper.AddLogToConsole($"FINISH computing descriptor for: {fileName}\n");
 
             if (AddToList)
@@ -467,12 +465,11 @@ namespace Bachelor_app
                 $"FINISH finding key points for: {fileName}\n" +
                 $"Count of key points: {detectedKeyPoints.Length}\n");
 
-            var newItem = new KeyPointModel()
-            {
-                DetectedKeyPoints = new VectorOfKeyPoint(detectedKeyPoints),
-                InputFile = inputFile,
-                ID = ID
-            };
+            var newItem = new KeyPointModel(
+                new VectorOfKeyPoint(detectedKeyPoints), 
+                inputFile, 
+                ID
+                );
 
             if (AddToList)
                 DetectedKeyPoints.Add(ID, newItem);

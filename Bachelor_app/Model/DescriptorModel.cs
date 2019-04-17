@@ -7,9 +7,19 @@ namespace Bachelor_app.Model
 {
     public class DescriptorModel
     {
-        public KeyPointModel KeyPoint { get; set; }
-        public Mat Descriptors { get; set; }
-        public string FileFormatSIFT { get; set; }
+        public KeyPointModel KeyPoint { get; private set; }
+        public Mat Descriptors { get; private set; }
+        public string FileFormatSIFT { get; private set; }
+
+        public DescriptorModel(KeyPointModel keyPointModel, Mat descriptors) {
+            KeyPoint = keyPointModel;
+            Descriptors = descriptors;
+        }
+
+        public void SaveSiftInModel(string SiftText)
+        {
+            FileFormatSIFT = SiftText;
+        }
     }
 
     public static class DescriptorExtension
@@ -47,7 +57,7 @@ namespace Bachelor_app.Model
                 File.WriteAllText(descriptorSavePath, sb.ToString());
 
             if (SaveInDescriptorNode)
-                model.FileFormatSIFT = sb.ToString();
+                model.SaveSiftInModel(sb.ToString());
         }
     }
 }

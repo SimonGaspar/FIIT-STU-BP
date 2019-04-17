@@ -13,9 +13,16 @@ namespace Bachelor_app.Model
 {
     public class KeyPointModel
     {
-        public VectorOfKeyPoint DetectedKeyPoints { get; set; }
-        public InputFileModel InputFile { get; set; }
-        public int ID { get; set; }
+        public VectorOfKeyPoint DetectedKeyPoints { get; private set; }
+        public InputFileModel InputFile { get; private set; }
+        public int ID { get; private set; }
+
+        public KeyPointModel(VectorOfKeyPoint detectedKeyPoints, InputFileModel inputFile,int id)
+        {
+            DetectedKeyPoints = detectedKeyPoints;
+            InputFile = inputFile;
+            ID = id;
+        }
     }
 
 

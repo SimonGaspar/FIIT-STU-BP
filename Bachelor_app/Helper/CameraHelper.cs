@@ -39,10 +39,15 @@ namespace Bachelor_app.Helper
         /// <param name="RightImage"></param>
         public static void GetStereoImageSync(VideoCapture LeftCamera, VideoCapture RightCamera, ref Mat LeftImage, ref Mat RightImage)
         {
-            LeftCamera.Grab();
-            RightCamera.Grab();
-            LeftCamera.Retrieve(LeftImage);
-            RightCamera.Retrieve(RightImage);
+            if (LeftCamera != null && RightCamera != null)
+            {
+                LeftCamera.Grab();
+                RightCamera.Grab();
+                LeftCamera.Retrieve(LeftImage);
+                RightCamera.Retrieve(RightImage);
+            }
+            else
+                LeftImage = RightImage = null;
         }
 
         /// <summary>
@@ -65,8 +70,13 @@ namespace Bachelor_app.Helper
         /// <param name="Image"></param>
         public static void GetImage(VideoCapture Camera, ref Mat Image)
         {
-            Camera.Grab();
-            Camera.Retrieve(Image);
+            if (Camera != null)
+            {
+                Camera.Grab();
+                Camera.Retrieve(Image);
+            }
+            else
+                Image = null;
         }
 
     }

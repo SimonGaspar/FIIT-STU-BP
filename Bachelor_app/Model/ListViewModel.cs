@@ -18,9 +18,7 @@ namespace Bachelor_app.Model
         public Image<Bgr, Byte> _lastDrawnKeypoint { get; set; }
         public Image<Bgr, Byte> _lastDrawnMatches { get; set; }
         public Image<Bgr, Byte> _lastImage { get; set; }
-
-
-
+        
         public List<InputFileModel> BasicStack { get; private set; }
         public List<InputFileModel> LeftCameraStack { get; private set; }
         public List<InputFileModel> RightCameraStack { get; private set; }

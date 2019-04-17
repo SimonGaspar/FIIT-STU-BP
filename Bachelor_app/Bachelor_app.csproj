@@ -130,6 +130,7 @@
     <Compile Include="Enumerate\EInput.cs" />
     <Compile Include="Enumerate\EListViewGroup.cs" />
     <Compile Include="Enumerate\EMatchingType.cs" />
+    <Compile Include="Exception\EmptyFrameException.cs" />
     <Compile Include="Extension\CameraExtension.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
     <Compile Include="Extension\MatExtension.cs" />

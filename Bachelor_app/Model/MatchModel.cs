@@ -14,14 +14,29 @@ namespace Bachelor_app.Model
 {
     public class MatchModel
     {
-        public DescriptorModel LeftDescriptor { get; set; }
-        public DescriptorModel RightDescriptor { get; set; }
-        public List<MDMatch[]> MatchesList { get; set; }
-        public Mat PerspectiveMatrix { get; set; }
-        public Mat Mask { get; set; }
-        public string FileFormatMatch { get; set; }
-        public List<MDMatch[]> FilteredMatchesList { get; set; }
-        public bool FilteredMatch { get; set; }
+        public DescriptorModel LeftDescriptor { get; private set; }
+        public DescriptorModel RightDescriptor { get; private set; }
+        public List<MDMatch[]> MatchesList { get; private set; }
+        public Mat PerspectiveMatrix { get; private set; }
+        public Mat Mask { get; private set; }
+        public string FileFormatMatch { get; private set; }
+        public List<MDMatch[]> FilteredMatchesList { get; private set; }
+        public bool FilteredMatch { get; private set; }
+
+        public MatchModel(DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, List<MDMatch[]> matchesList, Mat perspectiveMatrix, Mat mask, string fileFormatMatch, List<MDMatch[]> filteredMatchesList, bool filteredMatch) {
+            LeftDescriptor = leftDescriptor;
+            RightDescriptor = rightDescriptor;
+            MatchesList = matchesList;
+            PerspectiveMatrix = perspectiveMatrix;
+            Mask = mask;
+            FileFormatMatch = fileFormatMatch;
+            FilteredMatchesList = filteredMatchesList;
+            FilteredMatch = filteredMatch;
+        }
+
+        public void SaveMatchInModel(string text) {
+            FileFormatMatch = text;
+        }
     }
 
     public static class MatchExtension
@@ -61,7 +76,7 @@ namespace Bachelor_app.Model
         {
             if (model.Mask == null || model.FilteredMatchesList.Count == 0)
             {
-                model.FileFormatMatch = null;
+                model.SaveMatchInModel(null);
                 return false;
             }
 
@@ -96,7 +111,7 @@ namespace Bachelor_app.Model
                     sb.Append($"{matchesList[m][0].QueryIdx} ");
             }
 
-            model.FileFormatMatch = sb.ToString();
+            model.SaveMatchInModel(sb.ToString());
             return true;
         }
     }

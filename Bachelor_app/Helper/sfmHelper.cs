@@ -27,11 +27,11 @@ namespace Bachelor_app.Helper
             {
                 var model = new NvmModel();
 
-                model.ImageCount = int.Parse(lineArray[indexOfLine++]);
+                model.SetImageCount(int.Parse(lineArray[indexOfLine++]));
                 if (model.ImageCount > 0)
                     indexOfLine = AddCameraModelFromFile(indexOfLine, lineArray, model.ImageCount, model);
 
-                model.PointCount = int.Parse(lineArray[indexOfLine++]);
+                model.SetPointCount(int.Parse(lineArray[indexOfLine++]));
                 if (model.PointCount > 0)
                     indexOfLine = AddPointModelFromFile(indexOfLine, lineArray, model.PointCount, model);
 
@@ -55,19 +55,19 @@ namespace Bachelor_app.Helper
             for (currentIndex = IndexOfLine; currentIndex < IndexOfLine + model.PointCount; currentIndex++)
             {
                 var camera = lineArray[currentIndex].Split();
-                var pointModel = new NvmPointModel()
-                {
-                    Position = new Vector3(
+                var pointModel = new NvmPointModel(
+                    new Vector3(
                         float.Parse(camera[0]),
                         float.Parse(camera[1]),
                         float.Parse(camera[2])
                         ),
-                    Color = new Vector3(
+                    new Vector3(
                         float.Parse(camera[3]),
                         float.Parse(camera[4]),
                         float.Parse(camera[5])
                         )
-                };
+                    );
+
                 model.ListPointModel.Add(pointModel);
             }
             return currentIndex;
@@ -87,23 +87,22 @@ namespace Bachelor_app.Helper
             for (currentIndex = IndexOfLine; currentIndex < IndexOfLine + cameraCount; currentIndex++)
             {
                 var camera = lineArray[currentIndex].Split();
-                var imageModel = new NvmCameraModel()
-                {
-                    FileName = camera[0],
-                    FocalLength = float.Parse(camera[1]),
-                    Quaternion = new Quaternion(
+                var imageModel = new NvmCameraModel(
+                    camera[0],
+                    float.Parse(camera[1]),
+                    new Quaternion(
                         float.Parse(camera[2]),
                         float.Parse(camera[3]),
                         float.Parse(camera[4]),
                         float.Parse(camera[5])
                         ),
-                    CameraCenter = new Vector3(
+                    new Vector3(
                         float.Parse(camera[6]),
                         float.Parse(camera[7]),
                         float.Parse(camera[8])
-                    ),
-                    RadialDistortion = float.Parse(camera[9])
-                };
+                        ),
+                    float.Parse(camera[9]));
+                
                 model.ListImageModel.Add(imageModel);
             }
             return currentIndex;

@@ -30,6 +30,9 @@ namespace Bachelor_app.Extension
         /// <returns></returns>
         public static Image<Bgr, byte> ToImageBGR<T>(this T image) where T : IImage, IInputArray
         {
+            if (image.Bitmap == null)
+                return null;
+
             return new Image<Bgr, byte>(image.Bitmap);
         }
 
@@ -40,6 +43,9 @@ namespace Bachelor_app.Extension
         /// <returns></returns>
         public static GpuMat ToGpuMat<T>(this T image) where T : IInputArray
         {
+            if (image == null)
+                return null;
+
             return new GpuMat(image);
         }
 
@@ -110,7 +116,6 @@ namespace Bachelor_app.Extension
                     CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
                 else
                     CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
-
             }
 
             return Mat;

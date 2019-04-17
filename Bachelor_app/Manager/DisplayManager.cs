@@ -24,7 +24,6 @@ namespace Bachelor_app.Manager
     {
         public EDisplayItem LeftViewWindowItem { get; set; }
         public EDisplayItem RightViewWindowItem { get; set; }
-
         public bool DisplayRemapImage { get; set; } = false;
 
         private FileManager _fileManager;
@@ -131,7 +130,6 @@ namespace Bachelor_app.Manager
             {
                 case EDisplayItem.SfMPointCloud: DisplayPointCloudNVM(renderWindow); break;
                 case EDisplayItem.DepthMapPointCloud: throw new NotImplementedException();
-                default: throw new NotImplementedException();
             }
         }
 

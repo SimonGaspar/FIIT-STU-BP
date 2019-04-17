@@ -7,8 +7,13 @@ namespace Bachelor_app.Model
     /// </summary>
     public class NvmPointModel
     {
-        public Vector3 Position { get; set; } = new Vector3();
-        public Vector3 Color { get; set; } = new Vector3();
+        public Vector3 Position { get; private set; }
+        public Vector3 Color { get; private set; }
+
+        public NvmPointModel(Vector3 position, Vector3 color) {
+            Position = position;
+            Color = color;
+        }
 
         //Dodatocne informacie -> teraz nepotrebne
 

@@ -7,11 +7,18 @@ namespace Bachelor_app.Model
     /// </summary>
     public class NvmCameraModel
     {
-        public string FileName { get; set; }
-        public float FocalLength { get; set; }
-        public Quaternion Quaternion { get; set; }
-        public Vector3 CameraCenter { get; set; }
-        public float RadialDistortion { get; set; }
+        public string FileName { get; private set; }
+        public float FocalLength { get; private set; }
+        public Quaternion Quaternion { get; private set; }
+        public Vector3 CameraCenter { get; private set; }
+        public float RadialDistortion { get; private set; }
 
+        public NvmCameraModel(string fileName, float focalLength, Quaternion quaternion, Vector3 cameraCenter, float radialDistortion) {
+            FileName = fileName;
+            focalLength = FocalLength;
+            Quaternion = quaternion;
+            CameraCenter = cameraCenter;
+            RadialDistortion = radialDistortion;
+        }
     }
 }

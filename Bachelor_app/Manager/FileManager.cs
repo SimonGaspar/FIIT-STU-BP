@@ -11,9 +11,7 @@ namespace Bachelor_app.Manager
     /// </summary>
     public class FileManager
     {
-
         public ListViewModel ListViewModel { get; private set; } = new ListViewModel();
-
         public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.Console;
         public EInput _inputType { get; set; } = EInput.ListViewBasicStack;
 
