@@ -1,37 +1,38 @@
-﻿using Bachelor_app;
-using Bakalárska_práca.Extension;
-using Emgu.CV;
-using System.IO;
+﻿using System.IO;
 using System.Text;
+using Bachelor_app.Extension;
+using Emgu.CV;
 
-namespace Bakalárska_práca.Model
+namespace Bachelor_app.Model
 {
-    /// <summary>
-    /// Model for descriptor
-    /// </summary>
     public class DescriptorModel
     {
-        public KeyPointModel KeyPoint;
-        public Mat Descriptors;
-        public string FileFormatSIFT;
+        public KeyPointModel KeyPoint { get; set; }
+        public Mat Descriptors { get; set; }
+        public string FileFormatSIFT { get; set; }
     }
 
-    public static class DescriptorExtension {
+    public static class DescriptorExtension
+    {
+        /// <summary>
+        /// Save descriptor in txt file for VisualSFM.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="SaveInTempDirectory"></param>
+        /// <param name="SaveInDescriptorNode"></param>
         public static void SaveSiftFile(this DescriptorModel model, bool SaveInTempDirectory = true, bool SaveInDescriptorNode = true)
         {
             var descriptor = model.Descriptors;
             var keyPoints = model.KeyPoint.DetectedKeyPoints;
-            var fileName = $"{Path.GetFileNameWithoutExtension(model.KeyPoint.InputFile.fileInfo.Name)}.SIFT";
-
-            var countKeypoint = keyPoints.Size;
-            var countDescriptor = descriptor.Cols;
+            var fileName = $"{model.KeyPoint.InputFile.FileNameWithoutExtension}.SIFT";
+            var descriptorSavePath = Path.Combine(Configuration.TempDirectoryPath, fileName);
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"{countKeypoint} 128");
+            sb.AppendLine($"{keyPoints.Size} 128");
 
             for (int i = 0; i < descriptor.Rows; i++)
             {
-                // X a Y su prehodene, teraz je to dobre
+                // X and Y are switched, now it's good
                 sb.AppendLine($"{keyPoints[i].Point.Y} {keyPoints[i].Point.X} {keyPoints[i].Size} {keyPoints[i].Angle}");
 
                 for (int j = 0; j < 128; j++)
@@ -43,7 +44,7 @@ namespace Bakalárska_práca.Model
             }
 
             if (SaveInTempDirectory)
-                File.WriteAllText(Path.Combine(Configuration.TempDirectoryPath, fileName), sb.ToString());
+                File.WriteAllText(descriptorSavePath, sb.ToString());
 
             if (SaveInDescriptorNode)
                 model.FileFormatSIFT = sb.ToString();

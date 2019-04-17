@@ -1,4 +1,4 @@
-﻿namespace Bakalárska_práca.StereoVision
+﻿namespace Bachelor_app.StereoVision
 {
     /// <summary>
     /// Model for StereoBM

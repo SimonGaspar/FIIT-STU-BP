@@ -2,19 +2,16 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Bakalárska_práca
+namespace Bachelor_app
 {
     /// <summary>
     /// Helper for Dialog
     /// </summary>
     public static class DialogHelper
     {
-        /// <summary>
-        /// Add filtering for dialog
-        /// </summary>
         /// <typeparam name="T">Enum, which contain file extensions</typeparam>
-        /// <param name="ofd">Dialog</param>
-        /// <param name="filterName">Name of filter</param>
+        /// <param name="ofd"></param>
+        /// <param name="filterName"></param>
         public static void AddFilterToDialog<T>(OpenFileDialog ofd, string filterName) where T : Enum
         {
             var fileExtension = Enum.GetValues(typeof(T)).Cast<T>().Select(x => $"*.{x.ToString()}");

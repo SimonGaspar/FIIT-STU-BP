@@ -2,8 +2,8 @@
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
 using Bachelor_app.StructureFromMotion.Model;
-using Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription;
 using static Emgu.CV.Features2D.ORBDetector;
 
 namespace Bachelor_app.StructureFromMotion.WindowsForm

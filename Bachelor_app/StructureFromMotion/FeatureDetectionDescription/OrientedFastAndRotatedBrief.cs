@@ -1,12 +1,11 @@
-﻿using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
+﻿using Bachelor_app.Model;
 using Bachelor_app.StructureFromMotion.Model;
 using Bachelor_app.StructureFromMotion.WindowsForm;
-using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Features2D;
 using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
+namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
     /// <summary>
     /// ORB algorithm
@@ -25,7 +24,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             Mat result = new Mat();
-            Mat image = new Mat(keyPoints.InputFile.fileInfo.FullName);
+            Mat image = new Mat(keyPoints.InputFile.FullPath);
             var _orb = CreateDetectorExtractor();
             _orb.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;

@@ -2,19 +2,15 @@
 
 namespace Bachelor_app.Model
 {
-    /// <summary>
-    /// Model for camera
-    /// </summary>
     public class CameraModel
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-
-        public VideoCapture camera { get; set; } = null;
+        public int DeviceId { get; set; }
+        public string DeviceName { get; set; }
+        public VideoCapture Camera { get; private set; }
 
         public void CreateCameraInstance()
         {
-            camera = new VideoCapture(ID);
+            Camera = new VideoCapture(DeviceId);
         }
     }
 }

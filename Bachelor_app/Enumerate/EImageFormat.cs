@@ -1,4 +1,4 @@
-﻿namespace Bakalárska_práca.Enumerate
+﻿namespace Bachelor_app.Enumerate
 {
     /// <summary>
     /// File extensions for filtering files. Only these image extensions are able for application.

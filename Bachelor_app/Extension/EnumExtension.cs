@@ -12,8 +12,8 @@ namespace Bachelor_app.Extension
         /// <summary>
         /// Localization of enum string value.
         /// </summary>
-        /// <param name="type">Enum value</param>
-        /// <returns>String of enum value from localization</returns>
+        /// <param name="type"></param>
+        /// <returns>String of enum value from localization.</returns>
         public static string Display(this Enum type)
         {
             return Localizer.GetString(type.ToString());
@@ -22,8 +22,8 @@ namespace Bachelor_app.Extension
         /// <summary>
         /// Localization of enum string value.
         /// </summary>
-        /// <typeparam name="T">Enum type</typeparam>
-        /// <param name="EnumStringValue">String of enum value</param>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="EnumStringValue">String of enum value.</param>
         /// <returns>Enum value</returns>
         public static T ReturnEnumValue<T>(string EnumStringValue) where T : Enum
         {

@@ -1,7 +1,6 @@
 ﻿using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
-using Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription;
 
-namespace Bakalárska_práca.StructureFromMotion
+namespace Bachelor_app.StructureFromMotion
 {
     /// <summary>
     /// Possible descriptor algorithm

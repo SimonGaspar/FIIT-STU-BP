@@ -1,12 +1,11 @@
-﻿using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
+﻿using Bachelor_app.Model;
 using Bachelor_app.StructureFromMotion.Model;
 using Bachelor_app.StructureFromMotion.WindowsForm;
-using Bakalárska_práca.Model;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
+namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
     /// <summary>
     /// CudaORB algorithm
@@ -24,7 +23,7 @@ namespace Bakalárska_práca.StructureFromMotion.FeatureDetectionDescription
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             var cudaORB = CreateDetectorExtractor();
-            var mat = new Mat(keyPoints.InputFile.fileInfo.FullName);
+            var mat = new Mat(keyPoints.InputFile.FullPath);
             Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
             GpuMat gpumat = new GpuMat(image);
 

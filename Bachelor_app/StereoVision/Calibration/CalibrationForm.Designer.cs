@@ -1,6 +1,6 @@
-﻿using Bachelor_app.Extension;
-using System;
+﻿using System;
 using System.Linq;
+using Bachelor_app.Extension;
 
 namespace Bachelor_app.StereoVision.Calibration
 {
@@ -86,8 +86,8 @@ namespace Bachelor_app.StereoVision.Calibration
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.Location = new System.Drawing.Point(3, 291);
             this.pictureBox2.Name = "pictureBox2";
@@ -98,8 +98,8 @@ namespace Bachelor_app.StereoVision.Calibration
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.Location = new System.Drawing.Point(476, 291);
             this.pictureBox1.Name = "pictureBox1";
@@ -110,8 +110,8 @@ namespace Bachelor_app.StereoVision.Calibration
             // 
             // Video_Source1
             // 
-            this.Video_Source1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.Video_Source1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Video_Source1.Location = new System.Drawing.Point(3, 3);
             this.Video_Source1.Name = "Video_Source1";
@@ -227,12 +227,12 @@ namespace Bachelor_app.StereoVision.Calibration
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(55, 24);
             this.toolStripButton1.Text = "Start";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1_Click);
             // 
             // Video_Source2
             // 
-            this.Video_Source2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.Video_Source2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Video_Source2.Location = new System.Drawing.Point(476, 3);
             this.Video_Source2.Name = "Video_Source2";
@@ -269,12 +269,12 @@ namespace Bachelor_app.StereoVision.Calibration
 
         }
 
-        private void InitializeString()
+        private void InitializeString(PatternModel patternModel)
         {
-            toolStripTextBox1.Text = _calibrationManager.patternModel.width.ToString();
-            toolStripTextBox2.Text = _calibrationManager.patternModel.height.ToString();
-            toolStripTextBox3.Text = _calibrationManager.patternModel.count.ToString();
-            toolStripTextBox4.Text = _calibrationManager.patternModel.distance.ToString();
+            toolStripTextBox1.Text = patternModel.Width.ToString();
+            toolStripTextBox2.Text = patternModel.Height.ToString();
+            toolStripTextBox3.Text = patternModel.Count.ToString();
+            toolStripTextBox4.Text = patternModel.Distance.ToString();
 
             this.toolStripComboBox1.Items.AddRange(Enum.GetValues(typeof(ECalibrationPattern)).Cast<ECalibrationPattern>().Select(x => x.Display()).ToArray());
             this.toolStripComboBox1.SelectedItem = ECalibrationPattern.Chessboard.Display();

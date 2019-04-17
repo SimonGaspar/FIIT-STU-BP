@@ -1,11 +1,11 @@
-﻿using Bakalárska_práca.Extension;
-using Bakalárska_práca.StereoVision.Model;
-using Bakalárska_práca.StereoVision.WindowsForm;
+﻿using Bachelor_app.Extension;
+using Bachelor_app.StereoVision.Model;
+using Bachelor_app.StereoVision.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.StereoVision.StereoCorrespondence
+namespace Bachelor_app.StereoVision.StereoCorrespondence
 {
     /// <summary>
     /// CudaStereoConstantSpaceBP algorithm
@@ -33,7 +33,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             CudaStereoConstantSpaceBP _cudaStereoConstantSpaceBP = CreateCudaStereoConstantSpaceBP();
             ConvertImageToGray(leftImage, rightImage);
 
-            _cudaStereoConstantSpaceBP.FindStereoCorrespondence(LeftGrayImage.ImageToGpuMat(), RightGrayImage.ImageToGpuMat(), imageDisparity);
+            _cudaStereoConstantSpaceBP.FindStereoCorrespondence(LeftGrayImage.ToGpuMat(), RightGrayImage.ToGpuMat(), imageDisparity);
             imageDisparity.Download(disparity);
 
             return disparity;

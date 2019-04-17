@@ -1,11 +1,6 @@
-﻿using Bakalárska_práca.StructureFromMotion;
+﻿using System;
 using Emgu.CV;
 using Emgu.CV.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 {

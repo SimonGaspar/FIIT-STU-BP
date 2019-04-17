@@ -1,6 +1,5 @@
 ﻿using System;
-using Bakalárska_práca.Model;
-using Bakalárska_práca.StructureFromMotion;
+using Bachelor_app.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
 

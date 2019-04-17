@@ -135,7 +135,6 @@
     <Compile Include="Enumerate\EMatchingType.cs" />
     <Compile Include="Extension\CameraExtension.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
-    <Compile Include="Extension\ImageExtension.cs" />
     <Compile Include="Extension\MatExtension.cs" />
     <Compile Include="Extension\WindowsFormExtension.cs" />
     <Compile Include="Helper\CameraHelper.cs" />
@@ -159,10 +158,10 @@
     <Compile Include="Model\MatchModel.cs" />
     <Compile Include="Model\InputFileModel.cs" />
     <Compile Include="Model\KeyPointModel.cs" />
-    <Compile Include="Model\ListViewerModel.cs" />
-    <Compile Include="Model\nvmCameraModel.cs" />
-    <Compile Include="Model\nvmModel.cs" />
-    <Compile Include="Model\nvmPointModel.cs" />
+    <Compile Include="Model\ListViewModel.cs" />
+    <Compile Include="Model\NvmCameraModel.cs" />
+    <Compile Include="Model\NvmModel.cs" />
+    <Compile Include="Model\NvmPointModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StereoVision\Calibration\CalibrationManager.cs" />
@@ -336,6 +335,7 @@
     <Content Include="CUDA_EULA.txt" />
     <Content Include="CUFFT_EULA.txt" />
     <Content Include="License-LGPL.txt" />
+    <None Include="Resources\Modify_Freepik.png" />
     <Content Include="Tools\VisualSFM_Cuda\cudart64_40_17.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

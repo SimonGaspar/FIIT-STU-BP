@@ -2,38 +2,30 @@
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
-using Bachelor_app;
 using Bachelor_app.Enumerate;
+using Bachelor_app.Extension;
 using Bachelor_app.Manager;
-using Bachelor_app.StereoVision;
-using Bakalárska_práca.Enumerate;
-using Bakalárska_práca.Extension;
-using Bakalárska_práca.Manager;
-using Bakalárska_práca.StereoVision.StereoCorrespondence;
+using Bachelor_app.StereoVision.Calibration;
+using Bachelor_app.StereoVision.StereoCorrespondence;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.StereoVision
+namespace Bachelor_app.StereoVision
 {
     public class StereoVisionManager
     {
         private IStereoSolver StereoSolver;
         private FileManager _fileManager;
-        private DisplayManager _displayManager;
         private CameraManager _cameraManager;
-        public CalibrationManager _calibrationManager;
-        private MainForm _winForm;
 
         public bool stopStereoCorrespondence = false;
         public bool _useParallel = false;
 
-        public StereoVisionManager(FileManager fileManager, DisplayManager displayManager, CameraManager cameraManager, MainForm mainForm)
+        public StereoVisionManager(FileManager fileManager, CameraManager cameraManager)
         {
             this._fileManager = fileManager;
-            this._displayManager = displayManager;
             this._cameraManager = cameraManager;
-            this._winForm = mainForm;
         }
 
         /// <summary>
@@ -42,14 +34,17 @@ namespace Bakalárska_práca.StereoVision
         /// <param name="item">Algorithm</param>
         public void SetStereoCorrespondenceAlgorithm(EStereoCorrespondenceAlgorithm item)
         {
+            IStereoSolver resultItem = null;
             switch (item)
             {
-                case EStereoCorrespondenceAlgorithm.CudaStereoBM: StereoSolver = new CudaStereoBlockMatching(); break;
-                case EStereoCorrespondenceAlgorithm.StereoBM: StereoSolver = new StereoBlockMatching(); break;
-                case EStereoCorrespondenceAlgorithm.StereoSGBM: StereoSolver = new StereoSemiGlobalBlockMatching(); break;
-                case EStereoCorrespondenceAlgorithm.CudaStereoConstantSpaceBP: StereoSolver = new CudaStereoConstantSpaceBeliefPropagation(); break;
+                case EStereoCorrespondenceAlgorithm.CudaStereoBM: resultItem = new CudaStereoBlockMatching(); break;
+                case EStereoCorrespondenceAlgorithm.StereoBM: resultItem = new StereoBlockMatching(); break;
+                case EStereoCorrespondenceAlgorithm.StereoSGBM: resultItem = new StereoSemiGlobalBlockMatching(); break;
+                case EStereoCorrespondenceAlgorithm.CudaStereoConstantSpaceBP: resultItem = new CudaStereoConstantSpaceBeliefPropagation(); break;
                 default: throw new NotImplementedException();
             }
+
+            StereoSolver = resultItem;
         }
 
         /// <summary>
@@ -74,30 +69,31 @@ namespace Bakalárska_práca.StereoVision
         {
             while (!stopStereoCorrespondence)
             {
-                var listOfInput = _cameraManager.GetInputFromStereoCamera(false,_fileManager.listViewerModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack].Count);
+                var listOfInput = _cameraManager.GetInputFromStereoCamera(false, _fileManager.ListViewModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack].Count);
 
-                var leftImage = new Mat(listOfInput[0].fileInfo.FullName).Image2ImageBGR();
-                var rightImage = new Mat(listOfInput[1].fileInfo.FullName).Image2ImageBGR();
+                var leftImage = new Mat(listOfInput[0].FullPath).ToImageBGR();
+                var rightImage = new Mat(listOfInput[1].FullPath).ToImageBGR();
 
-                if (_calibrationManager != null && _calibrationManager.calibrationModel != null)
+                if (CalibrationModel.IsCalibrated)
                 {
-                    CvInvoke.Remap(leftImage, leftImage, _calibrationManager.calibrationModel.UndistortCam1.MapX, _calibrationManager.calibrationModel.UndistortCam1.MapY, Inter.Linear);
-                    CvInvoke.Remap(rightImage, rightImage, _calibrationManager.calibrationModel.UndistortCam2.MapX, _calibrationManager.calibrationModel.UndistortCam2.MapY, Inter.Linear);
+
+                    CvInvoke.Remap(leftImage, leftImage, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+                    CvInvoke.Remap(rightImage, rightImage, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
                 }
 
                 var DepthMap = StereoSolver.ComputeDepthMap(leftImage, rightImage);
                 var DepthMapToSave = new Mat();
                 DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);
 
-                _fileManager.listViewerModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
+                _fileManager.ListViewModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
 
                 SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap));
                 Computer3DPointsFromStereoPair(DepthMap);
 
                 //Vymazat ak sa nic nenakresli
                 //DELETE these, when not using.
-                leftImage.Draw(_calibrationManager.calibrationModel.Rec1, new Bgr(Color.LimeGreen), 20);
-                rightImage.Draw(_calibrationManager.calibrationModel.Rec2, new Bgr(Color.LimeGreen), 20);
+                leftImage.Draw(CalibrationModel.Rec1, new Bgr(Color.LimeGreen), 20);
+                rightImage.Draw(CalibrationModel.Rec2, new Bgr(Color.LimeGreen), 20);
                 leftImage.Save(Path.Combine(Configuration.TempDirectoryPath, "LeftRecImager.JPG"));
                 rightImage.Save(Path.Combine(Configuration.TempDirectoryPath, "RightRecImager.JPG"));
             }
@@ -109,7 +105,7 @@ namespace Bakalárska_práca.StereoVision
         /// <param name="disparityMap">Disparity map</param>
         private void SaveAndAddDepthMapToListView(Image<Bgr, byte> disparityMap)
         {
-            var path = Path.Combine(Configuration.TempDepthMapDirectoryPath, $"DepthMap_{_fileManager.listViewerModel.LeftCameraStack.Count}.JPG");
+            var path = Path.Combine(Configuration.TempDepthMapDirectoryPath, $"DepthMap_{_fileManager.ListViewModel.LeftCameraStack.Count}.JPG");
 
             disparityMap.Save(path);
             _fileManager.AddInputFileToList(path, EListViewGroup.DepthMap);
@@ -135,15 +131,15 @@ namespace Bakalárska_práca.StereoVision
         /// </summary>
         private void ComputeStereoCorrespondenceFromStackSequel()
         {
-            for (int i = 0; i < _fileManager.listViewerModel.LeftCameraStack.Count; i++)
+            for (int i = 0; i < _fileManager.ListViewModel.LeftCameraStack.Count; i++)
             {
-                var leftImage = new Image<Bgr, byte>((Bitmap)_fileManager.listViewerModel.LeftCameraStack[i].image);
-                var rightImage = new Image<Bgr, byte>((Bitmap)_fileManager.listViewerModel.RightCameraStack[i].image);
+                var leftImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListViewModel.LeftCameraStack[i].Image);
+                var rightImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListViewModel.RightCameraStack[i].Image);
 
-                if (_calibrationManager != null && _calibrationManager.calibrationModel != null)
+                if (CalibrationModel.IsCalibrated)
                 {
-                    CvInvoke.Remap(leftImage, leftImage, _calibrationManager.calibrationModel.UndistortCam1.MapX, _calibrationManager.calibrationModel.UndistortCam1.MapY, Inter.Linear);
-                    CvInvoke.Remap(rightImage, rightImage, _calibrationManager.calibrationModel.UndistortCam2.MapX, _calibrationManager.calibrationModel.UndistortCam2.MapY, Inter.Linear);
+                    CvInvoke.Remap(leftImage, leftImage, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+                    CvInvoke.Remap(rightImage, rightImage, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
                 }
 
                 var DepthMap = StereoSolver.ComputeDepthMap(leftImage, rightImage);
@@ -151,9 +147,9 @@ namespace Bakalárska_práca.StereoVision
                 var DepthMapToSave = new Mat();
                 DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);
 
-                _fileManager.listViewerModel._lastDepthMapImage = DepthMapToSave.Image2ImageBGR();
+                _fileManager.ListViewModel._lastDepthMapImage = DepthMapToSave.ToImageBGR();
 
-                SaveAndAddDepthMapToListView(DepthMapToSave.Image2ImageBGR());
+                SaveAndAddDepthMapToListView(DepthMapToSave.ToImageBGR());
                 Computer3DPointsFromStereoPair(DepthMap);
             }
         }
@@ -163,16 +159,16 @@ namespace Bakalárska_práca.StereoVision
         /// </summary>
         private void ComputeStereoCorrespondenceFromStackParallel()
         {
-            Parallel.For(0, _fileManager.listViewerModel.LeftCameraStack.Count, i =>
+            Parallel.For(0, _fileManager.ListViewModel.LeftCameraStack.Count, i =>
             {
-                var leftImage = _fileManager.listViewerModel.LeftCameraStack[i];
-                var rightImage = _fileManager.listViewerModel.RightCameraStack[i];
-                var DepthMap = StereoSolver.ComputeDepthMap(leftImage.image, rightImage.image);
+                var leftImage = _fileManager.ListViewModel.LeftCameraStack[i];
+                var rightImage = _fileManager.ListViewModel.RightCameraStack[i];
+                var DepthMap = StereoSolver.ComputeDepthMap(leftImage.Image, rightImage.Image);
 
                 var DepthMapToSave = new Mat();
                 DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);
 
-                _fileManager.listViewerModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
+                _fileManager.ListViewModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
 
                 SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap));
                 Computer3DPointsFromStereoPair(DepthMap);
@@ -195,9 +191,9 @@ namespace Bakalárska_práca.StereoVision
         /// <returns></returns>
         private MCvPoint3D32f[] Computer3DPointsFromStereoPair(Mat disparityMap)
         {
-            if (_calibrationManager != null && _calibrationManager.calibrationModel != null)
+            if (CalibrationModel.IsCalibrated)
             {
-                MCvPoint3D32f[] points = PointCollection.ReprojectImageTo3D(disparityMap, _calibrationManager.calibrationModel.Q);
+                MCvPoint3D32f[] points = PointCollection.ReprojectImageTo3D(disparityMap, CalibrationModel.Q);
             }
             return null;
         }
@@ -207,7 +203,7 @@ namespace Bakalárska_práca.StereoVision
         /// </summary>
         public void ShowCalibration()
         {
-            _calibrationManager = new CalibrationManager(_cameraManager);
+            new CalibrationManager(_cameraManager);
         }
     }
 }

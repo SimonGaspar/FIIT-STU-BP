@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using Bakalárska_práca.StereoVision.StereoCorrespondence;
+using Bachelor_app.StereoVision.StereoCorrespondence;
 
-namespace Bakalárska_práca.StereoVision.WindowsForm
+namespace Bachelor_app.StereoVision.WindowsForm
 {
     /// <summary>
     /// Now not used, but in future, we can use video for SfM and stereo correspondence.

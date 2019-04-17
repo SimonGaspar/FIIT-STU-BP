@@ -5,12 +5,12 @@ namespace Bachelor_app.Model
     /// <summary>
     /// Model for .nvm file
     /// </summary>
-    public class nvmModel
+    public class NvmModel
     {
-        public int imageCount { get; set; }
-        public int pointCount { get; set; }
+        public int ImageCount { get; set; }
+        public int PointCount { get; set; }
 
-        public List<nvmPointModel> listPointModel { get; set; } = new List<nvmPointModel>();
-        public List<nvmCameraModel> listImageModel { get; set; } = new List<nvmCameraModel>();
+        public List<NvmPointModel> ListPointModel { get; set; } = new List<NvmPointModel>();
+        public List<NvmCameraModel> ListImageModel { get; set; } = new List<NvmCameraModel>();
     }
 }

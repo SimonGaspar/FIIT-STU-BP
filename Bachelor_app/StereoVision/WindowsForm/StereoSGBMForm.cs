@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
-using Bakalárska_práca.Extension;
-using Bakalárska_práca.Helper;
-using Bakalárska_práca.StereoVision.Model;
-using Bakalárska_práca.StereoVision.StereoCorrespondence;
+using Bachelor_app.Extension;
+using Bachelor_app.Helper;
+using Bachelor_app.StereoVision.Model;
+using Bachelor_app.StereoVision.StereoCorrespondence;
 using Emgu.CV;
 
-namespace Bakalárska_práca.StereoVision.WindowsForm
+namespace Bachelor_app.StereoVision.WindowsForm
 {
     public partial class StereoSGBMForm : Form
     {
@@ -20,14 +20,14 @@ namespace Bakalárska_práca.StereoVision.WindowsForm
         }
 
         #region TrackBar
-        private void trackBar_ValueChangedOdd(object sender, EventArgs e)
+        private void TrackBar_ValueChangedOdd(object sender, EventArgs e)
         {
-            WindowsFormHelper.trackBar_ValueChangedOdd(sender as TrackBar, toolTip1, GetPropertiesAndSetModel);
+            WindowsFormHelper.TrackBar_ValueChangedOdd(sender as TrackBar, toolTip1, GetPropertiesAndSetModel);
         }
 
-        private void trackBar_ValueChangedMultiple16(object sender, EventArgs e)
+        private void TrackBar_ValueChangedMultiple16(object sender, EventArgs e)
         {
-            WindowsFormHelper.trackBar_ValueChangedMultiple16(sender as TrackBar, toolTip1, GetPropertiesAndSetModel);
+            WindowsFormHelper.TrackBar_ValueChangedMultiple16(sender as TrackBar, toolTip1, GetPropertiesAndSetModel);
         }
         #endregion
 

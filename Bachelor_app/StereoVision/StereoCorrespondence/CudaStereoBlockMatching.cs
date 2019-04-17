@@ -1,17 +1,17 @@
-﻿using Bakalárska_práca.Extension;
-using Bakalárska_práca.StereoVision.Model;
+﻿using Bachelor_app.Extension;
+using Bachelor_app.StereoVision.Model;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.StereoVision.StereoCorrespondence
+namespace Bachelor_app.StereoVision.StereoCorrespondence
 {
     /// <summary>
     /// CudaStereoBM algorithm
     /// </summary>
     public class CudaStereoBlockMatching : StereoBlockMatching, IStereoSolver
     {
-        public new CudaStereoBlockMatchingModel model = new CudaStereoBlockMatchingModel();
+        private new CudaStereoBlockMatchingModel model = new CudaStereoBlockMatchingModel();
 
         public CudaStereoBlockMatching()
         {
@@ -31,7 +31,7 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
             CudaStereoBM _cudaStereoBM = CreateCudaStereoBM();
             ConvertImageToGray(leftImage, rightImage);
 
-            _cudaStereoBM.FindStereoCorrespondence(LeftGrayImage.ImageToGpuMat(), RightGrayImage.ImageToGpuMat(), imageDisparity);
+            _cudaStereoBM.FindStereoCorrespondence(LeftGrayImage.ToGpuMat(), RightGrayImage.ToGpuMat(), imageDisparity);
             imageDisparity.Download(disparity);
 
             return disparity;

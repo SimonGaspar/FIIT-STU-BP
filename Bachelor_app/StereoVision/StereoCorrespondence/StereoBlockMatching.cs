@@ -1,9 +1,9 @@
-﻿using Bakalárska_práca.StereoVision.WindowsForm;
+﻿using Bachelor_app.StereoVision.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.StereoVision.StereoCorrespondence
+namespace Bachelor_app.StereoVision.StereoCorrespondence
 {
     /// <summary>
     /// StereoBM algorithm

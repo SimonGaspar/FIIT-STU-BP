@@ -10,7 +10,7 @@ namespace Bachelor_app.Helper
     public static class CameraHelper
     {
         /// <summary>
-        /// Get list of connected video devices
+        /// Get list of connected video devices.
         /// </summary>
         /// <returns>List of connected video devices</returns>
         public static List<KeyValuePair<int, string>> GetListOfWebCam()
@@ -22,27 +22,52 @@ namespace Bachelor_app.Helper
             int _DeviceIndex = 0;
             foreach (DsDevice _Camera in _SystemCamereas)
             {
-                // Vyriesit ID camery
-                ListCamerasData.Add(new KeyValuePair<int, string>(_DeviceIndex, _Camera.Name));
-                _DeviceIndex++;
+                // Vyriesit ID camery a vytvorenie VideoCapture s ID
+                // Prepojenie DirectShow.NET s EmguCV
+                ListCamerasData.Add(new KeyValuePair<int, string>(_DeviceIndex++, _Camera.Name));
             }
 
             return ListCamerasData;
         }
 
         /// <summary>
-        /// Get stereo image
+        /// Get stereo image with synchornization.
         /// </summary>
-        /// <param name="LeftCamera">Left camera</param>
-        /// <param name="RightCamera">Right camera</param>
-        /// <param name="LeftImage">Mat for left image</param>
-        /// <param name="RightImage">Mat for right image</param>
-        public static void GetStereoImage(VideoCapture LeftCamera, VideoCapture RightCamera, ref Mat LeftImage, ref Mat RightImage)
+        /// <param name="LeftCamera"></param>
+        /// <param name="RightCamera"></param>
+        /// <param name="LeftImage"></param>
+        /// <param name="RightImage"></param>
+        public static void GetStereoImageSync(VideoCapture LeftCamera, VideoCapture RightCamera, ref Mat LeftImage, ref Mat RightImage)
         {
             LeftCamera.Grab();
             RightCamera.Grab();
             LeftCamera.Retrieve(LeftImage);
             RightCamera.Retrieve(RightImage);
         }
+
+        /// <summary>
+        /// Get stereo image without synchornization. For better result for stereo image use GetStereoImageSync.
+        /// </summary>
+        /// <param name="LeftCamera"></param>
+        /// <param name="RightCamera"></param>
+        /// <param name="LeftImage"></param>
+        /// <param name="RightImage"></param>
+        public static void GetStereoImage(VideoCapture LeftCamera, VideoCapture RightCamera, ref Mat LeftImage, ref Mat RightImage)
+        {
+            GetImage(LeftCamera, ref LeftImage);
+            GetImage(RightCamera, ref RightImage);
+        }
+
+        /// <summary>
+        /// Get stereo image with synchornization.
+        /// </summary>
+        /// <param name="Camera"></param>
+        /// <param name="Image"></param>
+        public static void GetImage(VideoCapture Camera, ref Mat Image)
+        {
+            Camera.Grab();
+            Camera.Retrieve(Image);
+        }
+
     }
 }

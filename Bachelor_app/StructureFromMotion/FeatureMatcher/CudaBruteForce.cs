@@ -1,13 +1,10 @@
 ﻿using System.Threading;
-using Bachelor_app.StructureFromMotion;
-using Bachelor_app.StructureFromMotion.FeatureMatcher;
 using Bachelor_app.StructureFromMotion.WindowsForm;
-using Bakalárska_práca.Helper;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Util;
 
-namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
+namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 {
     /// <summary>
     /// CudaBFMatcher algorithm

@@ -5,20 +5,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Bachelor_app;
 using Bachelor_app.Enumerate;
+using Bachelor_app.Helper;
 using Bachelor_app.Manager;
+using Bachelor_app.Model;
+using Bachelor_app.StructureFromMotion;
 using Bachelor_app.Tools;
-using Bakalárska_práca.Extension;
-using Bakalárska_práca.Helper;
-using Bakalárska_práca.Manager;
-using Bakalárska_práca.Model;
-using Bakalárska_práca.StructureFromMotion;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 
-namespace Bakalárska_práca
+namespace Bachelor_app
 {
     public class SfM
     {
@@ -92,7 +89,7 @@ namespace Bakalárska_práca
                 case EInput.ConnectedRightCamera:
                     while (!stopSFM)
                     {
-                        var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.LeftCamera.camera,countInputFile++);
+                        var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.LeftCamera.Camera, countInputFile++);
                         listOfInput.AddRange(cameraOutput);
 
                         ComputeSfM(DetectedKeyPoints.Count, cameraOutput);
@@ -101,7 +98,7 @@ namespace Bakalárska_práca
                 case EInput.ConnectedLeftCamera:
                     while (!stopSFM)
                     {
-                        var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.RightCamera.camera,countInputFile++);
+                        var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.RightCamera.Camera, countInputFile++);
                         listOfInput.AddRange(cameraOutput);
 
                         ComputeSfM(DetectedKeyPoints.Count, cameraOutput);
@@ -125,11 +122,12 @@ namespace Bakalárska_práca
 
         private List<InputFileModel> GetListFromListView(bool ContinueSFM)
         {
-            var list = ContinueSFM ? fileManager.listViewerModel.BasicStack.Where(x => x.UseInSFM == false).ToList() : fileManager.listViewerModel.BasicStack;
+            var list = ContinueSFM ? fileManager.ListViewModel.BasicStack.Where(x => x.UseInSFM == false).ToList() : fileManager.ListViewModel.BasicStack;
             foreach (var node in list)
             {
-                File.Copy(node.fileInfo.FullName, Path.Combine(Configuration.TempDirectoryPath, node.fileInfo.Name), true);
-                node.fileInfo = new FileInfo(Path.Combine(Configuration.TempDirectoryPath, node.fileInfo.Name));
+                var savePath = Path.Combine(Configuration.TempDirectoryPath, node.FileName);
+                File.Copy(node.FullPath, savePath, true);
+                node.SetFileInfo(new FileInfo(savePath));
                 node.UseInSFM = true;
             }
             return list;
@@ -321,10 +319,10 @@ namespace Bakalárska_práca
 
             foreach (var node in listOfInput)
             {
-                sb.AppendLine(Path.Combine(Configuration.TempDirectoryPath, node.fileInfo.Name));
+                sb.AppendLine(Path.Combine(Configuration.TempDirectoryPath, node.FileName));
             }
 
-            File.WriteAllText(Path.Combine(Configuration.TempDirectoryPath, "Result.nvm.txt"), sb.ToString());
+            File.WriteAllText(Path.Combine(Configuration.TempDirectoryPath, $"{Configuration.VisualSFMResult}.txt"), sb.ToString());
         }
 
         private void WriteAllMatches(List<MatchModel> findedMatches, int index = 0)
@@ -343,8 +341,8 @@ namespace Bakalárska_práca
         private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = true, bool DrawAndSave = true)
         {
             WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
-                    $"\t{leftDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n" +
-                    $"\t{rightDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n");
+                    $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                    $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
 
 
             var foundedMatch = new MatchModel()
@@ -360,8 +358,8 @@ namespace Bakalárska_práca
 
             WindowsFormHelper.AddLogToConsole(
                 $"FINISH computing matches for: \n" +
-                $"\t{leftDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n" +
-                $"\t{rightDescriptor.KeyPoint.InputFile.fileInfo.Name.ToString()}\n"
+                $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
                 );
 
 
@@ -446,7 +444,7 @@ namespace Bakalárska_práca
 
         private void ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList = true, bool SaveOnDisk = true)
         {
-            var fileName = keypoint.InputFile.fileInfo.Name;
+            var fileName = keypoint.InputFile.FileName;
 
             WindowsFormHelper.AddLogToConsole($"Start computing descriptor for: {fileName}\n");
 
@@ -457,7 +455,7 @@ namespace Bakalárska_práca
                 KeyPoint = keypoint
             };
             WindowsFormHelper.AddLogToConsole($"FINISH computing descriptor for: {fileName}\n");
-            
+
             if (AddToList)
                 ComputedDescriptors.Add(keypoint.ID, descriptorNode);
 
@@ -467,11 +465,11 @@ namespace Bakalárska_práca
 
         private void FindKeypoint(int ID, InputFileModel inputFile, IFeatureDetector detector, bool AddToList = true, bool DrawAndSave = true)
         {
-            var fileName = inputFile.fileInfo.Name;
+            var fileName = inputFile.FileName;
 
             WindowsFormHelper.AddLogToConsole($"Start finding key points for: {fileName}\n");
 
-            var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.fileInfo.FullName));
+            var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.FullPath));
 
             WindowsFormHelper.AddLogToConsole(
                 $"FINISH finding key points for: {fileName}\n" +

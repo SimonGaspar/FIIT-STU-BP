@@ -6,14 +6,14 @@ using Emgu.CV.CvEnum;
 namespace Bachelor_app.Extension
 {
     /// <summary>
-    /// Extensions for camera
+    /// Extension method for camera (class VideoCapture).
     /// </summary>
     public static class CameraExtension
     {
         /// <summary>
         /// Get frame from camera and save it in Mat.
         /// </summary>
-        /// <param name="camera">Camera</param>
+        /// <param name="camera"></param>
         /// <returns>Frame in Mat</returns>
         public static Mat GetImageInMat(this VideoCapture camera)
         {
@@ -23,7 +23,12 @@ namespace Bachelor_app.Extension
             return input;
         }
 
-        public static void UpdateResolution(this VideoCapture camera, Size resolution)
+        /// <summary>
+        /// Set camera resolution.
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="resolution"></param>
+        private static void UpdateResolution(this VideoCapture camera, Size resolution)
         {
             if (camera != null)
             {
@@ -31,12 +36,24 @@ namespace Bachelor_app.Extension
                 camera.SetCaptureProperty(CapProp.FrameHeight, resolution.Height);
             }
         }
-        public static void UpdateResolution(this VideoCapture camera, int Width, int Height)
-        {
-            var resolution = new Size(Width, Height);
-            UpdateResolution(camera, resolution);
-        }
 
+        ///// <summary>
+        ///// Set camera resolution.
+        ///// </summary>
+        ///// <param name="camera"></param>
+        ///// <param name="Width">Width of resolution.</param>
+        ///// <param name="Height">Height of resolution.</param>
+        //public static void UpdateResolution(this VideoCapture camera, int Width, int Height)
+        //{
+        //    var resolution = new Size(Width, Height);
+        //    UpdateResolution(camera, resolution);
+        //}
+
+        /// <summary>
+        /// Set camera resolution.
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="type">Type of resolution.</param>
         public static void UpdateResolution(this VideoCapture camera, ECameraResolution type)
         {
             var resolution = type.GetResolution();

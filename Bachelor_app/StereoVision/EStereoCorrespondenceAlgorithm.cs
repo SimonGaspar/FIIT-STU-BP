@@ -1,8 +1,5 @@
-﻿namespace Bakalárska_práca.StereoVision
+﻿namespace Bachelor_app.StereoVision
 {
-    /// <summary>
-    /// Stereo correspondence algorithm
-    /// </summary>
     public enum EStereoCorrespondenceAlgorithm
     {
         StereoBM,

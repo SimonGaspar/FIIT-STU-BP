@@ -16,32 +16,27 @@ namespace Bachelor_app.Helper
         /// Loading point cloud from nvm file.
         /// </summary>
         /// <returns>List of nvm models<returns>
-        public static List<nvmModel> LoadPointCloud()
+        public static List<NvmModel> LoadPointCloud()
         {
-            string filePath = Path.Combine($"..\\..\\..\\Temp", $"Result.nvm");
-            var subjectString = File.ReadAllText(filePath);
+            var subjectString = File.ReadAllText(Configuration.VisualSFMResultPath);
             var lineArray = subjectString.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            var resultList = new List<nvmModel>();
-            string header = lineArray[0];
+            var resultList = new List<NvmModel>();
+            //string header = lineArray[0];
 
-            for (int i = 1; i < lineArray.Count();)
+            for (int indexOfLine = 1; indexOfLine < lineArray.Count();)
             {
-                var model = new nvmModel();
-                model.imageCount = int.Parse(lineArray[i++]);
+                var model = new NvmModel();
 
-                if (model.imageCount == 0) break;
+                model.ImageCount = int.Parse(lineArray[indexOfLine++]);
+                if (model.ImageCount > 0)
+                    indexOfLine = AddCameraModelFromFile(indexOfLine, lineArray, model.ImageCount, model);
 
-                i = AddCameraModelFromFile(i, lineArray, model.imageCount, model);
-
-
-                model.pointCount = int.Parse(lineArray[i++]);
-                if (model.pointCount == 0) break;
-
-                i = AddPointModelFromFile(i, lineArray, model.pointCount, model);
+                model.PointCount = int.Parse(lineArray[indexOfLine++]);
+                if (model.PointCount > 0)
+                    indexOfLine = AddPointModelFromFile(indexOfLine, lineArray, model.PointCount, model);
 
                 resultList.Add(model);
             }
-
 
             return resultList;
         }
@@ -49,69 +44,69 @@ namespace Bachelor_app.Helper
         /// <summary>
         /// Loading points from nvm file.
         /// </summary>
-        /// <param name="i">Number of line</param>
+        /// <param name="IndexOfLine">Number of line</param>
         /// <param name="lineArray">Array of lines (nvm file)</param>
         /// <param name="pointCount">Number of points in file</param>
         /// <param name="model">Current model in which we add 3D points.</param>
         /// <returns>Number of line, where it ends.</returns>
-        private static int AddPointModelFromFile(int i, string[] lineArray, int pointCount, nvmModel model)
+        private static int AddPointModelFromFile(int IndexOfLine, string[] lineArray, int pointCount, NvmModel model)
         {
-            int y = 0;
-            for (y = i; y < i + model.pointCount; y++)
+            int currentIndex = 0;
+            for (currentIndex = IndexOfLine; currentIndex < IndexOfLine + model.PointCount; currentIndex++)
             {
-                var camera = lineArray[y].Split();
-                var pointModel = new nvmPointModel()
+                var camera = lineArray[currentIndex].Split();
+                var pointModel = new NvmPointModel()
                 {
-                    position = new Vector3(
+                    Position = new Vector3(
                         float.Parse(camera[0]),
                         float.Parse(camera[1]),
                         float.Parse(camera[2])
                         ),
-                    color = new Vector3(
+                    Color = new Vector3(
                         float.Parse(camera[3]),
                         float.Parse(camera[4]),
                         float.Parse(camera[5])
                         )
                 };
-                model.listPointModel.Add(pointModel);
+                model.ListPointModel.Add(pointModel);
             }
-            return y;
+            return currentIndex;
         }
 
         /// <summary>
         /// Loading cameras from nvm file
         /// </summary>
-        /// /// <param name="i">Number of line</param>
+        /// /// <param name="IndexOfLine">Number of line</param>
         /// <param name="lineArray">Array of lines (nvm file)</param>
         /// <param name="cameraCount">Number of cameras in file</param>
         /// <param name="model">Current model in which we add 3D points.</param>
         /// <returns>Number of line, where it ends.</returns>
-        private static int AddCameraModelFromFile(int i, string[] lineArray, int cameraCount, nvmModel model)
+        private static int AddCameraModelFromFile(int IndexOfLine, string[] lineArray, int cameraCount, NvmModel model)
         {
-            int x = 0;
-            for (x = i; x < i + cameraCount; x++)
+            int currentIndex = 0;
+            for (currentIndex = IndexOfLine; currentIndex < IndexOfLine + cameraCount; currentIndex++)
             {
-                var camera = lineArray[x].Split();
-                var imageModel = new nvmCameraModel()
+                var camera = lineArray[currentIndex].Split();
+                var imageModel = new NvmCameraModel()
                 {
-                    fileName = camera[0],
-                    focalLength = float.Parse(camera[1]),
-                    quaternion = new Quaternion(
+                    FileName = camera[0],
+                    FocalLength = float.Parse(camera[1]),
+                    Quaternion = new Quaternion(
                         float.Parse(camera[2]),
                         float.Parse(camera[3]),
                         float.Parse(camera[4]),
                         float.Parse(camera[5])
                         ),
-                    cameraCenter = new Vector3(
+                    CameraCenter = new Vector3(
                         float.Parse(camera[6]),
                         float.Parse(camera[7]),
                         float.Parse(camera[8])
                     ),
-                    radialDistortion = float.Parse(camera[9])
+                    RadialDistortion = float.Parse(camera[9])
                 };
-                model.listImageModel.Add(imageModel);
+                model.ListImageModel.Add(imageModel);
             }
-            return x;
+            return currentIndex;
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿namespace Bakalárska_práca.Enumerate
+﻿namespace Bachelor_app.Enumerate
 {
     /// <summary>
-    /// Type of group in ListView (MainForm)
+    /// Types of group in ListView (MainForm).
     /// </summary>
     public enum EListViewGroup
     {

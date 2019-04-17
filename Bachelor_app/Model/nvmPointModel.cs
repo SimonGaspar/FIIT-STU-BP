@@ -5,10 +5,10 @@ namespace Bachelor_app.Model
     /// <summary>
     /// Model for points (.nvm file)
     /// </summary>
-    public class nvmPointModel
+    public class NvmPointModel
     {
-        public Vector3 position { get; set; } = new Vector3();
-        public Vector3 color { get; set; } = new Vector3();
+        public Vector3 Position { get; set; } = new Vector3();
+        public Vector3 Color { get; set; } = new Vector3();
 
         //Dodatocne informacie -> teraz nepotrebne
 
@@ -20,10 +20,10 @@ namespace Bachelor_app.Model
     /// Now not used, but in future, we can use this information.
     /// DELETE these, when not using.
     /// </summary>
-    public class nvmMeasurement
+    public class NvmMeasurement
     {
-        public int imageIndex { get; set; }
-        public int featureIndex { get; set; }
-        public Vector2 position { get; set; } = new Vector2();
+        public int ImageIndex { get; set; }
+        public int FeatureIndex { get; set; }
+        public Vector2 Position { get; set; } = new Vector2();
     }
 }

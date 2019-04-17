@@ -1,6 +1,5 @@
 ﻿using Bachelor_app.StructureFromMotion.Model;
 using Bachelor_app.StructureFromMotion.WindowsForm;
-using Bakalárska_práca.StructureFromMotion;
 using Emgu.CV;
 using Emgu.CV.Features2D;
 using Emgu.CV.Structure;

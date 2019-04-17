@@ -1,7 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.StructureFromMotion
+namespace Bachelor_app.StructureFromMotion
 {
     /// <summary>
     /// Interface for detector algorithm

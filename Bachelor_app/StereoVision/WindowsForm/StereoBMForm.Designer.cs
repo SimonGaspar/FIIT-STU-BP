@@ -1,4 +1,4 @@
-﻿namespace Bakalárska_práca.StereoVision.WindowsForm
+﻿namespace Bachelor_app.StereoVision.WindowsForm
 {
     partial class StereoBMForm
     {
@@ -47,7 +47,7 @@
             this.DisparityTrackBar.Name = "DisparityTrackBar";
             this.DisparityTrackBar.Size = new System.Drawing.Size(270, 45);
             this.DisparityTrackBar.TabIndex = 0;
-            this.DisparityTrackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChangedMultiple16);
+            this.DisparityTrackBar.ValueChanged += new System.EventHandler(this.TrackBar_ValueChangedMultiple16);
             // 
             // Disparity
             // 
@@ -67,7 +67,7 @@
             this.BlockSizeTrackBar.Name = "BlockSizeTrackBar";
             this.BlockSizeTrackBar.Size = new System.Drawing.Size(268, 45);
             this.BlockSizeTrackBar.TabIndex = 2;
-            this.BlockSizeTrackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChangedOdd);
+            this.BlockSizeTrackBar.ValueChanged += new System.EventHandler(this.TrackBar_ValueChangedOdd);
             // 
             // BlockSize
             // 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using Bakalárska_práca.StructureFromMotion.FeatureMatcher;
+using Bachelor_app.StructureFromMotion.FeatureMatcher;
 using Emgu.CV.Features2D;
 
 namespace Bachelor_app.StructureFromMotion.WindowsForm

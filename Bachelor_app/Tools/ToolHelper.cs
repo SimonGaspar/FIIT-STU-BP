@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using Bakalárska_práca.Helper;
+using Bachelor_app.Helper;
 
 namespace Bachelor_app.Tools
 {
@@ -25,7 +25,7 @@ namespace Bachelor_app.Tools
             {
                 var line = process.StandardOutput.ReadLine();
                 if (!string.IsNullOrEmpty(line))
-                WindowsFormHelper.AddLogToConsole(line + "\n");
+                    WindowsFormHelper.AddLogToConsole(line + "\n");
             }
 
             process.WaitForExit();

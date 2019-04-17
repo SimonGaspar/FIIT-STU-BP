@@ -136,6 +136,9 @@
   <data name="Repeat_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Repeat_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="RightArrow_Lyolya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightArrow_Lyolya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AddImage_Swifticon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AddImage_Swifticon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -154,13 +157,13 @@
   <data name="Download_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Download_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RightArrow_Lyolya" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightArrow_Lyolya.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Refresh_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Refresh_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CameraCalibration_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CameraCalibration_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Refresh_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Refresh_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Modify_Freepik" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Modify_Freepik.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

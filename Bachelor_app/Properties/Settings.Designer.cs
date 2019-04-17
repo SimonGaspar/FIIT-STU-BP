@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Bakalárska_práca.Properties
+namespace Bachelor_app.Properties
 {
 
 

@@ -123,6 +123,16 @@ namespace Bachelor_app.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Modify_Freepik {
+            get {
+                object obj = ResourceManager.GetObject("Modify_Freepik", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Parallel_Freepik {
             get {
                 object obj = ResourceManager.GetObject("Parallel_Freepik", resourceCulture);

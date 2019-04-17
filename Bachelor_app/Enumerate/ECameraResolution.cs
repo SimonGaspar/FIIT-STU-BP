@@ -4,7 +4,7 @@ using System.Drawing;
 namespace Bachelor_app.Enumerate
 {
     /// <summary>
-    /// Camera resolution type
+    /// Types of camera resolution.
     /// </summary>
     public enum ECameraResolution
     {
@@ -14,12 +14,12 @@ namespace Bachelor_app.Enumerate
     }
 
     /// <summary>
-    /// Extension class for enum ECameraResolution
+    /// Extension class for enum ECameraResolution.
     /// </summary>
     public static class CameraResolutionExtension
     {
         /// <summary>
-        /// Return object Size(width, height) by .
+        /// Return object Size(width, height) by type.
         /// </summary>
         /// <param name="type">Type of camera resolution.</param>
         /// <returns>Object Size(width, height) by ECameraResolution type.</returns>

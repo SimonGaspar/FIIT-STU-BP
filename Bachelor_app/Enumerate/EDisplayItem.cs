@@ -1,4 +1,4 @@
-﻿namespace Bakalárska_práca.Enumerate
+﻿namespace Bachelor_app.Enumerate
 {
     /// <summary>
     /// Enum for the view object in aplication (MainForm) to display specific item.
@@ -10,6 +10,7 @@
         LeftCamera,
         RightCamera,
         SfMPointCloud,
+        StereoVisionPointCloud,
         DepthMapPointCloud,
         KeyPoints,
         DescriptorsMatches,

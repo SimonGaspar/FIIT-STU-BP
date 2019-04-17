@@ -2,46 +2,47 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Bachelor_app;
-using Bakalárska_práca.Enumerate;
-using Bakalárska_práca.Extension;
-using Bakalárska_práca.Manager;
+using Bachelor_app.Enumerate;
+using Bachelor_app.Extension;
+using Bachelor_app.Manager;
 using Emgu.CV;
 using Emgu.CV.Features2D;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 
-namespace Bakalárska_práca.Model
+namespace Bachelor_app.Model
 {
-    /// <summary>
-    /// Descriptor matches model
-    /// </summary>
     public class MatchModel
     {
-        public DescriptorModel LeftDescriptor;
-        public DescriptorModel RightDescriptor;
-        public List<MDMatch[]> MatchesList;
-        public Mat PerspectiveMatrix;
-        public Mat Mask;
-        public string FileFormatMatch;
-        public List<MDMatch[]> FilteredMatchesList;
-        public bool FilteredMatch;
+        public DescriptorModel LeftDescriptor { get; set; }
+        public DescriptorModel RightDescriptor { get; set; }
+        public List<MDMatch[]> MatchesList { get; set; }
+        public Mat PerspectiveMatrix { get; set; }
+        public Mat Mask { get; set; }
+        public string FileFormatMatch { get; set; }
+        public List<MDMatch[]> FilteredMatchesList { get; set; }
+        public bool FilteredMatch { get; set; }
     }
 
     public static class MatchExtension
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="fileManager">Save in FileManager ListViewGroup.</param>
         public static void DrawAndSave(this MatchModel model, FileManager fileManager)
         {
             try
             {
                 Mat output = new Mat();
-                var fileName = $"{Path.GetFileNameWithoutExtension(model.RightDescriptor.KeyPoint.InputFile.fileInfo.Name)}_{Path.GetFileNameWithoutExtension(model.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name)}.JPG";
+                var fileName = $"{model.RightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{model.LeftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.JPG";
                 var savePath = Path.Combine(Configuration.TempDrawMatches, fileName);
 
-                Features2DToolbox.DrawMatches(new Mat(model.LeftDescriptor.KeyPoint.InputFile.fileInfo.FullName), model.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(model.RightDescriptor.KeyPoint.InputFile.fileInfo.FullName), model.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(model.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), model.Mask);
+                Features2DToolbox.DrawMatches(new Mat(model.LeftDescriptor.KeyPoint.InputFile.FullPath), model.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(model.RightDescriptor.KeyPoint.InputFile.FullPath), model.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(model.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), model.Mask);
                 output.Save(savePath);
 
-                fileManager.listViewerModel._lastDrawnMatches = output.Image2ImageBGR();
+                fileManager.ListViewModel._lastDrawnMatches = output.ToImageBGR();
                 fileManager.AddInputFileToList(savePath, EListViewGroup.DrawnMatches);
             }
             catch (Exception e)
@@ -50,19 +51,25 @@ namespace Bakalárska_práca.Model
             }
         }
 
-        public static int SaveMatchString(this MatchModel model, bool UseMask = true)
+        /// <summary>
+        /// Save string with all matches in model.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="UseMask"></param>
+        /// <returns></returns>
+        public static bool SaveMatchString(this MatchModel model, bool UseMask = true)
         {
             if (model.Mask == null || model.FilteredMatchesList.Count == 0)
             {
                 model.FileFormatMatch = null;
-                return 0;
+                return false;
             }
 
 
-            var leftImageName = model.LeftDescriptor.KeyPoint.InputFile.fileInfo.Name;
-            var rightImageName = model.RightDescriptor.KeyPoint.InputFile.fileInfo.Name;
+            var leftImageName = model.LeftDescriptor.KeyPoint.InputFile.FileName;
+            var rightImageName = model.RightDescriptor.KeyPoint.InputFile.FileName;
             var matchesList = model.FilteredMatch ? model.FilteredMatchesList : model.MatchesList;
-            
+
             int countMaskMatches = 0;
             if (UseMask)
             {
@@ -90,7 +97,7 @@ namespace Bakalárska_práca.Model
             }
 
             model.FileFormatMatch = sb.ToString();
-            return 0;
+            return true;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Bakalárska_práca.Helper
+namespace Bachelor_app.Helper
 {
     /// <summary>
     /// Helper for WinForm
@@ -21,34 +21,43 @@ namespace Bakalárska_práca.Helper
         /// <param name="text">Text with format</param>
         public static void AddLogToConsole(string text)
         {
-            _winForm.richTextBox1.Invoke((Action)delegate
+            var element = _winForm.richTextBox1;
+
+            if (element.InvokeRequired)
             {
-                _winForm.richTextBox1.Text += $"[{DateTime.Now}]\n" + text;
-            });
+                element.Invoke((Action)delegate
+                {
+                    _winForm.richTextBox1.Text += $"[{DateTime.Now}]\n{text}\n";
+                });
+            }
+            else
+            {
+                element.Text += $"[{DateTime.Now}]\n{text}\n";
+            }
         }
 
         // Asi to zmeniť na text field
         // DELETE these, when not using.
         #region StereoVision TrackBar
-        public static void trackBar_ValueChanged(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
+        public static void TrackBar_ValueChanged(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
         {
             toolTip.SetToolTip(trackBar, trackBar.Value.ToString());
             GetPropertiesAndSetModel();
         }
 
-        public static void trackBar_ValueChangedMultiple16(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
+        public static void TrackBar_ValueChangedMultiple16(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
         {
             toolTip.SetToolTip(trackBar, (trackBar.Value * 16).ToString());
             GetPropertiesAndSetModel();
         }
 
-        public static void trackBar_ValueChangedOdd(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
+        public static void TrackBar_ValueChangedOdd(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
         {
             toolTip.SetToolTip(trackBar, ((trackBar.Value * 2) + 1).ToString());
             GetPropertiesAndSetModel();
         }
 
-        public static void trackBar_ValueChangedEven(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
+        public static void TrackBar_ValueChangedEven(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
         {
             toolTip.SetToolTip(trackBar, (trackBar.Value * 2).ToString());
             GetPropertiesAndSetModel();

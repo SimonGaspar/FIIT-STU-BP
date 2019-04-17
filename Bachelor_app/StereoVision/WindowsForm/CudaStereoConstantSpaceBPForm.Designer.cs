@@ -1,4 +1,4 @@
-﻿namespace Bakalárska_práca.StereoVision.WindowsForm
+﻿namespace Bachelor_app.StereoVision.WindowsForm
 {
     partial class CudaStereoConstantSpaceBPForm
     {

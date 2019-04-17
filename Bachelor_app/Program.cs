@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using Bachelor_app;
 using Bachelor_app.Resources;
 
-namespace Bakalárska_práca
+namespace Bachelor_app
 {
     static class Program
     {

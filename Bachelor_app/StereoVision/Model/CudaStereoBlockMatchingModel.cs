@@ -1,4 +1,4 @@
-﻿namespace Bakalárska_práca.StereoVision.Model
+﻿namespace Bachelor_app.StereoVision.Model
 {
     /// <summary>
     /// Model for CudaStereoBM

@@ -2,11 +2,11 @@
 using System.Linq;
 using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
-using Bakalárska_práca.Enumerate;
-using Bakalárska_práca.StereoVision;
-using Bakalárska_práca.StructureFromMotion;
+using Bachelor_app.Helper;
+using Bachelor_app.StereoVision;
+using Bachelor_app.StructureFromMotion;
 
-namespace Bakalárska_práca
+namespace Bachelor_app
 {
     partial class MainForm
     {
@@ -51,6 +51,7 @@ namespace Bakalárska_práca
             this.toolStripButton23 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton22 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton24 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton17 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -193,6 +194,7 @@ namespace Bakalárska_práca
             this.toolStripButton23,
             this.toolStripSeparator12,
             this.toolStripButton22,
+            this.toolStripButton24,
             this.toolStripButton11,
             this.toolStripButton17});
             this.toolStrip1.Location = new System.Drawing.Point(0, 22);
@@ -228,7 +230,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox1.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Size = new System.Drawing.Size(121, 22);
-            this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
+            this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox1_SelectedIndexChanged);
             // 
             // toolStripButton4
             // 
@@ -240,7 +242,7 @@ namespace Bakalárska_práca
             this.toolStripButton4.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton4.Text = "toolStripButton4";
             this.toolStripButton4.ToolTipText = "Settings";
-            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
+            this.toolStripButton4.Click += new System.EventHandler(this.ToolStripButton4_Click);
             // 
             // toolStripSeparator7
             // 
@@ -254,7 +256,7 @@ namespace Bakalárska_práca
             this.toolStripButton16.Name = "toolStripButton16";
             this.toolStripButton16.Size = new System.Drawing.Size(89, 19);
             this.toolStripButton16.Text = "Calibration";
-            this.toolStripButton16.Click += new System.EventHandler(this.toolStripButton16_Click);
+            this.toolStripButton16.Click += new System.EventHandler(this.ToolStripButton16_Click);
             // 
             // toolStripButton18
             // 
@@ -264,7 +266,7 @@ namespace Bakalárska_práca
             this.toolStripButton18.Name = "toolStripButton18";
             this.toolStripButton18.Size = new System.Drawing.Size(24, 19);
             this.toolStripButton18.Text = "Download camera settings";
-            this.toolStripButton18.Click += new System.EventHandler(this.toolStripButton18_Click);
+            this.toolStripButton18.Click += new System.EventHandler(this.ToolStripButton18_Click);
             // 
             // toolStripButton19
             // 
@@ -274,7 +276,7 @@ namespace Bakalárska_práca
             this.toolStripButton19.Name = "toolStripButton19";
             this.toolStripButton19.Size = new System.Drawing.Size(24, 19);
             this.toolStripButton19.Text = "Load camera settings";
-            this.toolStripButton19.Click += new System.EventHandler(this.toolStripButton19_Click);
+            this.toolStripButton19.Click += new System.EventHandler(this.ToolStripButton19_Click);
             // 
             // toolStripButton23
             // 
@@ -286,7 +288,7 @@ namespace Bakalárska_práca
             this.toolStripButton23.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton23.Text = "toolStripButton9";
             this.toolStripButton23.ToolTipText = "Clear";
-            this.toolStripButton23.Click += new System.EventHandler(this.toolStripButton23_Click);
+            this.toolStripButton23.Click += new System.EventHandler(this.ToolStripButton23_Click);
             // 
             // toolStripSeparator12
             // 
@@ -302,7 +304,18 @@ namespace Bakalárska_práca
             this.toolStripButton22.Name = "toolStripButton22";
             this.toolStripButton22.Size = new System.Drawing.Size(69, 19);
             this.toolStripButton22.Text = "Parallel";
-            this.toolStripButton22.Click += new System.EventHandler(this.toolStripButton22_Click);
+            this.toolStripButton22.Click += new System.EventHandler(this.ToolStripButton22_Click);
+            // 
+            // toolStripButton24
+            // 
+            this.toolStripButton24.BackColor = System.Drawing.SystemColors.Control;
+            this.toolStripButton24.CheckOnClick = true;
+            this.toolStripButton24.Image = global::Bachelor_app.Properties.Resources.Modify_Freepik;
+            this.toolStripButton24.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton24.Name = "toolStripButton24";
+            this.toolStripButton24.Size = new System.Drawing.Size(100, 19);
+            this.toolStripButton24.Text = "Modify input";
+            this.toolStripButton24.Click += new System.EventHandler(this.ToolStripButton24_Click);
             // 
             // toolStripButton11
             // 
@@ -311,7 +324,7 @@ namespace Bakalárska_práca
             this.toolStripButton11.Name = "toolStripButton11";
             this.toolStripButton11.Size = new System.Drawing.Size(55, 19);
             this.toolStripButton11.Text = "Run ";
-            this.toolStripButton11.Click += new System.EventHandler(this.toolStripButton11_Click);
+            this.toolStripButton11.Click += new System.EventHandler(this.ToolStripButton11_Click);
             // 
             // toolStripButton17
             // 
@@ -320,7 +333,7 @@ namespace Bakalárska_práca
             this.toolStripButton17.Name = "toolStripButton17";
             this.toolStripButton17.Size = new System.Drawing.Size(55, 19);
             this.toolStripButton17.Text = "Stop";
-            this.toolStripButton17.Click += new System.EventHandler(this.toolStripButton17_Click);
+            this.toolStripButton17.Click += new System.EventHandler(this.ToolStripButton17_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -572,7 +585,7 @@ namespace Bakalárska_práca
             this.richTextBox1.Size = new System.Drawing.Size(420, 204);
             this.richTextBox1.TabIndex = 20;
             this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox_TextChanged);
+            this.richTextBox1.TextChanged += new System.EventHandler(this.RichTextBox_TextChanged);
             // 
             // toolStrip2
             // 
@@ -635,7 +648,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox2.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox2.Name = "toolStripComboBox2";
             this.toolStripComboBox2.Size = new System.Drawing.Size(121, 22);
-            this.toolStripComboBox2.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox2_SelectedIndexChanged);
+            this.toolStripComboBox2.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox2_SelectedIndexChanged);
             // 
             // toolStripButton1
             // 
@@ -647,7 +660,7 @@ namespace Bakalárska_práca
             this.toolStripButton1.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton1.Text = "toolStripButton1";
             this.toolStripButton1.ToolTipText = "Settings";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1_Click);
             // 
             // toolStripSeparator4
             // 
@@ -667,7 +680,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox3.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox3.Name = "toolStripComboBox3";
             this.toolStripComboBox3.Size = new System.Drawing.Size(121, 22);
-            this.toolStripComboBox3.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox3_SelectedIndexChanged);
+            this.toolStripComboBox3.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox3_SelectedIndexChanged);
             // 
             // toolStripButton2
             // 
@@ -679,7 +692,7 @@ namespace Bakalárska_práca
             this.toolStripButton2.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton2.Text = "toolStripButton2";
             this.toolStripButton2.ToolTipText = "Settings";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.toolStripButton2.Click += new System.EventHandler(this.ToolStripButton2_Click);
             // 
             // toolStripSeparator5
             // 
@@ -699,7 +712,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox4.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox4.Name = "toolStripComboBox4";
             this.toolStripComboBox4.Size = new System.Drawing.Size(121, 22);
-            this.toolStripComboBox4.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox4_SelectedIndexChanged);
+            this.toolStripComboBox4.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox4_SelectedIndexChanged);
             // 
             // toolStripButton3
             // 
@@ -711,7 +724,7 @@ namespace Bakalárska_práca
             this.toolStripButton3.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton3.Text = "toolStripButton3";
             this.toolStripButton3.ToolTipText = "Settings";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.toolStripButton3.Click += new System.EventHandler(this.ToolStripButton3_Click);
             // 
             // toolStripSeparator9
             // 
@@ -728,7 +741,7 @@ namespace Bakalárska_práca
             // 
             this.toolStripComboBox8.Name = "toolStripComboBox8";
             this.toolStripComboBox8.Size = new System.Drawing.Size(92, 22);
-            this.toolStripComboBox8.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox8_SelectedIndexChanged);
+            this.toolStripComboBox8.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox8_SelectedIndexChanged);
             // 
             // toolStripButton14
             // 
@@ -739,7 +752,7 @@ namespace Bakalárska_práca
             this.toolStripButton14.Name = "toolStripButton14";
             this.toolStripButton14.Size = new System.Drawing.Size(69, 19);
             this.toolStripButton14.Text = "Parallel";
-            this.toolStripButton14.Click += new System.EventHandler(this.toolStripButton14_Click);
+            this.toolStripButton14.Click += new System.EventHandler(this.ToolStripButton14_Click);
             // 
             // toolStripSeparator6
             // 
@@ -753,7 +766,7 @@ namespace Bakalárska_práca
             this.toolStripButton10.Name = "toolStripButton10";
             this.toolStripButton10.Size = new System.Drawing.Size(52, 19);
             this.toolStripButton10.Text = "Run";
-            this.toolStripButton10.Click += new System.EventHandler(this.toolStripButton10_Click);
+            this.toolStripButton10.Click += new System.EventHandler(this.ToolStripButton10_Click);
             // 
             // toolStripButton12
             // 
@@ -762,7 +775,7 @@ namespace Bakalárska_práca
             this.toolStripButton12.Name = "toolStripButton12";
             this.toolStripButton12.Size = new System.Drawing.Size(73, 24);
             this.toolStripButton12.Text = "Resume";
-            this.toolStripButton12.Click += new System.EventHandler(this.toolStripButton12_Click);
+            this.toolStripButton12.Click += new System.EventHandler(this.ToolStripButton12_Click);
             // 
             // toolStripButton15
             // 
@@ -771,7 +784,7 @@ namespace Bakalárska_práca
             this.toolStripButton15.Name = "toolStripButton15";
             this.toolStripButton15.Size = new System.Drawing.Size(55, 24);
             this.toolStripButton15.Text = "Stop";
-            this.toolStripButton15.Click += new System.EventHandler(this.toolStripButton15_Click);
+            this.toolStripButton15.Click += new System.EventHandler(this.ToolStripButton15_Click);
             // 
             // tableLayoutPanel6
             // 
@@ -821,7 +834,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox5.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox5.Name = "toolStripComboBox5";
             this.toolStripComboBox5.Size = new System.Drawing.Size(121, 22);
-            this.toolStripComboBox5.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox5_SelectedIndexChanged);
+            this.toolStripComboBox5.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox5_SelectedIndexChanged);
             // 
             // toolStripButton20
             // 
@@ -830,7 +843,7 @@ namespace Bakalárska_práca
             this.toolStripButton20.Name = "toolStripButton20";
             this.toolStripButton20.Size = new System.Drawing.Size(69, 19);
             this.toolStripButton20.Text = "Update";
-            this.toolStripButton20.Click += new System.EventHandler(this.toolStripButton20_Click);
+            this.toolStripButton20.Click += new System.EventHandler(this.ToolStripButton20_Click);
             // 
             // toolStrip4
             // 
@@ -863,7 +876,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox6.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox6.Name = "toolStripComboBox6";
             this.toolStripComboBox6.Size = new System.Drawing.Size(121, 22);
-            this.toolStripComboBox6.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox6_SelectedIndexChanged);
+            this.toolStripComboBox6.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox6_SelectedIndexChanged);
             // 
             // toolStripButton21
             // 
@@ -872,7 +885,7 @@ namespace Bakalárska_práca
             this.toolStripButton21.Name = "toolStripButton21";
             this.toolStripButton21.Size = new System.Drawing.Size(69, 19);
             this.toolStripButton21.Text = "Update";
-            this.toolStripButton21.Click += new System.EventHandler(this.toolStripButton21_Click);
+            this.toolStripButton21.Click += new System.EventHandler(this.ToolStripButton21_Click);
             // 
             // toolStrip5
             // 
@@ -910,7 +923,7 @@ namespace Bakalárska_práca
             this.toolStripComboBox7.Margin = new System.Windows.Forms.Padding(0);
             this.toolStripComboBox7.Name = "toolStripComboBox7";
             this.toolStripComboBox7.Size = new System.Drawing.Size(121, 22);
-            this.toolStripComboBox7.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox7_SelectedIndexChanged);
+            this.toolStripComboBox7.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox7_SelectedIndexChanged);
             // 
             // toolStripSeparator8
             // 
@@ -927,7 +940,7 @@ namespace Bakalárska_práca
             this.toolStripButton5.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton5.Text = "toolStripButton5";
             this.toolStripButton5.ToolTipText = "Add image";
-            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
+            this.toolStripButton5.Click += new System.EventHandler(this.ToolStripButton5_Click);
             // 
             // toolStripButton6
             // 
@@ -939,7 +952,7 @@ namespace Bakalárska_práca
             this.toolStripButton6.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton6.Text = "toolStripButton6";
             this.toolStripButton6.ToolTipText = "Remove image";
-            this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
+            this.toolStripButton6.Click += new System.EventHandler(this.ToolStripButton6_Click);
             // 
             // toolStripButton7
             // 
@@ -973,7 +986,7 @@ namespace Bakalárska_práca
             this.toolStripButton9.Size = new System.Drawing.Size(24, 20);
             this.toolStripButton9.Text = "toolStripButton9";
             this.toolStripButton9.ToolTipText = "Clear";
-            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
+            this.toolStripButton9.Click += new System.EventHandler(this.ToolStripButton9_Click);
             // 
             // toolStripSeparator2
             // 
@@ -989,7 +1002,7 @@ namespace Bakalárska_práca
             this.toolStripButton13.Size = new System.Drawing.Size(24, 19);
             this.toolStripButton13.Text = "toolStripButton13";
             this.toolStripButton13.ToolTipText = "Clear console";
-            this.toolStripButton13.Click += new System.EventHandler(this.toolStripButton13_Click);
+            this.toolStripButton13.Click += new System.EventHandler(this.ToolStripButton13_Click);
             // 
             // toolStrip6
             // 
@@ -1035,7 +1048,7 @@ namespace Bakalárska_práca
             // 
             this.toolStripComboBox9.Name = "toolStripComboBox9";
             this.toolStripComboBox9.Size = new System.Drawing.Size(92, 22);
-            this.toolStripComboBox9.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox9_SelectedIndexChanged);
+            this.toolStripComboBox9.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox9_SelectedIndexChanged);
             // 
             // toolStripLabel12
             // 
@@ -1047,7 +1060,7 @@ namespace Bakalárska_práca
             // 
             this.toolStripComboBox10.Name = "toolStripComboBox10";
             this.toolStripComboBox10.Size = new System.Drawing.Size(92, 22);
-            this.toolStripComboBox10.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox10_SelectedIndexChanged);
+            this.toolStripComboBox10.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox10_SelectedIndexChanged);
             // 
             // toolStripSeparator11
             // 
@@ -1064,7 +1077,7 @@ namespace Bakalárska_práca
             // 
             this.toolStripComboBox12.Name = "toolStripComboBox12";
             this.toolStripComboBox12.Size = new System.Drawing.Size(92, 22);
-            this.toolStripComboBox12.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox12_SelectedIndexChanged);
+            this.toolStripComboBox12.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox12_SelectedIndexChanged);
             // 
             // toolStripSeparator13
             // 
@@ -1081,7 +1094,7 @@ namespace Bakalárska_práca
             // 
             this.toolStripComboBox11.Name = "toolStripComboBox11";
             this.toolStripComboBox11.Size = new System.Drawing.Size(92, 22);
-            this.toolStripComboBox11.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox11_SelectedIndexChanged);
+            this.toolStripComboBox11.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox11_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -1156,10 +1169,10 @@ namespace Bakalárska_práca
             this.toolStripComboBox11.Items.AddRange(Enum.GetValues(typeof(EInput)).Cast<EInput>().Select(x => x.Display()).ToArray());
             this.toolStripComboBox11.SelectedItem = EInput.ListViewBasicStack.Display();
 
-            this.toolStripComboBox10.Items.AddRange(cameraManager.ListCamerasData.Select(x => x.Value).ToArray());
+            this.toolStripComboBox10.Items.AddRange(CameraHelper.GetListOfWebCam().Select(x => x.Value).ToArray());
             this.toolStripComboBox10.SelectedItem = EInput.ListViewBasicStack.Display();
 
-            this.toolStripComboBox9.Items.AddRange(cameraManager.ListCamerasData.Select(x => x.Value).ToArray());
+            this.toolStripComboBox9.Items.AddRange(CameraHelper.GetListOfWebCam().Select(x => x.Value).ToArray());
             this.toolStripComboBox9.SelectedItem = EInput.ListViewBasicStack.Display();
 
             this.toolStripComboBox12.Items.AddRange(Enum.GetValues(typeof(ECameraResolution)).Cast<ECameraResolution>().Select(x => x.Display()).ToArray());
@@ -1411,6 +1424,7 @@ namespace Bakalárska_práca
         private System.Windows.Forms.ToolStripButton toolStripButton21;
         public System.Windows.Forms.ToolStripButton toolStripButton22;
         private System.Windows.Forms.ToolStripButton toolStripButton23;
+        public System.Windows.Forms.ToolStripButton toolStripButton24;
     }
 }
 

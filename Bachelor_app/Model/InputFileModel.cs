@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using Bakalárska_práca.Enumerate;
+using Bachelor_app.Enumerate;
 
-namespace Bakalárska_práca.Model
+namespace Bachelor_app.Model
 {
-    /// <summary>
-    /// Model for input file
-    /// </summary>
     public class InputFileModel
     {
-        public FileInfo fileInfo { get; set; }
-        public Image image { get; set; }
+        public Image Image { get; private set; }
+        public bool UseInSFM { get; set; }
+        public string FullPath { get { return fileInfo.FullName; } }
+        public string FileName { get { return fileInfo.Name; } }
+        public string FileNameWithoutExtension { get { return Path.GetFileNameWithoutExtension(FullPath); } }
 
-        public bool UseInSFM { get; set; } = false;
+        private FileInfo fileInfo;
 
         public InputFileModel(FileInfo fileInfo)
         {
@@ -27,13 +27,18 @@ namespace Bakalárska_práca.Model
             GetImageFromInputFile();
         }
 
+        public void SetFileInfo(FileInfo fileInfo)
+        {
+            this.fileInfo = fileInfo;
+        }
+
         /// <summary>
         /// Set image for this model
         /// </summary>
         private void GetImageFromInputFile()
         {
             if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
-                image = Image.FromFile(fileInfo.FullName);
+                Image = Image.FromFile(fileInfo.FullName);
 
 
             /// <summary>

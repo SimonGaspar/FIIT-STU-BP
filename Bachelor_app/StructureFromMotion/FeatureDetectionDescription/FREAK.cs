@@ -1,7 +1,6 @@
-﻿using Bachelor_app.StructureFromMotion.Model;
+﻿using Bachelor_app.Model;
+using Bachelor_app.StructureFromMotion.Model;
 using Bachelor_app.StructureFromMotion.WindowsForm;
-using Bakalárska_práca.Model;
-using Bakalárska_práca.StructureFromMotion;
 using Emgu.CV;
 using Emgu.CV.XFeatures2D;
 
@@ -24,7 +23,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
         {
             var _freak = CreateExtractor();
             Mat result = new Mat();
-            Mat image = new Mat(keyPoints.InputFile.fileInfo.FullName);
+            Mat image = new Mat(keyPoints.InputFile.FullPath);
             _freak.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;
         }

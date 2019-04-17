@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using Bakalárska_práca.Helper;
+using Bachelor_app.Helper;
 
 namespace Bachelor_app.StereoVision.Calibration
 {
@@ -10,11 +10,11 @@ namespace Bachelor_app.StereoVision.Calibration
     public partial class CalibrationForm : Form
     {
         CalibrationManager _calibrationManager;
-        public CalibrationForm(CalibrationManager calibrationManager)
+        public CalibrationForm(CalibrationManager calibrationManager, PatternModel patternModel)
         {
             this._calibrationManager = calibrationManager;
             InitializeComponent();
-            InitializeString();
+            InitializeString(patternModel);
         }
 
         public delegate void UpateTitleDelgate(String Text);
@@ -43,25 +43,11 @@ namespace Bachelor_app.StereoVision.Calibration
         }
 
         /// <summary>
-        /// Kill calibration and close window
-        /// </summary>
-        public void ExitWindows()
-        {
-            if (this.InvokeRequired)
-                this.Invoke((Action)delegate { ExitWindows(); });
-            else
-            {
-                _calibrationManager.CalibrationProcess.Abort();
-                this.Close();
-            }
-        }
-
-        /// <summary>
         /// Start calibration
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void ToolStripButton1_Click(object sender, EventArgs e)
         {
             toolStripButton1.Enabled = false;
             _calibrationManager.UpdatePatternModel();

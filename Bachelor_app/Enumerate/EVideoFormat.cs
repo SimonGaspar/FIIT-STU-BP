@@ -1,4 +1,4 @@
-﻿namespace Bakalárska_práca.Enumerate
+﻿namespace Bachelor_app.Enumerate
 {
     /// <summary>
     /// Now not used, but in future, we can use video for SfM and stereo correspondence.

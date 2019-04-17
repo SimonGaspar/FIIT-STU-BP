@@ -1,7 +1,7 @@
-﻿using Bakalárska_práca.Model;
+﻿using Bachelor_app.Model;
 using Emgu.CV;
 
-namespace Bakalárska_práca.StructureFromMotion
+namespace Bachelor_app.StructureFromMotion
 {
     /// <summary>
     /// Interface for descriptor algorithm

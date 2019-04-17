@@ -1,20 +1,54 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Drawing;
+using System.Runtime.InteropServices;
+using Bachelor_app.StereoVision.Calibration;
 using Emgu.CV;
+using Emgu.CV.Cuda;
 using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.Extension
+namespace Bachelor_app.Extension
 {
     /// <summary>
-    /// Extension for manipulation with Mat
+    /// Extension methods for images and mat.
     /// </summary>
     public static class MatExtension
     {
         /// <summary>
-        /// Method to get value from Mat
         /// </summary>
-        /// <param name="mat">Mat</param>
-        /// <param name="row">Row in Mat</param>
-        /// <param name="col">Column in Mat</param>
+        /// <typeparam name="T">Input type of Image/Mat.</typeparam>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public static Image ToImage<T>(this T image) where T : IImage, IInputArray
+        {
+            return image.Bitmap;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="T">Input type of Image/Mat.</typeparam>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public static Image<Bgr, byte> ToImageBGR<T>(this T image) where T : IImage, IInputArray
+        {
+            return new Image<Bgr, byte>(image.Bitmap);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="T">Input type of Image/Mat.</typeparam>
+        /// <param name="image"></param>
+        /// <returns></returns>
+        public static GpuMat ToGpuMat<T>(this T image) where T : IInputArray
+        {
+            return new GpuMat(image);
+        }
+
+        /// <summary>
+        /// Method to get value from Mat.
+        /// </summary>
+        /// <param name="mat"></param>
+        /// <param name="row">t</param>
+        /// <param name="col"></param>
         /// <returns>Value from Mat</returns>
         public static dynamic GetValue(this Mat mat, int row, int col)
         {
@@ -24,11 +58,11 @@ namespace Bakalárska_práca.Extension
         }
 
         /// <summary>
-        /// Method to set value in Mat
+        /// Method to set value in Mat.
         /// </summary>
-        /// <param name="mat">Mat</param>
-        /// <param name="row">Row in Mat</param>
-        /// <param name="col">Column in Mat</param>
+        /// <param name="mat"></param>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
         public static void SetValue(this Mat mat, int row, int col, dynamic value)
         {
             var target = CreateElement(mat.Depth, value);
@@ -36,11 +70,11 @@ namespace Bakalárska_práca.Extension
         }
 
         /// <summary>
-        /// Get type of value
+        /// Get type of value.
         /// </summary>
-        /// <param name="depthType">Depth type of Mat</param>
-        /// <param name="value">Primary nothing</param>
-        /// <returns>Array of C# type from depth type</returns>
+        /// <param name="depthType">Depth type of Mat.</param>
+        /// <param name="value">Primary nothing.</param>
+        /// <returns>Array of C# type from depth type.</returns>
         private static dynamic CreateElement(DepthType depthType, dynamic value)
         {
             var element = CreateElement(depthType);
@@ -49,10 +83,10 @@ namespace Bakalárska_práca.Extension
         }
 
         /// <summary>
-        /// Types of value in Mat
+        /// Types of value in Mat.
         /// </summary>
-        /// <param name="depthType">Depth of Mat</param>
-        /// <returns>C# object of deoth type</returns>
+        /// <param name="depthType">Depth of Mat.</param>
+        /// <returns>C# object of deoth type.</returns>
         private static dynamic CreateElement(DepthType depthType)
         {
             switch (depthType)
@@ -66,6 +100,20 @@ namespace Bakalárska_práca.Extension
                 case DepthType.Cv64F: return new double[1];
                 default: return new float[1];
             }
+        }
+
+        public static Mat RemapMat(this Mat Mat, bool LeftImage, bool UseRemap = false)
+        {
+            if (CalibrationModel.IsCalibrated && UseRemap)
+            {
+                if (LeftImage)
+                    CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+                else
+                    CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+
+            }
+
+            return Mat;
         }
     }
 }

@@ -5,7 +5,7 @@ using Emgu.CV;
 using Emgu.CV.Features2D;
 using Emgu.CV.Util;
 
-namespace Bakalárska_práca.StructureFromMotion.FeatureMatcher
+namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 {
     /// <summary>
     /// BFMatcher algorithm

@@ -3,19 +3,15 @@ using System.Drawing;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
-namespace Bakalárska_práca.StereoVision.StereoCorrespondence
+namespace Bachelor_app.StereoVision.StereoCorrespondence
 {
     /// <summary>
     /// Abstract class for stereo correspondence
     /// </summary>
     public abstract class AbstractStereoSolver : IStereoSolver
     {
-        protected Image<Bgr, byte> LeftImage;
-        protected Image<Bgr, byte> RightImage;
-        protected Image<Gray, byte> LeftGrayImage;
-        protected Image<Gray, byte> RightGrayImage;
-        public Image<Gray, byte> DepthMapGray { get; protected set; }
-        public Image<Bgr, byte> DepthMap { get; protected set; }
+        protected Image<Gray, byte> LeftGrayImage { get; set; }
+        protected Image<Gray, byte> RightGrayImage { get; set; }
 
         /// <summary>
         /// Compute depth map from images
@@ -67,10 +63,6 @@ namespace Bakalárska_práca.StereoVision.StereoCorrespondence
         /// <param name="rightImage">Right image</param>
         protected void ConvertImageToGray<T>(T leftImage, T rightImage) where T : Image<Bgr, byte>
         {
-            LeftImage = leftImage;
-            RightImage = rightImage;
-            DepthMapGray = new Image<Gray, byte>(leftImage.Size);
-            DepthMap = new Image<Bgr, byte>(leftImage.Size);
             LeftGrayImage = leftImage.Convert<Gray, byte>();
             RightGrayImage = rightImage.Convert<Gray, byte>();
         }

@@ -1,6 +1,6 @@
-﻿using Bakalárska_práca.StructureFromMotion.FeatureMatcher;
+﻿using Bachelor_app.StructureFromMotion.FeatureMatcher;
 
-namespace Bakalárska_práca.StructureFromMotion
+namespace Bachelor_app.StructureFromMotion
 {
     /// <summary>
     /// Possible matching algorithm

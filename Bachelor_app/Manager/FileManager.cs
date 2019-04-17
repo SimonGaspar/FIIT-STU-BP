@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Bachelor_app.Enumerate;
-using Bachelor_app.Manager;
 using Bachelor_app.Model;
-using Bakalárska_práca.Enumerate;
-using Bakalárska_práca.Model;
 
-namespace Bakalárska_práca.Manager
+namespace Bachelor_app.Manager
 {
     /// <summary>
     /// File management
     /// </summary>
     public class FileManager
     {
+
+        public ListViewModel ListViewModel { get; private set; } = new ListViewModel();
+
+        public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.Console;
+        public EInput _inputType { get; set; } = EInput.ListViewBasicStack;
+
         private MainForm _winForm;
-
-        public ListViewerModel listViewerModel = new ListViewerModel();
-
-        public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.BasicStack;
-        public EInput _inputType;
 
         public FileManager(MainForm WinForm)
         {
@@ -59,10 +57,10 @@ namespace Bakalárska_práca.Manager
 
             foreach (ListViewItem fileName in listViewToRemove.SelectedItems)
             {
-                if (listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.fileInfo.Name == fileName.Text).UseInSFM == true)
+                if (ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.FileName == fileName.Text).UseInSFM == true)
                     continue;
 
-                listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(listViewerModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.fileInfo.Name == fileName.Text));
+                ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.FileName == fileName.Text));
 
                 var imageList = _winForm.ImageList[(int)ListViewerDisplay];
                 imageList.Images.RemoveByKey(fileName.Text);
@@ -94,11 +92,11 @@ namespace Bakalárska_práca.Manager
                 listView.Invoke((Action)delegate { AddInputFileToList(inputFile, listOfInput, imageList, listView); });
             else
             {
-                imageList.Images.Add(inputFile.fileInfo.Name, inputFile.image);
+                imageList.Images.Add(inputFile.FileName, inputFile.Image);
 
-                var listItem = new ListViewItem(inputFile.fileInfo.Name, imageList.Images.IndexOfKey(inputFile.fileInfo.Name))
+                var listItem = new ListViewItem(inputFile.FileName, imageList.Images.IndexOfKey(inputFile.FileName))
                 {
-                    ImageKey = inputFile.fileInfo.Name
+                    ImageKey = inputFile.FileName
                 };
 
                 listOfInput.Add(inputFile);
@@ -117,7 +115,7 @@ namespace Bakalárska_práca.Manager
             var inputFileLeft = new InputFileModel(PathToFile);
             var imageList = _winForm.ImageList[id];
             var listViewer = _winForm.ListViews[id];
-            AddInputFileToList(inputFileLeft, listViewerModel.ListOfListInputFolder[id], imageList, listViewer);
+            AddInputFileToList(inputFileLeft, ListViewModel.ListOfListInputFolder[id], imageList, listViewer);
         }
     }
 }

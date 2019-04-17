@@ -2,11 +2,8 @@
 using System.Windows.Forms;
 using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
-using Bakalárska_práca;
-using Bakalárska_práca.Enumerate;
-using Bakalárska_práca.Manager;
-using Bakalárska_práca.StereoVision;
-using Bakalárska_práca.StructureFromMotion;
+using Bachelor_app.StereoVision;
+using Bachelor_app.StructureFromMotion;
 
 namespace Bachelor_app.Manager
 {
@@ -18,8 +15,7 @@ namespace Bachelor_app.Manager
         private StereoVisionManager _stereoVisionManager;
         private SfM _sfmManager;
         private CameraManager _cameraManager;
-
-
+        
         private const float ShowWindowSize = 50F;
         private const float HideWindowSize = 0F;
 
