@@ -42,6 +42,9 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
                 _cudaORB.UpdateModel(model);
 
+                // Try create instance with new value in model.
+                using (_cudaORB.CreateInstance()) { };
+
                 this.Hide();
             }
             catch (Exception)

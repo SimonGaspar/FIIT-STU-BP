@@ -43,7 +43,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             return imageDisparity;
         }
 
-        protected override dynamic CreateInstance()
+        public override dynamic CreateInstance()
         {
             return new StereoBM(this.Model.Disparity, this.Model.BlockSize);
         }

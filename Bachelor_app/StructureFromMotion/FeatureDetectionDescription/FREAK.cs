@@ -25,7 +25,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             return result;
         }
 
-        protected override dynamic CreateInstance()
+        public override dynamic CreateInstance()
         {
             return new Freak(
                 Model.OrientationNormalized,

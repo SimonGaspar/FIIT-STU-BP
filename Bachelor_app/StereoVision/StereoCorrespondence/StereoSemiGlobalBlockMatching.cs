@@ -37,7 +37,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         }
 
 
-        protected override dynamic CreateInstance()
+        public override dynamic CreateInstance()
         {
             return new StereoSGBM(
                 Model.MinDispatiries,

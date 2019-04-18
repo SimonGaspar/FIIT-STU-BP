@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using Bachelor_app.Helper;
 using Bachelor_app.StereoVision.StereoCorrespondence;
 
 namespace Bachelor_app.StereoVision.WindowsForm
@@ -17,7 +16,7 @@ namespace Bachelor_app.StereoVision.WindowsForm
             InitializeComponent();
             ShowDefaultModelSetting();
         }
-        
+
         /// <summary>
         /// Create model from WinForm values and update.
         /// </summary>
@@ -31,6 +30,9 @@ namespace Bachelor_app.StereoVision.WindowsForm
                 var model = new StereoBlockMatchingModel(Disparity, BlockSize);
 
                 _stereoBlockMatching.UpdateModel(model);
+
+                // Try create instance with new value in model.
+                using (_stereoBlockMatching.CreateInstance()) { };
 
                 this.Hide();
             }

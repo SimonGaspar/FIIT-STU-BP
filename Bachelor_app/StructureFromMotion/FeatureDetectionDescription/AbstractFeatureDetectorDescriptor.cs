@@ -35,6 +35,6 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             Model = model;
         }
 
-        protected virtual dynamic CreateInstance() { return null; }
+        public virtual dynamic CreateInstance() { return null; }
     }
 }

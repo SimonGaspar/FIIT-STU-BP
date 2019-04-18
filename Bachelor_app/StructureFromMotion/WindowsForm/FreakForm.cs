@@ -28,6 +28,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                     int.Parse(textBox2.Text));
 
                 _freak.UpdateModel(model);
+
+                // Try create instance with new value in model.
+                using (_freak.CreateInstance()) { };
+
                 this.Hide();
             }
             catch (Exception)

@@ -11,7 +11,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class FAST : AbstractFeatureDetectorDescriptor, IFeatureDetector
     {
-        public FAST():base(new FastModel())
+        public FAST() : base(new FastModel())
         {
             WindowsForm = new FastForm(this);
         }
@@ -25,7 +25,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             return result;
         }
 
-        protected override dynamic CreateInstance()
+        public override dynamic CreateInstance()
         {
             return new FastDetector(
                 Model.Threshold,

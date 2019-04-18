@@ -24,7 +24,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
             _bruteForceMatcher.Clear();
         }
 
-        protected override dynamic CreateInstance()
+        public override dynamic CreateInstance()
         {
             return new BFMatcher(
                Model.Type,

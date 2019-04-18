@@ -29,6 +29,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 var model = new BruteForceModel(type);
 
                 cudaBruteForce.UpdateModel(model);
+
+                // Try create instance with new value in model.
+                using (cudaBruteForce.CreateInstance()) { };
+
                 this.Hide();
             }
             catch (Exception)

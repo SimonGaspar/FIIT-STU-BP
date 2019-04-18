@@ -44,7 +44,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             return result;
         }
 
-        protected override dynamic CreateInstance()
+        public override dynamic CreateInstance()
         {
             return new CudaORBDetector(
                 Model.NumberOfFeatures,

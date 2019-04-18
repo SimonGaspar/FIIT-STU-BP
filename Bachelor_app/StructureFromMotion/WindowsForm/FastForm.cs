@@ -29,6 +29,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 var model = new FastModel(int.Parse(textBox1.Text), checkBox1.Checked, type);
 
                 _fast.UpdateModel(model);
+
+                // Try create instance with new value in model.
+                using (_fast.CreateInstance()) { };
+
                 this.Hide();
             }
             catch (Exception)

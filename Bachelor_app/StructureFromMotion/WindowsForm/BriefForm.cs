@@ -24,6 +24,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 var model = new BriefModel(int.Parse(textBox1.Text));
 
                 _brief.UpdateModel(model);
+
+                // Try create instance with new value in model.
+                using (_brief.CreateInstance()) { };
+
                 this.Hide();
             }
             catch (Exception)

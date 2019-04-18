@@ -40,6 +40,9 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 );
                 orb.UpdateModel(model);
 
+                // Try create instance with new value in model.
+                using (orb.CreateInstance()) { };
+
                 this.Hide();
             }
             catch (Exception)

@@ -77,7 +77,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             RightGrayImage = rightImage.Convert<Gray, byte>();
         }
 
-        protected virtual dynamic CreateInstance()
+        public virtual dynamic CreateInstance()
         {
             return null;
         }

@@ -34,5 +34,11 @@ namespace Bachelor_app.StereoVision
         /// Show WinForm(settings)
         /// </summary>
         void ShowSettingForm();
+
+        /// <summary>
+        /// Create instance of algorithm
+        /// </summary>
+        /// <returns></returns>
+        dynamic CreateInstance();
     }
 }

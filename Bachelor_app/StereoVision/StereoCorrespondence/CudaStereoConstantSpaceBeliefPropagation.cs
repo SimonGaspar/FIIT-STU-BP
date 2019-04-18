@@ -38,7 +38,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             return disparity;
         }
 
-        protected override dynamic CreateInstance()
+        public override dynamic CreateInstance()
         {
             return new CudaStereoConstantSpaceBP(Model.Disparity, Model.Iteration, Model.Level, Model.Plane);
         }

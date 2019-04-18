@@ -29,7 +29,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
             Monitor.Exit(locker);
         }
 
-        protected override dynamic CreateInstance()
+        public override dynamic CreateInstance()
         {
             return new CudaBFMatcher(Model.Type);
         }

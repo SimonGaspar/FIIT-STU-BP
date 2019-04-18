@@ -9,9 +9,8 @@ namespace Bachelor_app.StructureFromMotion
     public interface IFeatureMatcher
     {
         void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches);
-
         void UpdateModel<T>(T model);
-
         void ShowSettingForm();
+        dynamic CreateInstance();
     }
 }
