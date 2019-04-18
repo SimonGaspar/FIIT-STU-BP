@@ -30,9 +30,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 var model = new BruteForceModel(type, checkBox1.Checked);
                 bruteForce.UpdateModel(model);
 
-                // Try create instance with new value in model.
-                using (bruteForce.CreateInstance()) { };
-
                 this.Hide();
             }
             catch (Exception)

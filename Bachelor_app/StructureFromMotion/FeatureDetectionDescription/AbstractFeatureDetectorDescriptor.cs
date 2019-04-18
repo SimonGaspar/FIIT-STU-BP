@@ -33,6 +33,15 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
         public virtual void UpdateModel<T>(T model)
         {
             Model = model;
+            TryCreateInstance();
+        }
+
+        private void TryCreateInstance()
+        {
+            var instance = CreateInstance();
+
+            if (instance == null)
+                throw new NullReferenceException("Instance is null.");
         }
 
         public virtual dynamic CreateInstance() { return null; }

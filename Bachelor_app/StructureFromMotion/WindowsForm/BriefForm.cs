@@ -25,9 +25,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
                 _brief.UpdateModel(model);
 
-                // Try create instance with new value in model.
-                using (_brief.CreateInstance()) { };
-
                 this.Hide();
             }
             catch (Exception)

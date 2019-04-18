@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
@@ -63,6 +64,18 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         public virtual void UpdateModel<T>(T model)
         {
             Model = model;
+            TryCreateInstance();
+        }
+
+        private void TryCreateInstance()
+        {
+            var instance = CreateInstance();
+
+            if (instance == null)
+                throw new NullReferenceException("Instance is null.");
+
+            if (instance is IDisposable)
+                instance.Dispose();
         }
 
         /// <summary>

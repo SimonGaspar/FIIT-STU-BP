@@ -31,9 +31,6 @@ namespace Bachelor_app.StereoVision.WindowsForm
 
                 _stereoBlockMatching.UpdateModel(model);
 
-                // Try create instance with new value in model.
-                using (_stereoBlockMatching.CreateInstance()) { };
-
                 this.Hide();
             }
             catch (Exception)

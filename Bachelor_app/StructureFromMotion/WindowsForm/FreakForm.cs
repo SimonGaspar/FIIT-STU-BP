@@ -29,9 +29,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
                 _freak.UpdateModel(model);
 
-                // Try create instance with new value in model.
-                using (_freak.CreateInstance()) { };
-
                 this.Hide();
             }
             catch (Exception)

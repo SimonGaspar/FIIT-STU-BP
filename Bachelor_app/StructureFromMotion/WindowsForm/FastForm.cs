@@ -30,9 +30,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
                 _fast.UpdateModel(model);
 
-                // Try create instance with new value in model.
-                using (_fast.CreateInstance()) { };
-
                 this.Hide();
             }
             catch (Exception)

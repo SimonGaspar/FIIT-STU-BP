@@ -50,9 +50,6 @@ namespace Bachelor_app.StereoVision.WindowsForm
 
                 _cudaStereoConstantSpaceBeliefPropagation.UpdateModel(model);
 
-                // Try create instance with new value in model.
-                using (_cudaStereoConstantSpaceBeliefPropagation.CreateInstance()) { };
-
                 this.Hide();
             }
             catch (Exception)

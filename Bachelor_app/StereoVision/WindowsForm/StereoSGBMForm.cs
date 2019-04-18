@@ -41,10 +41,7 @@ namespace Bachelor_app.StereoVision.WindowsForm
                 );
 
                 _stereoSemiGlobalBlockMatching.UpdateModel(model);
-
-                // Try create instance with new value in model.
-                using (_stereoSemiGlobalBlockMatching.CreateInstance()) { };
-
+                
                 this.Hide();
             }
             catch (Exception)
