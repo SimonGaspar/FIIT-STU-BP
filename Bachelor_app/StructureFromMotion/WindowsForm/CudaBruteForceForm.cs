@@ -25,14 +25,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             try
             {
                 var type = Enum.GetValues(typeof(DistanceType)).Cast<DistanceType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
-
-                var model = new BruteForceModel()
-                {
-                    Type = type
-                };
+                var model = new BruteForceModel(type);
 
                 cudaBruteForce.UpdateModel(model);
-                this.Close();
+                this.Hide();
             }
             catch (Exception)
             {
@@ -53,6 +49,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void ShowDefaultModelSetting()
         {
             this.comboBox1.SelectedIndex = this.comboBox1.Items.Count - 1;
+        }
+
+        private void CudaBruteForceForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

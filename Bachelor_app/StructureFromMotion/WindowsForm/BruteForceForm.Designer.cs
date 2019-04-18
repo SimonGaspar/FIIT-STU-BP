@@ -87,6 +87,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.Controls.Add(this.checkBox1);
             this.Name = "BruteForceForm";
             this.Text = "BruteForceForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BruteForceForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

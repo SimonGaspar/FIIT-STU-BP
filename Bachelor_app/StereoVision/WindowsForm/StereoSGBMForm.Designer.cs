@@ -329,6 +329,7 @@
             this.Controls.Add(this.DisparityTrackBar);
             this.Name = "StereoSGBMForm";
             this.Text = "StereoSGBMForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StereoSGBMForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.BlockSizeTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DisparityTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.P1TrackBar)).EndInit();

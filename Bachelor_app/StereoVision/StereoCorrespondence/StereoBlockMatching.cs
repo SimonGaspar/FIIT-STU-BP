@@ -1,4 +1,5 @@
-﻿using Bachelor_app.StereoVision.WindowsForm;
+﻿using Bachelor_app.StereoVision.Model;
+using Bachelor_app.StereoVision.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -10,11 +11,17 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
     /// </summary>
     public class StereoBlockMatching : AbstractStereoSolver, IStereoSolver
     {
-        public StereoBlockMatchingModel model = new StereoBlockMatchingModel();
-        protected StereoBMForm _windowsForm;
-
-        public StereoBlockMatching()
+        public StereoBlockMatching() : base(new StereoBlockMatchingModel())
         {
+            WinForm = new StereoBMForm(this);
+        }
+
+        public StereoBlockMatching(CudaStereoBlockMatchingModel Model) : base(Model)
+        {
+        }
+        public StereoBlockMatching(StereoSemiGlobalBlockMatchingModel Model) : base(Model)
+        {
+
         }
 
         /// <summary>
@@ -25,7 +32,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         /// <returns>Depth map</returns>
         public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
-            StereoBM _stereoBM = CreateStereoBM();
+            StereoBM _stereoBM = CreateInstance();
             ConvertImageToGray(leftImage, rightImage);
 
             Mat imageDisparity = new Mat();
@@ -36,33 +43,9 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             return imageDisparity;
         }
 
-        /// <summary>
-        /// Update model with WinForm value
-        /// </summary>
-        /// <typeparam name="T">Type of model</typeparam>
-        /// <param name="model">New model</param>
-        public override void UpdateModel<T>(T model)
+        protected override dynamic CreateInstance()
         {
-            this.model = model as StereoBlockMatchingModel;
+            return new StereoBM(this.Model.Disparity, this.Model.BlockSize);
         }
-
-        /// <summary>
-        /// Create new instance of using algorithm.
-        /// </summary>
-        /// <returns>New instance</returns>
-        public StereoBM CreateStereoBM()
-        {
-            return new StereoBM(this.model.Disparity, this.model.BlockSize);
-        }
-
-        /// <summary>
-        /// Show WinForm(settings)
-        /// </summary>
-        public override void ShowSettingForm()
-        {
-            _windowsForm = new StereoBMForm(this);
-            _windowsForm.Show();
-        }
-
     }
 }

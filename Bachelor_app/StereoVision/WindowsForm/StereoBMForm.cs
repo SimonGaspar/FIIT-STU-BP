@@ -34,13 +34,20 @@ namespace Bachelor_app.StereoVision.WindowsForm
         /// </summary>
         private void GetPropertiesAndSetModel()
         {
-            var model = new StereoBlockMatchingModel()
-            {
-                Disparity = DisparityTrackBar.ValueMultiple16(),
-                BlockSize = BlockSizeTrackBar.ValueOdd()
-            };
+            var Disparity = DisparityTrackBar.ValueMultiple16();
+            var BlockSize = BlockSizeTrackBar.ValueOdd();
+            var model = new StereoBlockMatchingModel(Disparity, BlockSize);
 
             _stereoBlockMatching.UpdateModel(model);
+        }
+
+        private void StereoBMForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

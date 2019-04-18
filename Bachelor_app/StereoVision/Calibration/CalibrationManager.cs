@@ -23,13 +23,13 @@ namespace Bachelor_app.StereoVision
         private CameraManager _cameraManager;
         private CalibrationForm _winForm;
 
-        private VideoCapture _leftCamera;
-        private VideoCapture _rightCamera;
+        private readonly VideoCapture _leftCamera;
+        private readonly VideoCapture _rightCamera;
 
         private Thread CalibrationProcess;
         private PatternModel patternModel = new PatternModel();
 
-        private static object locker = new object();
+        private static readonly object locker = new object();
 
         #region Image Processing
         private int buffer_length;
@@ -51,7 +51,7 @@ namespace Bachelor_app.StereoVision
             _leftCamera = cameraManager.LeftCamera.Camera;
             _rightCamera = cameraManager.RightCamera.Camera;
 
-            _winForm = new CalibrationForm(this,patternModel);
+            _winForm = new CalibrationForm(this, patternModel);
             CalibrationProcess = new Thread(ProcessFrame);
             _winForm.ShowDialog();
         }
@@ -186,6 +186,7 @@ namespace Bachelor_app.StereoVision
             InitUndistortMatrix(CalibrationModel.IntrinsicCam2, CalibrationModel.UndistortCam2);
 
             currentMode = ECalibrationMode.Calibrated;
+            CalibrationModel.IsCalibrated = true;
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace Bachelor_app.StereoVision
             VectorOfPointF cornerLeft = new VectorOfPointF();
             VectorOfPointF cornerRight = new VectorOfPointF();
 
-            switch (patternModel.pattern)
+            switch (patternModel.Pattern)
             {
                 case ECalibrationPattern.Chessboard:
                     CvInvoke.FindChessboardCorners(Gray_frame_S1, patternModel.PatternSize, cornerLeft, CalibCbType.AdaptiveThresh);
@@ -239,7 +240,7 @@ namespace Bachelor_app.StereoVision
                 Gray_frame_S1.FindCornerSubPix(new PointF[1][] { corners_Left }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
                 Gray_frame_S2.FindCornerSubPix(new PointF[1][] { corners_Right }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
 
-                if (patternModel.start_Flag)
+                if (patternModel.Start_Flag)
                 {
                     corners_points_Left[buffer_savepoint] = corners_Left;
                     corners_points_Right[buffer_savepoint] = corners_Right;
@@ -249,7 +250,7 @@ namespace Bachelor_app.StereoVision
 
                     _winForm.UpdateTitle("Form1: Buffer " + buffer_savepoint.ToString() + " of " + buffer_length.ToString());
                 }
-                switch (patternModel.pattern)
+                switch (patternModel.Pattern)
                 {
                     case ECalibrationPattern.Chessboard:
                         CvInvoke.DrawChessboardCorners(frameImage_S1, patternModel.PatternSize, new VectorOfPointF(corners_Left), true);
@@ -282,11 +283,12 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         public void UpdatePatternModel()
         {
-            patternModel.Width = int.Parse(_winForm.toolStripTextBox1.Text);
-            patternModel.Height = int.Parse(_winForm.toolStripTextBox2.Text);
-            patternModel.Count = int.Parse(_winForm.toolStripTextBox3.Text);
-            patternModel.Distance = float.Parse(_winForm.toolStripTextBox4.Text);
-            patternModel.pattern = Enum.GetValues(typeof(ECalibrationPattern)).Cast<ECalibrationPattern>().First(x => x.ToString() == _winForm.toolStripComboBox1.SelectedItem.ToString());
+            var Size = new Size(int.Parse(_winForm.toolStripTextBox1.Text), int.Parse(_winForm.toolStripTextBox2.Text));
+            var Count = int.Parse(_winForm.toolStripTextBox3.Text);
+            var Distance = float.Parse(_winForm.toolStripTextBox4.Text);
+            var PatternType = Enum.GetValues(typeof(ECalibrationPattern)).Cast<ECalibrationPattern>().First(x => x.ToString() == _winForm.toolStripComboBox1.SelectedItem.ToString());
+
+            patternModel = new PatternModel(Size.Width, Size.Height, Count, Distance, PatternType);
         }
 
 

@@ -12,20 +12,16 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class OrientedFastAndRotatedBrief : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
-        private OrientedFastAndRotatedBriefForm _windowsForm;
-        private OrientedFastAndRotatedBriefModel model = new OrientedFastAndRotatedBriefModel();
-
-        public OrientedFastAndRotatedBrief()
+        public OrientedFastAndRotatedBrief() : base(new OrientedFastAndRotatedBriefModel(30000))
         {
-            model.NumberOfFeatures = 30000;
-            UpdateModel(model);
+            WindowsForm = new OrientedFastAndRotatedBriefForm(this);
         }
 
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             Mat result = new Mat();
             Mat image = new Mat(keyPoints.InputFile.FullPath);
-            var _orb = CreateDetectorExtractor();
+            var _orb = CreateInstance();
             _orb.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;
         }
@@ -33,37 +29,25 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
         public override MKeyPoint[] DetectKeyPoints(IInputArray image)
         {
             MKeyPoint[] result;
-            var _orb = CreateDetectorExtractor();
+            var _orb = CreateInstance();
             result = _orb.Detect(image);
 
             return result;
         }
 
-        public override void ShowSettingForm()
+        protected override dynamic CreateInstance()
         {
-            _windowsForm = new OrientedFastAndRotatedBriefForm(this);
-            _windowsForm.Show();
-        }
-
-        public override void UpdateModel<T>(T model)
-        {
-            this.model = model as OrientedFastAndRotatedBriefModel;
-        }
-
-        public ORBDetector CreateDetectorExtractor()
-        {
-            var _orb = new ORBDetector(
-                this.model.NumberOfFeatures,
-                this.model.ScaleFactor,
-                this.model.NLevels,
-                this.model.EdgeThreshold,
-                this.model.FirstLevel,
-                this.model.WTK_A,
-                this.model.ScoreType,
-                this.model.PatchSize,
-                this.model.FastThreshold
+            return new ORBDetector(
+                Model.NumberOfFeatures,
+                Model.ScaleFactor,
+                Model.NLevels,
+                Model.EdgeThreshold,
+                Model.FirstLevel,
+                Model.WTK_A,
+                Model.ScoreType,
+                Model.PatchSize,
+                Model.FastThreshold
                 );
-            return _orb;
         }
     }
 }

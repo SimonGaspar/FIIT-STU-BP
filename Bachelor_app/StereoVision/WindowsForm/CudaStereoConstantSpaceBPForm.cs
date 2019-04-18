@@ -16,5 +16,14 @@ namespace Bachelor_app.StereoVision.WindowsForm
 
             InitializeComponent();
         }
+
+        private void CudaStereoConstantSpaceBPForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+        }
     }
 }

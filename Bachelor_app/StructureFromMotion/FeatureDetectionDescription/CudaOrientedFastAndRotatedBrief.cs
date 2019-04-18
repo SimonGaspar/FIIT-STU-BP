@@ -12,17 +12,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class CudaOrientedFastAndRotatedBrief : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
-        private CudaOrientedFastAndRotatedBriefForm _windowsForm;
-        private CudaOrientedFastAndRotatedBriefModel model = new CudaOrientedFastAndRotatedBriefModel();
-
-        public CudaOrientedFastAndRotatedBrief()
+        public CudaOrientedFastAndRotatedBrief() : base(new CudaOrientedFastAndRotatedBriefModel(30000))
         {
-            model.NumberOfFeatures = 30000;
+            WindowsForm = new CudaOrientedFastAndRotatedBriefForm(this);
         }
 
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
-            var cudaORB = CreateDetectorExtractor();
+            var cudaORB = CreateInstance();
             var mat = new Mat(keyPoints.InputFile.FullPath);
             Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
             GpuMat gpumat = new GpuMat(image);
@@ -36,7 +33,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
         public override MKeyPoint[] DetectKeyPoints(IInputArray input)
         {
-            var cudaORB = CreateDetectorExtractor();
+            var cudaORB = CreateInstance();
             var mat = input as Mat;
             Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
             MKeyPoint[] result;
@@ -47,32 +44,20 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             return result;
         }
 
-        public override void ShowSettingForm()
+        protected override dynamic CreateInstance()
         {
-            _windowsForm = new CudaOrientedFastAndRotatedBriefForm(this);
-            _windowsForm.Show();
-        }
-
-        public override void UpdateModel<T>(T model)
-        {
-            this.model = model as CudaOrientedFastAndRotatedBriefModel;
-        }
-
-        private CudaORBDetector CreateDetectorExtractor()
-        {
-            var _cudaORB = new CudaORBDetector(
-                this.model.NumberOfFeatures,
-                this.model.ScaleFactor,
-                this.model.NLevels,
-                this.model.EdgeThreshold,
-                this.model.FirstLevel,
-                this.model.WTK_A,
-                this.model.ScoreType,
-                this.model.PatchSize,
-                this.model.FastThreshold,
-                this.model.BlurForDescriptor
+            return new CudaORBDetector(
+                Model.NumberOfFeatures,
+                Model.ScaleFactor,
+                Model.NLevels,
+                Model.EdgeThreshold,
+                Model.FirstLevel,
+                Model.WTK_A,
+                Model.ScoreType,
+                Model.PatchSize,
+                Model.FastThreshold,
+                Model.BlurForDescriptor
                 );
-            return _cudaORB;
         }
     }
 }

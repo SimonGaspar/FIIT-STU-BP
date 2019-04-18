@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
@@ -10,8 +9,16 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
     /// </summary>
     public abstract class AbstractStereoSolver : IStereoSolver
     {
-        protected Image<Gray, byte> LeftGrayImage { get; set; }
-        protected Image<Gray, byte> RightGrayImage { get; set; }
+        protected Image<Gray, byte> LeftGrayImage { get; private set; }
+        protected Image<Gray, byte> RightGrayImage { get; private set; }
+        protected dynamic Model { get; private set; }
+        protected dynamic WinForm { get; set; }
+
+
+        public AbstractStereoSolver(dynamic model)
+        {
+            Model = model;
+        }
 
         /// <summary>
         /// Compute depth map from images
@@ -43,7 +50,10 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         /// <summary>
         /// Show WinForm(settings)
         /// </summary>
-        public virtual void ShowSettingForm() { }
+        public virtual void ShowSettingForm()
+        {
+            WinForm.Show();
+        }
 
         /// <summary>
         /// Update model with WinForm value
@@ -52,7 +62,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         /// <param name="model">New model</param>
         public virtual void UpdateModel<T>(T model)
         {
-            throw new NotImplementedException();
+            Model = model;
         }
 
         /// <summary>
@@ -65,6 +75,11 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         {
             LeftGrayImage = leftImage.Convert<Gray, byte>();
             RightGrayImage = rightImage.Convert<Gray, byte>();
+        }
+
+        protected virtual dynamic CreateInstance()
+        {
+            return null;
         }
 
     }

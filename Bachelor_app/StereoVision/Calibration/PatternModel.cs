@@ -9,31 +9,39 @@ namespace Bachelor_app.StereoVision.Calibration
     /// </summary>
     public class PatternModel
     {
-        public int Width { get; set; } = 9;
-        public int Height { get; set; } = 6;
         public Size PatternSize => new Size(Width, Height);
 
         // Needed only, when using own draw method
-        public Bgr[] line_colour_array;
-        public bool start_Flag = true;
-        public int Count { get; set; } = 100;
-        public float Distance { get; set; } = 25.0f;
-        public ECalibrationPattern pattern = ECalibrationPattern.Chessboard;
+        public Bgr[] Line_colour_array { get { return CreateOwnColor(); } }
+        public bool Start_Flag { get; set; } = true;
+        public int Count { get; private set; } = 100;
+        public float Distance { get; private set; } = 25.0f;
+        public ECalibrationPattern Pattern { get; private set; } = ECalibrationPattern.Chessboard;
 
-        /// <summary>
-        /// Colors for drawing pattern
-        /// </summary>
-        public PatternModel()
+        private readonly int Width = 9;
+        private readonly int Height = 6;
+
+        public PatternModel(int width = 9, int height = 6, int count = 100, float distance = 25.0F, ECalibrationPattern pattern = ECalibrationPattern.Chessboard)
         {
-            line_colour_array = new Bgr[Width * Height];
+            Width = width;
+            Height = height;
+            Count = count;
+            Distance = distance;
+            Pattern = pattern;
+        }
+
+        private Bgr[] CreateOwnColor()
+        {
+            var colorArray = new Bgr[Width * Height];
 
             Random R = new Random();
             for (int i = 0; i < Height; i++)
             {
                 var color = new Bgr(R.Next(0, 255), R.Next(0, 255), R.Next(0, 255));
                 for (int j = 0; j < Width; j++)
-                    line_colour_array[i * Width + j] = color;
+                    colorArray[i * Width + j] = color;
             }
+            return colorArray;
         }
     }
 }

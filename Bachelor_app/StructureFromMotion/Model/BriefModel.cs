@@ -5,6 +5,11 @@
     /// </summary>
     public class BriefModel
     {
-        public int DescriptorSize { get; set; } = 32;
+        public int DescriptorSize { get; private set; }
+
+        public BriefModel(int descriptorSize = 32)
+        {
+            DescriptorSize = descriptorSize;
+        }
     }
 }

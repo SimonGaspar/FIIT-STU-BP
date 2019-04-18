@@ -21,13 +21,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         {
             try
             {
-                var model = new BriefModel()
-                {
-                    DescriptorSize = int.Parse(textBox1.Text)
-                };
+                var model = new BriefModel(int.Parse(textBox1.Text));
 
                 _brief.UpdateModel(model);
-                this.Close();
+                this.Hide();
             }
             catch (Exception)
             {
@@ -49,6 +46,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         {
             this.textBox1.Text = defaultModel.DescriptorSize.ToString();
 
+        }
+
+        private void BriefForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

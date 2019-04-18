@@ -7,11 +7,12 @@ namespace Bachelor_app.StructureFromMotion
     /// </summary>
     public class BruteForceModel : CudaBruteForceModel
     {
-        public bool CrossCheck { get; set; } = true;
+        public bool CrossCheck { get; private set; }
 
-        public BruteForceModel()
+        public BruteForceModel(DistanceType type = DistanceType.Hamming2, bool crossCheck = true)
+            : base(type)
         {
-            Type = DistanceType.Hamming2;
+            CrossCheck = crossCheck;
         }
     }
 }

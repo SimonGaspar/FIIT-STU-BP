@@ -11,11 +11,10 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
     /// </summary>
     public class StereoSemiGlobalBlockMatching : StereoBlockMatching, IStereoSolver
     {
-        public new StereoSemiGlobalBlockMatchingModel model = new StereoSemiGlobalBlockMatchingModel();
-        protected new StereoSGBMForm _windowsForm;
 
-        public StereoSemiGlobalBlockMatching()
+        public StereoSemiGlobalBlockMatching() : base(new StereoSemiGlobalBlockMatchingModel())
         {
+            WinForm = new StereoSGBMForm(this);
         }
 
         /// <summary>
@@ -26,7 +25,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         /// <returns>Depth map</returns>
         public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
-            StereoSGBM _stereoSGBM = CreateStereoSGBM();
+            StereoSGBM _stereoSGBM = CreateInstance();
             ConvertImageToGray(leftImage, rightImage);
 
             Mat imageDisparity = new Mat();
@@ -37,44 +36,22 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             return imageDisparity;
         }
 
-        /// <summary>
-        /// Update model with WinForm value
-        /// </summary>
-        /// <typeparam name="T">Type of model</typeparam>
-        /// <param name="model">New model</param>
-        public override void UpdateModel<T>(T model)
-        {
-            this.model = model as StereoSemiGlobalBlockMatchingModel;
-        }
 
-        /// <summary>
-        /// Create new instance of using algorithm.
-        /// </summary>
-        /// <returns>New instance</returns>
-        public StereoSGBM CreateStereoSGBM()
+        protected override dynamic CreateInstance()
         {
             return new StereoSGBM(
-                this.model.MinDispatiries,
-                this.model.Disparity,
-                this.model.BlockSize,
-                this.model.P1,
-                this.model.P2,
-                this.model.Disp12MaxDiff,
-                this.model.PreFilterCap,
-                this.model.UniquenessRatio,
-                this.model.SpeckleWindowsSize,
-                this.model.SpeckleRange,
-                this.model.Mode
+                Model.MinDispatiries,
+                Model.Disparity,
+                Model.BlockSize,
+                Model.P1,
+                Model.P2,
+                Model.Disp12MaxDiff,
+                Model.PreFilterCap,
+                Model.UniquenessRatio,
+                Model.SpeckleWindowsSize,
+                Model.SpeckleRange,
+                Model.Mode
                 );
-        }
-
-        /// <summary>
-        /// Show WinForm(settings)
-        /// </summary>
-        public override void ShowSettingForm()
-        {
-            _windowsForm = new StereoSGBMForm(this);
-            _windowsForm.Show();
         }
     }
 }

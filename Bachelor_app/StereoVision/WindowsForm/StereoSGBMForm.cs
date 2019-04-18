@@ -36,23 +36,41 @@ namespace Bachelor_app.StereoVision.WindowsForm
         /// </summary>
         private void GetPropertiesAndSetModel()
         {
-            var model = new StereoSemiGlobalBlockMatchingModel()
-            {
-                Disparity = DisparityTrackBar.ValueMultiple16(),
-                BlockSize = BlockSizeTrackBar.ValueOdd(),
-                MinDispatiries = MinDisparityTrackBar.Value,
-                P1 = P1TrackBar.Value,
-                P2 = P2TrackBar.Value,
-                Disp12MaxDiff = DispMax12DiffTrackBar.Value,
-                PreFilterCap = PreFilterCapTrackBar.Value,
-                UniquenessRatio = UniquenessRatioTrackBar.Value,
-                SpeckleRange = SpeckleRangeTrackBar.Value,
-                SpeckleWindowsSize = SpeckleWindowsSizeTrackBar.Value,
-                Mode = ModeSGBM.Checked ? StereoSGBM.Mode.SGBM : StereoSGBM.Mode.HH
+            var Disparity = DisparityTrackBar.ValueMultiple16();
+            var BlockSize = BlockSizeTrackBar.ValueOdd();
+            var MinDispatiries = MinDisparityTrackBar.Value;
+            var P1 = P1TrackBar.Value;
+            var P2 = P2TrackBar.Value;
+            var Disp12MaxDiff = DispMax12DiffTrackBar.Value;
+            var PreFilterCap = PreFilterCapTrackBar.Value;
+            var UniquenessRatio = UniquenessRatioTrackBar.Value;
+            var SpeckleRange = SpeckleRangeTrackBar.Value;
+            var SpeckleWindowsSize = SpeckleWindowsSizeTrackBar.Value;
+            var Mode = ModeSGBM.Checked ? StereoSGBM.Mode.SGBM : StereoSGBM.Mode.HH;
 
-            };
+            var model = new StereoSemiGlobalBlockMatchingModel(
+                Disparity,
+                BlockSize,
+                MinDispatiries,
+                P1,
+                P2,
+                Disp12MaxDiff,
+                PreFilterCap,
+                UniquenessRatio,
+                SpeckleWindowsSize,
+                SpeckleRange,
+                Mode);
 
             _stereoSemiGlobalBlockMatching.UpdateModel(model);
+        }
+
+        private void StereoSGBMForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

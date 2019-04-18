@@ -19,8 +19,8 @@ namespace Bachelor_app.StereoVision
         private FileManager _fileManager;
         private CameraManager _cameraManager;
 
-        public bool stopStereoCorrespondence = false;
-        public bool _useParallel = false;
+        public bool StopStereoCorrespondence { get; set; }
+        public bool UseParallel { get; set; }
 
         public StereoVisionManager(FileManager fileManager, CameraManager cameraManager)
         {
@@ -52,7 +52,7 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         public void ComputeStereoCorrespondence()
         {
-            stopStereoCorrespondence = false;
+            StopStereoCorrespondence = false;
 
             switch (_fileManager._inputType)
             {
@@ -67,7 +67,7 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         private void ComputeStereoCorrespondenceFromConnectedStereoCamera()
         {
-            while (!stopStereoCorrespondence)
+            while (!StopStereoCorrespondence)
             {
                 var listOfInput = _cameraManager.GetInputFromStereoCamera(false, _fileManager.ListViewModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack].Count);
 
@@ -116,7 +116,7 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         public void ComputeStereoCorrespondenceFromStack()
         {
-            if (_useParallel)
+            if (UseParallel)
             {
                 ComputeStereoCorrespondenceFromStackParallel();
             }

@@ -19,13 +19,12 @@ namespace Bachelor_app
 {
     public class SfM
     {
-        public IFeatureDetector _detector;
-        public IFeatureDescriptor _descriptor;
-        public IFeatureMatcher _matcher;
-        public EMatchingType _matchingType;
-        public bool _useParallel = false;
-        float ms_MAX_DIST = 0;
-        float ms_MIN_DIST = float.MaxValue;
+        public IFeatureDetector Detector { get; set; }
+        public IFeatureDescriptor Descriptor { get; set; }
+        public IFeatureMatcher Matcher { get; set; }
+        public EMatchingType MatchingType { get; set; }
+        public bool UseParallel { get; set; } = false;
+        public bool StopSFM { get; set; } = false;
 
         private SortedList<int, KeyPointModel> DetectedKeyPoints;
         private SortedList<int, DescriptorModel> ComputedDescriptors;
@@ -33,7 +32,9 @@ namespace Bachelor_app
 
         private FileManager fileManager;
         private CameraManager cameraManager;
-        public bool stopSFM = false;
+
+        private float ms_MAX_DIST;
+        private float ms_MIN_DIST;
         //private static object locker = new object();
 
         public SfM(FileManager fileManager, CameraManager cameraManager)
@@ -48,7 +49,7 @@ namespace Bachelor_app
 
         public void StartSFM(bool ContinueSFM = false)
         {
-            stopSFM = false;
+            StopSFM = false;
             List<InputFileModel> listOfInput = new List<InputFileModel>();
             var countInputFile = DetectedKeyPoints.Count;
             var startSFMFrom = 0;
@@ -72,7 +73,7 @@ namespace Bachelor_app
                     ComputeSfM(startSFMFrom, listOfInput);
                     break;
                 case EInput.ConnectedStereoCamera:
-                    while (!stopSFM)
+                    while (!StopSFM)
                     {
                         var cameraStereoOutput = cameraManager.GetInputFromStereoCamera(true, countInputFile++);
                         listOfInput.AddRange(cameraStereoOutput);
@@ -81,7 +82,7 @@ namespace Bachelor_app
                     }
                     break;
                 case EInput.ConnectedRightCamera:
-                    while (!stopSFM)
+                    while (!StopSFM)
                     {
                         var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.LeftCamera.Camera, countInputFile++);
                         listOfInput.AddRange(cameraOutput);
@@ -90,7 +91,7 @@ namespace Bachelor_app
                     }
                     break;
                 case EInput.ConnectedLeftCamera:
-                    while (!stopSFM)
+                    while (!StopSFM)
                     {
                         var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.RightCamera.Camera, countInputFile++);
                         listOfInput.AddRange(cameraOutput);
@@ -109,9 +110,9 @@ namespace Bachelor_app
 
         public void ComputeSfM(int startIndex, List<InputFileModel> inputImages)
         {
-            StartDetectingKeyPoint(startIndex, inputImages, _detector);
-            StartComputingDescriptor(startIndex, _descriptor);
-            StartMatching(startIndex, _matcher);
+            StartDetectingKeyPoint(startIndex, inputImages, Detector);
+            StartComputingDescriptor(startIndex, Descriptor);
+            StartMatching(startIndex, Matcher);
         }
 
         private List<InputFileModel> GetListFromListView(bool ContinueSFM)
@@ -136,7 +137,7 @@ namespace Bachelor_app
 
         private void StartStereoMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
         {
-            if (_useParallel)
+            if (UseParallel)
                 StartStereoMatchingParallel(countOfExistedKeypoint, matcher);
             else
                 StartStereoMatchingSequence(countOfExistedKeypoint, matcher);
@@ -147,7 +148,7 @@ namespace Bachelor_app
             FindMatches(matcher, ComputedDescriptors[countOfExistedKeypoint - 2], ComputedDescriptors[countOfExistedKeypoint - 1]);
             int startMatchingFromPrevious;
 
-            switch (_matchingType)
+            switch (MatchingType)
             {
                 case EMatchingType.OnePrevious:
                     startMatchingFromPrevious = 1;
@@ -171,7 +172,7 @@ namespace Bachelor_app
             FindMatches(matcher, ComputedDescriptors[countOfExistedKeypoint - 2], ComputedDescriptors[countOfExistedKeypoint - 1]);
             int startMatchingFromPrevious = 0;
 
-            switch (_matchingType)
+            switch (MatchingType)
             {
                 case EMatchingType.OnePrevious:
                     startMatchingFromPrevious = 1;
@@ -196,7 +197,7 @@ namespace Bachelor_app
 
         private void StartMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
         {
-            if (_useParallel)
+            if (UseParallel)
                 StartParallelMatching(countOfExistedKeypoint, matcher);
             else
                 StartMatchingSequence(countOfExistedKeypoint, matcher);
@@ -206,7 +207,7 @@ namespace Bachelor_app
         {
             int startMatchingFromPrevious = 0;
 
-            switch (_matchingType)
+            switch (MatchingType)
             {
                 case EMatchingType.OnePrevious:
                     startMatchingFromPrevious = 1;
@@ -266,7 +267,7 @@ namespace Bachelor_app
         private void StartParallelMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
         {
             int startMatchingFromPrevious = 0;
-            switch (_matchingType)
+            switch (MatchingType)
             {
                 case EMatchingType.OnePrevious:
                     startMatchingFromPrevious = 1;
@@ -291,7 +292,7 @@ namespace Bachelor_app
 
         private void StartDetectingKeyPoint(int countOfInput, List<InputFileModel> listOfInput, IFeatureDetector detector)
         {
-            if (_useParallel)
+            if (UseParallel)
                 Parallel.For(0, listOfInput.Count, x => { FindKeypoint(countOfInput + x, listOfInput[x], detector); });
             else
                 for (int i = 0; i < listOfInput.Count; i++)
@@ -300,7 +301,7 @@ namespace Bachelor_app
 
         private void StartComputingDescriptor(int countOfExistedKeyPoint, IFeatureDescriptor descriptor)
         {
-            if (_useParallel)
+            if (UseParallel)
                 Parallel.For(countOfExistedKeyPoint, DetectedKeyPoints.Count, x => ComputeDescriptor(DetectedKeyPoints[x], descriptor));
             else
                 for (int i = countOfExistedKeyPoint; i < DetectedKeyPoints.Count; i++)
@@ -369,18 +370,18 @@ namespace Bachelor_app
                 var matchesForHomography = FilterMatches ? filteredMatchesList : matchesList;
                 if (matchesForHomography.Count > 0)
                 {
-                    perspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? filteredMatchesList : matchesList, mask);                    
+                    perspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? filteredMatchesList : matchesList, mask);
                 }
                 //}
             }
 
             var foundedMatch = new MatchModel(
-                leftDescriptor, 
-                rightDescriptor, 
-                matchesList, 
-                perspectiveMatrix, 
-                mask, 
-                null, 
+                leftDescriptor,
+                rightDescriptor,
+                matchesList,
+                perspectiveMatrix,
+                mask,
+                null,
                 filteredMatchesList,
                 FilterMatches
                 );
@@ -419,6 +420,9 @@ namespace Bachelor_app
 
         private void FindMinMaxDistInMatches(MDMatch[][] matchesArray, ref float ms_MAX_DIST, ref float ms_MIN_DIST)
         {
+            ms_MAX_DIST = 0;
+            ms_MIN_DIST = float.MaxValue;
+
             for (int i = 0; i < matchesArray.Length; i++)
             {
                 if (matchesArray[i].Length == 0)
@@ -466,8 +470,8 @@ namespace Bachelor_app
                 $"Count of key points: {detectedKeyPoints.Length}\n");
 
             var newItem = new KeyPointModel(
-                new VectorOfKeyPoint(detectedKeyPoints), 
-                inputFile, 
+                new VectorOfKeyPoint(detectedKeyPoints),
+                inputFile,
                 ID
                 );
 

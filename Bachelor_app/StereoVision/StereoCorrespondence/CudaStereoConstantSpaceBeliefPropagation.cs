@@ -12,11 +12,10 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
     /// </summary>
     public class CudaStereoConstantSpaceBeliefPropagation : AbstractStereoSolver, IStereoSolver
     {
-        private CudaStereoConstantSpaceBPForm _windowsForm;
-        public CudaStereoConstantSpaceBPModel model = new CudaStereoConstantSpaceBPModel();
-
         public CudaStereoConstantSpaceBeliefPropagation()
+            : base(new CudaStereoConstantSpaceBPModel())
         {
+            WinForm = new CudaStereoConstantSpaceBPForm(this);
         }
 
         /// <summary>
@@ -30,7 +29,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             GpuMat imageDisparity = new GpuMat();
             Mat disparity = new Mat();
 
-            CudaStereoConstantSpaceBP _cudaStereoConstantSpaceBP = CreateCudaStereoConstantSpaceBP();
+            CudaStereoConstantSpaceBP _cudaStereoConstantSpaceBP = CreateInstance();
             ConvertImageToGray(leftImage, rightImage);
 
             _cudaStereoConstantSpaceBP.FindStereoCorrespondence(LeftGrayImage.ToGpuMat(), RightGrayImage.ToGpuMat(), imageDisparity);
@@ -39,32 +38,9 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             return disparity;
         }
 
-        /// <summary>
-        /// Update model with WinForm value
-        /// </summary>
-        /// <typeparam name="T">Type of model</typeparam>
-        /// <param name="model">New model</param>
-        public override void UpdateModel<T>(T model)
+        protected override dynamic CreateInstance()
         {
-            this.model = model as CudaStereoConstantSpaceBPModel;
-        }
-
-        /// <summary>
-        /// Create new instance of using algorithm.
-        /// </summary>
-        /// <returns>New instance</returns>
-        public CudaStereoConstantSpaceBP CreateCudaStereoConstantSpaceBP()
-        {
-            return new CudaStereoConstantSpaceBP(this.model.Disparity, this.model.Iteration, this.model.Level, this.model.Plane);
-        }
-
-        /// <summary>
-        /// Show WinForm(settings)
-        /// </summary>
-        public override void ShowSettingForm()
-        {
-            _windowsForm = new CudaStereoConstantSpaceBPForm(this);
-            _windowsForm.Show();
+            return new CudaStereoConstantSpaceBP(Model.Disparity, Model.Iteration, Model.Level, Model.Plane);
         }
     }
 }

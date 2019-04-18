@@ -7,14 +7,27 @@ namespace Bachelor_app.StructureFromMotion.Model
     /// </summary>
     public class OrientedFastAndRotatedBriefModel
     {
-        public int NumberOfFeatures { get; set; } = 500;
-        public float ScaleFactor { get; set; } = 1.2F;
-        public int NLevels { get; set; } = 8;
-        public int EdgeThreshold { get; set; } = 31;
-        public int FirstLevel { get; set; } = 0;
-        public int WTK_A { get; set; } = 2;
-        public ScoreType ScoreType { get; set; } = ScoreType.Harris;
-        public int PatchSize { get; set; } = 31;
-        public int FastThreshold { get; set; } = 20;
+        public int NumberOfFeatures { get; private set; }
+        public float ScaleFactor { get; private set; }
+        public int NLevels { get; private set; }
+        public int EdgeThreshold { get; private set; }
+        public int FirstLevel { get; private set; }
+        public int WTK_A { get; private set; }
+        public ScoreType ScoreType { get; private set; }
+        public int PatchSize { get; private set; }
+        public int FastThreshold { get; private set; }
+
+        public OrientedFastAndRotatedBriefModel(int numberOfFeatures = 500, float scaleFactor = 1.2F, int nLevels = 8, int edgeThreshold = 31, int firstLevel = 0, int wTK_A = 2, ScoreType scoreType = ScoreType.Harris, int patchSize = 31, int fastThreshold = 20)
+        {
+            NumberOfFeatures = numberOfFeatures;
+            ScaleFactor = scaleFactor;
+            NLevels = NLevels;
+            EdgeThreshold = edgeThreshold;
+            FirstLevel = firstLevel;
+            WTK_A = wTK_A;
+            ScoreType = scoreType;
+            PatchSize = patchSize;
+            FastThreshold = fastThreshold;
+        }
     }
 }

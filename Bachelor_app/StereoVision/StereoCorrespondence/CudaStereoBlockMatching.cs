@@ -1,5 +1,6 @@
 ﻿using Bachelor_app.Extension;
 using Bachelor_app.StereoVision.Model;
+using Bachelor_app.StereoVision.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
@@ -11,10 +12,10 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
     /// </summary>
     public class CudaStereoBlockMatching : StereoBlockMatching, IStereoSolver
     {
-        private new CudaStereoBlockMatchingModel model = new CudaStereoBlockMatchingModel();
-
         public CudaStereoBlockMatching()
+            :base(new CudaStereoBlockMatchingModel())
         {
+            WinForm = new StereoBMForm(this);
         }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             GpuMat imageDisparity = new GpuMat();
             Mat disparity = new Mat();
 
-            CudaStereoBM _cudaStereoBM = CreateCudaStereoBM();
+            CudaStereoBM _cudaStereoBM = CreateInstance();
             ConvertImageToGray(leftImage, rightImage);
 
             _cudaStereoBM.FindStereoCorrespondence(LeftGrayImage.ToGpuMat(), RightGrayImage.ToGpuMat(), imageDisparity);
@@ -37,23 +38,9 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             return disparity;
         }
 
-        /// <summary>
-        /// Update model with WinForm value
-        /// </summary>
-        /// <typeparam name="T">Type of model</typeparam>
-        /// <param name="model">New model</param>
-        public override void UpdateModel<T>(T model)
+        protected override dynamic CreateInstance()
         {
-            this.model = model as CudaStereoBlockMatchingModel;
-        }
-
-        /// <summary>
-        /// Create new instance of using algorithm
-        /// </summary>
-        /// <returns>New instance</returns>
-        private CudaStereoBM CreateCudaStereoBM()
-        {
-            return new CudaStereoBM(this.model.Disparity, this.model.BlockSize);
+            return new CudaStereoBM(Model.Disparity, Model.BlockSize);
         }
     }
 }

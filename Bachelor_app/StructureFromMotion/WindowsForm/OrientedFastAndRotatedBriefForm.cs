@@ -27,21 +27,20 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             {
                 var type = Enum.GetValues(typeof(ScoreType)).Cast<ScoreType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
 
-                model = new OrientedFastAndRotatedBriefModel()
-                {
-                    NumberOfFeatures = int.Parse(textBox1.Text),
-                    ScaleFactor = float.Parse(textBox2.Text),
-                    NLevels = int.Parse(textBox3.Text),
-                    EdgeThreshold = int.Parse(textBox4.Text),
-                    FirstLevel = int.Parse(textBox5.Text),
-                    WTK_A = int.Parse(textBox6.Text),
-                    PatchSize = int.Parse(textBox7.Text),
-                    FastThreshold = int.Parse(textBox8.Text),
-                    ScoreType = type
-                };
+                model = new OrientedFastAndRotatedBriefModel(
+                    int.Parse(textBox1.Text),
+                    float.Parse(textBox2.Text),
+                    int.Parse(textBox3.Text),
+                    int.Parse(textBox4.Text),
+                    int.Parse(textBox5.Text),
+                    int.Parse(textBox6.Text),
+                    type,
+                    int.Parse(textBox7.Text),
+                    int.Parse(textBox8.Text)
+                );
                 orb.UpdateModel(model);
 
-                this.Close();
+                this.Hide();
 
             }
             catch (Exception)
@@ -97,6 +96,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void Label8_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void OrientedFastAndRotatedBriefForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

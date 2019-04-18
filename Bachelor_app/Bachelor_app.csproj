@@ -285,6 +285,9 @@
     <EmbeddedResource Include="StereoVision\Calibration\CalibrationForm.resx">
       <DependentUpon>CalibrationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="StereoVision\WindowsForm\CudaStereoConstantSpaceBPForm.resx">
+      <DependentUpon>CudaStereoConstantSpaceBPForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StereoVision\WindowsForm\StereoBMForm.resx">
       <DependentUpon>StereoBMForm.cs</DependentUpon>
     </EmbeddedResource>

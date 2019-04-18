@@ -90,6 +90,7 @@
             this.Controls.Add(this.DisparityTrackBar);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "StereoBMForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.StereoBMForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.DisparityTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BlockSizeTrackBar)).EndInit();
             this.ResumeLayout(false);

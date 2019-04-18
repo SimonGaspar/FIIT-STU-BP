@@ -26,14 +26,9 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             {
                 var type = Enum.GetValues(typeof(DistanceType)).Cast<DistanceType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
 
-                var model = new BruteForceModel()
-                {
-                    Type = type,
-                    CrossCheck = checkBox1.Checked
-                };
-
+                var model = new BruteForceModel(type, checkBox1.Checked);
                 bruteForce.UpdateModel(model);
-                this.Close();
+                this.Hide();
             }
             catch (Exception)
             {
@@ -56,6 +51,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.comboBox1.SelectedIndex = this.comboBox1.Items.Count - 1;
             this.checkBox1.Checked = defaultModel.CrossCheck;
 
+        }
+
+        private void BruteForceForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

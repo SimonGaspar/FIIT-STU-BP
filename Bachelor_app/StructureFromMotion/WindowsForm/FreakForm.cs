@@ -21,16 +21,14 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         {
             try
             {
-                var model = new FreakModel()
-                {
-                    PatternScale = float.Parse(textBox1.Text),
-                    NOctaves = int.Parse(textBox2.Text),
-                    OrientationNormalized = checkBox1.Checked,
-                    ScaleNormalized = checkBox2.Checked
-                };
+                var model = new FreakModel(
+                    checkBox1.Checked,
+                    checkBox2.Checked,
+                    float.Parse(textBox1.Text),
+                    int.Parse(textBox2.Text));
 
                 _freak.UpdateModel(model);
-                this.Close();
+                this.Hide();
             }
             catch (Exception)
             {
@@ -54,6 +52,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.textBox2.Text = defaultModel.NOctaves.ToString();
             this.checkBox1.Checked = defaultModel.OrientationNormalized;
             this.checkBox2.Checked = defaultModel.ScaleNormalized;
+        }
+
+        private void FreakForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

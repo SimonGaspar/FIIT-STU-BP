@@ -7,6 +7,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
     public abstract class AbstractFeatureDetectorDescriptor : IFeatureDetector, IFeatureDescriptor
     {
+        protected dynamic WindowsForm { get; set; }
+        protected dynamic Model { get; private set; }
+
+        public AbstractFeatureDetectorDescriptor(dynamic model)
+        {
+            Model = model;
+        }
+
         public virtual Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             throw new NotSupportedException();
@@ -19,12 +27,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
         public virtual void ShowSettingForm()
         {
-            throw new NotSupportedException();
+            WindowsForm.Show();
         }
 
         public virtual void UpdateModel<T>(T model)
         {
-            throw new NotSupportedException();
+            Model = model;
         }
+
+        protected virtual dynamic CreateInstance() { return null; }
     }
 }

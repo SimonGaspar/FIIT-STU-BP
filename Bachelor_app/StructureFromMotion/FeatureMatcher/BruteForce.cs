@@ -10,41 +10,26 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
     /// </summary>
     public class BruteForce : AbstractMatcher, IFeatureMatcher
     {
-        private BruteForceForm _windowsForm;
-        private BruteForceModel model = new BruteForceModel();
-
         public BruteForce()
+            : base(new BruteForceModel())
         {
-            UpdateModel(model);
+            WinForm = new BruteForceForm(this);
         }
 
         public override void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            var _bruteForceMatcher = CreateMatcher();
+            var _bruteForceMatcher = CreateInstance();
             _bruteForceMatcher.Add(queryDescriptors);
             _bruteForceMatcher.KnnMatch(trainDescriptors, matches, 1, null);
             _bruteForceMatcher.Clear();
         }
 
-        public override void ShowSettingForm()
+        protected override dynamic CreateInstance()
         {
-            _windowsForm = new BruteForceForm(this);
-            _windowsForm.Show();
-        }
-
-        public override void UpdateModel<T>(T model)
-        {
-            this.model = model as BruteForceModel;
-
-        }
-
-        public BFMatcher CreateMatcher()
-        {
-            var _bruteForceMatcher = new BFMatcher(
-               this.model.Type,
-               this.model.CrossCheck
+            return new BFMatcher(
+               Model.Type,
+               Model.CrossCheck
                );
-            return _bruteForceMatcher;
         }
     }
 }

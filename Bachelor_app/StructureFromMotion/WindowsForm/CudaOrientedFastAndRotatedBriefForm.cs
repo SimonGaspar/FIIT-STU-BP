@@ -26,24 +26,33 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             try
             {
                 var type = Enum.GetValues(typeof(ScoreType)).Cast<ScoreType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
+                var NumberOfFeatures = int.Parse(textBox1.Text);
+                var ScaleFactor = float.Parse(textBox2.Text);
+                var NLevels = int.Parse(textBox3.Text);
+                var EdgeThreshold = int.Parse(textBox4.Text);
+                var FirstLevel = int.Parse(textBox5.Text);
+                var WTK_A = int.Parse(textBox6.Text);
+                var PatchSize = int.Parse(textBox7.Text);
+                var FastThreshold = int.Parse(textBox8.Text);
+                var BlurForDescriptor = checkBox1.Checked;
 
-                model = new CudaOrientedFastAndRotatedBriefModel()
-                {
-                    NumberOfFeatures = int.Parse(textBox1.Text),
-                    ScaleFactor = float.Parse(textBox2.Text),
-                    NLevels = int.Parse(textBox3.Text),
-                    EdgeThreshold = int.Parse(textBox4.Text),
-                    FirstLevel = int.Parse(textBox5.Text),
-                    WTK_A = int.Parse(textBox6.Text),
-                    PatchSize = int.Parse(textBox7.Text),
-                    FastThreshold = int.Parse(textBox8.Text),
-                    ScoreType = type,
-                    BlurForDescriptor = checkBox1.Checked
-                };
+
+                model = new CudaOrientedFastAndRotatedBriefModel(
+                    NumberOfFeatures,
+                    ScaleFactor,
+                    NLevels,
+                    EdgeThreshold,
+                    FirstLevel,
+                    WTK_A,
+                    type,
+                    PatchSize,
+                    FastThreshold,
+                    BlurForDescriptor
+                    );
 
                 _cudaORB.UpdateModel(model);
 
-                this.Close();
+                this.Hide();
 
             }
             catch (Exception)
@@ -100,6 +109,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void Label8_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void CudaOrientedFastAndRotatedBriefForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

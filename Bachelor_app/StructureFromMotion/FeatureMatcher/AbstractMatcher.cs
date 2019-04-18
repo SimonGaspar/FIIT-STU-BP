@@ -6,6 +6,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 {
     public abstract class AbstractMatcher : IFeatureMatcher
     {
+        protected dynamic Model { get; private set; }
+        protected dynamic WinForm { get; set; }
+
+        public AbstractMatcher(dynamic model)
+        {
+            Model = model;
+        }
+
         public virtual void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
             throw new NotSupportedException();
@@ -13,12 +21,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 
         public virtual void ShowSettingForm()
         {
-            throw new NotSupportedException();
+            WinForm.Show();
         }
 
         public virtual void UpdateModel<T>(T model)
         {
-            throw new NotSupportedException();
+            Model = model;
         }
+
+        protected virtual dynamic CreateInstance() { return null; }
     }
 }

@@ -171,7 +171,7 @@ namespace Bachelor_app
 
         private void ToolStripButton15_Click(object sender, EventArgs e)
         {
-            structureFromMotionManager.stopSFM = true;
+            structureFromMotionManager.StopSFM = true;
         }
 
         private void ToolStripButton16_Click(object sender, EventArgs e)
@@ -181,7 +181,7 @@ namespace Bachelor_app
 
         private void ToolStripButton17_Click(object sender, EventArgs e)
         {
-            stereoVisionManager.stopStereoCorrespondence = true;
+            stereoVisionManager.StopStereoCorrespondence = true;
         }
 
         private void ToolStripComboBox12_SelectedIndexChanged(object sender, EventArgs e)

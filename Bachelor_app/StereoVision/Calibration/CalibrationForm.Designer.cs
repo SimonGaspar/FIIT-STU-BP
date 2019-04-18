@@ -271,8 +271,8 @@ namespace Bachelor_app.StereoVision.Calibration
 
         private void InitializeString(PatternModel patternModel)
         {
-            toolStripTextBox1.Text = patternModel.Width.ToString();
-            toolStripTextBox2.Text = patternModel.Height.ToString();
+            toolStripTextBox1.Text = patternModel.PatternSize.Width.ToString();
+            toolStripTextBox2.Text = patternModel.PatternSize.Height.ToString();
             toolStripTextBox3.Text = patternModel.Count.ToString();
             toolStripTextBox4.Text = patternModel.Distance.ToString();
 

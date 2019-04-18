@@ -25,16 +25,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             try
             {
                 var type = Enum.GetValues(typeof(DetectorType)).Cast<DetectorType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
-
-                var model = new FastModel()
-                {
-                    Type = type,
-                    Threshold = int.Parse(textBox1.Text),
-                    NonMaxSupression = checkBox1.Checked
-                };
+                var model = new FastModel(int.Parse(textBox1.Text), checkBox1.Checked, type);
 
                 _fast.UpdateModel(model);
-                this.Close();
+                this.Hide();
             }
             catch (Exception)
             {
@@ -67,6 +61,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void FastForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
         }
     }
 }

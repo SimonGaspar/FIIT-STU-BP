@@ -11,12 +11,10 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class BRIEF : AbstractFeatureDetectorDescriptor, IFeatureDescriptor
     {
-        private BriefForm _windowsForm;
-        private BriefModel model = new BriefModel();
-
         public BRIEF()
+            : base(new BriefModel())
         {
-            UpdateModel(model);
+            WindowsForm = new BriefForm(this);
         }
 
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
@@ -24,26 +22,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             Mat result = new Mat();
             Mat image = new Mat(keyPoints.InputFile.FullPath);
 
-            var _brief = CreatExtractor();
+            var _brief = CreateInstance();
             _brief.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;
         }
 
-        public override void ShowSettingForm()
+        protected override dynamic CreateInstance()
         {
-            _windowsForm = new BriefForm(this);
-            _windowsForm.Show();
-        }
-
-        public override void UpdateModel<T>(T model)
-        {
-            this.model = model as BriefModel;
-        }
-
-        private BriefDescriptorExtractor CreatExtractor()
-        {
-            var _brief = new BriefDescriptorExtractor(this.model.DescriptorSize);
-            return _brief;
+            return new BriefDescriptorExtractor(Model.DescriptorSize);
         }
     }
 }

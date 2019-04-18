@@ -11,43 +11,28 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class FREAK : AbstractFeatureDetectorDescriptor, IFeatureDescriptor
     {
-        private FreakForm _windowsForm;
-        private FreakModel model = new FreakModel();
-
-        public FREAK()
+        public FREAK() : base(new FreakModel())
         {
-            UpdateModel(model);
+            WindowsForm = new FreakForm(this);
         }
 
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
-            var _freak = CreateExtractor();
+            var _freak = CreateInstance();
             Mat result = new Mat();
             Mat image = new Mat(keyPoints.InputFile.FullPath);
             _freak.Compute(image, keyPoints.DetectedKeyPoints, result);
             return result;
         }
 
-        public override void ShowSettingForm()
+        protected override dynamic CreateInstance()
         {
-            _windowsForm = new FreakForm(this);
-            _windowsForm.Show();
-        }
-
-        public override void UpdateModel<T>(T model)
-        {
-            this.model = model as FreakModel;
-        }
-
-        private Freak CreateExtractor()
-        {
-            var _freak = new Freak(
-                this.model.OrientationNormalized,
-                this.model.ScaleNormalized,
-                this.model.PatternScale,
-                this.model.NOctaves
+            return new Freak(
+                Model.OrientationNormalized,
+                Model.ScaleNormalized,
+                Model.PatternScale,
+                Model.NOctaves
                 );
-            return _freak;
         }
     }
 }

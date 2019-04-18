@@ -106,7 +106,7 @@ namespace Bachelor_app.Manager
 
         public void SetUsingParallelForStereoVision()
         {
-            _stereoVisionManager._useParallel = _winForm.toolStripButton14.Checked;
+            _stereoVisionManager.UseParallel = _winForm.toolStripButton14.Checked;
         }
 
         #endregion
@@ -169,7 +169,7 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EFeatureDetector>(currentItem.SelectedItem.ToString());
 
-            _sfmManager._detector = enumItem.GetDetectorInstance();
+            _sfmManager.Detector = enumItem.GetDetectorInstance();
         }
 
         public void SetFeatureDescriptor(object sender, EventArgs e)
@@ -177,7 +177,7 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EFeatureDescriptor>(currentItem.SelectedItem.ToString());
 
-            _sfmManager._descriptor = enumItem.GetDescriptorInstance();
+            _sfmManager.Descriptor = enumItem.GetDescriptorInstance();
         }
 
         public void SetFeatureMatcher(object sender, EventArgs e)
@@ -185,22 +185,22 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EFeatureMatcher>(currentItem.SelectedItem.ToString());
 
-            _sfmManager._matcher = enumItem.GetMatcherInstance();
+            _sfmManager.Matcher = enumItem.GetMatcherInstance();
         }
 
         public void ShowFeatureMatcherSettings(object sender, EventArgs e)
         {
-            _sfmManager._matcher.ShowSettingForm();
+            _sfmManager.Matcher.ShowSettingForm();
         }
 
         public void ShowFeatureDescriptorSettings(object sender, EventArgs e)
         {
-            _sfmManager._descriptor.ShowSettingForm();
+            _sfmManager.Descriptor.ShowSettingForm();
         }
 
         public void ShowFeatureDetectorSettings(object sender, EventArgs e)
         {
-            _sfmManager._detector.ShowSettingForm();
+            _sfmManager.Detector.ShowSettingForm();
         }
 
         public void ResumeSFM()
@@ -213,12 +213,12 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EMatchingType>(currentItem.SelectedItem.ToString());
 
-            _sfmManager._matchingType = enumItem;
+            _sfmManager.MatchingType = enumItem;
         }
 
         public void SetUsingParallel()
         {
-            _sfmManager._useParallel = _winForm.toolStripButton14.Checked;
+            _sfmManager.UseParallel = _winForm.toolStripButton14.Checked;
         }
 
         #endregion

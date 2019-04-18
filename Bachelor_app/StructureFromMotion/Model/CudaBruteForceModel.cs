@@ -7,6 +7,11 @@ namespace Bachelor_app.StructureFromMotion
     /// </summary>
     public class CudaBruteForceModel
     {
-        public DistanceType Type { get; set; } = DistanceType.Hamming;
+        public DistanceType Type { get; private set; }
+
+        public CudaBruteForceModel(DistanceType type = DistanceType.Hamming)
+        {
+            Type = type;
+        }
     }
 }

@@ -40,18 +40,16 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(35, 13);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Location = new System.Drawing.Point(26, 11);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(160, 24);
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 1;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(118, 45);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(88, 37);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
             this.button1.Text = "Apply";
             this.button1.UseVisualStyleBackColor = true;
@@ -59,10 +57,9 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(10, 45);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Location = new System.Drawing.Point(8, 37);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 28);
+            this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
             this.button2.Text = "Default";
             this.button2.UseVisualStyleBackColor = true;
@@ -70,15 +67,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             // 
             // CudaBruteForceForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(230, 87);
+            this.ClientSize = new System.Drawing.Size(172, 71);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "CudaBruteForceForm";
             this.Text = "BruteForceForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CudaBruteForceForm_FormClosing);
             this.ResumeLayout(false);
 
         }
