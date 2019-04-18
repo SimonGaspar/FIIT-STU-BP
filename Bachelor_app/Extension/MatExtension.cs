@@ -115,7 +115,7 @@ namespace Bachelor_app.Extension
                 if (LeftImage)
                     CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
                 else
-                    CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+                    CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
             }
 
             return Mat;

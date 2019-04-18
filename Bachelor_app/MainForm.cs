@@ -198,15 +198,12 @@ namespace Bachelor_app
 
         private void ToolStripButton18_Click(object sender, EventArgs e)
         {
-            //string json = JsonConvert.SerializeObject(CalibrationModel);
-            //File.WriteAllText("CalibrationJSON.json", json);
+            CalibrationModel.CreateJson();
         }
 
         private void ToolStripButton19_Click(object sender, EventArgs e)
         {
-            //var json = File.ReadAllText("CalibrationJSON.json");
-            //stereoVisionManager._calibrationManager = new CalibrationManager();
-            //stereoVisionManager._calibrationManager.calibrationModel = JsonConvert.DeserializeObject<CalibrationModel>(json);
+            CalibrationModel.LoadJson();
         }
 
         private void ToolStripButton20_Click(object sender, EventArgs e)

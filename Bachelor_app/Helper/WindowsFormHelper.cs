@@ -35,34 +35,5 @@ namespace Bachelor_app.Helper
                 element.Text += $"[{DateTime.Now}]\n{text}\n";
             }
         }
-
-        // Asi to zmeniť na text field
-        // DELETE these, when not using.
-        #region StereoVision TrackBar
-        public static void TrackBar_ValueChanged(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
-        {
-            toolTip.SetToolTip(trackBar, trackBar.Value.ToString());
-            GetPropertiesAndSetModel();
-        }
-
-        public static void TrackBar_ValueChangedMultiple16(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
-        {
-            toolTip.SetToolTip(trackBar, (trackBar.Value * 16).ToString());
-            GetPropertiesAndSetModel();
-        }
-
-        public static void TrackBar_ValueChangedOdd(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
-        {
-            toolTip.SetToolTip(trackBar, ((trackBar.Value * 2) + 1).ToString());
-            GetPropertiesAndSetModel();
-        }
-
-        public static void TrackBar_ValueChangedEven(TrackBar trackBar, ToolTip toolTip, Action GetPropertiesAndSetModel)
-        {
-            toolTip.SetToolTip(trackBar, (trackBar.Value * 2).ToString());
-            GetPropertiesAndSetModel();
-        }
-        #endregion
-
     }
 }

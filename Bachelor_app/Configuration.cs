@@ -6,24 +6,31 @@ namespace Bachelor_app
 {
     public static class Configuration
     {
+        #region Temp directory and subdirectory
         public static string TempDirectoryPath { get; private set; } = Path.GetFullPath($"..\\..\\..\\Temp");
         public static string TempDepthMapDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "DepthMap");
         public static string TempLeftStackDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "LeftStack");
         public static string TempRightStackDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "RightStack");
         public static string TempDrawKeypoint { get; private set; } = Path.Combine(Configuration.TempDirectoryPath, "DrawKeypoint");
         public static string TempDrawMatches { get; private set; } = Path.Combine(Configuration.TempDirectoryPath, "DrawMatch");
-
+        #endregion
+        #region Match file
         public static string MatchFileName { get; private set; } = "AllFoundedMatches.txt";
         public static string MatchFilePath { get; private set; } = Path.Combine(TempDirectoryPath, MatchFileName);
-
+        #endregion
+        #region Tools
         public static string ToolsPath { get; private set; } = Path.GetFullPath(".\\Tools");
         public static string VisualSFMTool { get; private set; } = "VisualSFM.exe";
         public static string VisualSFMPath { get; private set; } = Path.Combine(ToolsPath, "VisualSFM_Cuda");
         public static string VisualSFMToolPath { get; private set; } = Path.Combine(VisualSFMPath, VisualSFMTool);
-
         public static string VisualSFMResult { get; private set; } = "Result.nvm";
         public static string VisualSFMResultPath { get; private set; } = Path.Combine(Configuration.TempDirectoryPath, VisualSFMResult);
-        
+        #endregion
+        #region Calibration
+        public static string CalibrationName { get; private set; } = "Calibration.json";
+        public static string CalibrationPath { get; private set; } = Path.Combine(TempDirectoryPath, CalibrationName);
+        #endregion
+
         #region Otazne
         public static ECameraResolution Resolution { get; set; }
         public static EDisplayItem LeftViewWindowItem { get; set; }
