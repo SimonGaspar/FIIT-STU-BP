@@ -7,14 +7,14 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class FreakForm : Form
     {
-        FREAK _freak;
-        FreakModel defaultModel = new FreakModel();
+        private FREAK _freak;
+        private FreakModel defaultModel = new FreakModel();
 
         public FreakForm(FREAK freak)
         {
             this._freak = freak;
             InitializeComponent();
-            InitializeStringForComponents();
+            ShowDefaultModelSetting();
         }
 
         private void GetPropertiesAndSetModel()

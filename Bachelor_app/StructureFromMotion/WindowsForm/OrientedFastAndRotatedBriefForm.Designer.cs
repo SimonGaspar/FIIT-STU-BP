@@ -107,7 +107,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 20);
             this.textBox4.TabIndex = 7;
-            this.textBox4.TextChanged += new System.EventHandler(this.TextBox4_TextChanged);
             // 
             // label4
             // 
@@ -117,7 +116,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.label4.Size = new System.Drawing.Size(78, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Edge threshold";
-            this.label4.Click += new System.EventHandler(this.Label4_Click);
             // 
             // textBox5
             // 
@@ -173,7 +171,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(100, 20);
             this.textBox8.TabIndex = 15;
-            this.textBox8.TextChanged += new System.EventHandler(this.TextBox8_TextChanged);
             // 
             // label8
             // 
@@ -183,7 +180,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.label8.Size = new System.Drawing.Size(73, 13);
             this.label8.TabIndex = 14;
             this.label8.Text = "Fast threshold";
-            this.label8.Click += new System.EventHandler(this.Label8_Click);
             // 
             // comboBox1
             // 
@@ -192,7 +188,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 16;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // button1
             // 
@@ -251,7 +246,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void InitializeStringForComponents()
         {
             this.comboBox1.Items.AddRange(Enum.GetValues(typeof(ScoreType)).Cast<ScoreType>().Select(x => x.ToString()).ToArray());
-            ShowDefaultModelSetting();
         }
 
         private System.Windows.Forms.Label label1;

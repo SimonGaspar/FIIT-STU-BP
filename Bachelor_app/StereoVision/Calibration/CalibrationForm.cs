@@ -9,7 +9,8 @@ namespace Bachelor_app.StereoVision.Calibration
     /// </summary>
     public partial class CalibrationForm : Form
     {
-        CalibrationManager _calibrationManager;
+        private CalibrationManager _calibrationManager;
+
         public CalibrationForm(CalibrationManager calibrationManager, PatternModel patternModel)
         {
             this._calibrationManager = calibrationManager;

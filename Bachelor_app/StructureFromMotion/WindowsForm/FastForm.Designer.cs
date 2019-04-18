@@ -74,7 +74,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(121, 20);
             this.textBox1.TabIndex = 20;
-            this.textBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // label4
             // 
@@ -84,7 +83,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.label4.Size = new System.Drawing.Size(54, 13);
             this.label4.TabIndex = 19;
             this.label4.Text = "Threshold";
-            this.label4.Click += new System.EventHandler(this.Label4_Click);
             // 
             // checkBox1
             // 
@@ -124,7 +122,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void InitializeStringForComponents()
         {
             this.comboBox1.Items.AddRange(Enum.GetValues(typeof(DetectorType)).Cast<DetectorType>().Select(x => x.ToString()).ToArray());
-            ShowDefaultModelSetting();
         }
 
         private System.Windows.Forms.Button button2;

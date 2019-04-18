@@ -10,50 +10,39 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class CudaOrientedFastAndRotatedBriefForm : Form
     {
-        CudaOrientedFastAndRotatedBrief _cudaORB;
-        public CudaOrientedFastAndRotatedBriefModel defaultModel = new CudaOrientedFastAndRotatedBriefModel();
+        private CudaOrientedFastAndRotatedBrief _cudaORB;
+        private CudaOrientedFastAndRotatedBriefModel defaultModel = new CudaOrientedFastAndRotatedBriefModel();
 
         public CudaOrientedFastAndRotatedBriefForm(CudaOrientedFastAndRotatedBrief cudaOrientedFastAndRotatedBrief)
         {
             _cudaORB = cudaOrientedFastAndRotatedBrief;
             InitializeComponent();
             InitializeStringForComponents();
+            ShowDefaultModelSetting();
         }
 
         private void GetPropertiesAndSetModel()
         {
-            CudaOrientedFastAndRotatedBriefModel model = null;
             try
             {
                 var type = Enum.GetValues(typeof(ScoreType)).Cast<ScoreType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
-                var NumberOfFeatures = int.Parse(textBox1.Text);
-                var ScaleFactor = float.Parse(textBox2.Text);
-                var NLevels = int.Parse(textBox3.Text);
-                var EdgeThreshold = int.Parse(textBox4.Text);
-                var FirstLevel = int.Parse(textBox5.Text);
-                var WTK_A = int.Parse(textBox6.Text);
-                var PatchSize = int.Parse(textBox7.Text);
-                var FastThreshold = int.Parse(textBox8.Text);
-                var BlurForDescriptor = checkBox1.Checked;
 
-
-                model = new CudaOrientedFastAndRotatedBriefModel(
-                    NumberOfFeatures,
-                    ScaleFactor,
-                    NLevels,
-                    EdgeThreshold,
-                    FirstLevel,
-                    WTK_A,
+                var model = new CudaOrientedFastAndRotatedBriefModel(
+                    int.Parse(textBox1.Text),
+                    float.Parse(textBox2.Text),
+                    int.Parse(textBox3.Text),
+                    int.Parse(textBox4.Text),
+                    int.Parse(textBox5.Text),
+                    int.Parse(textBox6.Text),
                     type,
-                    PatchSize,
-                    FastThreshold,
-                    BlurForDescriptor
+                    int.Parse(textBox7.Text),
+                    int.Parse(textBox8.Text),
+                    checkBox1.Checked
                     );
 
                 _cudaORB.UpdateModel(model);
 
                 this.Hide();
-
             }
             catch (Exception)
             {
@@ -84,31 +73,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void Button1_Click(object sender, EventArgs e)
         {
             GetPropertiesAndSetModel();
-        }
-
-        private void TextBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBox8_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Label8_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void CudaOrientedFastAndRotatedBriefForm_FormClosing(object sender, FormClosingEventArgs e)

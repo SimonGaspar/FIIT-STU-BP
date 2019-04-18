@@ -7,14 +7,14 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class BriefForm : Form
     {
-        BRIEF _brief;
-        BriefModel defaultModel = new BriefModel();
+        private BRIEF _brief;
+        private BriefModel defaultModel = new BriefModel();
 
         public BriefForm(BRIEF brief)
         {
             this._brief = brief;
             InitializeComponent();
-            InitializeStringForComponents();
+            ShowDefaultModelSetting();
         }
 
         private void GetPropertiesAndSetModel()

@@ -10,14 +10,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class FastForm : Form
     {
-        FAST _fast;
-        FastModel defaultModel = new FastModel();
+        private FAST _fast;
+        private FastModel defaultModel = new FastModel();
 
         public FastForm(FAST fast)
         {
             this._fast = fast;
             InitializeComponent();
             InitializeStringForComponents();
+            ShowDefaultModelSetting();
         }
 
         private void GetPropertiesAndSetModel()
@@ -51,16 +52,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             this.comboBox1.SelectedIndex = (int)defaultModel.Type;
             this.textBox1.Text = defaultModel.Threshold.ToString();
             this.checkBox1.Checked = defaultModel.NonMaxSupression;
-        }
-
-        private void Label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void FastForm_FormClosing(object sender, FormClosingEventArgs e)

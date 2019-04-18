@@ -10,24 +10,24 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class OrientedFastAndRotatedBriefForm : Form
     {
-        OrientedFastAndRotatedBrief orb;
-        public OrientedFastAndRotatedBriefModel defaultModel = new OrientedFastAndRotatedBriefModel();
+        private OrientedFastAndRotatedBrief orb;
+        private OrientedFastAndRotatedBriefModel defaultModel = new OrientedFastAndRotatedBriefModel();
 
         public OrientedFastAndRotatedBriefForm(OrientedFastAndRotatedBrief orientedFastAndRotatedBrief)
         {
             orb = orientedFastAndRotatedBrief;
             InitializeComponent();
             InitializeStringForComponents();
+            ShowDefaultModelSetting();
         }
 
         private void GetPropertiesAndSetModel()
         {
-            OrientedFastAndRotatedBriefModel model = null;
             try
             {
                 var type = Enum.GetValues(typeof(ScoreType)).Cast<ScoreType>().First(x => x.ToString() == comboBox1.SelectedItem.ToString());
 
-                model = new OrientedFastAndRotatedBriefModel(
+                var model = new OrientedFastAndRotatedBriefModel(
                     int.Parse(textBox1.Text),
                     float.Parse(textBox2.Text),
                     int.Parse(textBox3.Text),
@@ -41,13 +41,11 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 orb.UpdateModel(model);
 
                 this.Hide();
-
             }
             catch (Exception)
             {
                 MessageBox.Show("Unable to set these parameters.");
             }
-
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -71,31 +69,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void Button1_Click(object sender, EventArgs e)
         {
             GetPropertiesAndSetModel();
-        }
-
-        private void TextBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TextBox8_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Label8_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void OrientedFastAndRotatedBriefForm_FormClosing(object sender, FormClosingEventArgs e)

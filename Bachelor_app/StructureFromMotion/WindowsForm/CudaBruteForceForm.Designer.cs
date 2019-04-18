@@ -86,8 +86,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void InitializeStringForComponents()
         {
             this.comboBox1.Items.AddRange(Enum.GetValues(typeof(DistanceType)).Cast<DistanceType>().Select(x => x.ToString()).ToArray());
-
-            ShowDefaultModelSetting();
         }
 
         private System.Windows.Forms.ComboBox comboBox1;

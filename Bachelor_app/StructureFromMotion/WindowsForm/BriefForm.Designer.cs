@@ -89,12 +89,7 @@
         }
 
         #endregion
-
-        private void InitializeStringForComponents()
-        {
-            this.textBox1.Text = defaultModel.DescriptorSize.ToString();
-        }
-
+        
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;

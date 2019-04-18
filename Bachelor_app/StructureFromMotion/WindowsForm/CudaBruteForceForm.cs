@@ -9,8 +9,8 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
     public partial class CudaBruteForceForm : Form
     {
 
-        CudaBruteForce cudaBruteForce;
-        CudaBruteForceModel defaultModel = new BruteForceModel();
+        private CudaBruteForce cudaBruteForce;
+        private CudaBruteForceModel defaultModel = new BruteForceModel();
 
         public CudaBruteForceForm(CudaBruteForce cudaBruteForce)
         {
@@ -18,6 +18,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
             InitializeComponent();
             InitializeStringForComponents();
+            ShowDefaultModelSetting();
         }
 
         private void GetPropertiesAndSetModel()

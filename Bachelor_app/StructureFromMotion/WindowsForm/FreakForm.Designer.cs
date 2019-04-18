@@ -135,10 +135,6 @@
         }
 
         #endregion
-        private void InitializeStringForComponents()
-        {
-            ShowDefaultModelSetting();
-        }
 
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button2;
