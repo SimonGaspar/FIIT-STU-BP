@@ -137,7 +137,10 @@ namespace Bachelor_app.StereoVision
         {
             Monitor.Enter(locker);
             if (currentMode == ECalibrationMode.Caluculating_Stereo_Intrinsics)
-                ComputeCameraMatrix(size);
+            {
+                CalibrationModel.Resolution = size;
+                ComputeCameraMatrix();
+            }
             Monitor.Exit(locker);
         }
 
@@ -145,7 +148,7 @@ namespace Bachelor_app.StereoVision
         /// Computing camera matrix for stereo camera
         /// </summary>
         /// <param name="size">Size of input image from camera</param>
-        private void ComputeCameraMatrix(Size size)
+        private void ComputeCameraMatrix()
         {
             for (int k = 0; k < buffer_length; k++)
             {
@@ -160,7 +163,7 @@ namespace Bachelor_app.StereoVision
                 corners_object_Points[k] = object_list.ToArray();
             }
 
-            CameraCalibration.StereoCalibrate(corners_object_Points, corners_points_Left, corners_points_Right, CalibrationModel.IntrinsicCam1, CalibrationModel.IntrinsicCam2, size,
+            CameraCalibration.StereoCalibrate(corners_object_Points, corners_points_Left, corners_points_Right, CalibrationModel.IntrinsicCam1, CalibrationModel.IntrinsicCam2, CalibrationModel.Resolution,
                                                              CalibType.Default, new MCvTermCriteria(0.1e5),
                                                              out ExtrinsicCameraParameters EX_Param, out Matrix<double> fundamental, out Matrix<double> essential);
 
@@ -173,35 +176,21 @@ namespace Bachelor_app.StereoVision
             var Rec2 = new Rectangle();
             CvInvoke.StereoRectify(CalibrationModel.IntrinsicCam1.IntrinsicMatrix,
                                      CalibrationModel.IntrinsicCam1.DistortionCoeffs, CalibrationModel.IntrinsicCam2.IntrinsicMatrix, CalibrationModel.IntrinsicCam2.DistortionCoeffs,
-                                     size,
+                                     CalibrationModel.Resolution,
                                      CalibrationModel.EX_Param.RotationVector.RotationMatrix, CalibrationModel.EX_Param.TranslationVector,
                                      CalibrationModel.R1, CalibrationModel.R2, CalibrationModel.P1, CalibrationModel.P2, CalibrationModel.Q,
                                      StereoRectifyType.Default, 0,
-                                     size, ref Rec1, ref Rec2);
+                                     CalibrationModel.Resolution, ref Rec1, ref Rec2);
 
             CalibrationModel.Rec1 = Rec1;
             CalibrationModel.Rec2 = Rec2;
 
-            InitUndistortMatrix(CalibrationModel.IntrinsicCam1, CalibrationModel.UndistortCam1);
-            InitUndistortMatrix(CalibrationModel.IntrinsicCam2, CalibrationModel.UndistortCam2);
+
+            CalibrationModel.IntrinsicCam1.InitUndistortMatrix(CalibrationModel.UndistortCam1);
+            CalibrationModel.IntrinsicCam2.InitUndistortMatrix(CalibrationModel.UndistortCam2);
 
             currentMode = ECalibrationMode.Calibrated;
             CalibrationModel.IsCalibrated = true;
-        }
-
-        /// <summary>
-        /// Setting undistort matrix for camera
-        /// </summary>
-        /// <param name="intrinsicCameraParameters">Intrinsic parameters of camera</param>
-        /// <param name="undistortCameraParameters">Undistort parameters of camera</param>
-        private void InitUndistortMatrix(IntrinsicCameraParameters intrinsicCameraParameters, UndistortCameraParameters undistortCameraParameters)
-        {
-            var size = _cameraManager.resolution.GetResolution();
-
-            intrinsicCameraParameters.InitUndistortMap(size.Width, size.Height, out Matrix<float> MapX, out Matrix<float> MapY);
-
-            undistortCameraParameters.MapX = MapX;
-            undistortCameraParameters.MapY = MapY;
         }
 
         /// <summary>

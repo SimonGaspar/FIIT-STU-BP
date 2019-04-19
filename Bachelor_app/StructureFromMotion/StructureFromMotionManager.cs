@@ -63,6 +63,7 @@ namespace Bachelor_app
             else
             {
                 Configuration.DeleteTempFolder();
+                Configuration.GenerateFolders();
                 ClearList();
             }
 

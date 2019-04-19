@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using Emgu.CV;
 using Newtonsoft.Json;
 
@@ -40,21 +42,23 @@ namespace Bachelor_app.StereoVision.Calibration
         [JsonProperty]
         public static Matrix<double> P2 { get; set; } = new Matrix<double>(3, 4);
         [JsonProperty]
+        public static Size Resolution { get; set; }
+        [JsonProperty]
         public static bool IsCalibrated { get; set; } = false;
-
-        public static void CreateJson() {
-            // Serializovat len dolezite informacie
-
-            //var json = JsonConvert.SerializeObject(new CalibrationModel(), Formatting.Indented);
-            //File.WriteAllText(Configuration.CalibrationPath,json);
+        
+        public static void CreateJson()
+        {
+            var json = JsonConvert.SerializeObject(new CalibrationModel());
+            File.WriteAllText(Configuration.CalibrationPath, json);
         }
 
-        public static void LoadJson() {
-            //var json = JsonConvert.DeserializeObject(Configuration.CalibrationPath);
+        public static void LoadJson()
+        {
+            var json = File.ReadAllText(Configuration.CalibrationPath);
+            var jsonObject = JsonConvert.DeserializeObject<CalibrationModel>(json);
         }
-
     }
-
+    
     /// <summary>
     /// Undistort parameters for camera. Used in stereo vision by remap images.
     /// </summary>

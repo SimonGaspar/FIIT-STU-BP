@@ -130,6 +130,7 @@ namespace Bachelor_app
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel13 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox11 = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -348,7 +349,7 @@ namespace Bachelor_app
             this.tableLayoutPanel2.Controls.Add(this.RightViewBox, 2, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 85);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1016,6 +1017,7 @@ namespace Bachelor_app
             this.toolStripComboBox9,
             this.toolStripLabel12,
             this.toolStripComboBox10,
+            this.toolStripButton25,
             this.toolStripSeparator11,
             this.toolStripLabel14,
             this.toolStripComboBox12,
@@ -1098,6 +1100,16 @@ namespace Bachelor_app
             this.toolStripComboBox11.Size = new System.Drawing.Size(121, 27);
             this.toolStripComboBox11.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox11_SelectedIndexChanged);
             // 
+            // toolStripButton25
+            // 
+            this.toolStripButton25.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton25.Image = global::Bachelor_app.Properties.Resources.Repeat_Freepik;
+            this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton25.Name = "toolStripButton25";
+            this.toolStripButton25.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButton25.Text = "Update list";
+            this.toolStripButton25.Click += new System.EventHandler(this.toolStripButton25_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1106,7 +1118,7 @@ namespace Bachelor_app
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1685, 838);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1701, 863);
             this.Name = "MainForm";
             this.Text = "Form1";
@@ -1172,10 +1184,10 @@ namespace Bachelor_app
             this.toolStripComboBox11.Items.AddRange(Enum.GetValues(typeof(EInput)).Cast<EInput>().Select(x => x.Display()).ToArray());
             this.toolStripComboBox11.SelectedItem = EInput.ListViewBasicStack.Display();
 
-            this.toolStripComboBox10.Items.AddRange(CameraHelper.GetListOfWebCam().Select(x => x.Value).ToArray());
+            this.toolStripComboBox10.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
             this.toolStripComboBox10.SelectedItem = EInput.ListViewBasicStack.Display();
 
-            this.toolStripComboBox9.Items.AddRange(CameraHelper.GetListOfWebCam().Select(x => x.Value).ToArray());
+            this.toolStripComboBox9.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
             this.toolStripComboBox9.SelectedItem = EInput.ListViewBasicStack.Display();
 
             this.toolStripComboBox12.Items.AddRange(Enum.GetValues(typeof(ECameraResolution)).Cast<ECameraResolution>().Select(x => x.Display()).ToArray());
@@ -1428,6 +1440,7 @@ namespace Bachelor_app
         public System.Windows.Forms.ToolStripButton toolStripButton22;
         private System.Windows.Forms.ToolStripButton toolStripButton23;
         public System.Windows.Forms.ToolStripButton toolStripButton24;
+        private System.Windows.Forms.ToolStripButton toolStripButton25;
     }
 }
 

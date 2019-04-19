@@ -18,6 +18,8 @@ namespace Bachelor_app.Manager
 
         private const float ShowWindowSize = 50F;
         private const float HideWindowSize = 0F;
+        private int LeftCamera = -1;
+        private int RightCamera = -1;
 
         public MainFormManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager, SfM sfmManager, CameraManager cameraManager)
         {
@@ -40,10 +42,12 @@ namespace Bachelor_app.Manager
             else
                 _displayManager.RightViewWindowItem = enumItem;
 
-            if (enumItem == EDisplayItem.SfMPointCloud)
-                ChangeRenderer(LeftWindow, true);
-            else
-                ChangeRenderer(LeftWindow, false);
+            switch (enumItem) {
+                case EDisplayItem.SfMPointCloud:
+                case EDisplayItem.DepthMapPointCloud:
+                    ChangeRenderer(LeftWindow, true); ;break;
+                default: ChangeRenderer(LeftWindow, false);break;
+            }
         }
 
         private void ChangeRenderer(bool LeftWindow, bool PointCloud)
@@ -238,9 +242,31 @@ namespace Bachelor_app.Manager
         {
             var currentItem = sender as ToolStripComboBox;
             if (IsLeft)
-                _cameraManager.SetCamera(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
+            {
+                if (RightCamera != currentItem.SelectedIndex && IsLeft)
+                {
+                    _cameraManager.SetCamera(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
+                    LeftCamera = currentItem.SelectedIndex;
+                }
+                else
+                {
+                    MessageBox.Show("Can't set the same camera. It was set as right camera");
+                    currentItem.SelectedItem = currentItem.Items[(LeftCamera == -1 ? currentItem.Items.IndexOf("Empty") : LeftCamera)];
+                }
+            }
             else
-                _cameraManager.SetCamera(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
+            {
+                if (LeftCamera != currentItem.SelectedIndex && !IsLeft)
+                {
+                    _cameraManager.SetCamera(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
+                    RightCamera = currentItem.SelectedIndex;
+                }
+                else
+                {
+                    MessageBox.Show("Can't set the same camera. It was set as left camera.");
+                    currentItem.SelectedItem= currentItem.Items[(RightCamera ==-1 ? currentItem.Items.IndexOf("Empty"): RightCamera)];
+                }
+            }
         }
 
         public void SetResolution(object sender, EventArgs e)

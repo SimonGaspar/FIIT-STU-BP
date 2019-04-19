@@ -43,6 +43,9 @@ namespace Bachelor_app
 
         public static void GenerateFolders()
         {
+            if (Directory.Exists(TempDirectoryPath))
+                DeleteTempFolder();
+
             Directory.CreateDirectory(TempDirectoryPath);
             Directory.CreateDirectory(TempDepthMapDirectoryPath);
             Directory.CreateDirectory(TempLeftStackDirectoryPath);
@@ -63,8 +66,8 @@ namespace Bachelor_app
             {
                 dir.Delete(true);
             }
+            di.Delete();
 
-            GenerateFolders();
         }
     }
 }

@@ -10,6 +10,8 @@ using Bachelor_app.StereoVision.StereoCorrespondence;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
+using Emgu.CV.Util;
+using Newtonsoft.Json;
 
 namespace Bachelor_app.StereoVision
 {
@@ -86,9 +88,10 @@ namespace Bachelor_app.StereoVision
                 DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);
 
                 _fileManager.ListViewModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
+                var index = _fileManager.ListViewModel.LeftCameraStack.Count;
 
-                SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap));
-                Computer3DPointsFromStereoPair(DepthMap);
+                SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap),index);
+                Computer3DPointsFromStereoPair(DepthMap,index);
 
                 //Vymazat ak sa nic nenakresli
                 //DELETE these, when not using.
@@ -103,9 +106,9 @@ namespace Bachelor_app.StereoVision
         /// Save generated depth map
         /// </summary>
         /// <param name="disparityMap">Disparity map</param>
-        private void SaveAndAddDepthMapToListView(Image<Bgr, byte> disparityMap)
+        private void SaveAndAddDepthMapToListView(Image<Bgr, byte> disparityMap, int index)
         {
-            var path = Path.Combine(Configuration.TempDepthMapDirectoryPath, $"DepthMap_{_fileManager.ListViewModel.LeftCameraStack.Count}.JPG");
+            var path = Path.Combine(Configuration.TempDepthMapDirectoryPath, $"DepthMap_{index}.JPG");
 
             disparityMap.Save(path);
             _fileManager.AddInputFileToList(path, EListViewGroup.DepthMap);
@@ -149,8 +152,8 @@ namespace Bachelor_app.StereoVision
 
                 _fileManager.ListViewModel._lastDepthMapImage = DepthMapToSave.ToImageBGR();
 
-                SaveAndAddDepthMapToListView(DepthMapToSave.ToImageBGR());
-                Computer3DPointsFromStereoPair(DepthMap);
+                SaveAndAddDepthMapToListView(DepthMapToSave.ToImageBGR(),i);
+                Computer3DPointsFromStereoPair(DepthMap,i);
             }
         }
 
@@ -170,8 +173,8 @@ namespace Bachelor_app.StereoVision
 
                 _fileManager.ListViewModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
 
-                SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap));
-                Computer3DPointsFromStereoPair(DepthMap);
+                SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap),i);
+                Computer3DPointsFromStereoPair(DepthMap,i);
             }
             );
         }
@@ -189,13 +192,16 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         /// <param name="disparityMap">Disparity map</param>
         /// <returns></returns>
-        private MCvPoint3D32f[] Computer3DPointsFromStereoPair(Mat disparityMap)
+        private async Task Computer3DPointsFromStereoPair(Mat disparityMap, int index)
         {
             if (CalibrationModel.IsCalibrated)
             {
+                var path = Path.Combine(Configuration.TempDepthMapDirectoryPath, $"DepthMap_{index}.json");
+
                 MCvPoint3D32f[] points = PointCollection.ReprojectImageTo3D(disparityMap, CalibrationModel.Q);
+                var json = JsonConvert.SerializeObject(points);
+                File.WriteAllText(path, json);
             }
-            return null;
         }
 
         /// <summary>

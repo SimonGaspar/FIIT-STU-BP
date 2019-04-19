@@ -32,8 +32,13 @@ namespace Bachelor_app.Manager
         /// <param name="deviceName"></param>
         public void SetCamera(CameraModel cameraModel, int deviceId, string deviceName)
         {
-            cameraModel.CreateCameraInstance(deviceId, deviceName);
-            cameraModel.Camera.UpdateResolution(resolution);
+            if (deviceId >= 0)
+            {
+                cameraModel.CreateCameraInstance(deviceId, deviceName);
+                cameraModel.Camera.UpdateResolution(resolution);
+            }
+            else
+                cameraModel.Camera.Dispose();
         }
 
         /// <summary>

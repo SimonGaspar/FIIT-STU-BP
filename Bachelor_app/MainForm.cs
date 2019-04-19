@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using Bachelor_app.Helper;
@@ -239,6 +240,20 @@ namespace Bachelor_app
                 toolStripButton24.BackColor = default;
 
             displayManager.DisplayRemapImage = toolStripButton24.Checked;
+        }
+
+        private void toolStripButton25_Click(object sender, EventArgs e)
+        {
+            CameraHelper.UpdateCameraList();
+            var firstSelectedItem = this.toolStripComboBox10.SelectedItem;
+            this.toolStripComboBox10.Items.Clear();
+            this.toolStripComboBox10.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
+            this.toolStripComboBox10.SelectedItem = firstSelectedItem;
+
+            var secondSelectedItem = this.toolStripComboBox9.SelectedItem;
+            this.toolStripComboBox9.Items.Clear();
+            this.toolStripComboBox9.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
+            this.toolStripComboBox9.SelectedItem = secondSelectedItem;
         }
     }
 }
