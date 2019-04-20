@@ -21,7 +21,7 @@ namespace Bachelor_app.StructureFromMotion.Model
         {
             NumberOfFeatures = numberOfFeatures;
             ScaleFactor = scaleFactor;
-            NLevels = NLevels;
+            NLevels = nLevels;
             EdgeThreshold = edgeThreshold;
             FirstLevel = firstLevel;
             WTK_A = wTK_A;

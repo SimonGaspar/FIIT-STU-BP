@@ -30,11 +30,15 @@ namespace Bachelor_app.Helper
                 model.SetImageCount(int.Parse(lineArray[indexOfLine++]));
                 if (model.ImageCount > 0)
                     indexOfLine = AddCameraModelFromFile(indexOfLine, lineArray, model.ImageCount, model);
+                else
+                    break;
 
                 model.SetPointCount(int.Parse(lineArray[indexOfLine++]));
                 if (model.PointCount > 0)
                     indexOfLine = AddPointModelFromFile(indexOfLine, lineArray, model.PointCount, model);
-
+                else
+                    break;
+                
                 resultList.Add(model);
             }
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Management;
-using DirectShowLib;
 using Emgu.CV;
 
 namespace Bachelor_app.Helper

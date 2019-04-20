@@ -164,9 +164,16 @@ namespace Bachelor_app.StereoVision
         {
             Parallel.For(0, _fileManager.ListViewModel.LeftCameraStack.Count, i =>
             {
-                var leftImage = _fileManager.ListViewModel.LeftCameraStack[i];
-                var rightImage = _fileManager.ListViewModel.RightCameraStack[i];
-                var DepthMap = StereoSolver.ComputeDepthMap(leftImage.Image, rightImage.Image);
+                var leftImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListViewModel.LeftCameraStack[i].Image);
+                var rightImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListViewModel.RightCameraStack[i].Image);
+
+                if (CalibrationModel.IsCalibrated)
+                {
+                    CvInvoke.Remap(leftImage, leftImage, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+                    CvInvoke.Remap(rightImage, rightImage, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
+                }
+
+                var DepthMap = StereoSolver.ComputeDepthMap(leftImage, rightImage);
 
                 var DepthMapToSave = new Mat();
                 DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);

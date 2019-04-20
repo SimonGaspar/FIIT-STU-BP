@@ -30,7 +30,7 @@ namespace Bachelor_app.Extension
         /// <returns></returns>
         public static Image<Bgr, byte> ToImageBGR<T>(this T image) where T : IImage, IInputArray
         {
-            if (image.Bitmap == null)
+            if (image ==null || image.Bitmap == null)
                 return null;
 
             return new Image<Bgr, byte>(image.Bitmap);
