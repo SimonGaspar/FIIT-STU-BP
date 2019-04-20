@@ -19,26 +19,24 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
-            var cudaORB = CreateInstance();
-            var mat = new Mat(keyPoints.InputFile.FullPath);
-            Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
-            GpuMat gpumat = new GpuMat(image);
+            var result = new GpuMat();
 
-            GpuMat result = new GpuMat();
-            cudaORB.Compute(gpumat, keyPoints.DetectedKeyPoints, result);
-            var returnResult = result.ToMat();
+            using (var cudaORB = CreateInstance())
+            using (var mat = new Mat(keyPoints.InputFile.FullPath))
+            using (Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap))
+            using (GpuMat gpumat = new GpuMat(image))
+                cudaORB.Compute(gpumat, keyPoints.DetectedKeyPoints, result);
 
-            return returnResult;
+            return result.ToMat();
         }
 
         public override MKeyPoint[] DetectKeyPoints(IInputArray input)
         {
-            var cudaORB = CreateInstance();
-            var mat = input as Mat;
-            Image<Gray, byte> image = new Image<Gray, byte>(mat.Bitmap);
             MKeyPoint[] result;
-            GpuMat gpumat = new GpuMat(image);
 
+            using (var cudaORB = CreateInstance())
+            using (Image<Gray, byte> image = new Image<Gray, byte>((input as Mat).Bitmap))
+            using (GpuMat gpumat = new GpuMat(image))
             result = cudaORB.Detect(gpumat);
 
             return result;

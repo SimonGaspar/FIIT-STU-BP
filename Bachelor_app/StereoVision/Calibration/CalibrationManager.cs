@@ -53,7 +53,7 @@ namespace Bachelor_app.StereoVision
 
             _winForm = new CalibrationForm(this, patternModel);
             CalibrationProcess = new Thread(ProcessFrame);
-            _winForm.ShowDialog();
+            Task.Run(()=>_winForm.ShowDialog());
         }
 
         public void KillProcess()
@@ -88,29 +88,30 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         public void ProcessFrame()
         {
-            Mat frame_S1 = new Mat();
-            Mat frame_S2 = new Mat();
             bool StopCalibration = false;
 
-            while (!StopCalibration)
+            using (Mat frame_S1 = new Mat(), frame_S2 = new Mat())
             {
-                CameraHelper.GetStereoImageSync(_leftCamera, _rightCamera, ref frame_S1, ref frame_S2);
-
-                _winForm.Video_Source1.Image = frame_S1.ToImage();
-                _winForm.Video_Source2.Image = frame_S1.ToImage();
-
-                switch (currentMode)
+                while (!StopCalibration)
                 {
-                    case ECalibrationMode.SavingFrames:
-                        Task.Run(() => SaveImageForCalibration(frame_S1, frame_S2));
-                        break;
-                    case ECalibrationMode.Caluculating_Stereo_Intrinsics:
-                        TryComputeCameraMatrix(frame_S1.Size);
-                        break;
-                    case ECalibrationMode.Calibrated:
-                        StopCalibration = true; break;
+                    CameraHelper.GetStereoImageSync(_leftCamera, _rightCamera, frame_S1, frame_S2);
+
+                    _winForm.Video_Source1.Image = frame_S1.ToImage();
+                    _winForm.Video_Source2.Image = frame_S1.ToImage();
+
+                    switch (currentMode)
+                    {
+                        case ECalibrationMode.SavingFrames:
+                            Task.Run(() => SaveImageForCalibration(frame_S1, frame_S2));
+                            break;
+                        case ECalibrationMode.Caluculating_Stereo_Intrinsics:
+                            TryComputeCameraMatrix(frame_S1.Size);
+                            break;
+                        case ECalibrationMode.Calibrated:
+                            StopCalibration = true; break;
+                    }
+                    Thread.Sleep(100);
                 }
-                Thread.Sleep(100);
             }
             ExitWindows();
         }
@@ -201,69 +202,53 @@ namespace Bachelor_app.StereoVision
         /// <returns></returns>
         private async Task SaveImageForCalibration(Mat frame_S1, Mat frame_S2)
         {
-            var frameImage_S1 = new Image<Bgr, byte>(frame_S1.Bitmap);
-            var Gray_frame_S1 = frameImage_S1.Convert<Gray, byte>();
-            var frameImage_S2 = new Image<Bgr, byte>(frame_S2.Bitmap);
-            var Gray_frame_S2 = frameImage_S2.Convert<Gray, byte>();
-
-            VectorOfPointF cornerLeft = new VectorOfPointF();
-            VectorOfPointF cornerRight = new VectorOfPointF();
-
-            switch (patternModel.Pattern)
+            using (Image<Bgr, byte> frameImage_S1 = new Image<Bgr, byte>(frame_S1.Bitmap), frameImage_S2 = new Image<Bgr, byte>(frame_S2.Bitmap))
+            using (Image<Gray, byte> Gray_frame_S1 = frameImage_S1.Convert<Gray, byte>(), Gray_frame_S2 = frameImage_S2.Convert<Gray, byte>())
+            using (VectorOfPointF cornerLeft = new VectorOfPointF(), cornerRight = new VectorOfPointF())
             {
-                case ECalibrationPattern.Chessboard:
-                    CvInvoke.FindChessboardCorners(Gray_frame_S1, patternModel.PatternSize, cornerLeft, CalibCbType.AdaptiveThresh);
-                    CvInvoke.FindChessboardCorners(Gray_frame_S2, patternModel.PatternSize, cornerRight, CalibCbType.AdaptiveThresh);
-                    break;
-                default: throw new NotImplementedException();
-            }
-
-            if (cornerLeft.Size > 0 && cornerRight.Size > 0)
-            {
-                PointF[] corners_Left;
-                PointF[] corners_Right;
-
-                corners_Left = cornerLeft.ToArray();
-                corners_Right = cornerRight.ToArray();
-
-                Gray_frame_S1.FindCornerSubPix(new PointF[1][] { corners_Left }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
-                Gray_frame_S2.FindCornerSubPix(new PointF[1][] { corners_Right }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
-
-                if (patternModel.Start_Flag)
-                {
-                    corners_points_Left[buffer_savepoint] = corners_Left;
-                    corners_points_Right[buffer_savepoint] = corners_Right;
-                    buffer_savepoint++;
-
-                    if (buffer_savepoint == buffer_length) currentMode = ECalibrationMode.Caluculating_Stereo_Intrinsics;
-
-                    _winForm.UpdateTitle("Form1: Buffer " + buffer_savepoint.ToString() + " of " + buffer_length.ToString());
-                }
                 switch (patternModel.Pattern)
                 {
                     case ECalibrationPattern.Chessboard:
-                        CvInvoke.DrawChessboardCorners(frameImage_S1, patternModel.PatternSize, new VectorOfPointF(corners_Left), true);
-                        CvInvoke.DrawChessboardCorners(frameImage_S2, patternModel.PatternSize, new VectorOfPointF(corners_Right), true);
+                        CvInvoke.FindChessboardCorners(Gray_frame_S1, patternModel.PatternSize, cornerLeft, CalibCbType.AdaptiveThresh);
+                        CvInvoke.FindChessboardCorners(Gray_frame_S2, patternModel.PatternSize, cornerRight, CalibCbType.AdaptiveThresh);
                         break;
                     default: throw new NotImplementedException();
                 }
 
-                // Own drawing method
-                //
-                //frameImage_S1.Draw(new CircleF(corners_Left[0], 3), new Bgr(Color.Yellow), 10);
-                //frameImage_S2.Draw(new CircleF(corners_Right[0], 3), new Bgr(Color.Yellow), 10);
-                //for (int i = 1; i < corners_Left.Length; i++)
-                //{
-                //    //left
-                //    frameImage_S1.Draw(new LineSegment2DF(corners_Left[i - 1], corners_Left[i]), patternModel.line_colour_array[i], 10);
-                //    frameImage_S1.Draw(new CircleF(corners_Left[i], 3), new Bgr(Color.Yellow), 10);
-                //    //right
-                //    frameImage_S2.Draw(new LineSegment2DF(corners_Right[i - 1], corners_Right[i]), patternModel.line_colour_array[i], 10);
-                //    frameImage_S2.Draw(new CircleF(corners_Right[i], 3), new Bgr(Color.Yellow), 10);
-                //}
+                if (cornerLeft.Size > 0 && cornerRight.Size > 0)
+                {
+                    PointF[] corners_Left;
+                    PointF[] corners_Right;
 
-                _winForm.pictureBox1.Image = frameImage_S1.ToImage();
-                _winForm.pictureBox2.Image = frameImage_S2.ToImage();
+                    corners_Left = cornerLeft.ToArray();
+                    corners_Right = cornerRight.ToArray();
+
+                    Gray_frame_S1.FindCornerSubPix(new PointF[1][] { corners_Left }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
+                    Gray_frame_S2.FindCornerSubPix(new PointF[1][] { corners_Right }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
+
+                    if (patternModel.Start_Flag)
+                    {
+                        corners_points_Left[buffer_savepoint] = corners_Left;
+                        corners_points_Right[buffer_savepoint] = corners_Right;
+                        buffer_savepoint++;
+
+                        if (buffer_savepoint == buffer_length) currentMode = ECalibrationMode.Caluculating_Stereo_Intrinsics;
+
+                        _winForm.UpdateTitle("Form1: Buffer " + buffer_savepoint.ToString() + " of " + buffer_length.ToString());
+                    }
+
+                    switch (patternModel.Pattern)
+                    {
+                        case ECalibrationPattern.Chessboard:
+                            CvInvoke.DrawChessboardCorners(frameImage_S1, patternModel.PatternSize, new VectorOfPointF(corners_Left), true);
+                            CvInvoke.DrawChessboardCorners(frameImage_S2, patternModel.PatternSize, new VectorOfPointF(corners_Right), true);
+                            break;
+                        default: throw new NotImplementedException();
+                    }
+                    
+                    _winForm.pictureBox1.Image = frameImage_S1.ToImage();
+                    _winForm.pictureBox2.Image = frameImage_S2.ToImage();
+                }
             }
         }
 

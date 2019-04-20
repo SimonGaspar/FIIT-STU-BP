@@ -8,7 +8,6 @@ namespace Bachelor_app.StructureFromMotion
     public enum EFeatureDescriptor
     {
         ORB,
-        FAST,
         FREAK,
         BRIEF,
         CudaORB
@@ -23,7 +22,6 @@ namespace Bachelor_app.StructureFromMotion
             switch (type)
             {
                 case EFeatureDescriptor.ORB: returnItem = new OrientedFastAndRotatedBrief(); break;
-                case EFeatureDescriptor.FAST: returnItem = new FAST(); break;
                 case EFeatureDescriptor.FREAK: returnItem = new FREAK(); break;
                 case EFeatureDescriptor.BRIEF: returnItem = new BRIEF(); break;
                 case EFeatureDescriptor.CudaORB: returnItem = new CudaOrientedFastAndRotatedBrief(); break;

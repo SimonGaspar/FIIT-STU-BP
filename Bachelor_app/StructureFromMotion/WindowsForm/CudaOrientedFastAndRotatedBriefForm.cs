@@ -48,7 +48,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             {
                 MessageBox.Show("Unable to set these parameters.");
             }
-
         }
 
         private void Button2_Click(object sender, EventArgs e)

@@ -25,14 +25,12 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         /// <returns>Depth map</returns>
         public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
-            StereoSGBM _stereoSGBM = CreateInstance();
-            ConvertImageToGray(leftImage, rightImage);
-
             Mat imageDisparity = new Mat();
-            Mat imageToSave = new Mat();
-            _stereoSGBM.Compute(LeftGrayImage, RightGrayImage, imageDisparity);
-            imageDisparity.ConvertTo(imageToSave, DepthType.Cv8U);
-
+            using (StereoSGBM _stereoSGBM = CreateInstance())
+            {
+                ConvertImageToGray(leftImage, rightImage);
+                _stereoSGBM.Compute(LeftGrayImage, RightGrayImage, imageDisparity);
+            }
             return imageDisparity;
         }
 

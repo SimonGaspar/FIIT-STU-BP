@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Bachelor_app.Enumerate;
 using Bachelor_app.Helper;
@@ -334,29 +335,40 @@ namespace Bachelor_app
             File.WriteAllText(Configuration.MatchFilePath, sb.ToString());
         }
 
+        SemaphoreSlim semaphore = new SemaphoreSlim(1); 
+
         private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = true, bool DrawAndSave = true)
         {
             var filteredMatchesList = new List<MDMatch[]>();
             var matchesList = new List<MDMatch[]>();
+            MDMatch[][] matchesArray;
             var perspectiveMatrix = new Mat();
             var mask = new Mat();
 
             WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
                     $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                     $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
-
-            var matches = new VectorOfVectorOfDMatch();
-            matcher.Match(leftDescriptor.Descriptors, rightDescriptor.Descriptors, matches);
+            using (var matches = new VectorOfVectorOfDMatch())
+            {
+                try
+                {
+                    semaphore.Wait();
+                    matcher.Match(leftDescriptor.Descriptors, rightDescriptor.Descriptors, matches);
+                    semaphore.Release();
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Happend with {leftDescriptor.KeyPoint.InputFile.FileName}:{leftDescriptor.KeyPoint.DetectedKeyPoints.Size} and {rightDescriptor.KeyPoint.InputFile.FileName}:{rightDescriptor.KeyPoint.DetectedKeyPoints.Size}", e);
+                }
+                matchesArray = matches.ToArrayOfArray();
+            }
+            matchesList = matchesArray.ToList();
 
             WindowsFormHelper.AddLogToConsole(
                 $"FINISH computing matches for: \n" +
                 $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                 $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
                 );
-
-
-            MDMatch[][] matchesArray = matches.ToArrayOfArray();
-            matchesList = matchesArray.ToList();
 
             if (FilterMatches)
             {
@@ -366,14 +378,11 @@ namespace Bachelor_app
 
             if (ComputeHomography)
             {
-                //lock (locker)
-                //{
                 var matchesForHomography = FilterMatches ? filteredMatchesList : matchesList;
                 if (matchesForHomography.Count > 0)
                 {
                     perspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? filteredMatchesList : matchesList, mask);
                 }
-                //}
             }
 
             var foundedMatch = new MatchModel(

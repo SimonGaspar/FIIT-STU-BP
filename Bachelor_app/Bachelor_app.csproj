@@ -133,11 +133,9 @@
     <Compile Include="Extension\CameraExtension.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
     <Compile Include="Extension\MatExtension.cs" />
-    <Compile Include="Extension\WindowsFormExtension.cs" />
     <Compile Include="Helper\CameraHelper.cs" />
     <Compile Include="Helper\DialogHelper.cs" />
     <Compile Include="Enumerate\EImageFormat.cs" />
-    <Compile Include="Enumerate\EVideoFormat.cs" />
     <Compile Include="Helper\SfMHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

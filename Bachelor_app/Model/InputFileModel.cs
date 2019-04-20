@@ -39,19 +39,6 @@ namespace Bachelor_app.Model
         {
             if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
                 Image = Image.FromFile(fileInfo.FullName);
-
-
-            /// <summary>
-            /// Now not used, but in future, we can use video for SfM and stereo correspondence.
-            /// DELETE these, when not using.
-            /// </summary>
-            /// 
-            //if (Enum.IsDefined(typeof(EVideoFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
-            //{
-            //    var capture = new VideoCapture(fileInfo.FullName);
-            //    var x = capture.QueryFrame();
-            //    image = x.ToImage<Bgr, byte>().ToBitmap();
-            //}
         }
     }
 }

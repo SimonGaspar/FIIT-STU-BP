@@ -40,13 +40,15 @@ namespace Bachelor_app.Model
                 var fileName = $"{model.InputFile.FileNameWithoutExtension}.JPG";
                 var filePath = model.InputFile.FullPath;
                 var savePath = Path.Combine(Configuration.TempDrawKeypoint, fileName);
+                
+                using (Mat output = new Mat())
+                {
+                    Features2DToolbox.DrawKeypoints(new Mat(filePath), model.DetectedKeyPoints, output, new Bgr(0, 0, 255), KeypointDrawType.DrawRichKeypoints);
+                    output.Save(savePath);
 
-                Mat output = new Mat();
-                Features2DToolbox.DrawKeypoints(new Mat(filePath), model.DetectedKeyPoints, output, new Bgr(0, 0, 255), KeypointDrawType.DrawRichKeypoints);
-                output.Save(savePath);
-
-                fileManager.ListViewModel._lastDrawnKeypoint = output.ToImageBGR();
-                fileManager.AddInputFileToList(savePath, EListViewGroup.DrawnKeyPoint);
+                    fileManager.ListViewModel._lastDrawnKeypoint = output.ToImageBGR();
+                    fileManager.AddInputFileToList(savePath, EListViewGroup.DrawnKeyPoint);
+                }
             }
             catch (Exception e)
             {

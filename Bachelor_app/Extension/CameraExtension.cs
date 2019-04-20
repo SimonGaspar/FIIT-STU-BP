@@ -40,18 +40,6 @@ namespace Bachelor_app.Extension
             }
         }
 
-        ///// <summary>
-        ///// Set camera resolution.
-        ///// </summary>
-        ///// <param name="camera"></param>
-        ///// <param name="Width">Width of resolution.</param>
-        ///// <param name="Height">Height of resolution.</param>
-        //public static void UpdateResolution(this VideoCapture camera, int Width, int Height)
-        //{
-        //    var resolution = new Size(Width, Height);
-        //    UpdateResolution(camera, resolution);
-        //}
-
         /// <summary>
         /// Set camera resolution.
         /// </summary>

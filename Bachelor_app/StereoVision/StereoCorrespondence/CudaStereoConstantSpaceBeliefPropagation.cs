@@ -26,15 +26,17 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         /// <returns>Depth map</returns>
         public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
-            GpuMat imageDisparity = new GpuMat();
             Mat disparity = new Mat();
+            using (GpuMat imageDisparity = new GpuMat())
+            using (CudaStereoConstantSpaceBP _cudaStereoBM = CreateInstance())
+            {
+                ConvertImageToGray(leftImage, rightImage);
 
-            CudaStereoConstantSpaceBP _cudaStereoConstantSpaceBP = CreateInstance();
-            ConvertImageToGray(leftImage, rightImage);
+                using (GpuMat LeftGpuMat = LeftGrayImage.ToGpuMat(), RightGpuMat = RightGrayImage.ToGpuMat())
+                    _cudaStereoBM.FindStereoCorrespondence(LeftGpuMat, RightGpuMat, imageDisparity);
 
-            _cudaStereoConstantSpaceBP.FindStereoCorrespondence(LeftGrayImage.ToGpuMat(), RightGrayImage.ToGpuMat(), imageDisparity);
-            imageDisparity.Download(disparity);
-
+                imageDisparity.Download(disparity);
+            }
             return disparity;
         }
 

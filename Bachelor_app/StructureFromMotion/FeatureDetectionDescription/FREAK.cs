@@ -18,10 +18,12 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
-            var _freak = CreateInstance();
             Mat result = new Mat();
-            Mat image = new Mat(keyPoints.InputFile.FullPath);
-            _freak.Compute(image, keyPoints.DetectedKeyPoints, result);
+
+            using (Mat image = new Mat(keyPoints.InputFile.FullPath))
+            using (var _freak = CreateInstance())
+                _freak.Compute(image, keyPoints.DetectedKeyPoints, result);
+
             return result;
         }
 

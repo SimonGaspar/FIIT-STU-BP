@@ -50,15 +50,17 @@ namespace Bachelor_app.Model
         {
             try
             {
-                Mat output = new Mat();
                 var fileName = $"{model.RightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{model.LeftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.JPG";
                 var savePath = Path.Combine(Configuration.TempDrawMatches, fileName);
 
-                Features2DToolbox.DrawMatches(new Mat(model.LeftDescriptor.KeyPoint.InputFile.FullPath), model.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(model.RightDescriptor.KeyPoint.InputFile.FullPath), model.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(model.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), model.Mask);
-                output.Save(savePath);
+                using (Mat output = new Mat())
+                {
+                    Features2DToolbox.DrawMatches(new Mat(model.LeftDescriptor.KeyPoint.InputFile.FullPath), model.LeftDescriptor.KeyPoint.DetectedKeyPoints, new Mat(model.RightDescriptor.KeyPoint.InputFile.FullPath), model.RightDescriptor.KeyPoint.DetectedKeyPoints, new VectorOfVectorOfDMatch(model.FilteredMatchesList.ToArray()), output, new MCvScalar(0, 0, 255), new MCvScalar(0, 255, 0), model.Mask);
+                    output.Save(savePath);
 
-                fileManager.ListViewModel._lastDrawnMatches = output.ToImageBGR();
-                fileManager.AddInputFileToList(savePath, EListViewGroup.DrawnMatches);
+                    fileManager.ListViewModel._lastDrawnMatches = output.ToImageBGR();
+                    fileManager.AddInputFileToList(savePath, EListViewGroup.DrawnMatches);
+                }
             }
             catch (Exception e)
             {

@@ -73,32 +73,24 @@ namespace Bachelor_app.StereoVision
             {
                 var listOfInput = _cameraManager.GetInputFromStereoCamera(false, _fileManager.ListViewModel.ListOfListInputFolder[(int)EListViewGroup.LeftCameraStack].Count);
 
-                var leftImage = new Mat(listOfInput[0].FullPath).ToImageBGR();
-                var rightImage = new Mat(listOfInput[1].FullPath).ToImageBGR();
-
-                if (CalibrationModel.IsCalibrated)
+                using (Image<Bgr, byte> leftImage = new Mat(listOfInput[0].FullPath).ToImageBGR(), rightImage = new Mat(listOfInput[1].FullPath).ToImageBGR())
                 {
+                    if (CalibrationModel.IsCalibrated)
+                    {
+                        CvInvoke.Remap(leftImage, leftImage, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+                        CvInvoke.Remap(rightImage, rightImage, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
+                    }
+                    using (Mat DepthMap = StereoSolver.ComputeDepthMap(leftImage, rightImage), DepthMapToSave = new Mat())
+                    {
+                        DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);
 
-                    CvInvoke.Remap(leftImage, leftImage, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
-                    CvInvoke.Remap(rightImage, rightImage, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
+                        _fileManager.ListViewModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
+                        var index = _fileManager.ListViewModel.LeftCameraStack.Count;
+
+                        SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap), index);
+                        Computer3DPointsFromStereoPair(DepthMap, index);
+                    }
                 }
-
-                var DepthMap = StereoSolver.ComputeDepthMap(leftImage, rightImage);
-                var DepthMapToSave = new Mat();
-                DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);
-
-                _fileManager.ListViewModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
-                var index = _fileManager.ListViewModel.LeftCameraStack.Count;
-
-                SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap),index);
-                Computer3DPointsFromStereoPair(DepthMap,index);
-
-                //Vymazat ak sa nic nenakresli
-                //DELETE these, when not using.
-                leftImage.Draw(CalibrationModel.Rec1, new Bgr(Color.LimeGreen), 20);
-                rightImage.Draw(CalibrationModel.Rec2, new Bgr(Color.LimeGreen), 20);
-                leftImage.Save(Path.Combine(Configuration.TempDirectoryPath, "LeftRecImager.JPG"));
-                rightImage.Save(Path.Combine(Configuration.TempDirectoryPath, "RightRecImager.JPG"));
             }
         }
 
@@ -111,6 +103,8 @@ namespace Bachelor_app.StereoVision
             var path = Path.Combine(Configuration.TempDepthMapDirectoryPath, $"DepthMap_{index}.JPG");
 
             disparityMap.Save(path);
+            disparityMap.Dispose();
+
             _fileManager.AddInputFileToList(path, EListViewGroup.DepthMap);
         }
 
@@ -136,24 +130,23 @@ namespace Bachelor_app.StereoVision
         {
             for (int i = 0; i < _fileManager.ListViewModel.LeftCameraStack.Count; i++)
             {
-                var leftImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListViewModel.LeftCameraStack[i].Image);
-                var rightImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListViewModel.RightCameraStack[i].Image);
-
-                if (CalibrationModel.IsCalibrated)
+                using (Image<Bgr, byte> leftImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListViewModel.LeftCameraStack[i].Image), rightImage = new Image<Bgr, byte>((Bitmap)_fileManager.ListViewModel.RightCameraStack[i].Image))
                 {
-                    CvInvoke.Remap(leftImage, leftImage, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
-                    CvInvoke.Remap(rightImage, rightImage, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
+                    if (CalibrationModel.IsCalibrated)
+                    {
+                        CvInvoke.Remap(leftImage, leftImage, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+                        CvInvoke.Remap(rightImage, rightImage, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
+                    }
+
+                    using (Mat DepthMap = StereoSolver.ComputeDepthMap(leftImage, rightImage), DepthMapToSave = new Mat())
+                    {
+                        DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);
+                        _fileManager.ListViewModel._lastDepthMapImage = DepthMapToSave.ToImageBGR();
+
+                        SaveAndAddDepthMapToListView(DepthMapToSave.ToImageBGR(), i);
+                        Computer3DPointsFromStereoPair(DepthMap, i);
+                    }
                 }
-
-                var DepthMap = StereoSolver.ComputeDepthMap(leftImage, rightImage);
-
-                var DepthMapToSave = new Mat();
-                DepthMap.ConvertTo(DepthMapToSave, DepthType.Cv8U);
-
-                _fileManager.ListViewModel._lastDepthMapImage = DepthMapToSave.ToImageBGR();
-
-                SaveAndAddDepthMapToListView(DepthMapToSave.ToImageBGR(),i);
-                Computer3DPointsFromStereoPair(DepthMap,i);
             }
         }
 

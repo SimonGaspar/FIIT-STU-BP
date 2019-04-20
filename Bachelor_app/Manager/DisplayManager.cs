@@ -136,11 +136,13 @@ namespace Bachelor_app.Manager
 
         private void DisplayDepthMap(RenderWindowControl renderWindow)
         {
+            ClearVTKRenderer(renderWindow);
+
             var listView = _winForm.ListViews[(int)EListViewGroup.DepthMap];
             if (listView.Visible)
             {
                 var item = listView.SelectedItems;
-                ReadPointFromDepthMap(renderWindow,item[0].Name);
+                ReadPointFromDepthMap(renderWindow,item[0].Text.Split('.')[0]+".json");
 
             }
         }
@@ -151,33 +153,32 @@ namespace Bachelor_app.Manager
             var jsonObject = JsonConvert.DeserializeObject<MCvPoint3D32f[]>(json);
 
             vtkPoints points = vtkPoints.New();
-
             foreach (var point in jsonObject)
             {
                 points.InsertNextPoint(
                     double.Parse(point.X.ToString(), CultureInfo.InvariantCulture),
                     double.Parse(point.Y.ToString(), CultureInfo.InvariantCulture),
-                    double.Parse(point.Z.ToString(), CultureInfo.InvariantCulture));
+                    double.Parse(point.Z.ToString(), CultureInfo.InvariantCulture)
+                    );
             }
 
             vtkPolyData polydata = vtkPolyData.New();
             polydata.SetPoints(points);
+
             vtkVertexGlyphFilter glyphFilter = vtkVertexGlyphFilter.New();
             glyphFilter.SetInputConnection(polydata.GetProducerPort());
-
-            // Visualize
+            
             vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
             mapper.SetInputConnection(glyphFilter.GetOutputPort());
+
             vtkActor actor = vtkActor.New();
             actor.SetMapper(mapper);
             actor.GetProperty().SetPointSize(2);
-            // get a reference to the renderwindow of our renderWindowControl1
+
             vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
-            // renderer
             vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
-            // set background color
+
             renderer.SetBackground(0.2, 0.3, 0.4);
-            // add our actor to the renderer
             renderer.AddActor(actor);
             renderer.ResetCamera();
         }
@@ -188,6 +189,8 @@ namespace Bachelor_app.Manager
         /// <param name="renderWindowControl"></param>
         public void DisplayPointCloudNVM(RenderWindowControl renderWindowControl)
         {
+            ClearVTKRenderer(renderWindowControl);
+
             var nvmFile = SfMHelper.LoadPointCloud();
 
             foreach (var model in nvmFile)
@@ -197,6 +200,13 @@ namespace Bachelor_app.Manager
 
                 ReadPointIntoObject(renderWindowControl, model.ListPointModel);
             }
+        }
+
+        private void ClearVTKRenderer(RenderWindowControl renderWindowControl)
+        {
+            var renderWindow = renderWindowControl.RenderWindow;
+            renderWindow.GetRenderers().GetFirstRenderer().RemoveAllViewProps();
+            renderWindowControl.Update();
         }
 
         #region VTK loading methods
@@ -216,11 +226,12 @@ namespace Bachelor_app.Manager
             reader.Update();
 
             // Treba poriesit ako nasmerovat obrazky bez pokazenia textury
-            var vectoris = Vector3.Transform(new Vector3(0, 0, 1), camera.Quaternion);
+            //var vectoris = Vector3.Transform(new Vector3(0, 0, 1), camera.Quaternion);
 
             vtkPlaneSource planeSource = vtkPlaneSource.New();
             vtkTexture texture = new vtkTexture();
             texture.SetInputConnection(reader.GetOutputPort());
+
             vtkTransform transform = new vtkTransform();
             transform.RotateX(180);
             texture.SetTransform(transform);
@@ -231,13 +242,13 @@ namespace Bachelor_app.Manager
 
             vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
             mapper.SetInputConnection(plane.GetOutputPort());
+
             vtkActor actor = vtkActor.New();
             actor.SetMapper(mapper);
             actor.SetTexture(texture);
 
             renderer.SetBackground(0.2, 0.3, 0.4);
             renderer.AddActor(actor);
-
         }
 
         /// <summary>
@@ -250,39 +261,39 @@ namespace Bachelor_app.Manager
             vtkUnsignedCharArray colors = vtkUnsignedCharArray.New();
             colors.SetNumberOfComponents(3);
             colors.SetName("Colors");
-            vtkPoints points = vtkPoints.New();
 
+            vtkPoints points = vtkPoints.New();
             foreach (var point in listPointModel)
             {
-
                 colors.InsertNextValue(byte.Parse(point.Color.X.ToString(), CultureInfo.InvariantCulture));
                 colors.InsertNextValue(byte.Parse(point.Color.Y.ToString(), CultureInfo.InvariantCulture));
                 colors.InsertNextValue(byte.Parse(point.Color.Z.ToString(), CultureInfo.InvariantCulture));
+
                 points.InsertNextPoint(
                     double.Parse(point.Position.X.ToString(), CultureInfo.InvariantCulture),
                     double.Parse(point.Position.Y.ToString(), CultureInfo.InvariantCulture),
-                    double.Parse(point.Position.Z.ToString(), CultureInfo.InvariantCulture));
+                    double.Parse(point.Position.Z.ToString(), CultureInfo.InvariantCulture)
+                    );
             }
 
             vtkPolyData polydata = vtkPolyData.New();
             polydata.SetPoints(points);
             polydata.GetPointData().SetScalars(colors);
+
             vtkVertexGlyphFilter glyphFilter = vtkVertexGlyphFilter.New();
             glyphFilter.SetInputConnection(polydata.GetProducerPort());
-
-            // Visualize
+            
             vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
             mapper.SetInputConnection(glyphFilter.GetOutputPort());
+
             vtkActor actor = vtkActor.New();
             actor.SetMapper(mapper);
             actor.GetProperty().SetPointSize(2);
-            // get a reference to the renderwindow of our renderWindowControl1
+
             vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
-            // renderer
             vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
-            // set background color
+
             renderer.SetBackground(0.2, 0.3, 0.4);
-            // add our actor to the renderer
             renderer.AddActor(actor);
             renderer.ResetCamera();
         }

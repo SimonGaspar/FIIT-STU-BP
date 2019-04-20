@@ -100,7 +100,7 @@ namespace Bachelor_app.Helper
     /// <param name="RightCamera"></param>
     /// <param name="LeftImage"></param>
     /// <param name="RightImage"></param>
-    public static void GetStereoImageSync(VideoCapture LeftCamera, VideoCapture RightCamera, ref Mat LeftImage, ref Mat RightImage)
+    public static void GetStereoImageSync(VideoCapture LeftCamera, VideoCapture RightCamera, Mat LeftImage, Mat RightImage)
         {
             if (LeftCamera != null && RightCamera != null)
             {
@@ -120,10 +120,10 @@ namespace Bachelor_app.Helper
         /// <param name="RightCamera"></param>
         /// <param name="LeftImage"></param>
         /// <param name="RightImage"></param>
-        public static void GetStereoImage(VideoCapture LeftCamera, VideoCapture RightCamera, ref Mat LeftImage, ref Mat RightImage)
+        public static void GetStereoImage(VideoCapture LeftCamera, VideoCapture RightCamera, Mat LeftImage, Mat RightImage)
         {
-            GetImage(LeftCamera, ref LeftImage);
-            GetImage(RightCamera, ref RightImage);
+            GetImage(LeftCamera, LeftImage);
+            GetImage(RightCamera, RightImage);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Bachelor_app.Helper
         /// </summary>
         /// <param name="Camera"></param>
         /// <param name="Image"></param>
-        public static void GetImage(VideoCapture Camera, ref Mat Image)
+        public static void GetImage(VideoCapture Camera, Mat Image)
         {
             if (Camera != null)
             {

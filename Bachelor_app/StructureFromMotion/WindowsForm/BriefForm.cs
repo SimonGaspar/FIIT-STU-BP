@@ -46,7 +46,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
         private void ShowDefaultModelSetting()
         {
             this.textBox1.Text = defaultModel.DescriptorSize.ToString();
-
         }
 
         private void BriefForm_FormClosing(object sender, FormClosingEventArgs e)

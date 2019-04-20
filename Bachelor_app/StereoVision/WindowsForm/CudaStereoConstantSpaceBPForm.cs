@@ -5,10 +5,6 @@ using Bachelor_app.StereoVision.StereoCorrespondence;
 
 namespace Bachelor_app.StereoVision.WindowsForm
 {
-    /// <summary>
-    /// Now not used, but in future, we can use video for SfM and stereo correspondence.
-    /// DELETE these, when not using.
-    /// </summary>
     public partial class CudaStereoConstantSpaceBPForm : Form
     {
         private CudaStereoConstantSpaceBeliefPropagation _cudaStereoConstantSpaceBeliefPropagation;

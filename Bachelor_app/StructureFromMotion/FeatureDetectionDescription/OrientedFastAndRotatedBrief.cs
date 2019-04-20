@@ -20,17 +20,20 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             Mat result = new Mat();
-            Mat image = new Mat(keyPoints.InputFile.FullPath);
-            var _orb = CreateInstance();
-            _orb.Compute(image, keyPoints.DetectedKeyPoints, result);
+
+            using (Mat image = new Mat(keyPoints.InputFile.FullPath))
+            using (var _orb = CreateInstance())
+                _orb.Compute(image, keyPoints.DetectedKeyPoints, result);
+
             return result;
         }
 
         public override MKeyPoint[] DetectKeyPoints(IInputArray image)
         {
             MKeyPoint[] result;
-            var _orb = CreateInstance();
-            result = _orb.Detect(image);
+
+            using (var _orb = CreateInstance())
+                result = _orb.Detect(image);
 
             return result;
         }

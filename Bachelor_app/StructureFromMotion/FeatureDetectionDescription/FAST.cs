@@ -19,8 +19,9 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
         public override MKeyPoint[] DetectKeyPoints(IInputArray image)
         {
             MKeyPoint[] result;
-            var _fast = CreateInstance();
-            result = _fast.Detect(image);
+
+            using (var _fast = CreateInstance())
+                result = _fast.Detect(image);
 
             return result;
         }

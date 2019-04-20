@@ -21,12 +21,9 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 
         public override void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            Monitor.Enter(locker);
-            var _cudaBruteForceMatcher = CreateInstance();
-            var left = new GpuMat(queryDescriptors as Mat);
-            var right = new GpuMat(trainDescriptors as Mat);
-            _cudaBruteForceMatcher.KnnMatch(right, left, matches, 1);
-            Monitor.Exit(locker);
+            using (var _cudaBruteForceMatcher = CreateInstance())
+            using (GpuMat left = new GpuMat(queryDescriptors as Mat), right = new GpuMat(trainDescriptors as Mat))
+                _cudaBruteForceMatcher.KnnMatch(right, left, matches, 1);
         }
 
         public override dynamic CreateInstance()

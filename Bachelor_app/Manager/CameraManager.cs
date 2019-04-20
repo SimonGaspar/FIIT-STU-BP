@@ -58,19 +58,19 @@ namespace Bachelor_app.Manager
         /// <returns>List of images, which create stereo image.</returns>
         public List<InputFileModel> GetInputFromStereoCamera(bool IsSFM, int countInputFile = 0)
         {
-            Mat LeftImage = new Mat();
-            Mat RightImage = new Mat();
-
-            CameraHelper.GetStereoImageSync(LeftCamera.Camera, RightCamera.Camera, ref LeftImage, ref RightImage);
-
             string LeftImagePath = Path.Combine($@"{(IsSFM ? Configuration.TempDirectoryPath : Configuration.TempLeftStackDirectoryPath)}", $"Left_{countInputFile}.JPG");
             string RightImagePath = Path.Combine($@"{(IsSFM ? Configuration.TempDirectoryPath : Configuration.TempRightStackDirectoryPath)}", $"Right_{countInputFile}.JPG");
 
-            if (LeftImage == null || RightImage == null)
-                throw new EmptyFrameException("Empty frame was captured from camera.");
+            using (Mat LeftImage = new Mat(), RightImage = new Mat())
+            {
+                CameraHelper.GetStereoImageSync(LeftCamera.Camera, RightCamera.Camera, LeftImage, RightImage);
 
-            LeftImage.Save(LeftImagePath);
-            RightImage.Save(RightImagePath);
+                if (LeftImage == null || RightImage == null)
+                    throw new EmptyFrameException("Empty frame was captured from camera.");
+
+                LeftImage.Save(LeftImagePath);
+                RightImage.Save(RightImagePath);
+            }
 
             _fileManager.AddInputFileToList(LeftImagePath, EListViewGroup.LeftCameraStack);
             _fileManager.AddInputFileToList(RightImagePath, EListViewGroup.RightCameraStack);
@@ -94,21 +94,19 @@ namespace Bachelor_app.Manager
         {
             string ImagePath = Path.Combine($@"{Configuration.TempDirectoryPath}", $"Image_{countInputFile}.JPG");
 
-            Mat Image = camera.GetImageInMat();
-
-            if (Image == null)
+            using (Mat Image = new Mat())
             {
-                throw new EmptyFrameException("Empty frame was captured from camera.");
-            }
+                CameraHelper.GetImage(camera, Image);
 
-            Image.Save(ImagePath);
+                if (Image == null)
+                    throw new EmptyFrameException("Empty frame was captured from camera.");
+
+                Image.Save(ImagePath);
+            }
 
             _fileManager.AddInputFileToList(ImagePath, EListViewGroup.BasicStack);
 
-            var returnList = new List<InputFileModel>
-            {
-                new InputFileModel(ImagePath)
-            };
+            var returnList = new List<InputFileModel>{new InputFileModel(ImagePath)};
 
             return returnList;
         }

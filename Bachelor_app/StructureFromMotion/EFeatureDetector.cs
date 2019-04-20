@@ -10,8 +10,6 @@ namespace Bachelor_app.StructureFromMotion
     {
         ORB,
         FAST,
-        FREAK,
-        BRIEF,
         CudaORB
     }
 
@@ -25,8 +23,6 @@ namespace Bachelor_app.StructureFromMotion
             {
                 case EFeatureDetector.ORB: returnItem = new OrientedFastAndRotatedBrief(); break;
                 case EFeatureDetector.FAST: returnItem = new FAST(); break;
-                case EFeatureDetector.FREAK: returnItem = new FREAK(); break;
-                case EFeatureDetector.BRIEF: returnItem = new BRIEF(); break;
                 case EFeatureDetector.CudaORB: returnItem = new CudaOrientedFastAndRotatedBrief(); break;
                 default: throw new NotImplementedException();
             }

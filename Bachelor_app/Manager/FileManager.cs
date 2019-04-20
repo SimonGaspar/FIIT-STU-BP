@@ -30,9 +30,6 @@ namespace Bachelor_app.Manager
             using (OpenFileDialog ofd = new OpenFileDialog() { Multiselect = true, ValidateNames = true, CheckFileExists = true, CheckPathExists = true, Filter = "" })
             {
                 DialogHelper.AddFilterToDialog<EImageFormat>(ofd, "All Image Files");
-                // NOT IMPLEMENTED
-                // DELETE these, when not using.
-                // DialogHelper.AddFilterToDialog<EVideoFormat>(ofd, "All Video Files");
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
