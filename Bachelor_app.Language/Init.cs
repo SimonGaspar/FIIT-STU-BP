@@ -36,7 +36,7 @@ namespace Bachelor_app.Resources
                     return name;
 
                 string result = MainResourse.GetString(name);
-                return (result == null) ? name : result;
+                return result ?? name;
             }
             catch
             {
