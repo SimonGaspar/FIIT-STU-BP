@@ -107,7 +107,7 @@ namespace Bachelor_app.Helper
                         ),
                     float.Parse(camera[9]));
                 
-                model.ListImageModel.Add(imageModel);
+                model.ListCameraModel.Add(imageModel);
             }
             return currentIndex;
         }

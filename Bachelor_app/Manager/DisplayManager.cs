@@ -195,7 +195,7 @@ namespace Bachelor_app.Manager
 
             foreach (var model in nvmFile)
             {
-                foreach (var camera in model.ListImageModel)
+                foreach (var camera in model.ListCameraModel)
                     ReadCameraIntoObject(renderWindowControl, camera);
 
                 ReadPointIntoObject(renderWindowControl, model.ListPointModel);

@@ -124,13 +124,13 @@ namespace Bachelor_app
             this.toolStripComboBox9 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox10 = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel14 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox12 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel13 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox11 = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -1066,6 +1066,16 @@ namespace Bachelor_app
             this.toolStripComboBox10.Size = new System.Drawing.Size(121, 27);
             this.toolStripComboBox10.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox10_SelectedIndexChanged);
             // 
+            // toolStripButton25
+            // 
+            this.toolStripButton25.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton25.Image = global::Bachelor_app.Properties.Resources.Repeat_Freepik;
+            this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton25.Name = "toolStripButton25";
+            this.toolStripButton25.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButton25.Text = "Update list";
+            this.toolStripButton25.Click += new System.EventHandler(this.toolStripButton25_Click);
+            // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
@@ -1099,16 +1109,6 @@ namespace Bachelor_app
             this.toolStripComboBox11.Name = "toolStripComboBox11";
             this.toolStripComboBox11.Size = new System.Drawing.Size(121, 27);
             this.toolStripComboBox11.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox11_SelectedIndexChanged);
-            // 
-            // toolStripButton25
-            // 
-            this.toolStripButton25.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton25.Image = global::Bachelor_app.Properties.Resources.Repeat_Freepik;
-            this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton25.Name = "toolStripButton25";
-            this.toolStripButton25.Size = new System.Drawing.Size(24, 24);
-            this.toolStripButton25.Text = "Update list";
-            this.toolStripButton25.Click += new System.EventHandler(this.toolStripButton25_Click);
             // 
             // MainForm
             // 
