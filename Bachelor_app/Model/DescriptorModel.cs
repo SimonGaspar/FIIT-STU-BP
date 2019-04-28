@@ -8,12 +8,12 @@ namespace Bachelor_app.Model
     public class DescriptorModel
     {
         public KeyPointModel KeyPoint { get; private set; }
-        public Mat Descriptors { get; private set; }
+        public Mat Descriptor { get; private set; }
         public string FileFormatSIFT { get; private set; }
 
         public DescriptorModel(KeyPointModel keyPointModel, Mat descriptors) {
             KeyPoint = keyPointModel;
-            Descriptors = descriptors;
+            Descriptor = descriptors;
         }
 
         public void SaveSiftInModel(string SiftText)
@@ -32,7 +32,7 @@ namespace Bachelor_app.Model
         /// <param name="SaveInDescriptorNode"></param>
         public static void SaveSiftFile(this DescriptorModel model, bool SaveInTempDirectory = true, bool SaveInDescriptorNode = true)
         {
-            var descriptor = model.Descriptors;
+            var descriptor = model.Descriptor;
             var keyPoints = model.KeyPoint.DetectedKeyPoints;
             var fileName = $"{model.KeyPoint.InputFile.FileNameWithoutExtension}.SIFT";
             var descriptorSavePath = Path.Combine(Configuration.TempDirectoryPath, fileName);

@@ -353,7 +353,7 @@ namespace Bachelor_app
                 try
                 {
                     semaphore.Wait();
-                    matcher.Match(leftDescriptor.Descriptors, rightDescriptor.Descriptors, matches);
+                    matcher.Match(leftDescriptor.Descriptor, rightDescriptor.Descriptor, matches);
                     semaphore.Release();
                 }
                 catch (Exception e)
