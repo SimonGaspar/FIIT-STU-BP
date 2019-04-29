@@ -45,11 +45,12 @@ namespace Bachelor_app.Manager
             else
                 _displayManager.RightViewWindowItem = enumItem;
 
-            switch (enumItem) {
+            switch (enumItem)
+            {
                 case EDisplayItem.SfMPointCloud:
                 case EDisplayItem.DepthMapPointCloud:
-                    ChangeRenderer(LeftWindow, true); ;break;
-                default: ChangeRenderer(LeftWindow, false);break;
+                    ChangeRenderer(LeftWindow, true); ; break;
+                default: ChangeRenderer(LeftWindow, false); break;
             }
         }
 
@@ -255,8 +256,9 @@ namespace Bachelor_app.Manager
                 }
                 else
                 {
-                    MessageBox.Show("Can't set the same camera. It was set as right camera");
                     currentItem.SelectedItem = currentItem.Items[(LeftCamera == -1 ? currentItem.Items.IndexOf("Empty") : LeftCamera)];
+                    if (index != -1)
+                        MessageBox.Show("Can't set the same camera. It was set as right camera");
                 }
             }
             else
@@ -268,8 +270,9 @@ namespace Bachelor_app.Manager
                 }
                 else
                 {
-                    MessageBox.Show("Can't set the same camera. It was set as left camera.");
-                    currentItem.SelectedItem= currentItem.Items[(RightCamera ==-1 ? currentItem.Items.IndexOf("Empty"): RightCamera)];
+                    currentItem.SelectedItem = currentItem.Items[(RightCamera == -1 ? currentItem.Items.IndexOf("Empty") : RightCamera)];
+                    if (index != -1)
+                        MessageBox.Show("Can't set the same camera. It was set as left camera.");
                 }
             }
         }
