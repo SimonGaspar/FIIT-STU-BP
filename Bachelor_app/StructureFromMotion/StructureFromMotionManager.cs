@@ -36,6 +36,7 @@ namespace Bachelor_app
 
         private float ms_MAX_DIST;
         private float ms_MIN_DIST;
+        private int countMatches = 0;
         //private static object locker = new object();
 
         public SfM(FileManager fileManager, CameraManager cameraManager)
@@ -63,6 +64,7 @@ namespace Bachelor_app
             }
             else
             {
+                countMatches = 0;
                 Configuration.DeleteTempFolder();
                 Configuration.GenerateFolders();
                 ClearList();
@@ -350,6 +352,7 @@ namespace Bachelor_app
                 {
                     semaphore.Wait();
                     matcher.Match(leftDescriptor.Descriptor, rightDescriptor.Descriptor, matches);
+                    countMatches++;
                     semaphore.Release();
                 }
                 catch (Exception e)
@@ -361,7 +364,7 @@ namespace Bachelor_app
             matchesList = matchesArray.ToList();
 
             WindowsFormHelper.AddLogToConsole(
-                $"FINISH computing matches for: \n" +
+                $"FINISH ({countMatches}) computing matches for: \n" +
                 $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                 $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
                 );
