@@ -1,13 +1,11 @@
 ﻿using System.IO;
-using Bachelor_app.Enumerate;
-using Bachelor_app.Model;
 
 namespace Bachelor_app
 {
     public static class Configuration
     {
         #region Temp directory and subdirectory
-        public static string TempDirectoryPath { get; private set; } = Path.GetFullPath($"..\\..\\..\\Temp");
+        public static string TempDirectoryPath { get; private set; } = Path.GetFullPath($".\\Temp");
         public static string TempDepthMapDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "DepthMap");
         public static string TempLeftStackDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "LeftStack");
         public static string TempRightStackDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "RightStack");
@@ -31,14 +29,14 @@ namespace Bachelor_app
         public static string CalibrationPath { get; private set; } = Path.Combine(TempDirectoryPath, CalibrationName);
         #endregion
 
-        #region Otazne
-        public static ECameraResolution Resolution { get; set; }
-        public static EDisplayItem LeftViewWindowItem { get; set; }
-        public static EDisplayItem RightViewWindowItem { get; set; }
-        public static bool DisplayRemapImage { get; set; } = false;
-        public static EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.Console;
-        public static EInput _inputType { get; set; } = EInput.ListViewBasicStack;
-        public static ListViewModel ListViewModel { get; private set; } = new ListViewModel();
+        #region We can move some properties into configuration
+        //public static ECameraResolution Resolution { get; set; }
+        //public static EDisplayItem LeftViewWindowItem { get; set; }
+        //public static EDisplayItem RightViewWindowItem { get; set; }
+        //public static bool DisplayRemapImage { get; set; } = false;
+        //public static EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.Console;
+        //public static EInput _inputType { get; set; } = EInput.ListViewBasicStack;
+        //public static ListViewModel ListViewModel { get; private set; } = new ListViewModel();
         #endregion
 
         public static void GenerateFolders()
