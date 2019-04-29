@@ -38,6 +38,7 @@ namespace Bachelor_app.Manager
                 cameraModel.Camera.UpdateResolution(resolution);
             }
             else
+                if (cameraModel.Camera != null)
                 cameraModel.Camera.Dispose();
         }
 
@@ -106,7 +107,7 @@ namespace Bachelor_app.Manager
 
             _fileManager.AddInputFileToList(ImagePath, EListViewGroup.BasicStack);
 
-            var returnList = new List<InputFileModel>{new InputFileModel(ImagePath)};
+            var returnList = new List<InputFileModel> { new InputFileModel(ImagePath) };
 
             return returnList;
         }

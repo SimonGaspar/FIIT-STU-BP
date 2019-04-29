@@ -244,12 +244,14 @@ namespace Bachelor_app.Manager
         public void SetCamera(object sender, EventArgs e, bool IsLeft)
         {
             var currentItem = sender as ToolStripComboBox;
+            var index = currentItem.SelectedIndex != currentItem.Items.IndexOf("Empty") ? currentItem.SelectedIndex : -1;
+
             if (IsLeft)
             {
-                if (RightCamera != currentItem.SelectedIndex && IsLeft)
+                if (RightCamera != index)
                 {
-                    _cameraManager.SetCamera(_cameraManager.LeftCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
-                    LeftCamera = currentItem.SelectedIndex;
+                    _cameraManager.SetCamera(_cameraManager.LeftCamera, index, currentItem.SelectedItem.ToString());
+                    LeftCamera = index;
                 }
                 else
                 {
@@ -259,10 +261,10 @@ namespace Bachelor_app.Manager
             }
             else
             {
-                if (LeftCamera != currentItem.SelectedIndex && !IsLeft)
+                if (LeftCamera != index)
                 {
-                    _cameraManager.SetCamera(_cameraManager.RightCamera, currentItem.SelectedIndex, currentItem.SelectedItem.ToString());
-                    RightCamera = currentItem.SelectedIndex;
+                    _cameraManager.SetCamera(_cameraManager.RightCamera, index, currentItem.SelectedItem.ToString());
+                    RightCamera = index;
                 }
                 else
                 {
