@@ -15,6 +15,11 @@ namespace Bachelor_app.StructureFromMotion
 
     public static class FeatureDescriptorExtension
     {
+        /// <summary>
+        /// Create instance of descriptor type.
+        /// </summary>
+        /// <param name="type">Descriptor type.</param>
+        /// <returns>Instance of descriptor.</returns>
         public static IFeatureDescriptor GetDescriptorInstance(this EFeatureDescriptor type)
         {
             IFeatureDescriptor returnItem = null;

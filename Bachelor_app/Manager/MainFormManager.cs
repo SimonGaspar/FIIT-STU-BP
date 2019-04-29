@@ -7,6 +7,9 @@ using Bachelor_app.StructureFromMotion;
 
 namespace Bachelor_app.Manager
 {
+    /// <summary>
+    /// Controller of MainForm components.
+    /// </summary>
     public class MainFormManager
     {
         private MainForm _winForm;

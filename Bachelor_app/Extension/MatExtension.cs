@@ -30,7 +30,7 @@ namespace Bachelor_app.Extension
         /// <returns></returns>
         public static Image<Bgr, byte> ToImageBGR<T>(this T image) where T : IImage, IInputArray
         {
-            if (image ==null || image.Bitmap == null)
+            if (image == null || image.Bitmap == null)
                 return null;
 
             return new Image<Bgr, byte>(image.Bitmap);
@@ -108,6 +108,13 @@ namespace Bachelor_app.Extension
             }
         }
 
+        /// <summary>
+        /// Metod used in stereo vision to modify image for computing depth map.
+        /// </summary>
+        /// <param name="Mat">Image in Mat to modify</param>
+        /// <param name="LeftImage">It's left image?</param>
+        /// <param name="UseRemap">Use remap?</param>
+        /// <returns></returns>
         public static Mat RemapMat(this Mat Mat, bool LeftImage, bool UseRemap = false)
         {
             if (CalibrationModel.IsCalibrated && UseRemap)

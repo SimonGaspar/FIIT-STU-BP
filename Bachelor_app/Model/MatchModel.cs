@@ -23,7 +23,8 @@ namespace Bachelor_app.Model
         public List<MDMatch[]> FilteredMatchesList { get; private set; }
         public bool FilteredMatch { get; private set; }
 
-        public MatchModel(DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, List<MDMatch[]> matchesList, Mat perspectiveMatrix, Mat mask, string fileFormatMatch, List<MDMatch[]> filteredMatchesList, bool filteredMatch) {
+        public MatchModel(DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, List<MDMatch[]> matchesList, Mat perspectiveMatrix, Mat mask, string fileFormatMatch, List<MDMatch[]> filteredMatchesList, bool filteredMatch)
+        {
             LeftDescriptor = leftDescriptor;
             RightDescriptor = rightDescriptor;
             MatchesList = matchesList;
@@ -34,7 +35,12 @@ namespace Bachelor_app.Model
             FilteredMatch = filteredMatch;
         }
 
-        public void SaveMatchInModel(string text) {
+        /// <summary>
+        /// Save all founded matches in model.
+        /// </summary>
+        /// <param name="text">Text in correct format</param>
+        public void SaveMatchInModel(string text)
+        {
             FileFormatMatch = text;
         }
     }

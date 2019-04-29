@@ -8,6 +8,11 @@ namespace Bachelor_app.Model
         public string DeviceName { get; private set; }
         public VideoCapture Camera { get; private set; }
 
+        /// <summary>
+        /// Create instance of choosen camera.
+        /// </summary>
+        /// <param name="deviceId">ID of camera.</param>
+        /// <param name="deviceName">Name of camera.</param>
         public void CreateCameraInstance(int deviceId, string deviceName)
         {
             if (Camera != null)

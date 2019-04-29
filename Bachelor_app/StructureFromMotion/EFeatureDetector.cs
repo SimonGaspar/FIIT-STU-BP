@@ -15,6 +15,11 @@ namespace Bachelor_app.StructureFromMotion
 
     public static class FeatureDetectorExtension
     {
+        /// <summary>
+        /// Create instance of detector type.
+        /// </summary>
+        /// <param name="type">Detector type.</param>
+        /// <returns>Instance of detector.</returns>
         public static IFeatureDetector GetDetectorInstance(this EFeatureDetector type)
         {
             IFeatureDetector returnItem = null;

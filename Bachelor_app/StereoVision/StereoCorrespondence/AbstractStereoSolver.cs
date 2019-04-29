@@ -67,6 +67,9 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             TryCreateInstance();
         }
 
+        /// <summary>
+        /// Check, if instance can be created.
+        /// </summary>
         private void TryCreateInstance()
         {
             var instance = CreateInstance();

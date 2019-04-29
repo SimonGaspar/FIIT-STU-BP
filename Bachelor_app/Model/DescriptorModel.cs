@@ -11,11 +11,16 @@ namespace Bachelor_app.Model
         public Mat Descriptor { get; private set; }
         public string FileFormatSIFT { get; private set; }
 
-        public DescriptorModel(KeyPointModel keyPointModel, Mat descriptors) {
+        public DescriptorModel(KeyPointModel keyPointModel, Mat descriptors)
+        {
             KeyPoint = keyPointModel;
             Descriptor = descriptors;
         }
 
+        /// <summary>
+        /// Save SIFT format text in model.
+        /// </summary>
+        /// <param name="SiftText">Text in SIFT format.</param>
         public void SaveSiftInModel(string SiftText)
         {
             FileFormatSIFT = SiftText;

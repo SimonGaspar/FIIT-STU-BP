@@ -10,7 +10,6 @@ using Bachelor_app.StereoVision.StereoCorrespondence;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using Emgu.CV.Util;
 using Newtonsoft.Json;
 
 namespace Bachelor_app.StereoVision
@@ -173,8 +172,8 @@ namespace Bachelor_app.StereoVision
 
                 _fileManager.ListViewModel._lastDepthMapImage = new Image<Bgr, byte>(DepthMapToSave.Bitmap);
 
-                SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap),i);
-                Computer3DPointsFromStereoPair(DepthMap,i);
+                SaveAndAddDepthMapToListView(new Image<Bgr, byte>(DepthMapToSave.Bitmap), i);
+                Computer3DPointsFromStereoPair(DepthMap, i);
             }
             );
         }

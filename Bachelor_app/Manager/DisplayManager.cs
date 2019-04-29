@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Numerics;
 using System.Windows.Forms;
 using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
@@ -130,11 +129,15 @@ namespace Bachelor_app.Manager
             switch (typeOfItem)
             {
                 case EDisplayItem.SfMPointCloud: DisplayPointCloudNVM(renderWindow); break;
-                case EDisplayItem.DepthMapPointCloud: DisplayDepthMap(renderWindow); break;;
+                case EDisplayItem.DepthMapPointCloud: DisplayDepthMapPointCloud(renderWindow); break; ;
             }
         }
 
-        private void DisplayDepthMap(RenderWindowControl renderWindow)
+        /// <summary>
+        /// Method to display point cloud from depth map.
+        /// </summary>
+        /// <param name="renderWindow"></param>
+        private void DisplayDepthMapPointCloud(RenderWindowControl renderWindow)
         {
             ClearVTKRenderer(renderWindow);
 
@@ -142,45 +145,9 @@ namespace Bachelor_app.Manager
             if (listView.Visible)
             {
                 var item = listView.SelectedItems;
-                ReadPointFromDepthMap(renderWindow,item[0].Text.Split('.')[0]+".json");
+                ReadPointFromDepthMap(renderWindow, item[0].Text.Split('.')[0] + ".json");
 
             }
-        }
-
-        private void ReadPointFromDepthMap(RenderWindowControl renderWindowControl, string name)
-        {
-            var json = File.ReadAllText(Path.Combine(Configuration.TempDepthMapDirectoryPath,name));
-            var jsonObject = JsonConvert.DeserializeObject<MCvPoint3D32f[]>(json);
-
-            vtkPoints points = vtkPoints.New();
-            foreach (var point in jsonObject)
-            {
-                points.InsertNextPoint(
-                    double.Parse(point.X.ToString(), CultureInfo.InvariantCulture),
-                    double.Parse(point.Y.ToString(), CultureInfo.InvariantCulture),
-                    double.Parse(point.Z.ToString(), CultureInfo.InvariantCulture)
-                    );
-            }
-
-            vtkPolyData polydata = vtkPolyData.New();
-            polydata.SetPoints(points);
-
-            vtkVertexGlyphFilter glyphFilter = vtkVertexGlyphFilter.New();
-            glyphFilter.SetInputConnection(polydata.GetProducerPort());
-            
-            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
-            mapper.SetInputConnection(glyphFilter.GetOutputPort());
-
-            vtkActor actor = vtkActor.New();
-            actor.SetMapper(mapper);
-            actor.GetProperty().SetPointSize(2);
-
-            vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
-            vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
-
-            renderer.SetBackground(0.2, 0.3, 0.4);
-            renderer.AddActor(actor);
-            renderer.ResetCamera();
         }
 
         /// <summary>
@@ -202,6 +169,10 @@ namespace Bachelor_app.Manager
             }
         }
 
+        /// <summary>
+        /// Remove all points in render window.
+        /// </summary>
+        /// <param name="renderWindowControl"></param>
         private void ClearVTKRenderer(RenderWindowControl renderWindowControl)
         {
             var renderWindow = renderWindowControl.RenderWindow;
@@ -210,6 +181,47 @@ namespace Bachelor_app.Manager
         }
 
         #region VTK loading methods
+        /// <summary>
+        /// Reading points from depth map point cloud.
+        /// </summary>
+        /// <param name="renderWindowControl"></param>
+        /// <param name="name">Name of depth map with json extension.</param>
+        private void ReadPointFromDepthMap(RenderWindowControl renderWindowControl, string name)
+        {
+            var json = File.ReadAllText(Path.Combine(Configuration.TempDepthMapDirectoryPath, name));
+            var jsonObject = JsonConvert.DeserializeObject<MCvPoint3D32f[]>(json);
+
+            vtkPoints points = vtkPoints.New();
+            foreach (var point in jsonObject)
+            {
+                points.InsertNextPoint(
+                    double.Parse(point.X.ToString(), CultureInfo.InvariantCulture),
+                    double.Parse(point.Y.ToString(), CultureInfo.InvariantCulture),
+                    double.Parse(point.Z.ToString(), CultureInfo.InvariantCulture)
+                    );
+            }
+
+            vtkPolyData polydata = vtkPolyData.New();
+            polydata.SetPoints(points);
+
+            vtkVertexGlyphFilter glyphFilter = vtkVertexGlyphFilter.New();
+            glyphFilter.SetInputConnection(polydata.GetProducerPort());
+
+            vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
+            mapper.SetInputConnection(glyphFilter.GetOutputPort());
+
+            vtkActor actor = vtkActor.New();
+            actor.SetMapper(mapper);
+            actor.GetProperty().SetPointSize(2);
+
+            vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
+            vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
+
+            renderer.SetBackground(0.2, 0.3, 0.4);
+            renderer.AddActor(actor);
+            renderer.ResetCamera();
+        }
+
         /// <summary>
         /// Display camera in VTK renderer.
         /// </summary>
@@ -282,7 +294,7 @@ namespace Bachelor_app.Manager
 
             vtkVertexGlyphFilter glyphFilter = vtkVertexGlyphFilter.New();
             glyphFilter.SetInputConnection(polydata.GetProducerPort());
-            
+
             vtkPolyDataMapper mapper = vtkPolyDataMapper.New();
             mapper.SetInputConnection(glyphFilter.GetOutputPort());
 

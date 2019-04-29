@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
 using Bachelor_app.Helper;
 using Bachelor_app.Manager;
@@ -19,7 +18,6 @@ namespace Bachelor_app.StereoVision
 {
     public class CalibrationManager
     {
-        // ak bude mat global configuration aj typ resolution netreba si pamatat.
         private CameraManager _cameraManager;
         private CalibrationForm _winForm;
 
@@ -53,9 +51,12 @@ namespace Bachelor_app.StereoVision
 
             _winForm = new CalibrationForm(this, patternModel);
             CalibrationProcess = new Thread(ProcessFrame);
-            Task.Run(()=>_winForm.ShowDialog());
+            Task.Run(() => _winForm.ShowDialog());
         }
 
+        /// <summary>
+        /// Kill calibration thread.
+        /// </summary>
         public void KillProcess()
         {
             CalibrationProcess.Abort();
@@ -245,7 +246,7 @@ namespace Bachelor_app.StereoVision
                             break;
                         default: throw new NotImplementedException();
                     }
-                    
+
                     _winForm.pictureBox1.Image = frameImage_S1.ToImage();
                     _winForm.pictureBox2.Image = frameImage_S2.ToImage();
                 }

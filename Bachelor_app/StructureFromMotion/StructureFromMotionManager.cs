@@ -161,7 +161,6 @@ namespace Bachelor_app
                     MatchingSequencePrevious(countOfExistedKeypoint, startMatchingFromPrevious, 2, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    throw new NotImplementedException();
                     for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
                         for (int n = m + 1; n < ComputedDescriptors.Count; n++)
                             FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
@@ -185,7 +184,6 @@ namespace Bachelor_app
                     MatchingStereoParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    throw new NotImplementedException();
                     Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
@@ -220,7 +218,6 @@ namespace Bachelor_app
                     MatchingSequencePrevious(countOfExistedKeypoint, startMatchingFromPrevious, 1, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    throw new NotImplementedException();
                     for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
                         for (int n = m + 1; n < ComputedDescriptors.Count; n++)
                             FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
@@ -280,7 +277,6 @@ namespace Bachelor_app
                     MatchingParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    throw new NotImplementedException();
                     Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
@@ -335,7 +331,7 @@ namespace Bachelor_app
             File.WriteAllText(Configuration.MatchFilePath, sb.ToString());
         }
 
-        SemaphoreSlim semaphore = new SemaphoreSlim(1); 
+        SemaphoreSlim semaphore = new SemaphoreSlim(1);
 
         private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = true, bool DrawAndSave = true)
         {

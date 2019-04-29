@@ -13,6 +13,12 @@ namespace Bachelor_app.StructureFromMotion
 
     public static class FeatureMatcherExtension
     {
+
+        /// <summary>
+        /// Create instance of matcher type.
+        /// </summary>
+        /// <param name="type">matcher type.</param>
+        /// <returns>Instance of matcher.</returns>
         public static IFeatureMatcher GetMatcherInstance(this EFeatureMatcher type)
         {
             IFeatureMatcher returnItem = null;
