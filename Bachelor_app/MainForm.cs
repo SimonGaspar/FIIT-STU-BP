@@ -137,7 +137,7 @@ namespace Bachelor_app
 
         private void ToolStripButton13_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = "";
+            WindowsFormHelper.ClearConsole();
         }
 
         private void ToolStripComboBox8_SelectedIndexChanged(object sender, EventArgs e)

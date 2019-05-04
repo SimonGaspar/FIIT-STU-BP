@@ -160,13 +160,25 @@ namespace Bachelor_app.Manager
 
             var nvmFile = SfMHelper.LoadPointCloud();
 
-            foreach (var model in nvmFile)
+            // Only first model
+            if (nvmFile.Count > 0)
             {
+                var model = nvmFile[0];
+
                 foreach (var camera in model.ListCameraModel)
                     ReadCameraIntoObject(renderWindowControl, camera);
 
                 ReadPointIntoObject(renderWindowControl, model.ListPointModel);
             }
+
+            // If we want show all models
+            //foreach (var model in nvmFile)
+            //{
+            //    foreach (var camera in model.ListCameraModel)
+            //        ReadCameraIntoObject(renderWindowControl, camera);
+
+            //    ReadPointIntoObject(renderWindowControl, model.ListPointModel);
+            //}
         }
 
         /// <summary>

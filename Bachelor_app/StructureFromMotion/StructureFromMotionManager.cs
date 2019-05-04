@@ -11,6 +11,7 @@ using Bachelor_app.Helper;
 using Bachelor_app.Manager;
 using Bachelor_app.Model;
 using Bachelor_app.StructureFromMotion;
+using Bachelor_app.StructureFromMotion.FeatureMatcher;
 using Bachelor_app.Tools;
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -342,18 +343,48 @@ namespace Bachelor_app
             MDMatch[][] matchesArray;
             var perspectiveMatrix = new Mat();
             var mask = new Mat();
-
-            WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
-                    $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
-                    $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
             using (var matches = new VectorOfVectorOfDMatch())
             {
                 try
                 {
-                    semaphore.Wait();
-                    matcher.Match(leftDescriptor.Descriptor, rightDescriptor.Descriptor, matches);
-                    countMatches++;
-                    semaphore.Release();
+                    if (matcher.GetType().Name == typeof(CudaBruteForce).Name)
+                    {
+                        // Only 30000 points per descriptors can compute our GeForce GTX 1060 6GB 
+                        var leftDesc = new Mat(leftDescriptor.Descriptor.Rows > 30000 ? 30000 : leftDescriptor.Descriptor.Rows, leftDescriptor.Descriptor.Cols, leftDescriptor.Descriptor.Depth, leftDescriptor.Descriptor.NumberOfChannels);
+                        var rightDesc = new Mat(rightDescriptor.Descriptor.Rows > 30000 ? 30000 : rightDescriptor.Descriptor.Rows, rightDescriptor.Descriptor.Cols, rightDescriptor.Descriptor.Depth, rightDescriptor.Descriptor.NumberOfChannels);
+
+                        for (int i = 0; i < leftDesc.Rows; i++)
+                            leftDescriptor.Descriptor.Row(i).CopyTo(leftDesc.Row(i));
+                        for (int i = 0; i < rightDesc.Rows; i++)
+                            rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
+
+                        semaphore.Wait();
+                        WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
+                                $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                                $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
+
+                        matcher.Match(leftDesc, rightDesc, matches);
+
+                        WindowsFormHelper.AddLogToConsole(
+                            $"FINISH ({++countMatches}) computing matches for: \n" +
+                            $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                            $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
+                            );
+                        semaphore.Release();
+                    }
+                    else {
+                        WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
+                                $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                                $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
+
+                        matcher.Match(leftDescriptor.Descriptor, rightDescriptor.Descriptor, matches);
+
+                        WindowsFormHelper.AddLogToConsole(
+                            $"FINISH ({++countMatches}) computing matches for: \n" +
+                            $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                            $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
+                            );
+                    }
                 }
                 catch (Exception e)
                 {
@@ -362,12 +393,6 @@ namespace Bachelor_app
                 matchesArray = matches.ToArrayOfArray();
             }
             matchesList = matchesArray.ToList();
-
-            WindowsFormHelper.AddLogToConsole(
-                $"FINISH ({countMatches}) computing matches for: \n" +
-                $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
-                $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
-                );
 
             if (FilterMatches)
             {

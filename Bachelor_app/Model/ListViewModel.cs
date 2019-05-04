@@ -12,12 +12,12 @@ namespace Bachelor_app.Model
     public class ListViewModel
     {
 
-        public Image<Bgr, Byte> _lastBasicStack { get; set; }
-        public Image<Bgr, Byte> _lastCameraStack { get; set; }
-        public Image<Bgr, Byte> _lastDepthMapImage { get; set; }
-        public Image<Bgr, Byte> _lastDrawnKeypoint { get; set; }
-        public Image<Bgr, Byte> _lastDrawnMatches { get; set; }
-        public Image<Bgr, Byte> _lastImage { get; set; }
+        public Image<Bgr, byte> _lastBasicStack { get; set; }
+        public Image<Bgr, byte> _lastCameraStack { get; set; }
+        public Image<Bgr, byte> _lastDepthMapImage { get; set; }
+        public Image<Bgr, byte> _lastDrawnKeypoint { get; set; }
+        public Image<Bgr, byte> _lastDrawnMatches { get; set; }
+        public Image<Bgr, byte> _lastImage { get; set; }
         
         public List<InputFileModel> BasicStack { get; private set; }
         public List<InputFileModel> LeftCameraStack { get; private set; }
