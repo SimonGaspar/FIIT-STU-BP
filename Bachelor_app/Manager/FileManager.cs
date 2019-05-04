@@ -87,15 +87,15 @@ namespace Bachelor_app.Manager
                 listView.Invoke((Action)delegate { AddInputFileToList(inputFile, listOfInput, imageList, listView); });
             else
             {
-                imageList.Images.Add(inputFile.FileName, inputFile.Image);
+                //imageList.Images.Add(inputFile.FileName, inputFile.Image);
 
-                var listItem = new ListViewItem(inputFile.FileName, imageList.Images.IndexOfKey(inputFile.FileName))
-                {
-                    ImageKey = inputFile.FileName
-                };
+                //var listItem = new ListViewItem(inputFile.FileName, imageList.Images.IndexOfKey(inputFile.FileName))
+                //{
+                //    ImageKey = inputFile.FileName
+                //};
 
                 listOfInput.Add(inputFile);
-                listView.Items.Add(listItem);
+                //listView.Items.Add(listItem);
             }
         }
 

@@ -159,14 +159,11 @@ namespace Bachelor_app.Manager
             ClearVTKRenderer(renderWindowControl);
 
             var nvmFile = SfMHelper.LoadPointCloud();
-
-            foreach (var model in nvmFile)
-            {
+            var model = nvmFile[0];
                 foreach (var camera in model.ListCameraModel)
                     ReadCameraIntoObject(renderWindowControl, camera);
 
                 ReadPointIntoObject(renderWindowControl, model.ListPointModel);
-            }
         }
 
         /// <summary>

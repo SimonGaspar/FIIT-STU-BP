@@ -7,6 +7,7 @@ using Bachelor_app.Helper;
 using Bachelor_app.Manager;
 using Bachelor_app.StereoVision;
 using Bachelor_app.StereoVision.Calibration;
+using Bachelor_app.Tools;
 
 namespace Bachelor_app
 {
@@ -254,6 +255,11 @@ namespace Bachelor_app
             this.toolStripComboBox9.Items.Clear();
             this.toolStripComboBox9.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
             this.toolStripComboBox9.SelectedItem = secondSelectedItem;
+        }
+
+        private void toolStripButton8_Click(object sender, EventArgs e)
+        {
+            ToolHelper.RunVisualSFM(false);
         }
     }
 }

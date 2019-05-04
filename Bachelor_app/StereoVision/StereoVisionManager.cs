@@ -101,7 +101,7 @@ namespace Bachelor_app.StereoVision
         {
             var path = Path.Combine(Configuration.TempDepthMapDirectoryPath, $"DepthMap_{index}.JPG");
 
-            disparityMap.Save(path);
+            //disparityMap.Save(path);
             disparityMap.Dispose();
 
             _fileManager.AddInputFileToList(path, EListViewGroup.DepthMap);

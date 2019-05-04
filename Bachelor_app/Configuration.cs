@@ -1,11 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Bachelor_app
 {
     public static class Configuration
     {
         #region Temp directory and subdirectory
-        public static string TempDirectoryPath { get; private set; } = Path.GetFullPath($".\\Temp");
+        public static string TempDirectoryPath { get; private set; } = Path.GetFullPath($"..\\..\\..\\Temp");
         public static string TempDepthMapDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "DepthMap");
         public static string TempLeftStackDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "LeftStack");
         public static string TempRightStackDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "RightStack");
@@ -54,18 +55,23 @@ namespace Bachelor_app
 
         public static void DeleteTempFolder()
         {
-            DirectoryInfo di = new DirectoryInfo(TempDirectoryPath);
-
-            foreach (FileInfo file in di.GetFiles())
+            try
             {
-                file.Delete();
+                if (Directory.Exists(TempDirectoryPath))
+                {
+                    DirectoryInfo di = new DirectoryInfo(TempDirectoryPath);
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in di.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+                    di.Delete();
+                }
             }
-            foreach (DirectoryInfo dir in di.GetDirectories())
-            {
-                dir.Delete(true);
+            catch (Exception e) { }
             }
-            di.Delete();
-
-        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Bachelor_app.Resources;
+using Bachelor_app.Tools;
 
 namespace Bachelor_app
 {
