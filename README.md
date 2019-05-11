@@ -1,5 +1,5 @@
 # FIIT-STU-BP
-FIIT STU Bakalárska práca
+FIIT STU bachelor project
 
 This repository is for my bachelor project 3D mapping and modelling of environment in realtime. You can read it at */Document/BP_ŠimonGašpar.pdf
 
