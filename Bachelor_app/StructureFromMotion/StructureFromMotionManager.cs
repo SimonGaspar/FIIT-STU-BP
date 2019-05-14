@@ -16,7 +16,6 @@ using Bachelor_app.StructureFromMotion;
 using Bachelor_app.StructureFromMotion.FeatureMatcher;
 using Bachelor_app.Tools;
 using Emgu.CV;
-using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
 
@@ -229,7 +228,7 @@ namespace Bachelor_app
                             //continue;
                             {
                                 //if (detectoris == EFeatureDetector.FAST && descriptoris == EFeatureDescriptor.CudaORB)
-                                    //continue;
+                                //continue;
                                 SetDataTable();
                                 ClearList();
                                 Configuration.DeleteTempFolder();
@@ -336,7 +335,7 @@ namespace Bachelor_app
             NVMModelTable.ExportToCSV($"MODEL_{name}.csv", path);
             ProcessTable.ExportToCSV($"VISUALSFM_{name}.csv", path);
 
-            File.Copy(Configuration.VisualSFMResultPath, Path.Combine(path,name + ".nvm"),true);
+            File.Copy(Configuration.VisualSFMResultPath, Path.Combine(path, name + ".nvm"), true);
 
             JsonHelper.SaveJson(KeyPointTable, name, path);
             JsonHelper.SaveJson(DescriptorTable, name, path);
@@ -351,7 +350,8 @@ namespace Bachelor_app
                 CopyDataTable(NVMModelTable, d);
                 CopyDataTable(ProcessTable, e);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Console.WriteLine();
             }
         }
@@ -360,7 +360,7 @@ namespace Bachelor_app
         {
             foreach (DataRow dr in a.Rows)
             {
-                    b.Rows.Add(dr.ItemArray);
+                b.Rows.Add(dr.ItemArray);
             }
         }
 
@@ -532,7 +532,7 @@ namespace Bachelor_app
                     MatchingParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    for(int index= countOfExistedKeypoint;index< ComputedDescriptors.Count;index++)
+                    for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
                     //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
@@ -609,25 +609,25 @@ namespace Bachelor_app
 
             long matchestime = 0;
             bool filtered = false;
-            var Stopwatch = new Stopwatch();
+            //var Stopwatch = new Stopwatch();
             var filteredMatchesList = new List<MDMatch[]>();
             var matchesList = new List<MDMatch[]>();
             MDMatch[][] matchesArray;
             var perspectiveMatrix = new Mat();
             var mask = new Mat();
 
-            
+
             using (var matches = new VectorOfVectorOfDMatch())
             {
                 try
                 {
                     if (matcher.GetType().Name == typeof(CudaBruteForce).Name)
                     {
-                        Stopwatch.Reset();
+                        //Stopwatch.Reset();
                         //WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
                         // $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                         // $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
-                        var leftDesc = new Mat(leftDescriptor.Descriptor.Rows>30000?30000: leftDescriptor.Descriptor.Rows, leftDescriptor.Descriptor.Cols, leftDescriptor.Descriptor.Depth, leftDescriptor.Descriptor.NumberOfChannels);
+                        var leftDesc = new Mat(leftDescriptor.Descriptor.Rows > 30000 ? 30000 : leftDescriptor.Descriptor.Rows, leftDescriptor.Descriptor.Cols, leftDescriptor.Descriptor.Depth, leftDescriptor.Descriptor.NumberOfChannels);
                         var rightDesc = new Mat(rightDescriptor.Descriptor.Rows > 30000 ? 30000 : rightDescriptor.Descriptor.Rows, rightDescriptor.Descriptor.Cols, rightDescriptor.Descriptor.Depth, rightDescriptor.Descriptor.NumberOfChannels);
 
                         for (int i = 0; i < leftDesc.Rows; i++)
@@ -635,24 +635,26 @@ namespace Bachelor_app
                         for (int i = 0; i < rightDesc.Rows; i++)
                             rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
 
-                        Stopwatch.Start();
+                        //Stopwatch.Start();
                         matcher.Match(leftDesc, rightDesc, matches);
-                        Stopwatch.Stop();
-                        matchestime = Stopwatch.ElapsedMilliseconds;
+                        //Stopwatch.Stop();
+                        //matchestime = Stopwatch.ElapsedMilliseconds;
 
                         countMatches++;
 
-                        if(countMatches % 120 == 0)
+                        if (countMatches % 120 == 0)
                             WindowsFormHelper.AddLogToConsole(
                                 $"FINISH ({countMatches}) computing matches for: \n" +
                                 $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                                 $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
                                 );
+                        leftDesc.Dispose();
+                        rightDesc.Dispose();
                         semaphore.Release();
                     }
                     else
                     {
-                        Stopwatch.Reset();
+                        //Stopwatch.Reset();
                         WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
                          $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                          $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
@@ -663,11 +665,13 @@ namespace Bachelor_app
                             leftDescriptor.Descriptor.Row(i).CopyTo(leftDesc.Row(i));
                         for (int i = 0; i < rightDesc.Rows; i++)
                             rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
-                        Stopwatch.Start();
+                        //Stopwatch.Start();
                         matcher.Match(leftDesc, rightDesc, matches);
-                        Stopwatch.Stop();
-                        matchestime = Stopwatch.ElapsedMilliseconds;
+                        //Stopwatch.Stop();
+                        //matchestime = Stopwatch.ElapsedMilliseconds;
 
+                        leftDesc.Dispose();
+                        rightDesc.Dispose();
                         countMatches++;
                     }
                 }
@@ -689,8 +693,8 @@ namespace Bachelor_app
             //    $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
             //    );
 
-            Stopwatch.Reset();
-            Stopwatch.Start();
+            // Stopwatch.Reset();
+            //Stopwatch.Start();
             if (FilterMatches)
             {
                 FindMinMaxDistInMatches(matchesArray, ref ms_MAX_DIST, ref ms_MIN_DIST);
@@ -706,7 +710,7 @@ namespace Bachelor_app
                     perspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? filteredMatchesList : matchesList, mask);
                 }
             }
-            Stopwatch.Stop();
+            //Stopwatch.Stop();
 
 
             //MatchTable.Columns.Add("DateTime");
@@ -742,6 +746,20 @@ namespace Bachelor_app
             File.WriteAllText(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.FileFormatMatch);
             //if (AddToList)
             //    FoundedMatches.Add(foundedMatch);
+
+            // Dispose
+
+            filteredMatchesList = new List<MDMatch[]>();
+            filteredMatchesList.Clear();
+            matchesList.Clear();
+            perspectiveMatrix.Dispose();
+            mask.Dispose();
+            if (foundedMatch.Mask != null)
+                foundedMatch.Mask.Dispose();
+            if (foundedMatch.PerspectiveMatrix != null)
+                foundedMatch.PerspectiveMatrix.Dispose();
+            foundedMatch = null;
+
             return 0;
         }
 
@@ -821,7 +839,8 @@ namespace Bachelor_app
                 if (SaveOnDisk)
                     descriptorNode.SaveSiftFile();
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 WindowsFormHelper.AddLogToConsole("Error\n");
             }
         }
@@ -837,7 +856,8 @@ namespace Bachelor_app
                 WindowsFormHelper.AddLogToConsole($"Start finding key points for: {fileName}\n");
                 Stopwatch.Reset();
                 Stopwatch.Start();
-                var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.FullPath));
+                var image = new Mat(inputFile.FullPath);
+                var detectedKeyPoints = detector.DetectKeyPoints(image);
                 Stopwatch.Stop();
                 //KeyPointTable.Columns.Add("DateTime");
                 //KeyPointTable.Columns.Add("Image name");
@@ -863,8 +883,11 @@ namespace Bachelor_app
 
                 //if (DrawAndSave)
                 //    newItem.DrawAndSave(fileManager);
+
+                image.Dispose();
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 WindowsFormHelper.AddLogToConsole("Error\n");
             }
         }
