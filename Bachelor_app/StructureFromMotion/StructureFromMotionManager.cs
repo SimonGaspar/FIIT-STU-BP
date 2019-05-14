@@ -245,10 +245,20 @@ namespace Bachelor_app
                                 {
                                     SpecificStopWatch.Restart();
                                     StartDetectingKeyPoint(startIndex, inputImages, Detector);
+
+                                    Console.WriteLine("Memory used before collection:{0:N0}",GC.GetTotalMemory(false));
+                                    GC.Collect();
+                                    Console.WriteLine("Memory used after full collection:{0:N0}",GC.GetTotalMemory(true));
+
                                     SpecificStopWatch.Stop();
                                     time1 = SpecificStopWatch.ElapsedMilliseconds;
                                     SpecificStopWatch.Start();
                                     StartComputingDescriptor(startIndex, Descriptor);
+
+                                    Console.WriteLine("Memory used before collection:{0:N0}", GC.GetTotalMemory(false));
+                                    GC.Collect();
+                                    Console.WriteLine("Memory used after full collection:{0:N0}", GC.GetTotalMemory(true));
+
                                     SpecificStopWatch.Stop();
                                     time2 = SpecificStopWatch.ElapsedMilliseconds;
                                     SpecificStopWatch.Start();
@@ -539,6 +549,10 @@ namespace Bachelor_app
                          {
                              FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
                          });
+
+                        Console.WriteLine("Memory used before collection:{0:N0}", GC.GetTotalMemory(false));
+                        GC.Collect();
+                        Console.WriteLine("Memory used after full collection:{0:N0}", GC.GetTotalMemory(true));
                     };//);
                     break;
             }
