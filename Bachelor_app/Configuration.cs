@@ -57,19 +57,19 @@ namespace Bachelor_app
         {
             try
             {
-                if (Directory.Exists(TempDirectoryPath))
-                {
-                    DirectoryInfo di = new DirectoryInfo(TempDirectoryPath);
-                    foreach (FileInfo file in di.GetFiles())
-                    {
-                        file.Delete();
-                    }
-                    foreach (DirectoryInfo dir in di.GetDirectories())
-                    {
-                        dir.Delete(true);
-                    }
-                    di.Delete();
-                }
+                //if (Directory.Exists(TempDirectoryPath))
+                //{
+                //    DirectoryInfo di = new DirectoryInfo(TempDirectoryPath);
+                //    foreach (FileInfo file in di.GetFiles())
+                //    {
+                //        file.Delete();
+                //    }
+                //    foreach (DirectoryInfo dir in di.GetDirectories())
+                //    {
+                //        dir.Delete(true);
+                //    }
+                //    di.Delete();
+                //}
             }
             catch (Exception e) { }
             }
