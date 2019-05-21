@@ -34,6 +34,8 @@ namespace Bachelor_app
         public static string CalibrationPath { get; private set; } = Path.Combine(TempDirectoryPath, CalibrationName);
         #endregion
 
+        public static bool SaveImagesFromProcess = false;
+
         #region We can move some properties into configuration
         //public static ECameraResolution Resolution { get; set; }
         //public static EDisplayItem LeftViewWindowItem { get; set; }

@@ -33,7 +33,6 @@ namespace Bachelor_app.Helper
 
             foreach (var camera in ListUSBDevice)
             {
-
                 ListCamerasData.Add(new KeyValuePair<int, string>(ListUSBDevice.IndexOf(camera), camera.Name));
             }
 

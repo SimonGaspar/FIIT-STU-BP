@@ -71,6 +71,8 @@ namespace Bachelor_app
                 ClearList();
             }
 
+            GC.Collect();
+
             switch (fileManager._inputType)
             {
                 case EInput.ListViewBasicStack:
@@ -105,6 +107,7 @@ namespace Bachelor_app
                     }
                     break;
             }
+            GC.Collect();
 
             if (ContinueSFM)
                 WriteAddedImages(listOfInput);
@@ -115,9 +118,13 @@ namespace Bachelor_app
 
         public void ComputeSfM(int startIndex, List<InputFileModel> inputImages)
         {
+            GC.Collect();
             StartDetectingKeyPoint(startIndex, inputImages, Detector);
+            GC.Collect();
             StartComputingDescriptor(startIndex, Descriptor);
+            GC.Collect();
             StartMatching(startIndex, Matcher);
+            GC.Collect();
         }
 
         private List<InputFileModel> GetListFromListView(bool ContinueSFM)
@@ -130,6 +137,7 @@ namespace Bachelor_app
                 node.SetFileInfo(new FileInfo(savePath));
                 node.UseInSFM = true;
             }
+            GC.Collect();
             return list;
         }
 
@@ -138,6 +146,7 @@ namespace Bachelor_app
             DetectedKeyPoints.Clear();
             ComputedDescriptors.Clear();
             FoundedMatches.Clear();
+            GC.Collect();
         }
 
         private void StartStereoMatching(int countOfExistedKeypoint, IFeatureMatcher matcher)
@@ -187,13 +196,15 @@ namespace Bachelor_app
                     MatchingStereoParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    for(int i= countOfExistedKeypoint;i< ComputedDescriptors.Count;i++)
+                    //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
                         {
                             FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
                         });
-                    });
+                        GC.Collect();
+                    };//);
                     break;
             }
         }
@@ -222,8 +233,12 @@ namespace Bachelor_app
                     break;
                 case EMatchingType.AllWithAll:
                     for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                    {
                         for (int n = m + 1; n < ComputedDescriptors.Count; n++)
                             FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+
+                        GC.Collect();
+                    }
                     break;
             }
         }
@@ -231,10 +246,12 @@ namespace Bachelor_app
         private void MatchingSequencePrevious(int startMatchingFrom, int startMatchingFromPrevious, int iteration, IFeatureMatcher matcher)
         {
             for (int m = startMatchingFrom; m < ComputedDescriptors.Count; m += iteration)
+            {
                 for (int n = m - startMatchingFromPrevious; n < m && n >= 0; n += iteration)
-                {
                     FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
-                }
+
+                GC.Collect();
+            }
         }
 
         private void MatchingParallelPrevious(int startMatchingFrom, int startMatchingFromPrevious, IFeatureMatcher matcher)
@@ -247,6 +264,8 @@ namespace Bachelor_app
                     {
                         FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
                     });
+
+                    GC.Collect();
                 }
             });
         }
@@ -262,6 +281,8 @@ namespace Bachelor_app
                         if ((index - i) % 2 == 0)
                             FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
                     });
+
+                    GC.Collect();
                 }
             });
         }
@@ -280,13 +301,16 @@ namespace Bachelor_app
                     MatchingParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    for(int i= countOfExistedKeypoint;i< ComputedDescriptors.Count;i++)
+                    //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
                          {
                              FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
                          });
-                    });
+
+                        GC.Collect();
+                    };//);
                     break;
             }
         }
@@ -327,17 +351,19 @@ namespace Bachelor_app
 
             foreach (var node in findedMatches.Skip(index))
             {
-                sb.AppendLine(node.FileFormatMatch);
+                sb.AppendLine(node.SaveMatchString());
                 sb.AppendLine();
             }
 
             File.WriteAllText(Configuration.MatchFilePath, sb.ToString());
         }
 
-        SemaphoreSlim semaphore = new SemaphoreSlim(1);
+        SemaphoreSlim semaphore = new SemaphoreSlim(3);
 
-        private void FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = true, bool DrawAndSave = true)
+        private int FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = false, bool DrawAndSave = Configuration.SaveImagesFromProcess)
         {
+            semaphore.Wait();
+
             var filteredMatchesList = new List<MDMatch[]>();
             var matchesList = new List<MDMatch[]>();
             MDMatch[][] matchesArray;
@@ -357,20 +383,15 @@ namespace Bachelor_app
                             leftDescriptor.Descriptor.Row(i).CopyTo(leftDesc.Row(i));
                         for (int i = 0; i < rightDesc.Rows; i++)
                             rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
-
-                        semaphore.Wait();
+                        
                         WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
                                 $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                                 $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
 
                         matcher.Match(leftDesc, rightDesc, matches);
 
-                        WindowsFormHelper.AddLogToConsole(
-                            $"FINISH ({++countMatches}) computing matches for: \n" +
-                            $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
-                            $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
-                            );
-                        semaphore.Release();
+                        leftDesc.Dispose();
+                        rightDesc.Dispose();
                     }
                     else {
                         WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
@@ -378,18 +399,22 @@ namespace Bachelor_app
                                 $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
 
                         matcher.Match(leftDescriptor.Descriptor, rightDescriptor.Descriptor, matches);
-
-                        WindowsFormHelper.AddLogToConsole(
-                            $"FINISH ({++countMatches}) computing matches for: \n" +
-                            $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
-                            $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
-                            );
                     }
                 }
                 catch (Exception e)
                 {
-                    throw new Exception($"Happend with {leftDescriptor.KeyPoint.InputFile.FileName}:{leftDescriptor.KeyPoint.DetectedKeyPoints.Size} and {rightDescriptor.KeyPoint.InputFile.FileName}:{rightDescriptor.KeyPoint.DetectedKeyPoints.Size}", e);
+                    semaphore.Release();
+                    return 1;
+                    //throw new Exception($"Happend with {leftDescriptor.KeyPoint.InputFile.FileName}:{leftDescriptor.KeyPoint.DetectedKeyPoints.Size} and {rightDescriptor.KeyPoint.InputFile.FileName}:{rightDescriptor.KeyPoint.DetectedKeyPoints.Size}", e);
                 }
+
+                WindowsFormHelper.AddLogToConsole(
+                    $"FINISH ({Interlocked.Increment(countMatches)}) computing matches for: \n" +
+                    $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                    $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
+                    );
+
+                semaphore.Release();
                 matchesArray = matches.ToArrayOfArray();
             }
             matchesList = matchesArray.ToList();
@@ -424,10 +449,25 @@ namespace Bachelor_app
                 foundedMatch.DrawAndSave(fileManager);
 
             if (SaveInMatchNode)
-                foundedMatch.SaveMatchString();
+                foundedMatch.SaveMatchString(SaveInNode: SaveInMatchNode);
+            
+            //File.WriteAllText(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.FileFormatMatch);
 
             if (AddToList)
                 FoundedMatches.Add(foundedMatch);
+
+            //// Dispose
+            //filteredMatchesList = new List<MDMatch[]>();
+            //filteredMatchesList.Clear();
+            //matchesList.Clear();
+            //perspectiveMatrix.Dispose();
+            //mask.Dispose();
+            //if (foundedMatch.Mask != null)
+            //    foundedMatch.Mask.Dispose();
+            //if (foundedMatch.PerspectiveMatrix != null)
+            //    foundedMatch.PerspectiveMatrix.Dispose();
+            //foundedMatch = null;
+            return 0;
         }
 
         private List<MDMatch[]> FilterMatchesByMaxDist(MDMatch[][] matchesArray)
@@ -473,47 +513,66 @@ namespace Bachelor_app
             }
         }
 
-        private void ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList = true, bool SaveOnDisk = true)
+        private int ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList = true, bool SaveOnDisk = true)
         {
-            var fileName = keypoint.InputFile.FileName;
+            try
+            {
+                var fileName = keypoint.InputFile.FileName;
 
-            WindowsFormHelper.AddLogToConsole($"Start computing descriptor for: {fileName}\n");
+                WindowsFormHelper.AddLogToConsole($"Start computing descriptor for: {fileName}\n");
 
-            var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
-            var descriptorNode = new DescriptorModel(keypoint, computedDescriptor);
+                var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
+                var descriptorNode = new DescriptorModel(keypoint, computedDescriptor);
 
-            WindowsFormHelper.AddLogToConsole($"FINISH computing descriptor for: {fileName}\n");
+                WindowsFormHelper.AddLogToConsole($"FINISH computing descriptor for: {fileName}\n");
 
-            if (AddToList)
-                ComputedDescriptors.Add(keypoint.ID, descriptorNode);
+                if (AddToList)
+                    ComputedDescriptors.Add(keypoint.ID, descriptorNode);
 
-            if (SaveOnDisk)
-                descriptorNode.SaveSiftFile();
+                if (SaveOnDisk)
+                    descriptorNode.SaveSiftFile();
+            }
+            catch (Exception e)
+            {
+                WindowsFormHelper.AddLogToConsole("Error\n");
+                return 1;
+            }
+            return 0;
         }
 
-        private void FindKeypoint(int ID, InputFileModel inputFile, IFeatureDetector detector, bool AddToList = true, bool DrawAndSave = true)
+        private int FindKeypoint(int ID, InputFileModel inputFile, IFeatureDetector detector, bool AddToList = true, bool DrawAndSave = Configuration.SaveImagesFromProcess)
         {
-            var fileName = inputFile.FileName;
+            try { 
+                var fileName = inputFile.FileName;
 
-            WindowsFormHelper.AddLogToConsole($"Start finding key points for: {fileName}\n");
+                WindowsFormHelper.AddLogToConsole($"Start finding key points for: {fileName}\n");
 
-            var detectedKeyPoints = detector.DetectKeyPoints(new Mat(inputFile.FullPath));
+                var image = new Mat(inputFile.FullPath);
+                var detectedKeyPoints = detector.DetectKeyPoints(image);
+                image.Dispose();
 
-            WindowsFormHelper.AddLogToConsole(
-                $"FINISH finding key points for: {fileName}\n" +
-                $"Count of key points: {detectedKeyPoints.Length}\n");
+                WindowsFormHelper.AddLogToConsole(
+                    $"FINISH finding key points for: {fileName}\n" +
+                    $"Count of key points: {detectedKeyPoints.Length}\n");
 
-            var newItem = new KeyPointModel(
-                new VectorOfKeyPoint(detectedKeyPoints),
-                inputFile,
-                ID
-                );
+                var newItem = new KeyPointModel(
+                    new VectorOfKeyPoint(detectedKeyPoints),
+                    inputFile,
+                    ID
+                    );
 
-            if (AddToList)
-                DetectedKeyPoints.Add(ID, newItem);
+                if (AddToList)
+                    DetectedKeyPoints.Add(ID, newItem);
 
-            if (DrawAndSave)
-                newItem.DrawAndSave(fileManager);
+                if (DrawAndSave)
+                    newItem.DrawAndSave(fileManager);
+            }
+            catch (Exception e)
+            {
+                WindowsFormHelper.AddLogToConsole("Error\n");
+                return 1;
+            }
+            return 0;
         }
 
         public Mat FindHomography(VectorOfKeyPoint keypointsModel, VectorOfKeyPoint keypointsTest, List<MDMatch[]> matches, Mat Mask)

@@ -74,18 +74,18 @@ namespace Bachelor_app.Model
             }
         }
 
-        /// <summary>
+        // <summary>
         /// Save string with all matches in model.
         /// </summary>
         /// <param name="model"></param>
         /// <param name="UseMask"></param>
         /// <returns></returns>
-        public static bool SaveMatchString(this MatchModel model, bool UseMask = true)
+        public static string SaveMatchString(this MatchModel model, bool UseMask = true, bool SaveInNode=false)
         {
             if (model.Mask == null || model.FilteredMatchesList.Count == 0)
             {
                 model.SaveMatchInModel(null);
-                return false;
+                return null;
             }
 
 
@@ -119,8 +119,10 @@ namespace Bachelor_app.Model
                     sb.Append($"{matchesList[m][0].QueryIdx} ");
             }
 
-            model.SaveMatchInModel(sb.ToString());
-            return true;
+            if(SaveInNode)
+                model.SaveMatchInModel(sb.ToString());
+
+            return sb.ToString();
         }
     }
 }
