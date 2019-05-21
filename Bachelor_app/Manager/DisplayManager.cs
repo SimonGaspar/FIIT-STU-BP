@@ -146,7 +146,6 @@ namespace Bachelor_app.Manager
             {
                 var item = listView.SelectedItems;
                 ReadPointFromDepthMap(renderWindow, item[0].Text.Split('.')[0] + ".json");
-
             }
         }
 
