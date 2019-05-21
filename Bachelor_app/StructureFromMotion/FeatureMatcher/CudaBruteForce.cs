@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Bachelor_app.StructureFromMotion.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Cuda;
@@ -21,9 +22,16 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 
         public override void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            using (var _cudaBruteForceMatcher = CreateInstance())
-            using (GpuMat left = new GpuMat(queryDescriptors as Mat), right = new GpuMat(trainDescriptors as Mat))
-                _cudaBruteForceMatcher.KnnMatch(right, left, matches, 1);
+            try
+            {
+                using (var _cudaBruteForceMatcher = CreateInstance())
+                using (GpuMat left = new GpuMat(queryDescriptors as Mat), right = new GpuMat(trainDescriptors as Mat))
+                    _cudaBruteForceMatcher.KnnMatch(right, left, matches, 1);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("a");
+            }
         }
 
         public override dynamic CreateInstance()

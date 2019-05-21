@@ -89,10 +89,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV.UI, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\packages\EMGU.CV-CUDA.3.4.3.3016\lib\net35\Emgu.CV.UI.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\libs\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI.GL">
+      <HintPath>D:\libs\Emgu.CV.UI.GL.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.World, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\packages\EMGU.CV-CUDA.3.4.3.3016\lib\net35\Emgu.CV.World.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\libs\Emgu.CV.World.dll</HintPath>
     </Reference>
     <Reference Include="Kitware.mummy.Runtime, Version=1.0.2.599, Culture=neutral, PublicKeyToken=995c7fb9db2c1b44, processorArchitecture=AMD64">
       <HintPath>..\packages\Activiz.NET.x64.5.8.0\lib\net20\Kitware.mummy.Runtime.dll</HintPath>
@@ -174,9 +179,11 @@
     <Compile Include="StereoVision\Calibration\ECalibrationMode.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\AbstractFeatureDetectorDescriptor.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\BRIEF.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\CudaSurf.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FREAK.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\CudaOrientedFastAndRotatedBrief.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\Sift.cs" />
     <Compile Include="StructureFromMotion\FeatureMatcher\AbstractMatcher.cs" />
     <Compile Include="StructureFromMotion\FeatureMatcher\CudaBruteForce.cs" />
     <Compile Include="StructureFromMotion\Model\BriefModel.cs" />
@@ -185,9 +192,11 @@
     <Compile Include="StructureFromMotion\EFeatureDescriptor.cs" />
     <Compile Include="StructureFromMotion\EFeatureDetector.cs" />
     <Compile Include="StructureFromMotion\EFeatureMatcher.cs" />
+    <Compile Include="StructureFromMotion\Model\CudaSurfModel.cs" />
     <Compile Include="StructureFromMotion\Model\FastModel.cs" />
     <Compile Include="StructureFromMotion\Model\FreakModel.cs" />
     <Compile Include="StructureFromMotion\Model\CudaOrientedFastAndRotatedBriefModel.cs" />
+    <Compile Include="StructureFromMotion\Model\SiftModel.cs" />
     <Compile Include="StructureFromMotion\Model\OrientedFastAndRotatedBriefModel.cs" />
     <Compile Include="StructureFromMotion\StructureFromMotionManager.cs" />
     <Compile Include="StereoVision\EStereoCorrespondenceAlgorithm.cs" />
@@ -396,8 +405,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\EMGU.CUFFT.9.1.0\build\EMGU.CUFFT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EMGU.CUFFT.9.1.0\build\EMGU.CUFFT.targets'))" />
     <Error Condition="!Exists('..\packages\EMGU.CV-CUDA.DEPENDENCY.9.1.0\build\EMGU.CV-CUDA.DEPENDENCY.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EMGU.CV-CUDA.DEPENDENCY.9.1.0\build\EMGU.CV-CUDA.DEPENDENCY.targets'))" />
-    <Error Condition="!Exists('..\packages\EMGU.CV-CUDA.3.4.3.3016\build\EMGU.CV-CUDA.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EMGU.CV-CUDA.3.4.3.3016\build\EMGU.CV-CUDA.targets'))" />
   </Target>
   <Import Project="..\packages\EMGU.CV-CUDA.DEPENDENCY.9.1.0\build\EMGU.CV-CUDA.DEPENDENCY.targets" Condition="Exists('..\packages\EMGU.CV-CUDA.DEPENDENCY.9.1.0\build\EMGU.CV-CUDA.DEPENDENCY.targets')" />
-  <Import Project="..\packages\EMGU.CV-CUDA.3.4.3.3016\build\EMGU.CV-CUDA.targets" Condition="Exists('..\packages\EMGU.CV-CUDA.3.4.3.3016\build\EMGU.CV-CUDA.targets')" />
 </Project>

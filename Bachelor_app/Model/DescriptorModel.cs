@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using Bachelor_app.Extension;
 using Emgu.CV;
@@ -10,6 +11,7 @@ namespace Bachelor_app.Model
         public KeyPointModel KeyPoint { get; private set; }
         public Mat Descriptor { get; private set; }
         public string FileFormatSIFT { get; private set; }
+        public string DescriptorFilePath { get; set; }
 
         public DescriptorModel(KeyPointModel keyPointModel, Mat descriptors)
         {
@@ -41,7 +43,7 @@ namespace Bachelor_app.Model
             var keyPoints = model.KeyPoint.DetectedKeyPoints;
             var fileName = $"{model.KeyPoint.InputFile.FileNameWithoutExtension}.SIFT";
             var descriptorSavePath = Path.Combine(Configuration.TempDirectoryPath, fileName);
-
+            model.DescriptorFilePath = descriptorSavePath;
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"{keyPoints.Size} 128");
 

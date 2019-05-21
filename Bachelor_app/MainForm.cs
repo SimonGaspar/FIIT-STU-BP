@@ -261,5 +261,10 @@ namespace Bachelor_app
         {
             ToolHelper.RunVisualSFM(false);
         }
+
+        private void toolStripButton7_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

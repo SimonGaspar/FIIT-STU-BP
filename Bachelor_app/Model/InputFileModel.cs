@@ -37,8 +37,8 @@ namespace Bachelor_app.Model
         /// </summary>
         private void GetImageFromInputFile()
         {
-            if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
-                Image = Image.FromFile(fileInfo.FullName);
+            //if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
+            //    Image = Image.FromFile(fileInfo.FullName);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using Bachelor_app.StereoVision.Calibration;
 using Emgu.CV;
@@ -102,7 +103,7 @@ namespace Bachelor_app.Extension
                 case DepthType.Cv16S: return new short[1];
                 case DepthType.Cv16U: return new ushort[1];
                 case DepthType.Cv32S: return new int[1];
-                case DepthType.Cv32F: return new sbyte[1];
+                case DepthType.Cv32F: return new float[1];
                 case DepthType.Cv64F: return new double[1];
                 default: return new float[1];
             }

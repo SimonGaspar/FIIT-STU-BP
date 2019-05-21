@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Bachelor_app.Enumerate;
+using Bachelor_app.Extension;
 using Bachelor_app.Helper;
 using Bachelor_app.Manager;
 using Bachelor_app.Model;
@@ -43,79 +44,79 @@ namespace Bachelor_app
         //private static object locker = new object();
 
 
-        private DataTable KeyPointTable = new DataTable();
-        private DataTable DescriptorTable = new DataTable();
-        private DataTable MatchTable = new DataTable();
-        private DataTable NVMModelTable = new DataTable();
-        private DataTable ProcessTable = new DataTable();
+        //private DataTable KeyPointTable = new DataTable();
+        //private DataTable DescriptorTable = new DataTable();
+        //private DataTable MatchTable = new DataTable();
+        //private DataTable NVMModelTable = new DataTable();
+        //private DataTable ProcessTable = new DataTable();
         private Stopwatch Stopwatch = new Stopwatch();
 
         public void SetDataTable()
         {
-            KeyPointTable = new DataTable();
-            DescriptorTable = new DataTable();
-            MatchTable = new DataTable();
-            NVMModelTable = new DataTable();
-            ProcessTable = new DataTable();
-            Stopwatch = new Stopwatch();
+            //KeyPointTable = new DataTable();
+            //DescriptorTable = new DataTable();
+            //MatchTable = new DataTable();
+            //NVMModelTable = new DataTable();
+            //ProcessTable = new DataTable();
+            //Stopwatch = new Stopwatch();
 
-            KeyPointTable.Columns.Add("DateTime");
-            KeyPointTable.Columns.Add("Image name");
-            KeyPointTable.Columns.Add("Resolution width");
-            KeyPointTable.Columns.Add("Resolution height");
-            KeyPointTable.Columns.Add("Count of keypoints");
-            KeyPointTable.Columns.Add("Algorithm");
-            KeyPointTable.Columns.Add("Time to generate");
-            KeyPointTable.Columns.Add("Parallel");
+            //KeyPointTable.Columns.Add("DateTime");
+            //KeyPointTable.Columns.Add("Image name");
+            //KeyPointTable.Columns.Add("Resolution width");
+            //KeyPointTable.Columns.Add("Resolution height");
+            //KeyPointTable.Columns.Add("Count of keypoints");
+            //KeyPointTable.Columns.Add("Algorithm");
+            //KeyPointTable.Columns.Add("Time to generate");
+            //KeyPointTable.Columns.Add("Parallel");
 
 
-            DescriptorTable.Columns.Add("DateTime");
-            DescriptorTable.Columns.Add("Image name");
-            DescriptorTable.Columns.Add("Count of keypoints");
-            DescriptorTable.Columns.Add("Count of descriptors width");
-            DescriptorTable.Columns.Add("Count of descriptors hegiht");
-            DescriptorTable.Columns.Add("Algorithm");
-            DescriptorTable.Columns.Add("Time to generate");
-            DescriptorTable.Columns.Add("Parallel");
+            //DescriptorTable.Columns.Add("DateTime");
+            //DescriptorTable.Columns.Add("Image name");
+            //DescriptorTable.Columns.Add("Count of keypoints");
+            //DescriptorTable.Columns.Add("Count of descriptors width");
+            //DescriptorTable.Columns.Add("Count of descriptors hegiht");
+            //DescriptorTable.Columns.Add("Algorithm");
+            //DescriptorTable.Columns.Add("Time to generate");
+            //DescriptorTable.Columns.Add("Parallel");
 
-            MatchTable.Columns.Add("DateTime");
-            MatchTable.Columns.Add("Matching type");
-            MatchTable.Columns.Add("Left image");
-            MatchTable.Columns.Add("Right image");
-            MatchTable.Columns.Add("Count of left descriptors width");
-            MatchTable.Columns.Add("Count of left descriptors height");
-            MatchTable.Columns.Add("Count of right descriptors width");
-            MatchTable.Columns.Add("Count of right descriptors height");
-            MatchTable.Columns.Add("Founded matches");
-            MatchTable.Columns.Add("Filtered matches");
-            MatchTable.Columns.Add("Algorithm");
-            MatchTable.Columns.Add("Time to generate");
-            MatchTable.Columns.Add("Time to filtered");
-            MatchTable.Columns.Add("Filtered");
-            MatchTable.Columns.Add("Parallel");
+            //MatchTable.Columns.Add("DateTime");
+            //MatchTable.Columns.Add("Matching type");
+            //MatchTable.Columns.Add("Left image");
+            //MatchTable.Columns.Add("Right image");
+            //MatchTable.Columns.Add("Count of left descriptors width");
+            //MatchTable.Columns.Add("Count of left descriptors height");
+            //MatchTable.Columns.Add("Count of right descriptors width");
+            //MatchTable.Columns.Add("Count of right descriptors height");
+            //MatchTable.Columns.Add("Founded matches");
+            //MatchTable.Columns.Add("Filtered matches");
+            //MatchTable.Columns.Add("Algorithm");
+            //MatchTable.Columns.Add("Time to generate");
+            //MatchTable.Columns.Add("Time to filtered");
+            //MatchTable.Columns.Add("Filtered");
+            //MatchTable.Columns.Add("Parallel");
 
-            NVMModelTable.Columns.Add("DateTime");
-            NVMModelTable.Columns.Add("Time to generate model");
-            NVMModelTable.Columns.Add("Time to load model");
-            NVMModelTable.Columns.Add("Count of camera");
-            NVMModelTable.Columns.Add("Count of point");
+            //NVMModelTable.Columns.Add("DateTime");
+            //NVMModelTable.Columns.Add("Time to generate model");
+            //NVMModelTable.Columns.Add("Time to load model");
+            //NVMModelTable.Columns.Add("Count of camera");
+            //NVMModelTable.Columns.Add("Count of point");
 
-            ProcessTable.Columns.Add("DateTime");
-            ProcessTable.Columns.Add("KeypointAlgorithm");
-            ProcessTable.Columns.Add("KeypointCount");
-            ProcessTable.Columns.Add("KeyPointTime");
-            ProcessTable.Columns.Add("DescriptorAlgorithm");
-            ProcessTable.Columns.Add("DescriptorCount");
-            ProcessTable.Columns.Add("DescriptorTime");
-            ProcessTable.Columns.Add("MatcherAlgorithm");
-            ProcessTable.Columns.Add("MatcherCount");
-            ProcessTable.Columns.Add("MetchingType");
-            ProcessTable.Columns.Add("MatcherTime");
-            ProcessTable.Columns.Add("ModelCameraCount");
-            ProcessTable.Columns.Add("ModelPointCount");
-            ProcessTable.Columns.Add("ModelTime");
-            ProcessTable.Columns.Add("Parallel");
-            ProcessTable.Columns.Add("TimeToCompute");
+            //ProcessTable.Columns.Add("DateTime");
+            //ProcessTable.Columns.Add("KeypointAlgorithm");
+            //ProcessTable.Columns.Add("KeypointCount");
+            //ProcessTable.Columns.Add("KeyPointTime");
+            //ProcessTable.Columns.Add("DescriptorAlgorithm");
+            //ProcessTable.Columns.Add("DescriptorCount");
+            //ProcessTable.Columns.Add("DescriptorTime");
+            //ProcessTable.Columns.Add("MatcherAlgorithm");
+            //ProcessTable.Columns.Add("MatcherCount");
+            //ProcessTable.Columns.Add("MetchingType");
+            //ProcessTable.Columns.Add("MatcherTime");
+            //ProcessTable.Columns.Add("ModelCameraCount");
+            //ProcessTable.Columns.Add("ModelPointCount");
+            //ProcessTable.Columns.Add("ModelTime");
+            //ProcessTable.Columns.Add("Parallel");
+            //ProcessTable.Columns.Add("TimeToCompute");
 
         }
 
@@ -194,33 +195,33 @@ namespace Bachelor_app
             ToolHelper.RunVisualSFM(ContinueSFM);
         }
 
-        DataTable a = new DataTable();
-        DataTable b = new DataTable();
-        DataTable c = new DataTable();
-        DataTable d = new DataTable();
-        DataTable e = new DataTable();
+        //DataTable a = new DataTable();
+        //DataTable b = new DataTable();
+        //DataTable c = new DataTable();
+        //DataTable d = new DataTable();
+        //DataTable e = new DataTable();
 
         public void ComputeSfM(int startIndex, List<InputFileModel> inputImages)
         {
-            CopyColumnDataTable(KeyPointTable, a);
-            CopyColumnDataTable(DescriptorTable, b);
-            CopyColumnDataTable(MatchTable, c);
-            CopyColumnDataTable(NVMModelTable, d);
-            CopyColumnDataTable(ProcessTable, e);
+            //CopyColumnDataTable(KeyPointTable, a);
+            //CopyColumnDataTable(DescriptorTable, b);
+            //CopyColumnDataTable(MatchTable, c);
+            //CopyColumnDataTable(NVMModelTable, d);
+            //CopyColumnDataTable(ProcessTable, e);
 
             var SpecificStopWatch = new Stopwatch();
-            UseParallel = true;
+            UseParallel = false;
             //foreach (var detectoris in Enum.GetValues(typeof(EFeatureDetector)).Cast<EFeatureDetector>().ToList())
             {
-                var detectoris = EFeatureDetector.CudaORB;
+                var detectoris = EFeatureDetector.SIFT;
                 //continue;
                 //foreach (var descriptoris in Enum.GetValues(typeof(EFeatureDescriptor)).Cast<EFeatureDescriptor>())
                 {
-                    var descriptoris = EFeatureDescriptor.CudaORB;
+                    var descriptoris = EFeatureDescriptor.SIFT;
                     //continue;
                     //foreach (var matcheris in Enum.GetValues(typeof(EFeatureMatcher)).Cast<EFeatureMatcher>())
                     {
-                        var matcheris = EFeatureMatcher.CudaBruteForce;
+                        var matcheris = EFeatureMatcher.BruteForce;
                         var matcheristype = EMatchingType.AllWithAll;
                         //continue;
                         //foreach (var matcheristype in Enum.GetValues(typeof(EMatchingType)).Cast<EMatchingType>())
@@ -229,7 +230,7 @@ namespace Bachelor_app
                             {
                                 //if (detectoris == EFeatureDetector.FAST && descriptoris == EFeatureDescriptor.CudaORB)
                                 //continue;
-                                SetDataTable();
+                                //SetDataTable();
                                 ClearList();
                                 Configuration.DeleteTempFolder();
                                 Configuration.GenerateFolders();
@@ -261,6 +262,7 @@ namespace Bachelor_app
 
                                     SpecificStopWatch.Stop();
                                     time2 = SpecificStopWatch.ElapsedMilliseconds;
+                                    WindowsFormHelper.ClearConsole();
                                     SpecificStopWatch.Start();
                                     StartMatching(startIndex, Matcher);
                                     SpecificStopWatch.Stop();
@@ -284,7 +286,7 @@ namespace Bachelor_app
                                     //NVMModelTable.Columns.Add("Time to load model");
                                     //NVMModelTable.Columns.Add("Count of camera");
                                     //NVMModelTable.Columns.Add("Count of point");
-                                    NVMModelTable.Rows.Add($"{DateTime.Now}", $"{time}", $"{Stopwatch.ElapsedMilliseconds}", $"{nvmFile.Sum(x => x.ImageCount)}", $"{nvmFile.Sum(x => x.PointCount)}");
+                                    //NVMModelTable.Rows.Add($"{DateTime.Now}", $"{time}", $"{Stopwatch.ElapsedMilliseconds}", $"{nvmFile.Sum(x => x.ImageCount)}", $"{nvmFile.Sum(x => x.PointCount)}");
 
 
                                     //ProcessTable.Columns.Add("DateTime");
@@ -308,17 +310,17 @@ namespace Bachelor_app
                                     //private SortedList<int, DescriptorModel> ComputedDescriptors;
                                     //private List<MatchModel> FoundedMatches;
 
-                                    ProcessTable.Rows.Add($"{DateTime.Now}", $"{detectoris}", $"{DetectedKeyPoints.Count}", $"{time1}", $"{descriptoris}", $"{ComputedDescriptors.Count}", $"{time2}",
-                                        $"{matcheris}", $"{FoundedMatches.Count}", $"{matcheristype}", $"{time3}", $"{nvmFile.Sum(x => x.ImageCount)}", $"{nvmFile.Sum(x => x.PointCount)}",
-                                        $"{time4}", $"{UseParallel}", $"{SpecificStopWatch.ElapsedMilliseconds}");
+                                    //ProcessTable.Rows.Add($"{DateTime.Now}", $"{detectoris}", $"{DetectedKeyPoints.Count}", $"{time1}", $"{descriptoris}", $"{ComputedDescriptors.Count}", $"{time2}",
+                                    //    $"{matcheris}", $"{FoundedMatches.Count}", $"{matcheristype}", $"{time3}", $"{nvmFile.Sum(x => x.ImageCount)}", $"{nvmFile.Sum(x => x.PointCount)}",
+                                    //    $"{time4}", $"{UseParallel}", $"{SpecificStopWatch.ElapsedMilliseconds}");
 
                                     WriteDatatabletoJson();
                                 }
                                 catch (Exception e)
                                 {
-                                    ProcessTable.Rows.Add($"{DateTime.Now}", $"{detectoris}", $"FAILED", $"FAILED", $"{descriptoris}", $"FAILED", $"FAILED",
-                                        $"{matcheris}", $"FAILED", $"{matcheristype}", $"FAILED", $"FAILED", $"FAILED",
-                                        $"FAILED", $"{UseParallel}", $"FAILED");
+                                    //ProcessTable.Rows.Add($"{DateTime.Now}", $"{detectoris}", $"FAILED", $"FAILED", $"{descriptoris}", $"FAILED", $"FAILED",
+                                    //    $"{matcheris}", $"FAILED", $"{matcheristype}", $"FAILED", $"FAILED", $"FAILED",
+                                    //    $"FAILED", $"{UseParallel}", $"FAILED");
                                 }
 
                                 WindowsFormHelper.ClearConsole();
@@ -328,37 +330,37 @@ namespace Bachelor_app
                 }
             }
 
-            a.ExportToCSV($"KEYPOINT.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
-            b.ExportToCSV($"DESCRIPTOR.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
-            c.ExportToCSV($"MATCH.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
-            d.ExportToCSV($"MODEL.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
-            e.ExportToCSV($"VISUALSFM.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
+            //a.ExportToCSV($"KEYPOINT.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
+            //b.ExportToCSV($"DESCRIPTOR.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
+            //c.ExportToCSV($"MATCH.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
+            //d.ExportToCSV($"MODEL.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
+            //e.ExportToCSV($"VISUALSFM.csv", @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP");
         }
 
         private void WriteDatatabletoJson()
         {
             var name = $"{Detector.GetType().Name}_{Descriptor.GetType().Name}_{Matcher.GetType().Name}_{(UseParallel ? "Parallel" : "Sequel")}_{MatchingType}";
             var path = @"C:\Users\Notebook\Desktop\FIIT-STU-BC\FIIT-STU-BP";
-            KeyPointTable.ExportToCSV($"KEYPOINT_{name}.csv", path);
-            DescriptorTable.ExportToCSV($"DESCRIPTOR_{name}.csv", path);
-            MatchTable.ExportToCSV($"MATCH_{name}.csv", path);
-            NVMModelTable.ExportToCSV($"MODEL_{name}.csv", path);
-            ProcessTable.ExportToCSV($"VISUALSFM_{name}.csv", path);
+            //KeyPointTable.ExportToCSV($"KEYPOINT_{name}.csv", path);
+            //DescriptorTable.ExportToCSV($"DESCRIPTOR_{name}.csv", path);
+            //MatchTable.ExportToCSV($"MATCH_{name}.csv", path);
+            //NVMModelTable.ExportToCSV($"MODEL_{name}.csv", path);
+            //ProcessTable.ExportToCSV($"VISUALSFM_{name}.csv", path);
 
             File.Copy(Configuration.VisualSFMResultPath, Path.Combine(path, name + ".nvm"), true);
 
-            JsonHelper.SaveJson(KeyPointTable, name, path);
-            JsonHelper.SaveJson(DescriptorTable, name, path);
-            JsonHelper.SaveJson(MatchTable, name, path);
-            JsonHelper.SaveJson(NVMModelTable, name, path);
-            JsonHelper.SaveJson(ProcessTable, name, path);
+            //JsonHelper.SaveJson(KeyPointTable, name, path);
+            //JsonHelper.SaveJson(DescriptorTable, name, path);
+            //JsonHelper.SaveJson(MatchTable, name, path);
+            //JsonHelper.SaveJson(NVMModelTable, name, path);
+            //JsonHelper.SaveJson(ProcessTable, name, path);
             try
             {
-                CopyDataTable(KeyPointTable, a);
-                CopyDataTable(DescriptorTable, b);
-                CopyDataTable(MatchTable, c);
-                CopyDataTable(NVMModelTable, d);
-                CopyDataTable(ProcessTable, e);
+                //CopyDataTable(KeyPointTable, a);
+                //CopyDataTable(DescriptorTable, b);
+                //CopyDataTable(MatchTable, c);
+                //CopyDataTable(NVMModelTable, d);
+                //CopyDataTable(ProcessTable, e);
             }
             catch (Exception e)
             {
@@ -550,9 +552,12 @@ namespace Bachelor_app
                              FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
                          });
 
-                        Console.WriteLine("Memory used before collection:{0:N0}", GC.GetTotalMemory(false));
+                        ComputedDescriptors[index].Descriptor.Dispose();
+                        ComputedDescriptors[index].KeyPoint.DetectedKeyPoints.Dispose();
+
+                        //WindowsFormHelper.AddLogToConsole(string.Format("Memory used before collection:{0:N0}", GC.GetTotalMemory(false)));
                         GC.Collect();
-                        Console.WriteLine("Memory used after full collection:{0:N0}", GC.GetTotalMemory(true));
+                        //WindowsFormHelper.AddLogToConsole(string.Format("Memory used after full collection:{0:N0}", GC.GetTotalMemory(true)));
                     };//);
                     break;
             }
@@ -592,16 +597,29 @@ namespace Bachelor_app
         {
             StringBuilder sb = new StringBuilder();
 
-            foreach (var node in findedMatches.Skip(index))
-            {
-                sb.AppendLine(node.FileFormatMatch);
+            //foreach (var node in findedMatches.Skip(index))
+            //{
+            //    sb.AppendLine(node.FileFormatMatch);
+            //    sb.AppendLine();
+            //}
+            int i = 0;
+            int m = 0;
+            var directory = new DirectoryInfo(Configuration.TempDrawMatches);
+            foreach (var item in directory.GetFiles()) {
+                m++;
+                var lines = File.ReadAllLines(item.FullName);
+                if (int.Parse(lines[2].ToString().Split(' ')[0]) < 400)
+                    continue;
+                sb.AppendLine(File.ReadAllText(item.FullName));
                 sb.AppendLine();
+                i++;
             }
+
 
             File.WriteAllText(Configuration.MatchFilePath, sb.ToString());
         }
 
-        public static SemaphoreSlim semaphore = new SemaphoreSlim(3);
+        public static SemaphoreSlim semaphore = new SemaphoreSlim(1);
         public static StringBuilder sb = new StringBuilder();
 
         //zmenit draw na true
@@ -612,11 +630,11 @@ namespace Bachelor_app
             {
                 Interlocked.Increment(ref countMatches);
                 if (countMatches % 120 == 0)
-                    WindowsFormHelper.AddLogToConsole(
-                        $"FINISH ({countMatches}) computing matches for: \n" +
-                        $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
-                        $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
-                        );
+                    //WindowsFormHelper.AddLogToConsole(
+                    //    $"FINISH ({countMatches}) computing matches for: \n" +
+                    //    $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                    //    $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
+                    //    );
                 semaphore.Release();
                 return 0;
             }
@@ -641,13 +659,32 @@ namespace Bachelor_app
                         //WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
                         // $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                         // $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
-                        var leftDesc = new Mat(leftDescriptor.Descriptor.Rows > 30000 ? 30000 : leftDescriptor.Descriptor.Rows, leftDescriptor.Descriptor.Cols, leftDescriptor.Descriptor.Depth, leftDescriptor.Descriptor.NumberOfChannels);
-                        var rightDesc = new Mat(rightDescriptor.Descriptor.Rows > 30000 ? 30000 : rightDescriptor.Descriptor.Rows, rightDescriptor.Descriptor.Cols, rightDescriptor.Descriptor.Depth, rightDescriptor.Descriptor.NumberOfChannels);
+
+                        var leftDesc = new Mat(leftDescriptor.Descriptor.Rows > 30000 ? 30000 : leftDescriptor.Descriptor.Rows, leftDescriptor.Descriptor.Cols, Emgu.CV.CvEnum.DepthType.Cv8U, 1);
+                        var rightDesc = new Mat(rightDescriptor.Descriptor.Rows > 30000 ? 30000 : rightDescriptor.Descriptor.Rows, rightDescriptor.Descriptor.Cols, Emgu.CV.CvEnum.DepthType.Cv8U, 1);
 
                         for (int i = 0; i < leftDesc.Rows; i++)
-                            leftDescriptor.Descriptor.Row(i).CopyTo(leftDesc.Row(i));
+                            for (int j = 0; j < leftDesc.Cols; j++)
+                                leftDesc.SetValue(i, j, (byte)leftDescriptor.Descriptor.GetValue(i, j));
+
                         for (int i = 0; i < rightDesc.Rows; i++)
-                            rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
+                            for (int j = 0; j < leftDesc.Cols; j++)
+                                rightDesc.SetValue(i, j, (byte)rightDescriptor.Descriptor.GetValue(i, j));
+
+                        //var leftFile = File.ReadAllLines(leftDescriptor.DescriptorFilePath);
+                        //var count = int.Parse(leftFile[0].Split(' ')[0]);
+
+                        //var leftDesc = new Mat(count, 32, Emgu.CV.CvEnum.DepthType.Cv8U, 1);
+                        //for (int i = 1; i <= count; i++)
+                        //    for (int x = 0; x < 32; x++)
+                        //        leftDesc.SetValue(i-1,x, byte.Parse(leftFile[i * 2].Split(' ')[x]));
+
+                        //var rightFile = File.ReadAllLines(rightDescriptor.DescriptorFilePath);
+                        //count = int.Parse(rightFile[0].Split(' ')[0]);
+                        //var rightDesc = new Mat(count, 32, Emgu.CV.CvEnum.DepthType.Cv8U, 1);
+                        //for (int i = 1; i <= count; i++)
+                        //    for (int x = 0; x < 32; x++)
+                        //        rightDesc.SetValue(i - 1, x, byte.Parse(rightFile[i * 2].Split(' ')[x]));
 
                         //Stopwatch.Start();
                         matcher.Match(leftDesc, rightDesc, matches);
@@ -692,8 +729,9 @@ namespace Bachelor_app
                 catch (Exception e)
                 {
                     sb.AppendLine(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"));
-                    WindowsFormHelper.AddLogToConsole($"Error:\n" +
+                    WindowsFormHelper.AddLogToConsole($"ERROR:\n" +
                         $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt");
+                    semaphore.Release();
                     return 0;
                     //throw new Exception($"Happend with {leftDescriptor.KeyPoint.InputFile.FileName}:{leftDescriptor.KeyPoint.DetectedKeyPoints.Size} and {rightDescriptor.KeyPoint.InputFile.FileName}:{rightDescriptor.KeyPoint.DetectedKeyPoints.Size}", e);
                 }
@@ -774,6 +812,10 @@ namespace Bachelor_app
                 foundedMatch.PerspectiveMatrix.Dispose();
             foundedMatch = null;
 
+            //Console.WriteLine("Memory used before collection:{0:N0}", GC.GetTotalMemory(false));
+            //GC.Collect();
+            //Console.WriteLine("Memory used after full collection:{0:N0}", GC.GetTotalMemory(true));
+
             return 0;
         }
 
@@ -841,7 +883,7 @@ namespace Bachelor_app
                 //DescriptorTable.Columns.Add("Count of descriptors hegiht");
                 //DescriptorTable.Columns.Add("Algorithm");
                 //DescriptorTable.Columns.Add("Time to generate");
-                DescriptorTable.Rows.Add($"{DateTime.Now}", $"{keypoint.InputFile.FileName}", $"{keypoint.DetectedKeyPoints.Size}", $"{computedDescriptor.Size.Width}", $"{computedDescriptor.Size.Height}", $"{descriptor.GetType().Name}", $"{Stopwatch.ElapsedMilliseconds}");
+                //DescriptorTable.Rows.Add($"{DateTime.Now}", $"{keypoint.InputFile.FileName}", $"{keypoint.DetectedKeyPoints.Size}", $"{computedDescriptor.Size.Width}", $"{computedDescriptor.Size.Height}", $"{descriptor.GetType().Name}", $"{Stopwatch.ElapsedMilliseconds}");
 
                 var descriptorNode = new DescriptorModel(keypoint, computedDescriptor);
 
@@ -851,7 +893,13 @@ namespace Bachelor_app
                     ComputedDescriptors.Add(keypoint.ID, descriptorNode);
 
                 if (SaveOnDisk)
-                    descriptorNode.SaveSiftFile();
+                 descriptorNode.SaveSiftFile(true,false);
+
+                var fileNameDes = $"{descriptorNode.KeyPoint.InputFile.FileNameWithoutExtension}.SIFT";
+                var descriptorSavePath = Path.Combine(Configuration.TempDirectoryPath, fileNameDes);
+                descriptorNode.DescriptorFilePath = descriptorSavePath;
+
+                //computedDescriptor.Dispose();
             }
             catch (Exception e)
             {
@@ -880,7 +928,7 @@ namespace Bachelor_app
                 //KeyPointTable.Columns.Add("Count of keypoints");
                 //KeyPointTable.Columns.Add("Algorithm");
                 //KeyPointTable.Columns.Add("Time to generate");
-                KeyPointTable.Rows.Add($"{DateTime.Now}", $"{inputFile.FileName}", $"{inputFile.Image.Size.Width}", $"{inputFile.Image.Size.Height}", $"{detectedKeyPoints.Length}", $"{detector.GetType().Name}", $"{Stopwatch.ElapsedMilliseconds}");
+                //KeyPointTable.Rows.Add($"{DateTime.Now}", $"{inputFile.FileName}", $"{inputFile.Image.Size.Width}", $"{inputFile.Image.Size.Height}", $"{detectedKeyPoints.Length}", $"{detector.GetType().Name}", $"{Stopwatch.ElapsedMilliseconds}");
                 WindowsFormHelper.AddLogToConsole(
                     $"FINISH finding key points for: {fileName}\n" +
                     $"Count of key points: {detectedKeyPoints.Length}\n"

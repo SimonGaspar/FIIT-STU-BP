@@ -23,9 +23,10 @@ namespace Bachelor_app.Tools
 
             while (!process.StandardOutput.EndOfStream)
             {
-                var line = process.StandardOutput.ReadLine();
-                if (!string.IsNullOrEmpty(line))
-                    WindowsFormHelper.AddLogToConsole(line + "\n");
+                //WindowsFormHelper.ClearConsole();
+               var line = process.StandardOutput.ReadLine();
+                //if (!string.IsNullOrEmpty(line))
+                //    WindowsFormHelper.AddLogToConsole(line + "\n");
             }
 
             process.WaitForExit();

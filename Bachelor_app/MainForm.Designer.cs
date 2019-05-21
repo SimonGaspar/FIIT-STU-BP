@@ -967,6 +967,7 @@ namespace Bachelor_app
             this.toolStripButton7.Size = new System.Drawing.Size(24, 25);
             this.toolStripButton7.Text = "toolStripButton7";
             this.toolStripButton7.ToolTipText = "Switch left";
+            this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
             // 
             // toolStripButton8
             // 
