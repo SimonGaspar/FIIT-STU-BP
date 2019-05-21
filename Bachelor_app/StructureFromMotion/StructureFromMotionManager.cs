@@ -196,7 +196,7 @@ namespace Bachelor_app
                     MatchingStereoParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    for(int i= countOfExistedKeypoint;i< ComputedDescriptors.Count;i++)
+                    for(int index= countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
                     //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
@@ -301,7 +301,7 @@ namespace Bachelor_app
                     MatchingParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    for(int i= countOfExistedKeypoint;i< ComputedDescriptors.Count;i++)
+                    for(int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
                     //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
@@ -358,7 +358,7 @@ namespace Bachelor_app
             File.WriteAllText(Configuration.MatchFilePath, sb.ToString());
         }
 
-        SemaphoreSlim semaphore = new SemaphoreSlim(3);
+        static SemaphoreSlim semaphore = new SemaphoreSlim(1);
 
         private int FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = false, bool DrawAndSave = Configuration.SaveImagesFromProcess)
         {
@@ -384,7 +384,7 @@ namespace Bachelor_app
                         for (int i = 0; i < rightDesc.Rows; i++)
                             rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
                         
-                        WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
+                        WindowsFormHelper.AddLogToConsole($"Start CUDA computing matches for: \n" +
                                 $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                                 $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
 
@@ -409,7 +409,7 @@ namespace Bachelor_app
                 }
 
                 WindowsFormHelper.AddLogToConsole(
-                    $"FINISH ({Interlocked.Increment(countMatches)}) computing matches for: \n" +
+                    $"FINISH ({Interlocked.Increment(ref countMatches)}) computing matches for: \n" +
                     $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                     $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
                     );
@@ -530,7 +530,7 @@ namespace Bachelor_app
                     ComputedDescriptors.Add(keypoint.ID, descriptorNode);
 
                 if (SaveOnDisk)
-                    descriptorNode.SaveSiftFile();
+                    descriptorNode.SaveSiftFile(true,false);
             }
             catch (Exception e)
             {
