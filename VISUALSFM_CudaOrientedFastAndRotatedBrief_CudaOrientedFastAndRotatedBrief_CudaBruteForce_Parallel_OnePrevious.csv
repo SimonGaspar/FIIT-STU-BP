@@ -1,2 +1,0 @@
-﻿"DateTime","KeypointAlgorithm","KeypointCount","KeyPointTime","DescriptorAlgorithm","DescriptorCount","DescriptorTime","MatcherAlgorithm","MatcherCount","MetchingType","MatcherTime","ModelCameraCount","ModelPointCount","ModelTime","Parallel","TimeToCompute"
-"03-May-19 12:23:16","CudaORB","11","3396","CudaORB","11","3944","CudaBruteForce","10","OnePrevious","10791","38","19004","11321","True","11321"
