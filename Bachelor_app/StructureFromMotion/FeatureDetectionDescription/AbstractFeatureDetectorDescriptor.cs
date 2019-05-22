@@ -2,6 +2,7 @@
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
+using System.Windows.Forms;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
@@ -27,7 +28,10 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
         public virtual void ShowSettingForm()
         {
-            WindowsForm.Show();
+            if (WindowsForm != null)
+                WindowsForm.Show();
+            else
+                MessageBox.Show("This item hasn't settings.","No settings!",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         }
 
         public virtual void UpdateModel<T>(T model)

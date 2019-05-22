@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Bachelor_app.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 
 namespace Bachelor_app.Helper
 {

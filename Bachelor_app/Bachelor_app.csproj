@@ -176,6 +176,7 @@
     <Compile Include="StereoVision\Calibration\ECalibrationMode.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\AbstractFeatureDetectorDescriptor.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\BRIEF.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\CudaSurf.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FREAK.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\CudaOrientedFastAndRotatedBrief.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="StructureFromMotion\EFeatureDescriptor.cs" />
     <Compile Include="StructureFromMotion\EFeatureDetector.cs" />
     <Compile Include="StructureFromMotion\EFeatureMatcher.cs" />
+    <Compile Include="StructureFromMotion\Model\CudaSurfModel.cs" />
     <Compile Include="StructureFromMotion\Model\FastModel.cs" />
     <Compile Include="StructureFromMotion\Model\FreakModel.cs" />
     <Compile Include="StructureFromMotion\Model\CudaOrientedFastAndRotatedBriefModel.cs" />

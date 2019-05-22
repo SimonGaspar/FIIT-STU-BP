@@ -49,6 +49,18 @@ namespace Bachelor_app.Extension
             return new GpuMat(image);
         }
 
+        public static Mat ConvertMatForMatching(this Mat mat)
+        {
+            Mat result = new Mat(mat.Size, DepthType.Cv8U, 1);
+            for (int i = 0; i < mat.Rows; i++)
+                for (int j = 0; j < mat.Cols; j++)
+                {
+                    string value = mat.GetValue(i, j).ToString();
+                    result.SetValue(i, j, byte.Parse(value));
+                }
+            return result;
+        }
+
         /// <summary>
         /// Method to get value from Mat.
         /// </summary>

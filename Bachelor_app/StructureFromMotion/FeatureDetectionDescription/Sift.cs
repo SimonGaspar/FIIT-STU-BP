@@ -1,4 +1,5 @@
-﻿using Bachelor_app.Model;
+﻿using Bachelor_app.Extension;
+using Bachelor_app.Model;
 using Bachelor_app.StructureFromMotion.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
@@ -13,7 +14,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class Sift : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
-        private static SemaphoreSlim semaphore = new SemaphoreSlim(2);
+        private static SemaphoreSlim semaphore = new SemaphoreSlim(1);
         public Sift() : base(new SiftModel())
         {
             WindowsForm = null;
@@ -22,19 +23,26 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
         public override Mat ComputeDescriptor(KeyPointModel keyPoints)
         {
             semaphore.Wait();
-            Mat result = new Mat();
-            try
+            var convertedResult = new Mat();
+
+            using (Mat result = new Mat())
             {
-                using (Mat image = new Mat(keyPoints.InputFile.FullPath))
-                using (var _sift = CreateInstance())
-                    _sift.Compute(image, keyPoints.DetectedKeyPoints, result);
-            }
-            catch (Exception e)
-            {
-                throw e;
+                try
+                {
+                    using (Mat image = new Mat(keyPoints.InputFile.FullPath))
+                    using (var _sift = CreateInstance())
+                        _sift.Compute(image, keyPoints.DetectedKeyPoints, result);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+
+                convertedResult = result.ConvertMatForMatching();
+                result.Dispose();
             }
             semaphore.Release();
-            return result;
+            return convertedResult;
         }
 
         public override MKeyPoint[] DetectKeyPoints(IInputArray image)
