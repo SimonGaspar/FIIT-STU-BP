@@ -1,5 +1,4 @@
-﻿using Bachelor_app.Helper;
-using System;
+﻿using System;
 using System.IO;
 
 namespace Bachelor_app

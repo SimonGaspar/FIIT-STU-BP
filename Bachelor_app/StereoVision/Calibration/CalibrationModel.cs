@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.IO;
-using Emgu.CV;
-using Newtonsoft.Json;
+﻿using System.IO;
 
 namespace Bachelor_app.StereoVision.Calibration
 {

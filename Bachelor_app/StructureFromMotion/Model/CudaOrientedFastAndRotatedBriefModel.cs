@@ -1,6 +1,4 @@
-﻿using static Emgu.CV.Features2D.ORBDetector;
-
-namespace Bachelor_app.StructureFromMotion.Model
+﻿namespace Bachelor_app.StructureFromMotion.Model
 {
     /// <summary>
     /// Model for CudaORB

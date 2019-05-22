@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
-using Bachelor_app.Enumerate;
-using Bachelor_app.Extension;
-using Bachelor_app.Manager;
-using Bachelor_app.StereoVision.Calibration;
-using Bachelor_app.StereoVision.StereoCorrespondence;
-using Emgu.CV;
-using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
-using Newtonsoft.Json;
 
 namespace Bachelor_app.StereoVision
 {

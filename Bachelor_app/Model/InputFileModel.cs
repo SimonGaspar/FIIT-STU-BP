@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
-using Bachelor_app.Enumerate;
 
 namespace Bachelor_app.Model
 {

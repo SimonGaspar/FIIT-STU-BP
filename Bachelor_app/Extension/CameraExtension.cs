@@ -1,9 +1,4 @@
-﻿using System.Drawing;
-using Bachelor_app.Enumerate;
-using Emgu.CV;
-using Emgu.CV.CvEnum;
-
-namespace Bachelor_app.Extension
+﻿namespace Bachelor_app.Extension
 {
     /// <summary>
     /// Extension method for camera (class VideoCapture).

@@ -1,21 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Bachelor_app.Enumerate;
-using Bachelor_app.Helper;
-using Bachelor_app.Manager;
-using Bachelor_app.Model;
-using Bachelor_app.StructureFromMotion;
-using Bachelor_app.StructureFromMotion.FeatureMatcher;
-using Bachelor_app.Tools;
-using Emgu.CV;
-using Emgu.CV.Structure;
-using Emgu.CV.Util;
 
 namespace Bachelor_app
 {
@@ -196,7 +185,7 @@ namespace Bachelor_app
                     MatchingStereoParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    for(int index= countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
+                    for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
                     //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
@@ -301,7 +290,7 @@ namespace Bachelor_app
                     MatchingParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
                 case EMatchingType.AllWithAll:
-                    for(int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
+                    for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
                     //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
@@ -383,7 +372,7 @@ namespace Bachelor_app
                             leftDescriptor.Descriptor.Row(i).CopyTo(leftDesc.Row(i));
                         for (int i = 0; i < rightDesc.Rows; i++)
                             rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
-                        
+
                         WindowsFormHelper.AddLogToConsole($"Start CUDA computing matches for: \n" +
                                 $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                                 $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
@@ -393,7 +382,8 @@ namespace Bachelor_app
                         leftDesc.Dispose();
                         rightDesc.Dispose();
                     }
-                    else {
+                    else
+                    {
                         WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
                                 $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
                                 $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
@@ -450,7 +440,7 @@ namespace Bachelor_app
 
             if (SaveInMatchNode)
                 foundedMatch.SaveMatchString(SaveInNode: SaveInMatchNode);
-            
+
             //File.WriteAllText(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.FileFormatMatch);
 
             if (AddToList)
@@ -530,7 +520,7 @@ namespace Bachelor_app
                     ComputedDescriptors.Add(keypoint.ID, descriptorNode);
 
                 if (SaveOnDisk)
-                    descriptorNode.SaveSiftFile(true,false);
+                    descriptorNode.SaveSiftFile(true, false);
             }
             catch (Exception e)
             {
@@ -542,7 +532,8 @@ namespace Bachelor_app
 
         private int FindKeypoint(int ID, InputFileModel inputFile, IFeatureDetector detector, bool AddToList = true, bool DrawAndSave = Configuration.SaveImagesFromProcess)
         {
-            try { 
+            try
+            {
                 var fileName = inputFile.FileName;
 
                 WindowsFormHelper.AddLogToConsole($"Start finding key points for: {fileName}\n");

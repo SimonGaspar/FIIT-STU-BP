@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Bachelor_app.Enumerate;
-using Emgu.CV;
-using Emgu.CV.Structure;
+﻿using System.Collections.Generic;
 
 namespace Bachelor_app.Model
 {
@@ -18,7 +14,7 @@ namespace Bachelor_app.Model
         public Image<Bgr, byte> _lastDrawnKeypoint { get; set; }
         public Image<Bgr, byte> _lastDrawnMatches { get; set; }
         public Image<Bgr, byte> _lastImage { get; set; }
-        
+
         public List<InputFileModel> BasicStack { get; private set; }
         public List<InputFileModel> LeftCameraStack { get; private set; }
         public List<InputFileModel> RightCameraStack { get; private set; }

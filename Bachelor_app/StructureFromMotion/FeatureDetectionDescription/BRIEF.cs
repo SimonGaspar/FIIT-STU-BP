@@ -1,10 +1,4 @@
-﻿using Bachelor_app.Model;
-using Bachelor_app.StructureFromMotion.Model;
-using Bachelor_app.StructureFromMotion.WindowsForm;
-using Emgu.CV;
-using Emgu.CV.XFeatures2D;
-
-namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
+﻿namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
     /// <summary>
     /// BRIEF algorithm

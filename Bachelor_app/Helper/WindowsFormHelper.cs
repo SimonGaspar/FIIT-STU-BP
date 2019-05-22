@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 
 namespace Bachelor_app.Helper
 {
@@ -34,7 +33,7 @@ namespace Bachelor_app.Helper
             {
                 element.Text += $"[{DateTime.Now}]\n{text}\n";
             }
-        }       
+        }
 
         /// <summary>
         /// Method to adding text to console in MainForm.

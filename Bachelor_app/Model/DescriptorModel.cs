@@ -1,7 +1,5 @@
 ﻿using System.IO;
 using System.Text;
-using Bachelor_app.Extension;
-using Emgu.CV;
 
 namespace Bachelor_app.Model
 {

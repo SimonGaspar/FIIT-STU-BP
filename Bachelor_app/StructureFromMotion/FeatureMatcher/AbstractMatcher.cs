@@ -1,6 +1,4 @@
 ﻿using System;
-using Emgu.CV;
-using Emgu.CV.Util;
 
 namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 {

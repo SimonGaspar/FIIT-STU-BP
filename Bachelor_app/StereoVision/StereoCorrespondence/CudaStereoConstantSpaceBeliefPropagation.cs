@@ -1,11 +1,4 @@
-﻿using Bachelor_app.Extension;
-using Bachelor_app.StereoVision.Model;
-using Bachelor_app.StereoVision.WindowsForm;
-using Emgu.CV;
-using Emgu.CV.Cuda;
-using Emgu.CV.Structure;
-
-namespace Bachelor_app.StereoVision.StereoCorrespondence
+﻿namespace Bachelor_app.StereoVision.StereoCorrespondence
 {
     /// <summary>
     /// CudaStereoConstantSpaceBP algorithm

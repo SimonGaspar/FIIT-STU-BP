@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
-using Bachelor_app.Enumerate;
-using Bachelor_app.Extension;
-using Bachelor_app.StereoVision;
-using Bachelor_app.StructureFromMotion;
 
 namespace Bachelor_app.Manager
 {

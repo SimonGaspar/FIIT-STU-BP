@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Emgu.CV.Structure;
-
-namespace Bachelor_app.StereoVision.Calibration
+﻿namespace Bachelor_app.StereoVision.Calibration
 {
     /// <summary>
     /// Pattern model, which is used in calibration.

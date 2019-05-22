@@ -1,6 +1,4 @@
-﻿using Emgu.CV.Features2D;
-
-namespace Bachelor_app.StructureFromMotion
+﻿namespace Bachelor_app.StructureFromMotion
 {
     /// <summary>
     /// Model for CudaBFMatcher

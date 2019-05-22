@@ -1,10 +1,4 @@
-﻿using System.Threading;
-using Bachelor_app.StructureFromMotion.WindowsForm;
-using Emgu.CV;
-using Emgu.CV.Cuda;
-using Emgu.CV.Util;
-
-namespace Bachelor_app.StructureFromMotion.FeatureMatcher
+﻿namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 {
     /// <summary>
     /// CudaBFMatcher algorithm

@@ -1,7 +1,4 @@
 ﻿using System;
-using Bachelor_app.Model;
-using Emgu.CV;
-using Emgu.CV.Structure;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {

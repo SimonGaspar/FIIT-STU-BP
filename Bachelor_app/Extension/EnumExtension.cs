@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Bachelor_app.Resources;
 
 namespace Bachelor_app.Extension
 {

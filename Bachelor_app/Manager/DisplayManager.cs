@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using Bachelor_app.Enumerate;
-using Bachelor_app.Extension;
-using Bachelor_app.Helper;
-using Bachelor_app.Model;
-using Emgu.CV;
-using Emgu.CV.Structure;
-using Emgu.CV.UI;
-using Kitware.VTK;
-using Newtonsoft.Json;
 
 namespace Bachelor_app.Manager
 {
@@ -46,7 +35,7 @@ namespace Bachelor_app.Manager
             if (item.Focused)
             {
                 var listOfInputFile = _fileManager.ListViewModel.ListOfListInputFolder[(int)_fileManager.ListViewerDisplay];
-                if(_fileManager.ListViewModel._lastImage!=null)
+                if (_fileManager.ListViewModel._lastImage != null)
                     _fileManager.ListViewModel._lastImage.Dispose();
                 _fileManager.ListViewModel._lastImage = new Image<Bgr, byte>((Bitmap)Image.FromFile(listOfInputFile.FirstOrDefault(x => x.FileName == item.Text).FileName));
 

@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Bachelor_app.Helper;
 
 namespace Bachelor_app.Tools
 {

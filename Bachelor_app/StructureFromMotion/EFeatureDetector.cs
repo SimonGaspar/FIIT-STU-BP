@@ -1,5 +1,4 @@
 ﻿using System;
-using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
 
 namespace Bachelor_app.StructureFromMotion
 {

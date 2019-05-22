@@ -1,6 +1,4 @@
-﻿using Emgu.CV;
-
-namespace Bachelor_app.StereoVision.Model
+﻿namespace Bachelor_app.StereoVision.Model
 {
     /// <summary>
     /// Model for StereoSGBM

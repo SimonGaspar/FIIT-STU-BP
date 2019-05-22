@@ -2,13 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Bachelor_app.Enumerate;
-using Bachelor_app.Extension;
-using Bachelor_app.Manager;
-using Emgu.CV;
-using Emgu.CV.Features2D;
-using Emgu.CV.Structure;
-using Emgu.CV.Util;
 
 namespace Bachelor_app.Model
 {
@@ -80,7 +73,7 @@ namespace Bachelor_app.Model
         /// <param name="model"></param>
         /// <param name="UseMask"></param>
         /// <returns></returns>
-        public static string SaveMatchString(this MatchModel model, bool UseMask = true, bool SaveInNode=false)
+        public static string SaveMatchString(this MatchModel model, bool UseMask = true, bool SaveInNode = false)
         {
             if (model.Mask == null || model.FilteredMatchesList.Count == 0)
             {
@@ -119,7 +112,7 @@ namespace Bachelor_app.Model
                     sb.Append($"{matchesList[m][0].QueryIdx} ");
             }
 
-            if(SaveInNode)
+            if (SaveInNode)
                 model.SaveMatchInModel(sb.ToString());
 
             return sb.ToString();

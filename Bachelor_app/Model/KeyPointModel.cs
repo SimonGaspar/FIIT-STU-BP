@@ -1,13 +1,5 @@
 ﻿using System;
 using System.IO;
-using Bachelor_app.Enumerate;
-using Bachelor_app.Extension;
-using Bachelor_app.Manager;
-using Emgu.CV;
-using Emgu.CV.Features2D;
-using Emgu.CV.Structure;
-using Emgu.CV.Util;
-using static Emgu.CV.Features2D.Features2DToolbox;
 
 namespace Bachelor_app.Model
 {
@@ -17,7 +9,7 @@ namespace Bachelor_app.Model
         public InputFileModel InputFile { get; private set; }
         public int ID { get; private set; }
 
-        public KeyPointModel(VectorOfKeyPoint detectedKeyPoints, InputFileModel inputFile,int id)
+        public KeyPointModel(VectorOfKeyPoint detectedKeyPoints, InputFileModel inputFile, int id)
         {
             DetectedKeyPoints = detectedKeyPoints;
             InputFile = inputFile;
@@ -40,7 +32,7 @@ namespace Bachelor_app.Model
                 var fileName = $"{model.InputFile.FileNameWithoutExtension}.JPG";
                 var filePath = model.InputFile.FullPath;
                 var savePath = Path.Combine(Configuration.TempDrawKeypoint, fileName);
-                
+
                 using (Mat output = new Mat())
                 {
                     Features2DToolbox.DrawKeypoints(new Mat(filePath), model.DetectedKeyPoints, output, new Bgr(0, 0, 255), KeypointDrawType.DrawRichKeypoints);

@@ -1,6 +1,4 @@
-﻿using Bachelor_app.StructureFromMotion.FeatureDetectionDescription;
-
-namespace Bachelor_app.StructureFromMotion
+﻿namespace Bachelor_app.StructureFromMotion
 {
     /// <summary>
     /// Possible descriptor algorithm

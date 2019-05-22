@@ -1,11 +1,4 @@
-﻿using Bachelor_app.Model;
-using Bachelor_app.StructureFromMotion.Model;
-using Bachelor_app.StructureFromMotion.WindowsForm;
-using Emgu.CV;
-using Emgu.CV.Cuda;
-using Emgu.CV.Structure;
-
-namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
+﻿namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
     /// <summary>
     /// CudaORB algorithm
@@ -37,7 +30,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             using (var cudaORB = CreateInstance())
             using (Image<Gray, byte> image = new Image<Gray, byte>((input as Mat).Bitmap))
             using (GpuMat gpumat = new GpuMat(image))
-            result = cudaORB.Detect(gpumat);
+                result = cudaORB.Detect(gpumat);
 
             return result;
         }

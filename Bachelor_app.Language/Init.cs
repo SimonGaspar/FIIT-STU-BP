@@ -13,12 +13,14 @@ namespace Bachelor_app.Resources
             string FullResourseName = ResourseBase;
             Assembly assembly = Assembly.GetExecutingAssembly();
 
-            var ResList = assembly.GetManifestResourceNames().ToList();
+            System.Collections.Generic.List<string> ResList = assembly.GetManifestResourceNames().ToList();
 
             if (ResList.
                 Where(x => x.Equals(FullResourseName + Delimeter + LanguagePrefix + ".resources"))
                 .Count() == 1)
+            {
                 FullResourseName += Delimeter + LanguagePrefix;
+            }
 
             MainResourse = new ResourceManager(FullResourseName, assembly);
         }
@@ -33,7 +35,9 @@ namespace Bachelor_app.Resources
             try
             {
                 if (MainResourse == null)
+                {
                     return name;
+                }
 
                 string result = MainResourse.GetString(name);
                 return result ?? name;

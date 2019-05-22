@@ -1,11 +1,4 @@
-﻿using Bachelor_app.Extension;
-using Bachelor_app.StereoVision.Model;
-using Bachelor_app.StereoVision.WindowsForm;
-using Emgu.CV;
-using Emgu.CV.Cuda;
-using Emgu.CV.Structure;
-
-namespace Bachelor_app.StereoVision.StereoCorrespondence
+﻿namespace Bachelor_app.StereoVision.StereoCorrespondence
 {
     /// <summary>
     /// CudaStereoBM algorithm
@@ -13,7 +6,7 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
     public class CudaStereoBlockMatching : StereoBlockMatching, IStereoSolver
     {
         public CudaStereoBlockMatching()
-            :base(new CudaStereoBlockMatchingModel())
+            : base(new CudaStereoBlockMatchingModel())
         {
             WinForm = new StereoBMForm(this);
         }
@@ -32,8 +25,8 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
             {
                 ConvertImageToGray(leftImage, rightImage);
 
-                using (GpuMat LeftGpuMat = LeftGrayImage.ToGpuMat(),RightGpuMat = RightGrayImage.ToGpuMat())
-                    _cudaStereoBM.FindStereoCorrespondence(LeftGpuMat,RightGpuMat, imageDisparity);
+                using (GpuMat LeftGpuMat = LeftGrayImage.ToGpuMat(), RightGpuMat = RightGrayImage.ToGpuMat())
+                    _cudaStereoBM.FindStereoCorrespondence(LeftGpuMat, RightGpuMat, imageDisparity);
 
                 imageDisparity.Download(disparity);
             }

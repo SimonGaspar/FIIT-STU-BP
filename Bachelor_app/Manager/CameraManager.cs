@@ -1,10 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Bachelor_app.Enumerate;
-using Bachelor_app.Extension;
-using Bachelor_app.Helper;
-using Bachelor_app.Model;
-using Emgu.CV;
 
 namespace Bachelor_app.Manager
 {

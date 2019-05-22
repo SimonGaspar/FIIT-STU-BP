@@ -6,7 +6,7 @@
     public class CudaStereoBlockMatchingModel : StereoBlockMatchingModel
     {
         public CudaStereoBlockMatchingModel(int disparity = 64, int blockSize = 5)
-            :base(disparity,blockSize)
+            : base(disparity, blockSize)
         {
         }
     }
