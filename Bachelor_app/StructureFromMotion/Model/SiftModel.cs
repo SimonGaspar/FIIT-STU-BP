@@ -11,7 +11,7 @@
         public double EdgeThreshold { get; private set; }
         public double Sigma { get; private set; }
 
-        public SiftModel(int nFeatures = 0, int nOctaveLayers = 6, double contrastThreshold = 0.04, double edgeThreshold = 10, double sigma = 3.2)
+        public SiftModel(int nFeatures = 0, int nOctaveLayers = 3, double contrastThreshold = 0.04, double edgeThreshold = 10, double sigma = 1.6)
         {
             NumberOfFeatures = nFeatures;
             NOctaveLayers = nOctaveLayers;
