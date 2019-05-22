@@ -1,4 +1,6 @@
-﻿namespace Bachelor_app.StereoVision.Calibration
+﻿using System.Drawing;
+
+namespace Bachelor_app.StereoVision.Calibration
 {
     /// <summary>
     /// Pattern model, which is used in calibration.

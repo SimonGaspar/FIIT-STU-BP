@@ -1,4 +1,8 @@
-﻿namespace Bachelor_app.StereoVision
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System.Drawing;
+
+namespace Bachelor_app.StereoVision
 {
     /// <summary>
     /// Interface for stereo correspondence.

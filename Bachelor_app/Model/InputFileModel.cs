@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bachelor_app.Enumerate;
+using System;
+using System.Drawing;
 using System.IO;
 
 namespace Bachelor_app.Model

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Bachelor_app.Enumerate;
+using Emgu.CV;
+using Emgu.CV.Structure;
+using System.Collections.Generic;
 
 namespace Bachelor_app.Model
 {

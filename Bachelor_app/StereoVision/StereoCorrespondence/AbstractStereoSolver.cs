@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using System;
+using System.Drawing;
 
 namespace Bachelor_app.StereoVision.StereoCorrespondence
 {

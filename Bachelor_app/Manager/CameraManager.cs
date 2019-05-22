@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Bachelor_app.Enumerate;
+using Bachelor_app.Extension;
+using Bachelor_app.Helper;
+using Bachelor_app.Model;
+using Emgu.CV;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Bachelor_app.Manager

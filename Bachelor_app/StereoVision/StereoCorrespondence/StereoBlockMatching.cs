@@ -1,4 +1,9 @@
-﻿namespace Bachelor_app.StereoVision.StereoCorrespondence
+﻿using Bachelor_app.StereoVision.Model;
+using Bachelor_app.StereoVision.WindowsForm;
+using Emgu.CV;
+using Emgu.CV.Structure;
+
+namespace Bachelor_app.StereoVision.StereoCorrespondence
 {
     /// <summary>
     /// StereoBM algorithm

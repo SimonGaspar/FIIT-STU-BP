@@ -1,4 +1,11 @@
-﻿using System;
+﻿using Bachelor_app.Enumerate;
+using Bachelor_app.Extension;
+using Bachelor_app.Manager;
+using Emgu.CV;
+using Emgu.CV.Features2D;
+using Emgu.CV.Structure;
+using Emgu.CV.Util;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;

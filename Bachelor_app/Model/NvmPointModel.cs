@@ -1,4 +1,6 @@
-﻿namespace Bachelor_app.Model
+﻿using System.Numerics;
+
+namespace Bachelor_app.Model
 {
     /// <summary>
     /// Model for points (.nvm file)

@@ -1,11 +1,18 @@
-﻿namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
+﻿using Bachelor_app.Model;
+using Bachelor_app.StructureFromMotion.Model;
+using Bachelor_app.StructureFromMotion.WindowsForm;
+using Emgu.CV;
+using Emgu.CV.Cuda;
+using Emgu.CV.Structure;
+
+namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
     /// <summary>
     /// CudaORB algorithm
     /// </summary>
     public class CudaOrientedFastAndRotatedBrief : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
-        public CudaOrientedFastAndRotatedBrief() : base(new CudaOrientedFastAndRotatedBriefModel(30000))
+        public CudaOrientedFastAndRotatedBrief() : base(new CudaOrientedFastAndRotatedBriefModel())
         {
             WindowsForm = new CudaOrientedFastAndRotatedBriefForm(this);
         }

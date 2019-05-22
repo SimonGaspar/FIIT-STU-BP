@@ -1,4 +1,6 @@
-﻿namespace Bachelor_app.StructureFromMotion.Model
+﻿using static Emgu.CV.Features2D.FastDetector;
+
+namespace Bachelor_app.StructureFromMotion.Model
 {
     /// <summary>
     /// Model for FAST

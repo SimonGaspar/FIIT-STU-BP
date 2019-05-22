@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Bachelor_app.Model;
+using Bachelor_app.StructureFromMotion.Model;
+using Emgu.CV;
+using Emgu.CV.Structure;
+using Emgu.CV.XFeatures2D;
+using System;
 using System.Threading;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription

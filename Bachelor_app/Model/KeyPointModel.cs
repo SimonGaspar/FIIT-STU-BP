@@ -1,5 +1,13 @@
-﻿using System;
+﻿using Bachelor_app.Enumerate;
+using Bachelor_app.Extension;
+using Bachelor_app.Manager;
+using Emgu.CV;
+using Emgu.CV.Features2D;
+using Emgu.CV.Structure;
+using Emgu.CV.Util;
+using System;
 using System.IO;
+using static Emgu.CV.Features2D.Features2DToolbox;
 
 namespace Bachelor_app.Model
 {

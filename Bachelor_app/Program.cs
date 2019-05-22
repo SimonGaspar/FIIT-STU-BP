@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Bachelor_app.Resources;
+using System;
+using System.Windows.Forms;
 
 namespace Bachelor_app
 {

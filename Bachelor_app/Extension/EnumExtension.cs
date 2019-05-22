@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bachelor_app.Resources;
+using System;
 using System.Linq;
 
 namespace Bachelor_app.Extension

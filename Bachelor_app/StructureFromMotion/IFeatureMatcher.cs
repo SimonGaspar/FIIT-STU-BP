@@ -1,4 +1,7 @@
-﻿namespace Bachelor_app.StructureFromMotion
+﻿using Emgu.CV;
+using Emgu.CV.Util;
+
+namespace Bachelor_app.StructureFromMotion
 {
     /// <summary>
     /// Interface for matching algorithm

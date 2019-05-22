@@ -1,4 +1,6 @@
-﻿namespace Bachelor_app.StructureFromMotion
+﻿using Bachelor_app.StructureFromMotion.FeatureMatcher;
+
+namespace Bachelor_app.StructureFromMotion
 {
     /// <summary>
     /// Possible matching algorithm

@@ -1,8 +1,18 @@
-﻿using System;
+﻿using Bachelor_app.Extension;
+using Bachelor_app.Helper;
+using Bachelor_app.Manager;
+using Bachelor_app.StereoVision.Calibration;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using Emgu.CV.Util;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Bachelor_app.StereoVision
 {

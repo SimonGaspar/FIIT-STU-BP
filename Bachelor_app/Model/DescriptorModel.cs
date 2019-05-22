@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using Bachelor_app.Extension;
+using Emgu.CV;
+using System.IO;
 using System.Text;
 
 namespace Bachelor_app.Model

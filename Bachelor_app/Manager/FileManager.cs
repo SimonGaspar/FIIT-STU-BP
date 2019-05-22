@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Bachelor_app.Enumerate;
+using Bachelor_app.Model;
+using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace Bachelor_app.Manager
 {

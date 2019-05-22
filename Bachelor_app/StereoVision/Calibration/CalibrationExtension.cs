@@ -1,4 +1,6 @@
-﻿namespace Bachelor_app.StereoVision.Calibration
+﻿using Emgu.CV;
+
+namespace Bachelor_app.StereoVision.Calibration
 {
     public static class CalibrationExtension
     {

@@ -1,4 +1,6 @@
-﻿namespace Bachelor_app.Model
+﻿using Emgu.CV;
+
+namespace Bachelor_app.Model
 {
     public class CameraModel
     {
