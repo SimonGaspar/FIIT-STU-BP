@@ -11,7 +11,8 @@ namespace Bachelor_app.StructureFromMotion
         FREAK,
         BRIEF,
         CudaORB,
-        SIFT
+        SIFT,
+        CudaSURF
     }
 
     public static class FeatureDescriptorExtension
@@ -32,6 +33,7 @@ namespace Bachelor_app.StructureFromMotion
                 case EFeatureDescriptor.BRIEF: returnItem = new BRIEF(); break;
                 case EFeatureDescriptor.CudaORB: returnItem = new CudaOrientedFastAndRotatedBrief(); break;
                 case EFeatureDescriptor.SIFT: returnItem = new Sift(); break;
+                case EFeatureDescriptor.CudaSURF: returnItem = new CudaSurf(); break;
             }
 
             return returnItem;

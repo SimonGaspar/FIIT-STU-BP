@@ -11,7 +11,8 @@ namespace Bachelor_app.StructureFromMotion
         ORB,
         FAST,
         CudaORB,
-        SIFT
+        SIFT,
+        CudaSURF
     }
 
     public static class FeatureDetectorExtension
@@ -31,6 +32,7 @@ namespace Bachelor_app.StructureFromMotion
                 case EFeatureDetector.FAST: returnItem = new FAST(); break;
                 case EFeatureDetector.CudaORB: returnItem = new CudaOrientedFastAndRotatedBrief(); break;
                 case EFeatureDetector.SIFT: returnItem = new Sift(); break;
+                case EFeatureDetector.CudaSURF: returnItem = new CudaSurf(); break;
                 default: throw new NotImplementedException();
             }
 
