@@ -8,7 +8,8 @@
         ORB,
         FREAK,
         BRIEF,
-        CudaORB
+        CudaORB,
+        SIFT
     }
 
     public static class FeatureDescriptorExtension
@@ -28,6 +29,7 @@
                 case EFeatureDescriptor.FREAK: returnItem = new FREAK(); break;
                 case EFeatureDescriptor.BRIEF: returnItem = new BRIEF(); break;
                 case EFeatureDescriptor.CudaORB: returnItem = new CudaOrientedFastAndRotatedBrief(); break;
+                case EFeatureDescriptor.SIFT: returnItem = new Sift(); break;
             }
 
             return returnItem;
