@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Numerics;
-using Bachelor_app.Model;
 
 namespace Bachelor_app.Helper
 {
@@ -38,7 +36,7 @@ namespace Bachelor_app.Helper
                     indexOfLine = AddPointModelFromFile(indexOfLine, lineArray, model.PointCount, model);
                 else
                     break;
-                
+
                 resultList.Add(model);
             }
 
@@ -106,7 +104,7 @@ namespace Bachelor_app.Helper
                         float.Parse(camera[8])
                         ),
                     float.Parse(camera[9]));
-                
+
                 model.ListCameraModel.Add(imageModel);
             }
             return currentIndex;

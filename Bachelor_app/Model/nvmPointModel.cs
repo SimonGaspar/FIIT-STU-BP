@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Bachelor_app.Model
+﻿namespace Bachelor_app.Model
 {
     /// <summary>
     /// Model for points (.nvm file)
@@ -10,11 +8,12 @@ namespace Bachelor_app.Model
         public Vector3 Position { get; private set; }
         public Vector3 Color { get; private set; }
 
-        public NvmPointModel(Vector3 position, Vector3 color) {
+        public NvmPointModel(Vector3 position, Vector3 color)
+        {
             Position = position;
             Color = color;
         }
-        
+
         // Additional information
 
         //public int numberOfMeasurement { get; set; }

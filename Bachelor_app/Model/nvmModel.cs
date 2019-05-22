@@ -12,7 +12,8 @@ namespace Bachelor_app.Model
         public List<NvmPointModel> ListPointModel { get; private set; } = new List<NvmPointModel>();
         public List<NvmCameraModel> ListCameraModel { get; private set; } = new List<NvmCameraModel>();
 
-        public void SetImageCount(int count) {
+        public void SetImageCount(int count)
+        {
             ImageCount = count;
         }
 
