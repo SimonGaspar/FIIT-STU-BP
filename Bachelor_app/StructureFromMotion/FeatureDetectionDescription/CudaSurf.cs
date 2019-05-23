@@ -1,10 +1,8 @@
 ﻿using Bachelor_app.Model;
-using Bachelor_app.StructureFromMotion.Model;
-using Bachelor_app.StructureFromMotion.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
-using Emgu.CV.XFeatures2D;
+using Bachelor_app.StructureFromMotion.Model;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
@@ -47,13 +45,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
         public override dynamic CreateInstance()
         {
-            return new Emgu.CV.XFeatures2D.CudaSURF(Model.HessianThreshold,
-            Model.NOctaves,
-            Model.NOctaveLayers,
-            Model.Extended,
-            Model.FeaturesRatio,
-            Model.Upright
-                );
+            return new Emgu.CV.XFeatures2D.CudaSURF(
+                Model.HessianThreshold,
+                Model.NOctaves,
+                Model.NOctaveLayers,
+                Model.Extended,
+                Model.FeaturesRatio,
+                Model.Upright
+            );
         }
     }
 }

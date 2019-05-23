@@ -1,5 +1,7 @@
 ﻿using Bachelor_app.Extension;
 using Emgu.CV;
+using Emgu.CV.CvEnum;
+using System.Drawing;
 using System.IO;
 using System.Text;
 
@@ -24,6 +26,13 @@ namespace Bachelor_app.Model
         public void SaveSiftInModel(string SiftText)
         {
             FileFormatSIFT = SiftText;
+        }
+        public void SetDescriptor(Mat mat)
+        {
+            if (Descriptor != null)
+                Descriptor.Dispose();
+
+            Descriptor = mat;
         }
     }
 
@@ -63,6 +72,28 @@ namespace Bachelor_app.Model
 
             if (SaveInDescriptorNode)
                 model.SaveSiftInModel(sb.ToString());
+        }
+
+        public static Mat LoadSiftFile(this DescriptorModel model, bool SaveInNode = false)
+        {
+            var siftFile = File.ReadAllLines(Path.Combine(Configuration.TempDirectoryPath, model.KeyPoint.InputFile.FileNameWithoutExtension + ".SIFT"));
+            var header = siftFile[0].Split(' ');
+            var countRows = int.Parse(header[0]);
+            var countColumns = int.Parse(header[1]);
+
+            var result = new Mat(new Size(countColumns, countRows), DepthType.Cv8U, 1);
+
+            for (int i = 2; i < countRows; i += 2)
+            {
+                var tempRow = siftFile[i].Split(' ');
+                for (int j = 0; j < countColumns; j++)
+                    result.SetValue((i - 2) / 2, j, byte.Parse(tempRow[j]));
+            }
+
+            if (SaveInNode)
+                model.SetDescriptor(result);
+
+            return result;
         }
     }
 }
