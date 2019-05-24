@@ -51,6 +51,27 @@ namespace Bachelor_app.Manager
             if (listViewToRemove == null)
                 listViewToRemove = _winForm.ListViews[(int)ListViewerDisplay];
 
+            foreach (ListViewItem fileName in listViewToRemove.Items)
+            {
+                ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.FileName == fileName.Text));
+
+                var imageList = _winForm.ImageList[(int)ListViewerDisplay];
+                imageList.Images.RemoveByKey(fileName.Text);
+
+                var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
+                listViewer.Items.Remove(fileName);
+            }
+        }
+
+        /// <summary>
+        /// Remove checked files from current stack in ListViewerDisplay
+        /// </summary>
+        /// <param name="listViewToRemove">List with item to remove</param>
+        public void RemoveSelectedFromListView(ListView listViewToRemove = null)
+        {
+            if (listViewToRemove == null)
+                listViewToRemove = _winForm.ListViews[(int)ListViewerDisplay];
+
             foreach (ListViewItem fileName in listViewToRemove.SelectedItems)
             {
                 if (ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.FileName == fileName.Text).UseInSFM == true)
@@ -72,7 +93,7 @@ namespace Bachelor_app.Manager
         public void RemoveAllFromCurrentListView()
         {
             var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
-            RemoveFromListView(currentListView);
+            RemoveSelectedFromListView(currentListView);
         }
 
         /// <summary>

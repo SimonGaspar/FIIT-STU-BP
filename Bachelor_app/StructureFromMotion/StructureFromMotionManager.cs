@@ -170,10 +170,21 @@ namespace Bachelor_app
                     startMatchingFromPrevious = 2;
                     MatchingSequencePrevious(countOfExistedKeypoint, startMatchingFromPrevious, 2, matcher);
                     break;
-                case EMatchingType.AllWithAll:
+                case EMatchingType.AllWithAllForward:
                     for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
                         for (int n = m + 1; n < ComputedDescriptors.Count; n++)
                             FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+                    break;
+                case EMatchingType.AllWithAllBackward:
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                        for (int n = 0; n < m; n++)
+                            FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+                    break;
+                case EMatchingType.FullAllWithAll:
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                        for (int n = 0; n < ComputedDescriptors.Count; n++)
+                            if(m!=n)
+                                FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
                     break;
             }
         }
@@ -193,12 +204,35 @@ namespace Bachelor_app
                     startMatchingFromPrevious = 2;
                     MatchingStereoParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
-                case EMatchingType.AllWithAll:
+                case EMatchingType.AllWithAllForward:
                     for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
                     //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
                         Parallel.For(index + 1, ComputedDescriptors.Count, i =>
                         {
+                            FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                        });
+                        GC.Collect();
+                    };//);
+                    break;
+                case EMatchingType.AllWithAllBackward:
+                    for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
+                    //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        Parallel.For(0, index, i =>
+                        {
+                            FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                        });
+                        GC.Collect();
+                    };//);
+                    break;
+                case EMatchingType.FullAllWithAll:
+                    for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
+                    //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        Parallel.For(0, ComputedDescriptors.Count, i =>
+                        {
+                            if(index!=i)
                             FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
                         });
                         GC.Collect();
@@ -229,11 +263,30 @@ namespace Bachelor_app
                     startMatchingFromPrevious = 2;
                     MatchingSequencePrevious(countOfExistedKeypoint, startMatchingFromPrevious, 1, matcher);
                     break;
-                case EMatchingType.AllWithAll:
+                case EMatchingType.AllWithAllForward:
                     for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
                     {
                         for (int n = m + 1; n < ComputedDescriptors.Count; n++)
                             FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+
+                        GC.Collect();
+                    }
+                    break;
+                case EMatchingType.AllWithAllBackward:
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                    {
+                        for (int n = 0; n < m; n++)
+                            FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
+
+                        GC.Collect();
+                    }
+                    break;
+                case EMatchingType.FullAllWithAll:
+                    for (int m = countOfExistedKeypoint; m < ComputedDescriptors.Count; m++)
+                    {
+                        for (int n = 0; n < ComputedDescriptors.Count; n++)
+                            if(m!=n)
+                                FindMatches(matcher, ComputedDescriptors[m], ComputedDescriptors[n]);
 
                         GC.Collect();
                     }
@@ -298,7 +351,7 @@ namespace Bachelor_app
                     startMatchingFromPrevious = 2;
                     MatchingParallelPrevious(countOfExistedKeypoint, startMatchingFromPrevious, matcher);
                     break;
-                case EMatchingType.AllWithAll:
+                case EMatchingType.AllWithAllForward:
                     for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
                     //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
                     {
@@ -306,6 +359,31 @@ namespace Bachelor_app
                          {
                              FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
                          });
+
+                        GC.Collect();
+                    };//);
+                    break;
+                case EMatchingType.AllWithAllBackward:
+                    for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
+                    //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        Parallel.For(0, index, i =>
+                        {
+                            FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                        });
+
+                        GC.Collect();
+                    };//);
+                    break;
+                case EMatchingType.FullAllWithAll:
+                    for (int index = countOfExistedKeypoint; index < ComputedDescriptors.Count; index++)
+                    //Parallel.For(countOfExistedKeypoint, ComputedDescriptors.Count, index =>
+                    {
+                        Parallel.For(0, ComputedDescriptors.Count, i =>
+                        {
+                            if(i!=index)
+                                FindMatches(matcher, ComputedDescriptors[index], ComputedDescriptors[i]);
+                        });
 
                         GC.Collect();
                     };//);
@@ -457,7 +535,7 @@ namespace Bachelor_app
             if (AddToList)
                 FoundedMatches.Add(foundedMatch);
 
-            // Dispose
+            ////Dispose
             //filteredMatchesList = new List<MDMatch[]>();
             //filteredMatchesList.Clear();
             //matchesList.Clear();

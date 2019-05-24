@@ -7,6 +7,8 @@
     {
         OnePrevious,
         TwoPrevious,
-        AllWithAll
+        AllWithAllForward,
+        AllWithAllBackward,
+        FullAllWithAll
     }
 }

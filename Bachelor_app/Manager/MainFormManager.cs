@@ -148,7 +148,7 @@ namespace Bachelor_app.Manager
                 case EListViewGroup.BasicStack:
                 case EListViewGroup.LeftCameraStack:
                 case EListViewGroup.RightCameraStack:
-                    _fileManager.RemoveFromListView(); break;
+                    _fileManager.RemoveSelectedFromListView(); break;
                 default: break;
             }
         }
