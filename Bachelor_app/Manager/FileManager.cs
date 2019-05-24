@@ -2,6 +2,7 @@
 using Bachelor_app.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Bachelor_app.Manager
@@ -68,10 +69,18 @@ namespace Bachelor_app.Manager
         /// <summary>
         /// Remove all files from current stack in ListViewerDisplay
         /// </summary>
-        public void RemoveAllFromListView()
+        public void RemoveAllFromCurrentListView()
         {
             var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
             RemoveFromListView(currentListView);
+        }
+
+        /// <summary>
+        /// Remove all files from all ListViewerDisplay
+        /// </summary>
+        public void RemoveAllFromListViews() { 
+            foreach(var item in _winForm.ListViews)
+                RemoveFromListView(item);
         }
 
         /// <summary>

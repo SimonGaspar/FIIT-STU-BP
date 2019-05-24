@@ -68,28 +68,27 @@ namespace Bachelor_app
 
         public static void DeleteTempFolder()
         {
-            //try
-            //{
-            //    if (Directory.Exists(TempDirectoryPath))
-            //    {
-            //        DirectoryInfo di = new DirectoryInfo(TempDirectoryPath);
+            try
+            {
+                if (Directory.Exists(TempDirectoryPath))
+                {
+                    DirectoryInfo di = new DirectoryInfo(TempDirectoryPath);
 
-            //        foreach (FileInfo file in di.GetFiles())
-            //        {
-            //            file.Delete();
-            //        }
-            //        foreach (DirectoryInfo dir in di.GetDirectories())
-            //        {
-            //            dir.Delete(true);
-            //        }
-            //        di.Delete();
-            //    }
-            //}
-            //catch (Exception)
-            //{
-            //    WindowsFormHelper.AddLogToConsole($"Can't clear temp folder: {TempDirectoryPath}\n");
-            //}
-
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+                    foreach (DirectoryInfo dir in di.GetDirectories())
+                    {
+                        dir.Delete(true);
+                    }
+                    di.Delete();
+                }
+            }
+            catch (Exception)
+            {
+                WindowsFormHelper.AddLogToConsole($"Can't clear temp folder: {TempDirectoryPath}\n");
+            }
         }
     }
 }

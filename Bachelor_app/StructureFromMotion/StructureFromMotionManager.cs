@@ -39,7 +39,7 @@ namespace Bachelor_app
         private float ms_MIN_DIST;
         private int countMatches = 0;
         //private static object locker = new object();
-
+        
         public SfM(FileManager fileManager, CameraManager cameraManager)
         {
             DetectedKeyPoints = new SortedList<int, KeyPointModel>();
@@ -65,10 +65,8 @@ namespace Bachelor_app
             }
             else
             {
-                countMatches = 0;
-                Configuration.DeleteTempFolder();
-                Configuration.GenerateFolders();
                 ClearList();
+                countMatches = 0;
             }
 
             GC.Collect();

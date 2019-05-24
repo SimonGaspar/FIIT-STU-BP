@@ -255,5 +255,13 @@ namespace Bachelor_app
             this.toolStripComboBox9.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
             this.toolStripComboBox9.SelectedItem = secondSelectedItem;
         }
+
+        private void toolStripButton26_Click(object sender, EventArgs e)
+        {
+            Configuration.DeleteTempFolder();
+            Configuration.GenerateFolders();
+
+            fileManager.RemoveAllFromListViews();
+        }
     }
 }
