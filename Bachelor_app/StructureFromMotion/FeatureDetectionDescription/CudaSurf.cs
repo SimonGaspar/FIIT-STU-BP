@@ -47,12 +47,13 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
         public override dynamic CreateInstance()
         {
-            return new Emgu.CV.XFeatures2D.CudaSURF(Model.HessianThreshold,
-            Model.NOctaves,
-            Model.NOctaveLayers,
-            Model.Extended,
-            Model.FeaturesRatio,
-            Model.Upright
+            return new Emgu.CV.XFeatures2D.CudaSURF(
+                Model.HessianThreshold,
+                Model.NOctaves,
+                Model.NOctaveLayers,
+                Model.Extended,
+                Model.FeaturesRatio,
+                Model.Upright
                 );
         }
     }

@@ -182,6 +182,7 @@
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FAST.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\FREAK.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\CudaOrientedFastAndRotatedBrief.cs" />
+    <Compile Include="StructureFromMotion\FeatureDetectionDescription\Surf.cs" />
     <Compile Include="StructureFromMotion\FeatureDetectionDescription\Sift.cs" />
     <Compile Include="StructureFromMotion\FeatureMatcher\AbstractMatcher.cs" />
     <Compile Include="StructureFromMotion\FeatureMatcher\CudaBruteForce.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="StructureFromMotion\EFeatureDescriptor.cs" />
     <Compile Include="StructureFromMotion\EFeatureDetector.cs" />
     <Compile Include="StructureFromMotion\EFeatureMatcher.cs" />
+    <Compile Include="StructureFromMotion\Model\SurfModel.cs" />
     <Compile Include="StructureFromMotion\Model\CudaSurfModel.cs" />
     <Compile Include="StructureFromMotion\Model\FastModel.cs" />
     <Compile Include="StructureFromMotion\Model\FreakModel.cs" />

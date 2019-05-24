@@ -450,14 +450,16 @@ namespace Bachelor_app
                 foundedMatch.DrawAndSave(fileManager);
 
             if (SaveInMatchNode)
-                foundedMatch.SaveMatchString(SaveInNode: SaveInMatchNode);
+                foundedMatch.SaveMatchString(true);
 
-            //File.WriteAllText(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.FileFormatMatch);
+            //File.WriteAllText(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.SaveMatchString(true, false));
+
+            //File.WriteAllText(Path.Combine(Configuration.TempDrawKeypoint, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.SaveMatchString(false, false));
 
             if (AddToList)
                 FoundedMatches.Add(foundedMatch);
 
-            //// Dispose
+            // Dispose
             //filteredMatchesList = new List<MDMatch[]>();
             //filteredMatchesList.Clear();
             //matchesList.Clear();
@@ -468,6 +470,7 @@ namespace Bachelor_app
             //if (foundedMatch.PerspectiveMatrix != null)
             //    foundedMatch.PerspectiveMatrix.Dispose();
             //foundedMatch = null;
+
             return 0;
         }
 
@@ -516,10 +519,23 @@ namespace Bachelor_app
 
         private int ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList = true, bool SaveOnDisk = true)
         {
+            var fileName = keypoint.InputFile.FileName;
+
+            if (File.Exists(Path.Combine(Configuration.TempDirectoryPath, keypoint.InputFile.FileNameWithoutExtension + ".SIFT")))
+            {
+                WindowsFormHelper.AddLogToConsole($"Load descriptor for: {fileName}\n");
+
+                var descriptorNode = new DescriptorModel(keypoint, new Mat());
+                descriptorNode.LoadSiftFile(true);
+
+                if (AddToList)
+                    ComputedDescriptors.Add(keypoint.ID, descriptorNode);
+
+                return 0;
+            }
+
             try
             {
-                var fileName = keypoint.InputFile.FileName;
-
                 WindowsFormHelper.AddLogToConsole($"Start computing descriptor for: {fileName}\n");
 
                 var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
