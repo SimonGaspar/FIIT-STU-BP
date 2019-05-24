@@ -48,7 +48,7 @@ namespace Bachelor_app.Manager
                 var listOfInputFile = _fileManager.ListViewModel.ListOfListInputFolder[(int)_fileManager.ListViewerDisplay];
                 if (_fileManager.ListViewModel._lastImage != null)
                     _fileManager.ListViewModel._lastImage.Dispose();
-                _fileManager.ListViewModel._lastImage = new Image<Bgr, byte>((Bitmap)Image.FromFile(listOfInputFile.FirstOrDefault(x => x.FileName == item.Text).FileName));
+                _fileManager.ListViewModel._lastImage = new Image<Bgr, byte>((Bitmap)Image.FromFile(listOfInputFile.FirstOrDefault(x => x.FileName == item.Text).FullPath));
 
                 Display();
             }

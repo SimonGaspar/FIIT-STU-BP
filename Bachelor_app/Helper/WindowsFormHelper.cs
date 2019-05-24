@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Bachelor_app.Helper
 {
@@ -26,12 +27,20 @@ namespace Bachelor_app.Helper
             {
                 element.Invoke((Action)delegate
                 {
-                    _winForm.richTextBox1.Text += $"[{DateTime.Now}]\n{text}\n";
+                    string allText = element.Text + $"[{DateTime.Now}]\n{text}\n";
+                    var allLines = allText.Split('\n');
+                    var count = allLines.Length - 1;
+                    var result = allLines.Skip(count - 100);
+                    _winForm.richTextBox1.Text = string.Join("\n", result);
                 });
             }
             else
             {
-                element.Text += $"[{DateTime.Now}]\n{text}\n";
+                string allText = element.Text + $"[{DateTime.Now}]\n{text}\n";
+                var allLines = allText.Split('\n');
+                var count = allLines.Length - 1;
+                var result = allLines.Skip(count - 100);
+                element.Text = string.Join("\n",result);
             }
         }
 

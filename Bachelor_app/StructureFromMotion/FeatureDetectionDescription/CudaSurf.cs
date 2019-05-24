@@ -1,10 +1,8 @@
 ﻿using Bachelor_app.Model;
-using Bachelor_app.StructureFromMotion.Model;
-using Bachelor_app.StructureFromMotion.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
-using Emgu.CV.XFeatures2D;
+using Bachelor_app.StructureFromMotion.Model;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
