@@ -37,7 +37,7 @@ namespace Bachelor_app
             WindowsFormHelper.SetWinForm(this);
 
             InitializeStringForComponents();
-            Application.Idle += new EventHandler(displayManager.Display);
+            //Application.Idle += new EventHandler(displayManager.Display);
         }
 
         private void ListViewer_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

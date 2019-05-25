@@ -38,8 +38,10 @@ namespace Bachelor_app
         private float ms_MAX_DIST;
         private float ms_MIN_DIST;
         private int countMatches = 0;
+        private int countKeyPoint = 0;
+        private int countDeskriptor = 0;
         //private static object locker = new object();
-        
+
         public SfM(FileManager fileManager, CameraManager cameraManager)
         {
             DetectedKeyPoints = new SortedList<int, KeyPointModel>();
@@ -67,6 +69,8 @@ namespace Bachelor_app
             {
                 ClearList();
                 countMatches = 0;
+                countDeskriptor = 0;
+                countKeyPoint = 0;
             }
 
             GC.Collect();
@@ -394,19 +398,33 @@ namespace Bachelor_app
         private void StartDetectingKeyPoint(int countOfInput, List<InputFileModel> listOfInput, IFeatureDetector detector)
         {
             if (UseParallel)
-                Parallel.For(0, listOfInput.Count, x => { FindKeypoint(countOfInput + x, listOfInput[x], detector); });
+                Parallel.For(0, listOfInput.Count, x =>
+                {
+                    FindKeypoint(countOfInput + x, listOfInput[x], detector);
+                    GC.Collect();
+                });
             else
                 for (int i = 0; i < listOfInput.Count; i++)
+                {
                     FindKeypoint(countOfInput + i, listOfInput[i], detector);
+                    GC.Collect();
+                }
         }
 
         private void StartComputingDescriptor(int countOfExistedKeyPoint, IFeatureDescriptor descriptor)
         {
             if (UseParallel)
-                Parallel.For(countOfExistedKeyPoint, DetectedKeyPoints.Count, x => ComputeDescriptor(DetectedKeyPoints[x], descriptor));
+                Parallel.For(countOfExistedKeyPoint, DetectedKeyPoints.Count, x =>
+                {
+                    ComputeDescriptor(DetectedKeyPoints[x], descriptor);
+                    GC.Collect();
+                });
             else
                 for (int i = countOfExistedKeyPoint; i < DetectedKeyPoints.Count; i++)
+                {
                     ComputeDescriptor(DetectedKeyPoints[i], descriptor);
+                    GC.Collect();
+                }
         }
 
         private void WriteAddedImages(List<InputFileModel> listOfInput)
@@ -438,6 +456,12 @@ namespace Bachelor_app
 
         private int FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = false, bool DrawAndSave = Configuration.SaveImagesFromProcess)
         {
+            if (File.Exists(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt")))
+            {
+                Interlocked.Increment(ref countMatches);
+                return 1;
+            }
+
             semaphore.Wait();
 
             var filteredMatchesList = new List<MDMatch[]>();
@@ -526,7 +550,7 @@ namespace Bachelor_app
                 foundedMatch.DrawAndSave(fileManager);
 
             if (SaveInMatchNode)
-                foundedMatch.SaveMatchString(true);
+                foundedMatch.SaveMatchString(SaveInNode: SaveInMatchNode);
 
             //File.WriteAllText(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.SaveMatchString(true, false));
 
@@ -535,7 +559,7 @@ namespace Bachelor_app
             if (AddToList)
                 FoundedMatches.Add(foundedMatch);
 
-            ////Dispose
+            //// Dispose
             //filteredMatchesList = new List<MDMatch[]>();
             //filteredMatchesList.Clear();
             //matchesList.Clear();
@@ -593,20 +617,23 @@ namespace Bachelor_app
             }
         }
 
+        SemaphoreSlim semDescriptor = new SemaphoreSlim(8);
+
         private int ComputeDescriptor(KeyPointModel keypoint, IFeatureDescriptor descriptor, bool AddToList = true, bool SaveOnDisk = true)
         {
+            semDescriptor.Wait();
             var fileName = keypoint.InputFile.FileName;
 
             if (File.Exists(Path.Combine(Configuration.TempDirectoryPath, keypoint.InputFile.FileNameWithoutExtension + ".SIFT")))
             {
-                WindowsFormHelper.AddLogToConsole($"Load descriptor for: {fileName}\n");
+                WindowsFormHelper.AddLogToConsole($"({Interlocked.Increment(ref countDeskriptor)}) Load descriptor for: {fileName}\n");
 
                 var descriptorNode = new DescriptorModel(keypoint, new Mat());
                 descriptorNode.LoadSiftFile(true);
 
                 if (AddToList)
                     ComputedDescriptors.Add(keypoint.ID, descriptorNode);
-
+                semDescriptor.Release();
                 return 0;
             }
 
@@ -617,7 +644,7 @@ namespace Bachelor_app
                 var computedDescriptor = descriptor.ComputeDescriptor(keypoint);
                 var descriptorNode = new DescriptorModel(keypoint, computedDescriptor);
 
-                WindowsFormHelper.AddLogToConsole($"FINISH computing descriptor for: {fileName}\n");
+                WindowsFormHelper.AddLogToConsole($"FINISH ({Interlocked.Increment(ref countDeskriptor)}) computing descriptor for: {fileName}\n");
 
                 if (AddToList)
                     ComputedDescriptors.Add(keypoint.ID, descriptorNode);
@@ -628,13 +655,17 @@ namespace Bachelor_app
             catch (Exception e)
             {
                 WindowsFormHelper.AddLogToConsole("Error\n");
+                semDescriptor.Release();
                 return 1;
             }
+            semDescriptor.Release();
             return 0;
         }
 
+        SemaphoreSlim semKeypoint = new SemaphoreSlim(8);
         private int FindKeypoint(int ID, InputFileModel inputFile, IFeatureDetector detector, bool AddToList = true, bool DrawAndSave = Configuration.SaveImagesFromProcess)
         {
+            semKeypoint.Wait();
             try
             {
                 var fileName = inputFile.FileName;
@@ -646,7 +677,7 @@ namespace Bachelor_app
                 image.Dispose();
 
                 WindowsFormHelper.AddLogToConsole(
-                    $"FINISH finding key points for: {fileName}\n" +
+                    $"FINISH ({Interlocked.Increment(ref countKeyPoint)}) finding key points for: {fileName}\n" +
                     $"Count of key points: {detectedKeyPoints.Length}\n");
 
                 var newItem = new KeyPointModel(
@@ -664,8 +695,10 @@ namespace Bachelor_app
             catch (Exception e)
             {
                 WindowsFormHelper.AddLogToConsole("Error\n");
+                semKeypoint.Release();
                 return 1;
             }
+            semKeypoint.Release();
             return 0;
         }
 
