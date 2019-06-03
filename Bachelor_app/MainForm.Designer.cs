@@ -37,6 +37,7 @@ namespace Bachelor_app
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -102,10 +103,12 @@ namespace Bachelor_app
             this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox5 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButton20 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton27 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox6 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripButton21 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton28 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel9 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox7 = new System.Windows.Forms.ToolStripComboBox();
@@ -175,7 +178,7 @@ namespace Bachelor_app
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.330688F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.0062F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.330688F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1685, 838);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1540, 838);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // toolStrip1
@@ -202,7 +205,7 @@ namespace Bachelor_app
             this.toolStrip1.Location = new System.Drawing.Point(0, 27);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip1.Size = new System.Drawing.Size(1685, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1540, 27);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -354,7 +357,7 @@ namespace Bachelor_app
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1677, 411);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1532, 411);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // LeftViewBox
@@ -363,17 +366,17 @@ namespace Bachelor_app
             this.LeftViewBox.Location = new System.Drawing.Point(3, 2);
             this.LeftViewBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LeftViewBox.Name = "LeftViewBox";
-            this.LeftViewBox.Size = new System.Drawing.Size(832, 407);
+            this.LeftViewBox.Size = new System.Drawing.Size(760, 407);
             this.LeftViewBox.TabIndex = 2;
             this.LeftViewBox.TabStop = false;
             // 
             // RightViewBox
             // 
             this.RightViewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RightViewBox.Location = new System.Drawing.Point(841, 2);
+            this.RightViewBox.Location = new System.Drawing.Point(769, 2);
             this.RightViewBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RightViewBox.Name = "RightViewBox";
-            this.RightViewBox.Size = new System.Drawing.Size(832, 407);
+            this.RightViewBox.Size = new System.Drawing.Size(760, 407);
             this.RightViewBox.TabIndex = 2;
             this.RightViewBox.TabStop = false;
             // 
@@ -393,7 +396,7 @@ namespace Bachelor_app
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1685, 33);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1540, 33);
             this.tableLayoutPanel3.TabIndex = 3;
             // 
             // statusStrip1
@@ -407,7 +410,7 @@ namespace Bachelor_app
             this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(561, 33);
+            this.statusStrip1.Size = new System.Drawing.Size(513, 33);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -449,7 +452,7 @@ namespace Bachelor_app
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1685, 251);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1540, 251);
             this.tableLayoutPanel4.TabIndex = 4;
             // 
             // ListViewer0
@@ -621,7 +624,7 @@ namespace Bachelor_app
             this.toolStrip2.Location = new System.Drawing.Point(0, 54);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip2.Size = new System.Drawing.Size(1685, 27);
+            this.toolStrip2.Size = new System.Drawing.Size(1540, 27);
             this.toolStrip2.TabIndex = 5;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -744,7 +747,7 @@ namespace Bachelor_app
             // toolStripComboBox8
             // 
             this.toolStripComboBox8.Name = "toolStripComboBox8";
-            this.toolStripComboBox8.Size = new System.Drawing.Size(121, 27);
+            this.toolStripComboBox8.Size = new System.Drawing.Size(92, 27);
             this.toolStripComboBox8.SelectedIndexChanged += new System.EventHandler(this.ToolStripComboBox8_SelectedIndexChanged);
             // 
             // toolStripButton14
@@ -804,7 +807,7 @@ namespace Bachelor_app
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1685, 27);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(1540, 27);
             this.tableLayoutPanel6.TabIndex = 6;
             // 
             // toolStrip3
@@ -815,12 +818,13 @@ namespace Bachelor_app
             this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel7,
             this.toolStripComboBox5,
-            this.toolStripButton20});
+            this.toolStripButton20,
+            this.toolStripButton27});
             this.toolStrip3.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip3.Location = new System.Drawing.Point(0, 0);
             this.toolStrip3.Name = "toolStrip3";
             this.toolStrip3.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip3.Size = new System.Drawing.Size(842, 27);
+            this.toolStrip3.Size = new System.Drawing.Size(770, 27);
             this.toolStrip3.TabIndex = 0;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -849,6 +853,18 @@ namespace Bachelor_app
             this.toolStripButton20.Text = "Update";
             this.toolStripButton20.Click += new System.EventHandler(this.ToolStripButton20_Click);
             // 
+            // toolStripButton27
+            // 
+            this.toolStripButton27.Checked = true;
+            this.toolStripButton27.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripButton27.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton27.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton27.Image")));
+            this.toolStripButton27.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton27.Name = "toolStripButton27";
+            this.toolStripButton27.Size = new System.Drawing.Size(127, 24);
+            this.toolStripButton27.Text = "Camera in model";
+            this.toolStripButton27.Click += new System.EventHandler(this.toolStripButton27_Click);
+            // 
             // toolStrip4
             // 
             this.toolStrip4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -857,12 +873,13 @@ namespace Bachelor_app
             this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel8,
             this.toolStripComboBox6,
-            this.toolStripButton21});
+            this.toolStripButton21,
+            this.toolStripButton28});
             this.toolStrip4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip4.Location = new System.Drawing.Point(842, 0);
+            this.toolStrip4.Location = new System.Drawing.Point(770, 0);
             this.toolStrip4.Name = "toolStrip4";
             this.toolStrip4.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip4.Size = new System.Drawing.Size(843, 27);
+            this.toolStrip4.Size = new System.Drawing.Size(770, 27);
             this.toolStrip4.TabIndex = 1;
             this.toolStrip4.Text = "toolStrip4";
             // 
@@ -891,6 +908,18 @@ namespace Bachelor_app
             this.toolStripButton21.Text = "Update";
             this.toolStripButton21.Click += new System.EventHandler(this.ToolStripButton21_Click);
             // 
+            // toolStripButton28
+            // 
+            this.toolStripButton28.Checked = true;
+            this.toolStripButton28.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripButton28.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton28.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton28.Image")));
+            this.toolStripButton28.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton28.Name = "toolStripButton28";
+            this.toolStripButton28.Size = new System.Drawing.Size(127, 24);
+            this.toolStripButton28.Text = "Camera in model";
+            this.toolStripButton28.Click += new System.EventHandler(this.toolStripButton28_Click);
+            // 
             // toolStrip5
             // 
             this.toolStrip5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -910,7 +939,7 @@ namespace Bachelor_app
             this.toolStrip5.Location = new System.Drawing.Point(0, 527);
             this.toolStrip5.Name = "toolStrip5";
             this.toolStrip5.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip5.Size = new System.Drawing.Size(1685, 27);
+            this.toolStrip5.Size = new System.Drawing.Size(1540, 27);
             this.toolStrip5.TabIndex = 7;
             this.toolStrip5.Text = "toolStrip5";
             // 
@@ -1028,7 +1057,7 @@ namespace Bachelor_app
             this.toolStripButton26});
             this.toolStrip6.Location = new System.Drawing.Point(0, 0);
             this.toolStrip6.Name = "toolStrip6";
-            this.toolStrip6.Size = new System.Drawing.Size(1685, 27);
+            this.toolStrip6.Size = new System.Drawing.Size(1540, 27);
             this.toolStrip6.TabIndex = 8;
             this.toolStrip6.Text = "toolStrip6";
             // 
@@ -1130,10 +1159,10 @@ namespace Bachelor_app
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1685, 838);
+            this.ClientSize = new System.Drawing.Size(1540, 838);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MinimumSize = new System.Drawing.Size(1701, 861);
+            this.MinimumSize = new System.Drawing.Size(1533, 820);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -1456,6 +1485,8 @@ namespace Bachelor_app
         public System.Windows.Forms.ToolStripButton toolStripButton24;
         private System.Windows.Forms.ToolStripButton toolStripButton25;
         private System.Windows.Forms.ToolStripButton toolStripButton26;
+        private System.Windows.Forms.ToolStripButton toolStripButton27;
+        private System.Windows.Forms.ToolStripButton toolStripButton28;
     }
 }
 

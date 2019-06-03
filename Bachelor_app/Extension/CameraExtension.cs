@@ -1,7 +1,7 @@
-﻿using Bachelor_app.Enumerate;
+﻿using System.Drawing;
+using Bachelor_app.Enumerate;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
-using System.Drawing;
 
 namespace Bachelor_app.Extension
 {

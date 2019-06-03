@@ -18,6 +18,9 @@ namespace Bachelor_app.Helper
         /// <returns>List of nvm models<returns>
         public static List<NvmModel> LoadPointCloud()
         {
+            if (!File.Exists(Configuration.VisualSFMResultPath))
+                return new List<NvmModel>();
+
             var subjectString = File.ReadAllText(Configuration.VisualSFMResultPath);
             var lineArray = subjectString.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             var resultList = new List<NvmModel>();

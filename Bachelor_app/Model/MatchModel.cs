@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Bachelor_app.Model
 {
@@ -52,7 +53,7 @@ namespace Bachelor_app.Model
         /// </summary>
         /// <param name="model"></param>
         /// <param name="fileManager">Save in FileManager ListViewGroup.</param>
-        public static void DrawAndSave(this MatchModel model, FileManager fileManager)
+        public async static Task DrawAndSaveAsync(this MatchModel model, FileManager fileManager)
         {
             try
             {
@@ -121,7 +122,7 @@ namespace Bachelor_app.Model
 
             if (SaveInNode)
                 model.SaveMatchInModel(sb.ToString());
-
+            
             return sb.ToString();
         }
     }

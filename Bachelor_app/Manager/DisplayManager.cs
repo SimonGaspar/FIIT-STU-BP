@@ -26,6 +26,9 @@ namespace Bachelor_app.Manager
         public EDisplayItem RightViewWindowItem { get; set; }
         public bool DisplayRemapImage { get; set; } = false;
 
+        public bool DisplayPointCloudImageLeft { get; set; } = true;
+        public bool DisplayPointCloudImageRight { get; set; } = true;
+
         private FileManager _fileManager;
         private MainForm _winForm;
         private CameraManager _cameraManager;
@@ -116,9 +119,9 @@ namespace Bachelor_app.Manager
         public void DisplayPointCloud(bool LeftViewWindow)
         {
             if (LeftViewWindow)
-                ShowItemOnView(_winForm.renderWindowControl1, LeftViewWindowItem);
+                ShowItemOnView(_winForm.renderWindowControl1, LeftViewWindowItem,DisplayPointCloudImageLeft);
             else
-                ShowItemOnView(_winForm.renderWindowControl2, RightViewWindowItem);
+                ShowItemOnView(_winForm.renderWindowControl2, RightViewWindowItem,DisplayPointCloudImageRight);
         }
 
         /// <summary>
@@ -126,11 +129,11 @@ namespace Bachelor_app.Manager
         /// </summary>
         /// <param name="renderWindow"></param>
         /// <param name="typeOfItem"></param>
-        public void ShowItemOnView(RenderWindowControl renderWindow, EDisplayItem typeOfItem)
+        public void ShowItemOnView(RenderWindowControl renderWindow, EDisplayItem typeOfItem, bool DisplayImageInPointCloud = false)
         {
             switch (typeOfItem)
             {
-                case EDisplayItem.SfMPointCloud: DisplayPointCloudNVM(renderWindow); break;
+                case EDisplayItem.SfMPointCloud: DisplayPointCloudNVM(renderWindow, DisplayImageInPointCloud); break;
                 case EDisplayItem.DepthMapPointCloud: DisplayDepthMapPointCloud(renderWindow); break; ;
             }
         }
@@ -155,7 +158,7 @@ namespace Bachelor_app.Manager
         /// Method to read and display point cloud from .nvm file.
         /// </summary>
         /// <param name="renderWindowControl"></param>
-        public void DisplayPointCloudNVM(RenderWindowControl renderWindowControl)
+        public void DisplayPointCloudNVM(RenderWindowControl renderWindowControl, bool DisplayImageInPointCloud=true)
         {
             ClearVTKRenderer(renderWindowControl);
 
@@ -166,8 +169,11 @@ namespace Bachelor_app.Manager
             {
                 var model = nvmFile[0];
 
-                foreach (var camera in model.ListCameraModel)
-                    ReadCameraIntoObject(renderWindowControl, camera);
+                if (DisplayImageInPointCloud)
+                {
+                    foreach (var camera in model.ListCameraModel)
+                        ReadCameraIntoObject(renderWindowControl, camera);
+                }
 
                 ReadPointIntoObject(renderWindowControl, model.ListPointModel);
             }
@@ -240,12 +246,15 @@ namespace Bachelor_app.Manager
         /// </summary>
         /// <param name="renderWindowControl"></param>
         /// <param name="camera"></param>
-        public void ReadCameraIntoObject(RenderWindowControl renderWindowControl, NvmCameraModel camera)
+        public int ReadCameraIntoObject(RenderWindowControl renderWindowControl, NvmCameraModel camera)
         {
+            string filePath = Path.Combine(Configuration.TempDirectoryPath, $"{camera.FileName}");
+            if (!File.Exists(filePath))
+                return 1;
+
             vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
             vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
-
-            string filePath = Path.Combine(Configuration.TempDirectoryPath, $"{camera.FileName}");
+            
             vtkJPEGReader reader = vtkJPEGReader.New();
             reader.SetFileName(filePath);
             reader.Update();
@@ -274,6 +283,7 @@ namespace Bachelor_app.Manager
 
             renderer.SetBackground(0.2, 0.3, 0.4);
             renderer.AddActor(actor);
+            return 0;
         }
 
         /// <summary>

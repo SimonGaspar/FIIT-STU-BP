@@ -6,23 +6,23 @@ namespace Bachelor_app.Resources
 {
     public static class Localizer
     {
-        private static ResourceManager MainResourse = Resources_en_EN.ResourceManager;
+        private static ResourceManager mainResourse = Resources_en_EN.ResourceManager;
 
-        public static void InitLocalizedResource(string LanguagePrefix, string ResourseBase, string Delimeter = "_")
+        public static void InitLocalizedResource(string languagePrefix, string resourseBase, string delimeter = "_")
         {
-            string FullResourseName = ResourseBase;
+            string fullResourseName = resourseBase;
             Assembly assembly = Assembly.GetExecutingAssembly();
 
             System.Collections.Generic.List<string> ResList = assembly.GetManifestResourceNames().ToList();
 
             if (ResList.
-                Where(x => x.Equals(FullResourseName + Delimeter + LanguagePrefix + ".resources"))
+                Where(x => x.Equals(fullResourseName + delimeter + languagePrefix + ".resources"))
                 .Count() == 1)
             {
-                FullResourseName += Delimeter + LanguagePrefix;
+                fullResourseName += delimeter + languagePrefix;
             }
 
-            MainResourse = new ResourceManager(FullResourseName, assembly);
+            mainResourse = new ResourceManager(fullResourseName, assembly);
         }
 
         public static string Localize(this string str)
@@ -34,12 +34,12 @@ namespace Bachelor_app.Resources
         {
             try
             {
-                if (MainResourse == null)
+                if (mainResourse == null)
                 {
                     return name;
                 }
 
-                string result = MainResourse.GetString(name);
+                string result = mainResourse.GetString(name);
                 return result ?? name;
             }
             catch

@@ -4,6 +4,7 @@ using Emgu.CV.CvEnum;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Bachelor_app.Model
 {
@@ -44,7 +45,7 @@ namespace Bachelor_app.Model
         /// <param name="model"></param>
         /// <param name="SaveInTempDirectory"></param>
         /// <param name="SaveInDescriptorNode"></param>
-        public static void SaveSiftFile(this DescriptorModel model, bool SaveInTempDirectory = true, bool SaveInDescriptorNode = true)
+        public async static Task SaveSiftFileAsync(this DescriptorModel model, bool SaveInTempDirectory = true, bool SaveInDescriptorNode = true,string computedPath = "")
         {
             var descriptor = model.Descriptor;
             var keyPoints = model.KeyPoint.DetectedKeyPoints;

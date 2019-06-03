@@ -1,6 +1,6 @@
-﻿using Bachelor_app.Helper;
-using System;
+﻿using System;
 using System.IO;
+using Bachelor_app.Helper;
 
 namespace Bachelor_app
 {
@@ -8,15 +8,20 @@ namespace Bachelor_app
     {
         #region Temp directory and subdirectory
         public static string TempDirectoryPath { get; private set; } = Path.GetFullPath($".\\Temp");
+        public static string TempComputedDescriptorDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "ComputedDescriptors");
+
+        public static string TempComputedMatchesMapDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "ComputedMatches");
         public static string TempDepthMapDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "DepthMap");
         public static string TempLeftStackDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "LeftStack");
         public static string TempRightStackDirectoryPath { get; private set; } = Path.Combine(TempDirectoryPath, "RightStack");
         public static string TempDrawKeypoint { get; private set; } = Path.Combine(Configuration.TempDirectoryPath, "DrawKeypoint");
+
         public static string TempDrawMatches { get; private set; } = Path.Combine(Configuration.TempDirectoryPath, "DrawMatch");
         #endregion
 
         #region Match file
         public static string MatchFileName { get; private set; } = "AllFoundedMatches.txt";
+
         public static string MatchFilePath { get; private set; } = Path.Combine(TempDirectoryPath, MatchFileName);
         #endregion
 
@@ -34,16 +39,16 @@ namespace Bachelor_app
         public static string CalibrationPath { get; private set; } = Path.Combine(TempDirectoryPath, CalibrationName);
         #endregion
 
-        public const bool SaveImagesFromProcess = false;
+        public const bool SaveImagesFromProcess = true;
 
         #region We can move some properties into configuration
-        //public static ECameraResolution Resolution { get; set; }
-        //public static EDisplayItem LeftViewWindowItem { get; set; }
-        //public static EDisplayItem RightViewWindowItem { get; set; }
-        //public static bool DisplayRemapImage { get; set; } = false;
-        //public static EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.Console;
-        //public static EInput _inputType { get; set; } = EInput.ListViewBasicStack;
-        //public static ListViewModel ListViewModel { get; private set; } = new ListViewModel();
+        // public static ECameraResolution Resolution { get; set; }
+        // public static EDisplayItem LeftViewWindowItem { get; set; }
+        // public static EDisplayItem RightViewWindowItem { get; set; }
+        // public static bool DisplayRemapImage { get; set; } = false;
+        // public static EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.Console;
+        // public static EInput _inputType { get; set; } = EInput.ListViewBasicStack;
+        // public static ListViewModel ListViewModel { get; private set; } = new ListViewModel();
         #endregion
 
         public static void GenerateFolders(bool TryingAgain = false)
@@ -56,6 +61,8 @@ namespace Bachelor_app
                 Directory.CreateDirectory(TempRightStackDirectoryPath);
                 Directory.CreateDirectory(TempDrawKeypoint);
                 Directory.CreateDirectory(TempDrawMatches);
+                //Directory.CreateDirectory(TempComputedDescriptorDirectoryPath);
+                //Directory.CreateDirectory(TempComputedMatchesMapDirectoryPath);
             }
             catch (Exception e)
             {
@@ -75,13 +82,11 @@ namespace Bachelor_app
                     DirectoryInfo di = new DirectoryInfo(TempDirectoryPath);
 
                     foreach (FileInfo file in di.GetFiles())
-                    {
                         file.Delete();
-                    }
+
                     foreach (DirectoryInfo dir in di.GetDirectories())
-                    {
                         dir.Delete(true);
-                    }
+
                     di.Delete();
                 }
             }

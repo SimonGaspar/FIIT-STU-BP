@@ -90,7 +90,7 @@ namespace Bachelor_app
                         ComputeSfM(DetectedKeyPoints.Count, cameraStereoOutput);
                     }
                     break;
-                case EInput.ConnectedRightCamera:
+                case EInput.ConnectedLeftCamera:
                     while (!StopSFM)
                     {
                         var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.LeftCamera.Camera, countInputFile++);
@@ -99,7 +99,7 @@ namespace Bachelor_app
                         ComputeSfM(DetectedKeyPoints.Count, cameraOutput);
                     }
                     break;
-                case EInput.ConnectedLeftCamera:
+                case EInput.ConnectedRightCamera:
                     while (!StopSFM)
                     {
                         var cameraOutput = cameraManager.GetInputFromCamera(cameraManager.RightCamera.Camera, countInputFile++);
@@ -445,7 +445,11 @@ namespace Bachelor_app
 
             foreach (var node in findedMatches.Skip(index))
             {
-                sb.AppendLine(node.SaveMatchString());
+                if (string.IsNullOrWhiteSpace(node.FileFormatMatch))
+                    sb.AppendLine(node.SaveMatchString());
+                else
+                    sb.AppendLine(node.FileFormatMatch);
+
                 sb.AppendLine();
             }
 
@@ -456,102 +460,110 @@ namespace Bachelor_app
 
         private int FindMatches(IFeatureMatcher matcher, DescriptorModel leftDescriptor, DescriptorModel rightDescriptor, bool AddToList = true, bool FilterMatches = true, bool ComputeHomography = true, bool SaveInMatchNode = false, bool DrawAndSave = Configuration.SaveImagesFromProcess)
         {
-            if (File.Exists(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt")))
-            {
-                Interlocked.Increment(ref countMatches);
-                return 1;
-            }
-
+            MatchModel foundedMatch;
+            //var path = Path.Combine(Configuration.TempComputedDescriptorDirectoryPath, $"{UsedDetector}{UsedDescriptor}_{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt");
+            //if (File.Exists(path))
+            //{
+            //    Interlocked.Increment(ref countMatches);
+            //    foundedMatch = new MatchModel(null, null, null, null, null, File.ReadAllText(path), null, false);
+            //    return 1;
+            //}
+            //else
+            //{
             semaphore.Wait();
 
-            var filteredMatchesList = new List<MDMatch[]>();
-            var matchesList = new List<MDMatch[]>();
-            MDMatch[][] matchesArray;
-            var perspectiveMatrix = new Mat();
-            var mask = new Mat();
-            using (var matches = new VectorOfVectorOfDMatch())
-            {
-                try
+                var filteredMatchesList = new List<MDMatch[]>();
+                var matchesList = new List<MDMatch[]>();
+                MDMatch[][] matchesArray;
+                var perspectiveMatrix = new Mat();
+                var mask = new Mat();
+                using (var matches = new VectorOfVectorOfDMatch())
                 {
-                    if (matcher.GetType().Name == typeof(CudaBruteForce).Name)
+                    try
                     {
-                        // Only 30000 points per descriptors can compute our GeForce GTX 1060 6GB 
-                        var leftDesc = new Mat(leftDescriptor.Descriptor.Rows > 30000 ? 30000 : leftDescriptor.Descriptor.Rows, leftDescriptor.Descriptor.Cols, leftDescriptor.Descriptor.Depth, leftDescriptor.Descriptor.NumberOfChannels);
-                        var rightDesc = new Mat(rightDescriptor.Descriptor.Rows > 30000 ? 30000 : rightDescriptor.Descriptor.Rows, rightDescriptor.Descriptor.Cols, rightDescriptor.Descriptor.Depth, rightDescriptor.Descriptor.NumberOfChannels);
+                        if (matcher.GetType().Name == typeof(CudaBruteForce).Name)
+                        {
+                            // Only 30000 points per descriptors can compute our GeForce GTX 1060 6GB 
+                            var leftDesc = new Mat(leftDescriptor.Descriptor.Rows > 30000 ? 30000 : leftDescriptor.Descriptor.Rows, leftDescriptor.Descriptor.Cols, leftDescriptor.Descriptor.Depth, leftDescriptor.Descriptor.NumberOfChannels);
+                            var rightDesc = new Mat(rightDescriptor.Descriptor.Rows > 30000 ? 30000 : rightDescriptor.Descriptor.Rows, rightDescriptor.Descriptor.Cols, rightDescriptor.Descriptor.Depth, rightDescriptor.Descriptor.NumberOfChannels);
 
-                        for (int i = 0; i < leftDesc.Rows; i++)
-                            leftDescriptor.Descriptor.Row(i).CopyTo(leftDesc.Row(i));
-                        for (int i = 0; i < rightDesc.Rows; i++)
-                            rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
+                            for (int i = 0; i < leftDesc.Rows; i++)
+                                leftDescriptor.Descriptor.Row(i).CopyTo(leftDesc.Row(i));
+                            for (int i = 0; i < rightDesc.Rows; i++)
+                                rightDescriptor.Descriptor.Row(i).CopyTo(rightDesc.Row(i));
 
-                        WindowsFormHelper.AddLogToConsole($"Start CUDA computing matches for: \n" +
-                                $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
-                                $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
+                            WindowsFormHelper.AddLogToConsole($"Start CUDA computing matches for: \n" +
+                                    $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                                    $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
 
-                        matcher.Match(leftDesc, rightDesc, matches);
+                            matcher.Match(leftDesc, rightDesc, matches);
 
-                        leftDesc.Dispose();
-                        rightDesc.Dispose();
+                            leftDesc.Dispose();
+                            rightDesc.Dispose();
+                        }
+                        else
+                        {
+                            WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
+                                    $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                                    $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
+
+                            matcher.Match(leftDescriptor.Descriptor, rightDescriptor.Descriptor, matches);
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        WindowsFormHelper.AddLogToConsole($"Start computing matches for: \n" +
-                                $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
-                                $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n");
-
-                        matcher.Match(leftDescriptor.Descriptor, rightDescriptor.Descriptor, matches);
+                        semaphore.Release();
+                        WindowsFormHelper.AddLogToConsole($"ERROR with matching:\n {e.Message}\n");
+                        return 1;
+                        //throw new Exception($"Happend with {leftDescriptor.KeyPoint.InputFile.FileName}:{leftDescriptor.KeyPoint.DetectedKeyPoints.Size} and {rightDescriptor.KeyPoint.InputFile.FileName}:{rightDescriptor.KeyPoint.DetectedKeyPoints.Size}", e);
                     }
-                }
-                catch (Exception e)
-                {
+
+                    WindowsFormHelper.AddLogToConsole(
+                        $"FINISH ({Interlocked.Increment(ref countMatches)}) computing matches for: \n" +
+                        $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
+                        $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
+                        );
+
                     semaphore.Release();
-                    return 1;
-                    //throw new Exception($"Happend with {leftDescriptor.KeyPoint.InputFile.FileName}:{leftDescriptor.KeyPoint.DetectedKeyPoints.Size} and {rightDescriptor.KeyPoint.InputFile.FileName}:{rightDescriptor.KeyPoint.DetectedKeyPoints.Size}", e);
+                    matchesArray = matches.ToArrayOfArray();
+                //}
+                matchesList = matchesArray.ToList();
+
+                if (FilterMatches)
+                {
+                    FindMinMaxDistInMatches(matchesArray, ref ms_MAX_DIST, ref ms_MIN_DIST);
+                    filteredMatchesList = FilterMatchesByMaxDist(matchesArray);
                 }
 
-                WindowsFormHelper.AddLogToConsole(
-                    $"FINISH ({Interlocked.Increment(ref countMatches)}) computing matches for: \n" +
-                    $"\t{leftDescriptor.KeyPoint.InputFile.FileName}\n" +
-                    $"\t{rightDescriptor.KeyPoint.InputFile.FileName}\n"
+                if (ComputeHomography)
+                {
+                    var matchesForHomography = FilterMatches ? filteredMatchesList : matchesList;
+                    if (matchesForHomography.Count > 0)
+                    {
+                        perspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? filteredMatchesList : matchesList, mask);
+                    }
+                }
+
+                foundedMatch = new MatchModel(
+                    leftDescriptor,
+                    rightDescriptor,
+                    matchesList,
+                    perspectiveMatrix,
+                    mask,
+                    null,
+                    filteredMatchesList,
+                    FilterMatches
                     );
 
-                semaphore.Release();
-                matchesArray = matches.ToArrayOfArray();
+                if (DrawAndSave)
+                    Task.Run(async () => await foundedMatch.DrawAndSaveAsync(fileManager));
+
+                if (SaveInMatchNode)
+                    foundedMatch.SaveMatchString(SaveInNode: SaveInMatchNode,computedMatch:path);
+
+                //if (!string.IsNullOrWhiteSpace(path))
+                //    File.WriteAllText(path, foundedMatch.SaveMatchString());
             }
-            matchesList = matchesArray.ToList();
-
-            if (FilterMatches)
-            {
-                FindMinMaxDistInMatches(matchesArray, ref ms_MAX_DIST, ref ms_MIN_DIST);
-                filteredMatchesList = FilterMatchesByMaxDist(matchesArray);
-            }
-
-            if (ComputeHomography)
-            {
-                var matchesForHomography = FilterMatches ? filteredMatchesList : matchesList;
-                if (matchesForHomography.Count > 0)
-                {
-                    perspectiveMatrix = FindHomography(leftDescriptor.KeyPoint.DetectedKeyPoints, rightDescriptor.KeyPoint.DetectedKeyPoints, FilterMatches ? filteredMatchesList : matchesList, mask);
-                }
-            }
-
-            var foundedMatch = new MatchModel(
-                leftDescriptor,
-                rightDescriptor,
-                matchesList,
-                perspectiveMatrix,
-                mask,
-                null,
-                filteredMatchesList,
-                FilterMatches
-                );
-
-            if (DrawAndSave)
-                foundedMatch.DrawAndSave(fileManager);
-
-            if (SaveInMatchNode)
-                foundedMatch.SaveMatchString(SaveInNode: SaveInMatchNode);
-
             //File.WriteAllText(Path.Combine(Configuration.TempDrawMatches, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.SaveMatchString(true, false));
 
             //File.WriteAllText(Path.Combine(Configuration.TempDrawKeypoint, $"{leftDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}_{rightDescriptor.KeyPoint.InputFile.FileNameWithoutExtension}.txt"), foundedMatch.SaveMatchString(false, false));
@@ -623,19 +635,20 @@ namespace Bachelor_app
         {
             semDescriptor.Wait();
             var fileName = keypoint.InputFile.FileName;
+            //var path = Path.Combine(Configuration.TempComputedDescriptorDirectoryPath, $"{UsedDetector}{UsedDescriptor}_{keypoint.InputFile.FileNameWithoutExtension}.SIFT");
+            //if (File.Exists(path))
+            //{
+            //    WindowsFormHelper.AddLogToConsole($"({Interlocked.Increment(ref countDeskriptor)}) Load descriptor for: {fileName}\n");
+            //    File.Copy(path, Path.Combine(Configuration.TempDirectoryPath,$"{keypoint.InputFile.FileNameWithoutExtension}.SIFT"), true);
 
-            if (File.Exists(Path.Combine(Configuration.TempDirectoryPath, keypoint.InputFile.FileNameWithoutExtension + ".SIFT")))
-            {
-                WindowsFormHelper.AddLogToConsole($"({Interlocked.Increment(ref countDeskriptor)}) Load descriptor for: {fileName}\n");
+            //    var descriptorNode = new DescriptorModel(keypoint, new Mat());
+            //    descriptorNode.LoadSiftFile(true);
 
-                var descriptorNode = new DescriptorModel(keypoint, new Mat());
-                descriptorNode.LoadSiftFile(true);
-
-                if (AddToList)
-                    ComputedDescriptors.Add(keypoint.ID, descriptorNode);
-                semDescriptor.Release();
-                return 0;
-            }
+            //    if (AddToList)
+            //        ComputedDescriptors.Add(keypoint.ID, descriptorNode);
+            //    semDescriptor.Release();
+            //    return 0;
+            //}
 
             try
             {
@@ -650,7 +663,7 @@ namespace Bachelor_app
                     ComputedDescriptors.Add(keypoint.ID, descriptorNode);
 
                 if (SaveOnDisk)
-                    descriptorNode.SaveSiftFile(true, false);
+                    Task.Run(async ()=> await descriptorNode.SaveSiftFileAsync(true, false, path));
             }
             catch (Exception e)
             {
@@ -690,7 +703,7 @@ namespace Bachelor_app
                     DetectedKeyPoints.Add(ID, newItem);
 
                 if (DrawAndSave)
-                    newItem.DrawAndSave(fileManager);
+                    Task.Run(async () => await newItem.DrawAndSaveAsync(fileManager));
             }
             catch (Exception e)
             {

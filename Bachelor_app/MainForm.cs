@@ -263,5 +263,19 @@ namespace Bachelor_app
 
             fileManager.RemoveAllFromListViews();
         }
+
+        private void toolStripButton27_Click(object sender, EventArgs e)
+        {
+            displayManager.DisplayPointCloudImageLeft = !displayManager.DisplayPointCloudImageLeft;
+            toolStripButton27.Checked = displayManager.DisplayPointCloudImageLeft;
+            displayManager.DisplayPointCloud(true);
+        }
+
+        private void toolStripButton28_Click(object sender, EventArgs e)
+        {
+            displayManager.DisplayPointCloudImageRight = !displayManager.DisplayPointCloudImageRight;
+            toolStripButton28.Checked = displayManager.DisplayPointCloudImageRight;
+            displayManager.DisplayPointCloud(false);
+        }
     }
 }

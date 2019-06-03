@@ -7,6 +7,7 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using static Emgu.CV.Features2D.Features2DToolbox;
 
 namespace Bachelor_app.Model
@@ -33,7 +34,7 @@ namespace Bachelor_app.Model
         /// </summary>
         /// <param name="model"></param>
         /// <param name="fileManager">Save in FileManager ListViewGroup.</param>
-        public static void DrawAndSave(this KeyPointModel model, FileManager fileManager)
+        public async static Task DrawAndSaveAsync(this KeyPointModel model, FileManager fileManager)
         {
             try
             {
