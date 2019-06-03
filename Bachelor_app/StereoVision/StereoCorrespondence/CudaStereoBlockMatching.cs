@@ -28,15 +28,16 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         {
             Mat disparity = new Mat();
             using (GpuMat imageDisparity = new GpuMat())
-            using (CudaStereoBM _cudaStereoBM = CreateInstance())
+            using (CudaStereoBM cudaStereoBM = CreateInstance())
             {
                 ConvertImageToGray(leftImage, rightImage);
 
-                using (GpuMat LeftGpuMat = LeftGrayImage.ToGpuMat(), RightGpuMat = RightGrayImage.ToGpuMat())
-                    _cudaStereoBM.FindStereoCorrespondence(LeftGpuMat, RightGpuMat, imageDisparity);
+                using (GpuMat leftGpuMat = LeftGrayImage.ToGpuMat(), rightGpuMat = RightGrayImage.ToGpuMat())
+                    cudaStereoBM.FindStereoCorrespondence(leftGpuMat, rightGpuMat, imageDisparity);
 
                 imageDisparity.Download(disparity);
             }
+
             return disparity;
         }
 

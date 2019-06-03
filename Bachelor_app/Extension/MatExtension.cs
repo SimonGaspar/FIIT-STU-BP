@@ -1,10 +1,10 @@
-﻿using Bachelor_app.StereoVision.Calibration;
+﻿using System.Drawing;
+using System.Runtime.InteropServices;
+using Bachelor_app.StereoVision.Calibration;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using System.Drawing;
-using System.Runtime.InteropServices;
 
 namespace Bachelor_app.Extension
 {
@@ -14,11 +14,32 @@ namespace Bachelor_app.Extension
     public static class MatExtension
     {
         /// <summary>
+        /// Metod used in stereo vision to modify image for computing depth map.
+        /// </summary>
+        /// <param name="mat">Image in Mat to modify</param>
+        /// <param name="leftImage">It's left image?</param>
+        /// <param name="useRemap">Use remap?</param>
+        /// <returns></returns>
+        public static Mat RemapMat(this Mat mat, bool leftImage, bool useRemap = false)
+        {
+            if (CalibrationModel.IsCalibrated && useRemap)
+            {
+                if (leftImage)
+                    CvInvoke.Remap(mat, mat, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
+                else
+                    CvInvoke.Remap(mat, mat, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
+            }
+
+            return mat;
+        }
+
+        /// <summary>
         /// </summary>
         /// <typeparam name="T">Input type of Image/Mat.</typeparam>
         /// <param name="image"></param>
         /// <returns></returns>
-        public static Image ToImage<T>(this T image) where T : IImage, IInputArray
+        public static Image ToImage<T>(this T image)
+            where T : IImage, IInputArray
         {
             return image.Bitmap;
         }
@@ -28,12 +49,10 @@ namespace Bachelor_app.Extension
         /// <typeparam name="T">Input type of Image/Mat.</typeparam>
         /// <param name="image"></param>
         /// <returns></returns>
-        public static Image<Bgr, byte> ToImageBGR<T>(this T image) where T : IImage, IInputArray
+        public static Image<Bgr, byte> ToImageBGR<T>(this T image)
+            where T : IImage, IInputArray
         {
-            if (image == null || image.Bitmap == null)
-                return null;
-
-            return new Image<Bgr, byte>(image.Bitmap);
+            return (image == null || image.Bitmap == null) ? null : new Image<Bgr, byte>(image.Bitmap);
         }
 
         /// <summary>
@@ -41,23 +60,24 @@ namespace Bachelor_app.Extension
         /// <typeparam name="T">Input type of Image/Mat.</typeparam>
         /// <param name="image"></param>
         /// <returns></returns>
-        public static GpuMat ToGpuMat<T>(this T image) where T : IInputArray
+        public static GpuMat ToGpuMat<T>(this T image)
+            where T : IInputArray
         {
-            if (image == null)
-                return null;
-
-            return new GpuMat(image);
+            return image == null ? null : new GpuMat(image);
         }
 
         public static Mat ConvertMatForMatching(this Mat mat)
         {
             Mat result = new Mat(mat.Size, DepthType.Cv8U, 1);
             for (int i = 0; i < mat.Rows; i++)
+            {
                 for (int j = 0; j < mat.Cols; j++)
                 {
                     string value = mat.GetValue(i, j).ToString();
                     result.SetValue(i, j, byte.Parse(value));
                 }
+            }
+
             return result;
         }
 
@@ -71,7 +91,7 @@ namespace Bachelor_app.Extension
         public static dynamic GetValue(this Mat mat, int row, int col)
         {
             var value = CreateElement(mat.Depth);
-            Marshal.Copy(mat.DataPointer + (row * mat.Cols + col) * mat.ElementSize, value, 0, 1);
+            Marshal.Copy(mat.DataPointer + (((row * mat.Cols) + col) * mat.ElementSize), value, 0, 1);
             return value[0];
         }
 
@@ -84,7 +104,7 @@ namespace Bachelor_app.Extension
         public static void SetValue(this Mat mat, int row, int col, dynamic value)
         {
             var target = CreateElement(mat.Depth, value);
-            Marshal.Copy(target, 0, mat.DataPointer + (row * mat.Cols + col) * mat.ElementSize, 1);
+            Marshal.Copy(target, 0, mat.DataPointer + (((row * mat.Cols) + col) * mat.ElementSize), 1);
         }
 
         /// <summary>
@@ -118,26 +138,6 @@ namespace Bachelor_app.Extension
                 case DepthType.Cv64F: return new double[1];
                 default: return new float[1];
             }
-        }
-
-        /// <summary>
-        /// Metod used in stereo vision to modify image for computing depth map.
-        /// </summary>
-        /// <param name="Mat">Image in Mat to modify</param>
-        /// <param name="LeftImage">It's left image?</param>
-        /// <param name="UseRemap">Use remap?</param>
-        /// <returns></returns>
-        public static Mat RemapMat(this Mat Mat, bool LeftImage, bool UseRemap = false)
-        {
-            if (CalibrationModel.IsCalibrated && UseRemap)
-            {
-                if (LeftImage)
-                    CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam1.MapX, CalibrationModel.UndistortCam1.MapY, Inter.Linear);
-                else
-                    CvInvoke.Remap(Mat, Mat, CalibrationModel.UndistortCam2.MapX, CalibrationModel.UndistortCam2.MapY, Inter.Linear);
-            }
-
-            return Mat;
         }
     }
 }

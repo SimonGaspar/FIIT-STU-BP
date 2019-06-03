@@ -11,6 +11,17 @@ namespace Bachelor_app.Extension
     public static class CameraExtension
     {
         /// <summary>
+        /// Set camera resolution.
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="type">Type of resolution.</param>
+        public static void UpdateResolution(this VideoCapture camera, ECameraResolution type)
+        {
+            var resolution = type.GetResolution();
+            UpdateResolution(camera, resolution);
+        }
+
+        /// <summary>
         /// Get frame from camera and save it in Mat.
         /// </summary>
         /// <param name="camera"></param>
@@ -38,17 +49,6 @@ namespace Bachelor_app.Extension
                 camera.SetCaptureProperty(CapProp.FrameWidth, resolution.Width);
                 camera.SetCaptureProperty(CapProp.FrameHeight, resolution.Height);
             }
-        }
-
-        /// <summary>
-        /// Set camera resolution.
-        /// </summary>
-        /// <param name="camera"></param>
-        /// <param name="type">Type of resolution.</param>
-        public static void UpdateResolution(this VideoCapture camera, ECameraResolution type)
-        {
-            var resolution = type.GetResolution();
-            UpdateResolution(camera, resolution);
         }
     }
 }

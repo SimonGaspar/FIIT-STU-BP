@@ -22,8 +22,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             Mat result = new Mat();
 
             using (Mat image = new Mat(keyPoints.InputFile.FullPath))
-            using (var _brief = CreateInstance())
-                _brief.Compute(image, keyPoints.DetectedKeyPoints, result);
+            using (var brief = CreateInstance())
+                brief.Compute(image, keyPoints.DetectedKeyPoints, result);
 
             return result;
         }

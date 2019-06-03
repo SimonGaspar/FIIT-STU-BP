@@ -7,12 +7,12 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class BriefForm : Form
     {
-        private BRIEF _brief;
+        private BRIEF brief;
         private BriefModel defaultModel = new BriefModel();
 
         public BriefForm(BRIEF brief)
         {
-            this._brief = brief;
+            this.brief = brief;
             InitializeComponent();
             ShowDefaultModelSetting();
         }
@@ -23,9 +23,9 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
             {
                 var model = new BriefModel(int.Parse(textBox1.Text));
 
-                _brief.UpdateModel(model);
+                brief.UpdateModel(model);
 
-                this.Hide();
+                Hide();
             }
             catch (Exception)
             {
@@ -45,7 +45,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.textBox1.Text = defaultModel.DescriptorSize.ToString();
+            textBox1.Text = defaultModel.DescriptorSize.ToString();
         }
 
         private void BriefForm_FormClosing(object sender, FormClosingEventArgs e)

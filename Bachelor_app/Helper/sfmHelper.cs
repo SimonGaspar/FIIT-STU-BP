@@ -1,9 +1,9 @@
-﻿using Bachelor_app.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using Bachelor_app.Model;
 
 namespace Bachelor_app.Helper
 {
@@ -18,11 +18,14 @@ namespace Bachelor_app.Helper
         /// <returns>List of nvm models<returns>
         public static List<NvmModel> LoadPointCloud()
         {
+            if (!File.Exists(Configuration.VisualSFMResultPath))
+                return new List<NvmModel>();
+
             var subjectString = File.ReadAllText(Configuration.VisualSFMResultPath);
             var lineArray = subjectString.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             var resultList = new List<NvmModel>();
-            //string header = lineArray[0];
 
+            // string header = lineArray[0];
             for (int indexOfLine = 1; indexOfLine < lineArray.Count();)
             {
                 var model = new NvmModel();
@@ -48,47 +51,46 @@ namespace Bachelor_app.Helper
         /// <summary>
         /// Loading points from nvm file.
         /// </summary>
-        /// <param name="IndexOfLine">Number of line</param>
+        /// <param name="indexOfLine">Number of line</param>
         /// <param name="lineArray">Array of lines (nvm file)</param>
         /// <param name="pointCount">Number of points in file</param>
         /// <param name="model">Current model in which we add 3D points.</param>
         /// <returns>Number of line, where it ends.</returns>
-        private static int AddPointModelFromFile(int IndexOfLine, string[] lineArray, int pointCount, NvmModel model)
+        private static int AddPointModelFromFile(int indexOfLine, string[] lineArray, int pointCount, NvmModel model)
         {
             int currentIndex = 0;
-            for (currentIndex = IndexOfLine; currentIndex < IndexOfLine + model.PointCount; currentIndex++)
+            for (currentIndex = indexOfLine; currentIndex < indexOfLine + model.PointCount; currentIndex++)
             {
                 var camera = lineArray[currentIndex].Split();
                 var pointModel = new NvmPointModel(
                     new Vector3(
                         float.Parse(camera[0]),
                         float.Parse(camera[1]),
-                        float.Parse(camera[2])
-                        ),
+                        float.Parse(camera[2])),
                     new Vector3(
                         float.Parse(camera[3]),
                         float.Parse(camera[4]),
-                        float.Parse(camera[5])
-                        )
-                    );
+                        float.Parse(camera[5]))
+                        );
 
                 model.ListPointModel.Add(pointModel);
             }
+
             return currentIndex;
         }
 
         /// <summary>
         /// Loading cameras from nvm file
         /// </summary>
-        /// /// <param name="IndexOfLine">Number of line</param>
+        /// /// <param name="indexOfLine">Number of line</param>
         /// <param name="lineArray">Array of lines (nvm file)</param>
         /// <param name="cameraCount">Number of cameras in file</param>
         /// <param name="model">Current model in which we add 3D points.</param>
         /// <returns>Number of line, where it ends.</returns>
-        private static int AddCameraModelFromFile(int IndexOfLine, string[] lineArray, int cameraCount, NvmModel model)
+        private static int AddCameraModelFromFile(int indexOfLine, string[] lineArray, int cameraCount, NvmModel model)
         {
             int currentIndex = 0;
-            for (currentIndex = IndexOfLine; currentIndex < IndexOfLine + cameraCount; currentIndex++)
+            for (currentIndex = indexOfLine; currentIndex < indexOfLine + cameraCount; currentIndex++)
             {
                 var camera = lineArray[currentIndex].Split();
                 var imageModel = new NvmCameraModel(
@@ -109,6 +111,7 @@ namespace Bachelor_app.Helper
 
                 model.ListCameraModel.Add(imageModel);
             }
+
             return currentIndex;
         }
     }

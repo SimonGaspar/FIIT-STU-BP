@@ -8,7 +8,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class BruteForceForm : Form
     {
-
         private BruteForce bruteForce;
         private BruteForceModel defaultModel = new BruteForceModel();
 
@@ -30,7 +29,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 var model = new BruteForceModel(type, checkBox1.Checked);
                 bruteForce.UpdateModel(model);
 
-                this.Hide();
+                Hide();
             }
             catch (Exception)
             {
@@ -50,8 +49,8 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.comboBox1.SelectedIndex = this.comboBox1.Items.Count - 1;
-            this.checkBox1.Checked = defaultModel.CrossCheck;
+            comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
+            checkBox1.Checked = defaultModel.CrossCheck;
         }
 
         private void BruteForceForm_FormClosing(object sender, FormClosingEventArgs e)

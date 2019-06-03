@@ -1,13 +1,13 @@
-﻿using Emgu.CV;
+﻿using System.Drawing;
+using Emgu.CV;
 using Emgu.CV.Structure;
-using System.Drawing;
 
 namespace Bachelor_app.StereoVision
 {
     /// <summary>
     /// Interface for stereo correspondence.
     /// </summary>
-    interface IStereoSolver
+    internal interface IStereoSolver
     {
         /// <summary>
         /// </summary>

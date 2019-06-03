@@ -1,12 +1,13 @@
-﻿using Emgu.CV;
+﻿using System;
+using Emgu.CV;
 using Emgu.CV.Util;
-using System;
 
 namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 {
     public abstract class AbstractMatcher : IFeatureMatcher
     {
         protected dynamic Model { get; private set; }
+
         protected dynamic WinForm { get; set; }
 
         public AbstractMatcher(dynamic model)
@@ -38,6 +39,6 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
                 throw new NullReferenceException("Instance is null.");
         }
 
-        public virtual dynamic CreateInstance() { return null; }
+        public virtual dynamic CreateInstance() => null;
     }
 }

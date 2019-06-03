@@ -1,7 +1,7 @@
-﻿using Emgu.CV;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using Emgu.CV;
 
 namespace Bachelor_app.Helper
 {
@@ -10,17 +10,11 @@ namespace Bachelor_app.Helper
     /// </summary>
     public static class CameraHelper
     {
-        private static List<KeyValuePair<int, string>> _listOfCamera = null;
-        public static List<KeyValuePair<int, string>> ListOfCamera
-        {
-            get
-            {
-                if (_listOfCamera == null)
-                    return _listOfCamera = GetListOfWebCam();
+        private static List<KeyValuePair<int, string>> listOfCamera = null;
 
-                return _listOfCamera;
-            }
-        }
+        public static List<KeyValuePair<int, string>> ListOfCamera => listOfCamera ?? GetListOfWebCam();
+
+        public static void UpdateCameraList() => listOfCamera = GetListOfWebCam();
 
         /// <summary>
         /// Get list of connected video devices.
@@ -28,25 +22,17 @@ namespace Bachelor_app.Helper
         /// <returns>List of connected video devices</returns>
         private static List<KeyValuePair<int, string>> GetListOfWebCam()
         {
-            var ListCamerasData = new List<KeyValuePair<int, string>>();
-            var ListUSBDevice = GetUSBDevices();
+            var listCamerasData = new List<KeyValuePair<int, string>>();
+            var listUSBDevice = GetUSBDevices();
 
-            foreach (var camera in ListUSBDevice)
+            foreach (var camera in listUSBDevice)
             {
-                ListCamerasData.Add(new KeyValuePair<int, string>(ListUSBDevice.IndexOf(camera), camera.Name));
+                listCamerasData.Add(new KeyValuePair<int, string>(listUSBDevice.IndexOf(camera), camera.Name));
             }
 
-            ListCamerasData.Add(new KeyValuePair<int, string>(-1, "Empty"));
+            listCamerasData.Add(new KeyValuePair<int, string>(-1, "Empty"));
 
-            return ListCamerasData;
-        }
-
-        /// <summary>
-        /// Update list of connected cameras
-        /// </summary>
-        public static void UpdateCameraList()
-        {
-            _listOfCamera = GetListOfWebCam();
+            return listCamerasData;
         }
 
         /// <summary>
@@ -64,6 +50,7 @@ namespace Bachelor_app.Helper
             foreach (var device in collection)
             {
                 if ((string)device.GetPropertyValue("PNPClass") == "Camera" && (string)device.GetPropertyValue("Status") == "OK")
+                {
                     devices.Add(new USBDeviceInfo(
                         (string)device.GetPropertyValue("Service"),
                         (string)device.GetPropertyValue("ClassGUID"),
@@ -71,12 +58,13 @@ namespace Bachelor_app.Helper
                         (string)device.GetPropertyValue("PNPDeviceID"),
                         (string)device.GetPropertyValue("DeviceID"),
                         (string)device.GetPropertyValue("Name")));
+                }
             }
 
-            var VideoDevice = devices.Where(x => x.Description == "USB Video Device").OrderBy(x => x.DeviceID).ToList();
+            var videoDevice = devices.Where(x => x.Description == "USB Video Device").OrderBy(x => x.DeviceID).ToList();
 
             collection.Dispose();
-            return VideoDevice;
+            return videoDevice;
         }
 
         /// <summary>
@@ -85,76 +73,81 @@ namespace Bachelor_app.Helper
         private class USBDeviceInfo
         {
             public USBDeviceInfo(
-                string Service,
-                string ClassGUID,
-                string Description,
-                string PNPDeviceID,
-                string DeviceID,
-                string Name)
+                string service,
+                string classGUID,
+                string description,
+                string pnpDeviceID,
+                string deviceID,
+                string name)
             {
-                this.Service = Service;
-                this.ClassGUID = ClassGUID;
-                this.Description = Description;
-                this.PNPDeviceID = PNPDeviceID;
-                this.DeviceID = DeviceID;
-                this.Name = Name;
+                Service = service;
+                ClassGUID = classGUID;
+                Description = description;
+                PNPDeviceID = pnpDeviceID;
+                DeviceID = deviceID;
+                Name = name;
             }
+
             public string Service { get; set; }
+
             public string ClassGUID { get; set; }
+
             public string Description { get; set; }
+
             public string PNPDeviceID { get; set; }
+
             public string DeviceID { get; set; }
+
             public string Name { get; set; }
         }
 
         /// <summary>
         /// Get stereo image with synchornization.
         /// </summary>
-        /// <param name="LeftCamera"></param>
-        /// <param name="RightCamera"></param>
-        /// <param name="LeftImage"></param>
-        /// <param name="RightImage"></param>
-        public static void GetStereoImageSync(VideoCapture LeftCamera, VideoCapture RightCamera, Mat LeftImage, Mat RightImage)
+        /// <param name="leftCamera"></param>
+        /// <param name="rightCamera"></param>
+        /// <param name="leftImage"></param>
+        /// <param name="rightImage"></param>
+        public static void GetStereoImageSync(VideoCapture leftCamera, VideoCapture rightCamera, Mat leftImage, Mat rightImage)
         {
-            if (LeftCamera != null && RightCamera != null)
+            if (leftCamera != null && rightCamera != null)
             {
-                LeftCamera.Grab();
-                RightCamera.Grab();
-                LeftCamera.Retrieve(LeftImage);
-                RightCamera.Retrieve(RightImage);
+                leftCamera.Grab();
+                rightCamera.Grab();
+                leftCamera.Retrieve(leftImage);
+                rightCamera.Retrieve(rightImage);
             }
             else
-                LeftImage = RightImage = null;
+                leftImage = rightImage = null;
         }
 
         /// <summary>
         /// Get stereo image without synchornization. For better result for stereo image use GetStereoImageSync.
         /// </summary>
-        /// <param name="LeftCamera"></param>
-        /// <param name="RightCamera"></param>
-        /// <param name="LeftImage"></param>
-        /// <param name="RightImage"></param>
-        public static void GetStereoImage(VideoCapture LeftCamera, VideoCapture RightCamera, Mat LeftImage, Mat RightImage)
+        /// <param name="leftCamera"></param>
+        /// <param name="rightCamera"></param>
+        /// <param name="leftImage"></param>
+        /// <param name="rightImage"></param>
+        public static void GetStereoImage(VideoCapture leftCamera, VideoCapture rightCamera, Mat leftImage, Mat rightImage)
         {
-            GetImage(LeftCamera, LeftImage);
-            GetImage(RightCamera, RightImage);
+            GetImage(leftCamera, leftImage);
+            GetImage(rightCamera, rightImage);
         }
 
         /// <summary>
         /// Get stereo image with synchornization.
         /// </summary>
-        /// <param name="Camera"></param>
-        /// <param name="Image"></param>
-        public static void GetImage(VideoCapture Camera, Mat Image)
+        /// <param name="camera"></param>
+        /// <param name="image"></param>
+        public static void GetImage(VideoCapture camera, Mat image)
         {
-            if (Camera != null)
+            if (camera != null)
             {
-                Camera.Grab();
-                Camera.Retrieve(Image);
+                camera.Grab();
+                camera.Retrieve(image);
             }
             else
-                Image = null;
+                image = null;
         }
-
     }
 }

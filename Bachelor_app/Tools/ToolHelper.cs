@@ -1,11 +1,11 @@
-﻿using Bachelor_app.Helper;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using Bachelor_app.Helper;
 
 namespace Bachelor_app.Tools
 {
     public static class ToolHelper
     {
-        public static void RunVisualSFM(bool ContinueProcess)
+        public static void RunVisualSFM(bool continueProcess)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo(Configuration.VisualSFMToolPath)
             {
@@ -14,10 +14,9 @@ namespace Bachelor_app.Tools
                 UseShellExecute = false
             };
 
-            if (ContinueProcess)
-                startInfo.Arguments = $"sfm+import+resume {Configuration.VisualSFMResultPath} {Configuration.VisualSFMResultPath} {Configuration.MatchFilePath}";
-            else
-                startInfo.Arguments = $"sfm+import {Configuration.TempDirectoryPath} {Configuration.VisualSFMResultPath} {Configuration.MatchFilePath}";
+            startInfo.Arguments = continueProcess
+                ? $"sfm+import+resume {Configuration.VisualSFMResultPath} {Configuration.VisualSFMResultPath} {Configuration.MatchFilePath}"
+                : $"sfm+import {Configuration.TempDirectoryPath} {Configuration.VisualSFMResultPath} {Configuration.MatchFilePath}";
 
             Process process = Process.Start(startInfo);
 

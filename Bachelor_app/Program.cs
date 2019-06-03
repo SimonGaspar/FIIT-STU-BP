@@ -1,16 +1,16 @@
-﻿using Bachelor_app.Resources;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Bachelor_app.Resources;
 
 namespace Bachelor_app
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Localizer.InitLocalizedResource("en-EN", "Bachelor_app.Language.Resources.Resources");
             Configuration.GenerateFolders();

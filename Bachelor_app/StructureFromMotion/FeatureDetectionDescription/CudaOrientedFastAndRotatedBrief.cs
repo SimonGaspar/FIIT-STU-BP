@@ -1,11 +1,11 @@
-﻿using Bachelor_app.Helper;
+﻿using System;
+using Bachelor_app.Helper;
 using Bachelor_app.Model;
 using Bachelor_app.StructureFromMotion.Model;
 using Bachelor_app.StructureFromMotion.WindowsForm;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
-using System;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
@@ -14,7 +14,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class CudaOrientedFastAndRotatedBrief : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
-        public CudaOrientedFastAndRotatedBrief() : base(new CudaOrientedFastAndRotatedBriefModel())
+        public CudaOrientedFastAndRotatedBrief()
+            : base(new CudaOrientedFastAndRotatedBriefModel())
         {
             WindowsForm = new CudaOrientedFastAndRotatedBriefForm(this);
         }
@@ -35,7 +36,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                     returnValue = result.ToMat();
                     result.Dispose();
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     WindowsFormHelper.AddLogToConsole($"Error in computing descriptors:\n{e.Message}\n Start computing descriptors with CPU version of algorithm.\n");
                     returnValue = new OrientedFastAndRotatedBrief().ComputeDescriptor(keyPoints);
                 }
@@ -56,7 +58,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                 {
                     result = cudaORB.Detect(gpumat);
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     WindowsFormHelper.AddLogToConsole($"Error in finding key points:\n{e.Message}\n Start finding key points with CPU version of algorithm.\n");
                     result = new OrientedFastAndRotatedBrief().DetectKeyPoints(input);
                 }

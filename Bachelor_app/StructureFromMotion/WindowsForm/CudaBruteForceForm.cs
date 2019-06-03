@@ -8,7 +8,6 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class CudaBruteForceForm : Form
     {
-
         private CudaBruteForce cudaBruteForce;
         private CudaBruteForceModel defaultModel = new BruteForceModel();
 
@@ -30,7 +29,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
                 cudaBruteForce.UpdateModel(model);
 
-                this.Hide();
+                Hide();
             }
             catch (Exception)
             {
@@ -50,7 +49,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.comboBox1.SelectedIndex = this.comboBox1.Items.Count - 1;
+            comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
         }
 
         private void CudaBruteForceForm_FormClosing(object sender, FormClosingEventArgs e)

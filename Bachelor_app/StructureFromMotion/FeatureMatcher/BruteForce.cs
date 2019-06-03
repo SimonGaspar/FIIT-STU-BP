@@ -18,10 +18,10 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 
         public override void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            using (var _bruteForceMatcher = CreateInstance())
+            using (var bruteForceMatcher = CreateInstance())
             {
-                _bruteForceMatcher.Add(queryDescriptors);
-                _bruteForceMatcher.KnnMatch(trainDescriptors, matches, 1, null);
+                bruteForceMatcher.Add(queryDescriptors);
+                bruteForceMatcher.KnnMatch(trainDescriptors, matches, 1, null);
             }
         }
 

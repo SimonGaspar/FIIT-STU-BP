@@ -1,10 +1,10 @@
-﻿using Bachelor_app.Model;
+﻿using System;
+using Bachelor_app.Helper;
+using Bachelor_app.Model;
+using Bachelor_app.StructureFromMotion.Model;
 using Emgu.CV;
 using Emgu.CV.Cuda;
 using Emgu.CV.Structure;
-using Bachelor_app.StructureFromMotion.Model;
-using System;
-using Bachelor_app.Helper;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
@@ -13,7 +13,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class CudaSurf : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
-        public CudaSurf() : base(new CudaSurfModel())
+        public CudaSurf()
+            : base(new CudaSurfModel())
         {
             WindowsForm = null;
         }
@@ -31,7 +32,6 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                 {
                     cudaSurf.UploadKeypoints(keyPoints.DetectedKeyPoints, keypoint);
                     result = cudaSurf.ComputeDescriptorsRaw(gpumat, null, keypoint);
-                    
                     returnValue = result.ToMat();
                     result.Dispose();
                 }
@@ -41,6 +41,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                     returnValue = new Surf().ComputeDescriptor(keyPoints);
                 }
             }
+
             return returnValue;
         }
 

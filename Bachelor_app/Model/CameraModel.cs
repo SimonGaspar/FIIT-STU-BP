@@ -5,7 +5,9 @@ namespace Bachelor_app.Model
     public class CameraModel
     {
         public int DeviceId { get; private set; }
+
         public string DeviceName { get; private set; }
+
         public VideoCapture Camera { get; private set; }
 
         /// <summary>

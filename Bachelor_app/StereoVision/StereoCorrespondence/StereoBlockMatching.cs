@@ -10,17 +10,20 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
     /// </summary>
     public class StereoBlockMatching : AbstractStereoSolver, IStereoSolver
     {
-        public StereoBlockMatching() : base(new StereoBlockMatchingModel())
+        public StereoBlockMatching()
+            : base(new StereoBlockMatchingModel())
         {
             WinForm = new StereoBMForm(this);
         }
 
-        public StereoBlockMatching(CudaStereoBlockMatchingModel Model) : base(Model)
+        public StereoBlockMatching(CudaStereoBlockMatchingModel model)
+            : base(model)
         {
         }
-        public StereoBlockMatching(StereoSemiGlobalBlockMatchingModel Model) : base(Model)
-        {
 
+        public StereoBlockMatching(StereoSemiGlobalBlockMatchingModel model)
+            : base(model)
+        {
         }
 
         /// <summary>
@@ -32,17 +35,18 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         public override Mat ComputeDepthMap(Image<Bgr, byte> leftImage, Image<Bgr, byte> rightImage)
         {
             Mat imageDisparity = new Mat();
-            using (StereoBM _stereoBM = CreateInstance())
+            using (StereoBM stereoBM = CreateInstance())
             {
                 ConvertImageToGray(leftImage, rightImage);
-                _stereoBM.Compute(LeftGrayImage, RightGrayImage, imageDisparity);
+                stereoBM.Compute(LeftGrayImage, RightGrayImage, imageDisparity);
             }
+
             return imageDisparity;
         }
 
         public override dynamic CreateInstance()
         {
-            return new StereoBM(this.Model.Disparity, this.Model.BlockSize);
+            return new StereoBM(Model.Disparity, Model.BlockSize);
         }
     }
 }

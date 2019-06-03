@@ -1,4 +1,11 @@
-﻿using Bachelor_app.Extension;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Bachelor_app.Extension;
 using Bachelor_app.Helper;
 using Bachelor_app.Manager;
 using Bachelor_app.StereoVision.Calibration;
@@ -6,38 +13,29 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Bachelor_app.StereoVision
 {
     public class CalibrationManager
     {
-        private CameraManager _cameraManager;
-        private CalibrationForm _winForm;
+        private static readonly object Locker = new object();
 
-        private readonly VideoCapture _leftCamera;
-        private readonly VideoCapture _rightCamera;
+        private readonly CameraManager cameraManager;
+        private readonly VideoCapture leftCamera;
+        private readonly VideoCapture rightCamera;
 
-        private Thread CalibrationProcess;
+        private CalibrationForm winForm;
+        private Thread calibrationProcess;
         private PatternModel patternModel = new PatternModel();
 
-        private static readonly object locker = new object();
-
         #region Image Processing
-        private int buffer_length;
-        private int buffer_savepoint;
-        private MCvPoint3D32f[][] corners_object_Points;
-        private PointF[][] corners_points_Left;
-        private PointF[][] corners_points_Right;
+        private int bufferLength;
+        private int bufferSavepoint;
+        private MCvPoint3D32f[][] cornersObjectPoints;
+        private PointF[][] cornersPointsLeft;
+        private PointF[][] cornersPointsRight;
         private ECalibrationMode currentMode = ECalibrationMode.SavingFrames;
         #endregion
-
 
         public CalibrationManager()
         {
@@ -45,13 +43,13 @@ namespace Bachelor_app.StereoVision
 
         public CalibrationManager(CameraManager cameraManager)
         {
-            this._cameraManager = cameraManager;
-            _leftCamera = cameraManager.LeftCamera.Camera;
-            _rightCamera = cameraManager.RightCamera.Camera;
+            this.cameraManager = cameraManager;
+            leftCamera = cameraManager.LeftCamera.Camera;
+            rightCamera = cameraManager.RightCamera.Camera;
 
-            _winForm = new CalibrationForm(this, patternModel);
-            CalibrationProcess = new Thread(ProcessFrame);
-            Task.Run(() => _winForm.ShowDialog());
+            winForm = new CalibrationForm(this, patternModel);
+            calibrationProcess = new Thread(ProcessFrame);
+            Task.Run(() => winForm.ShowDialog());
         }
 
         /// <summary>
@@ -59,9 +57,8 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         public void KillProcess()
         {
-            CalibrationProcess.Abort();
+            calibrationProcess.Abort();
         }
-
 
         /// <summary>
         /// Start calibration.
@@ -69,7 +66,7 @@ namespace Bachelor_app.StereoVision
         public void StartCalibration()
         {
             SetValueForCalibration();
-            CalibrationProcess.Start();
+            calibrationProcess.Start();
         }
 
         /// <summary>
@@ -77,11 +74,11 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         private void SetValueForCalibration()
         {
-            buffer_length = patternModel.Count;
-            buffer_savepoint = 0;
-            corners_object_Points = new MCvPoint3D32f[buffer_length][];
-            corners_points_Left = new PointF[buffer_length][];
-            corners_points_Right = new PointF[buffer_length][];
+            bufferLength = patternModel.Count;
+            bufferSavepoint = 0;
+            cornersObjectPoints = new MCvPoint3D32f[bufferLength][];
+            cornersPointsLeft = new PointF[bufferLength][];
+            cornersPointsRight = new PointF[bufferLength][];
         }
 
         /// <summary>
@@ -89,16 +86,16 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         public void ProcessFrame()
         {
-            bool StopCalibration = false;
+            bool stopCalibration = false;
 
             using (Mat frame_S1 = new Mat(), frame_S2 = new Mat())
             {
-                while (!StopCalibration)
+                while (!stopCalibration)
                 {
-                    CameraHelper.GetStereoImageSync(_leftCamera, _rightCamera, frame_S1, frame_S2);
+                    CameraHelper.GetStereoImageSync(leftCamera, rightCamera, frame_S1, frame_S2);
 
-                    _winForm.Video_Source1.Image = frame_S1.ToImage();
-                    _winForm.Video_Source2.Image = frame_S1.ToImage();
+                    winForm.Video_Source1.Image = frame_S1.ToImage();
+                    winForm.Video_Source2.Image = frame_S1.ToImage();
 
                     switch (currentMode)
                     {
@@ -109,11 +106,13 @@ namespace Bachelor_app.StereoVision
                             TryComputeCameraMatrix(frame_S1.Size);
                             break;
                         case ECalibrationMode.Calibrated:
-                            StopCalibration = true; break;
+                            stopCalibration = true; break;
                     }
+
                     Thread.Sleep(100);
                 }
             }
+
             ExitWindows();
         }
 
@@ -122,12 +121,12 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         public void ExitWindows()
         {
-            if (_winForm.InvokeRequired)
-                _winForm.Invoke((Action)delegate { ExitWindows(); });
+            if (winForm.InvokeRequired)
+                winForm.Invoke((Action)delegate { ExitWindows(); });
             else
             {
-                CalibrationProcess.Abort();
-                _winForm.Close();
+                calibrationProcess.Abort();
+                winForm.Close();
             }
         }
 
@@ -137,13 +136,14 @@ namespace Bachelor_app.StereoVision
         /// <param name="size">Size of input image from camera</param>
         private void TryComputeCameraMatrix(Size size)
         {
-            Monitor.Enter(locker);
+            Monitor.Enter(Locker);
             if (currentMode == ECalibrationMode.Caluculating_Stereo_Intrinsics)
             {
                 CalibrationModel.Resolution = size;
                 ComputeCameraMatrix();
             }
-            Monitor.Exit(locker);
+
+            Monitor.Exit(Locker);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Bachelor_app.StereoVision
         /// <param name="size">Size of input image from camera</param>
         private void ComputeCameraMatrix()
         {
-            for (int k = 0; k < buffer_length; k++)
+            for (int k = 0; k < bufferLength; k++)
             {
                 List<MCvPoint3D32f> object_list = new List<MCvPoint3D32f>();
                 for (int i = 0; i < patternModel.PatternSize.Height; i++)
@@ -162,31 +162,53 @@ namespace Bachelor_app.StereoVision
                         object_list.Add(new MCvPoint3D32f(j * patternModel.Distance, i * patternModel.Distance, 0.0F));
                     }
                 }
-                corners_object_Points[k] = object_list.ToArray();
+
+                cornersObjectPoints[k] = object_list.ToArray();
             }
 
-            CameraCalibration.StereoCalibrate(corners_object_Points, corners_points_Left, corners_points_Right, CalibrationModel.IntrinsicCam1, CalibrationModel.IntrinsicCam2, CalibrationModel.Resolution,
-                                                             CalibType.Default, new MCvTermCriteria(0.1e5),
-                                                             out ExtrinsicCameraParameters EX_Param, out Matrix<double> fundamental, out Matrix<double> essential);
+            CameraCalibration.StereoCalibrate(
+                cornersObjectPoints,
+                cornersPointsLeft,
+                cornersPointsRight,
+                CalibrationModel.IntrinsicCam1,
+                CalibrationModel.IntrinsicCam2,
+                CalibrationModel.Resolution,
+                CalibType.Default,
+                new MCvTermCriteria(0.1e5),
+                out ExtrinsicCameraParameters eX_Param,
+                out Matrix<double> fundamental,
+                out Matrix<double> essential
+                );
 
-            CalibrationModel.EX_Param = EX_Param;
+            CalibrationModel.EX_Param = eX_Param;
             CalibrationModel.Fundamental = fundamental;
             CalibrationModel.Essential = essential;
             MessageBox.Show("Intrinsic Calculation Complete");
 
-            var Rec1 = new Rectangle();
-            var Rec2 = new Rectangle();
-            CvInvoke.StereoRectify(CalibrationModel.IntrinsicCam1.IntrinsicMatrix,
-                                     CalibrationModel.IntrinsicCam1.DistortionCoeffs, CalibrationModel.IntrinsicCam2.IntrinsicMatrix, CalibrationModel.IntrinsicCam2.DistortionCoeffs,
-                                     CalibrationModel.Resolution,
-                                     CalibrationModel.EX_Param.RotationVector.RotationMatrix, CalibrationModel.EX_Param.TranslationVector,
-                                     CalibrationModel.R1, CalibrationModel.R2, CalibrationModel.P1, CalibrationModel.P2, CalibrationModel.Q,
-                                     StereoRectifyType.Default, 0,
-                                     CalibrationModel.Resolution, ref Rec1, ref Rec2);
+            var rec1 = default(Rectangle);
+            var rec2 = default(Rectangle);
+            CvInvoke.StereoRectify(
+                CalibrationModel.IntrinsicCam1.IntrinsicMatrix,
+                CalibrationModel.IntrinsicCam1.DistortionCoeffs,
+                CalibrationModel.IntrinsicCam2.IntrinsicMatrix,
+                CalibrationModel.IntrinsicCam2.DistortionCoeffs,
+                CalibrationModel.Resolution,
+                CalibrationModel.EX_Param.RotationVector.RotationMatrix,
+                CalibrationModel.EX_Param.TranslationVector,
+                CalibrationModel.R1,
+                CalibrationModel.R2,
+                CalibrationModel.P1,
+                CalibrationModel.P2,
+                CalibrationModel.Q,
+                StereoRectifyType.Default,
+                0,
+                CalibrationModel.Resolution,
+                ref rec1,
+                ref rec2
+                );
 
-            CalibrationModel.Rec1 = Rec1;
-            CalibrationModel.Rec2 = Rec2;
-
+            CalibrationModel.Rec1 = rec1;
+            CalibrationModel.Rec2 = rec2;
 
             CalibrationModel.IntrinsicCam1.InitUndistortMatrix(CalibrationModel.UndistortCam1);
             CalibrationModel.IntrinsicCam2.InitUndistortMatrix(CalibrationModel.UndistortCam2);
@@ -204,14 +226,14 @@ namespace Bachelor_app.StereoVision
         private async Task SaveImageForCalibration(Mat frame_S1, Mat frame_S2)
         {
             using (Image<Bgr, byte> frameImage_S1 = new Image<Bgr, byte>(frame_S1.Bitmap), frameImage_S2 = new Image<Bgr, byte>(frame_S2.Bitmap))
-            using (Image<Gray, byte> Gray_frame_S1 = frameImage_S1.Convert<Gray, byte>(), Gray_frame_S2 = frameImage_S2.Convert<Gray, byte>())
+            using (Image<Gray, byte> gray_frame_S1 = frameImage_S1.Convert<Gray, byte>(), gray_frame_S2 = frameImage_S2.Convert<Gray, byte>())
             using (VectorOfPointF cornerLeft = new VectorOfPointF(), cornerRight = new VectorOfPointF())
             {
                 switch (patternModel.Pattern)
                 {
                     case ECalibrationPattern.Chessboard:
-                        CvInvoke.FindChessboardCorners(Gray_frame_S1, patternModel.PatternSize, cornerLeft, CalibCbType.AdaptiveThresh);
-                        CvInvoke.FindChessboardCorners(Gray_frame_S2, patternModel.PatternSize, cornerRight, CalibCbType.AdaptiveThresh);
+                        CvInvoke.FindChessboardCorners(gray_frame_S1, patternModel.PatternSize, cornerLeft, CalibCbType.AdaptiveThresh);
+                        CvInvoke.FindChessboardCorners(gray_frame_S2, patternModel.PatternSize, cornerRight, CalibCbType.AdaptiveThresh);
                         break;
                     default: throw new NotImplementedException();
                 }
@@ -224,18 +246,19 @@ namespace Bachelor_app.StereoVision
                     corners_Left = cornerLeft.ToArray();
                     corners_Right = cornerRight.ToArray();
 
-                    Gray_frame_S1.FindCornerSubPix(new PointF[1][] { corners_Left }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
-                    Gray_frame_S2.FindCornerSubPix(new PointF[1][] { corners_Right }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
+                    gray_frame_S1.FindCornerSubPix(new PointF[1][] { corners_Left }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
+                    gray_frame_S2.FindCornerSubPix(new PointF[1][] { corners_Right }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
 
                     if (patternModel.Start_Flag)
                     {
-                        corners_points_Left[buffer_savepoint] = corners_Left;
-                        corners_points_Right[buffer_savepoint] = corners_Right;
-                        buffer_savepoint++;
+                        cornersPointsLeft[bufferSavepoint] = corners_Left;
+                        cornersPointsRight[bufferSavepoint] = corners_Right;
+                        bufferSavepoint++;
 
-                        if (buffer_savepoint == buffer_length) currentMode = ECalibrationMode.Caluculating_Stereo_Intrinsics;
+                        if (bufferSavepoint == bufferLength)
+                            currentMode = ECalibrationMode.Caluculating_Stereo_Intrinsics;
 
-                        _winForm.UpdateTitle("Form1: Buffer " + buffer_savepoint.ToString() + " of " + buffer_length.ToString());
+                        winForm.UpdateTitle("Form1: Buffer " + bufferSavepoint.ToString() + " of " + bufferLength.ToString());
                     }
 
                     switch (patternModel.Pattern)
@@ -247,8 +270,8 @@ namespace Bachelor_app.StereoVision
                         default: throw new NotImplementedException();
                     }
 
-                    _winForm.pictureBox1.Image = frameImage_S1.ToImage();
-                    _winForm.pictureBox2.Image = frameImage_S2.ToImage();
+                    winForm.pictureBox1.Image = frameImage_S1.ToImage();
+                    winForm.pictureBox2.Image = frameImage_S2.ToImage();
                 }
             }
         }
@@ -258,14 +281,12 @@ namespace Bachelor_app.StereoVision
         /// </summary>
         public void UpdatePatternModel()
         {
-            var Size = new Size(int.Parse(_winForm.toolStripTextBox1.Text), int.Parse(_winForm.toolStripTextBox2.Text));
-            var Count = int.Parse(_winForm.toolStripTextBox3.Text);
-            var Distance = float.Parse(_winForm.toolStripTextBox4.Text);
-            var PatternType = Enum.GetValues(typeof(ECalibrationPattern)).Cast<ECalibrationPattern>().First(x => x.ToString() == _winForm.toolStripComboBox1.SelectedItem.ToString());
+            var size = new Size(int.Parse(winForm.toolStripTextBox1.Text), int.Parse(winForm.toolStripTextBox2.Text));
+            var count = int.Parse(winForm.toolStripTextBox3.Text);
+            var distance = float.Parse(winForm.toolStripTextBox4.Text);
+            var patternType = Enum.GetValues(typeof(ECalibrationPattern)).Cast<ECalibrationPattern>().First(x => x.ToString() == winForm.toolStripComboBox1.SelectedItem.ToString());
 
-            patternModel = new PatternModel(Size.Width, Size.Height, Count, Distance, PatternType);
+            patternModel = new PatternModel(size.Width, size.Height, count, distance, patternType);
         }
-
-
     }
 }

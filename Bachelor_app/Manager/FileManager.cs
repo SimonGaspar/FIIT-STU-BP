@@ -1,9 +1,8 @@
-﻿using Bachelor_app.Enumerate;
-using Bachelor_app.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
+using Bachelor_app.Enumerate;
+using Bachelor_app.Model;
 
 namespace Bachelor_app.Manager
 {
@@ -13,14 +12,16 @@ namespace Bachelor_app.Manager
     public class FileManager
     {
         public ListViewModel ListViewModel { get; private set; } = new ListViewModel();
+
         public EListViewGroup ListViewerDisplay { get; set; } = EListViewGroup.Console;
-        public EInput _inputType { get; set; } = EInput.ListViewBasicStack;
 
-        private MainForm _winForm;
+        public EInput InputType { get; set; } = EInput.ListViewBasicStack;
 
-        public FileManager(MainForm WinForm)
+        private MainForm winForm;
+
+        public FileManager(MainForm winForm)
         {
-            this._winForm = WinForm;
+            this.winForm = winForm;
         }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Bachelor_app.Manager
         /// </summary>
         public void AddToListView()
         {
-            using (OpenFileDialog ofd = new OpenFileDialog() { Multiselect = true, ValidateNames = true, CheckFileExists = true, CheckPathExists = true, Filter = "" })
+            using (OpenFileDialog ofd = new OpenFileDialog() { Multiselect = true, ValidateNames = true, CheckFileExists = true, CheckPathExists = true, Filter = string.Empty })
             {
                 DialogHelper.AddFilterToDialog<EImageFormat>(ofd, "All Image Files");
 
@@ -38,7 +39,7 @@ namespace Bachelor_app.Manager
                     {
                         AddInputFileToList(fileName, ListViewerDisplay);
                     }
-                };
+                }
             }
         }
 
@@ -49,16 +50,16 @@ namespace Bachelor_app.Manager
         public void RemoveFromListView(ListView listViewToRemove = null)
         {
             if (listViewToRemove == null)
-                listViewToRemove = _winForm.ListViews[(int)ListViewerDisplay];
+                listViewToRemove = winForm.ListViews[(int)ListViewerDisplay];
 
             foreach (ListViewItem fileName in listViewToRemove.Items)
             {
                 ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.FileName == fileName.Text));
 
-                var imageList = _winForm.ImageList[(int)ListViewerDisplay];
+                var imageList = winForm.ImageList[(int)ListViewerDisplay];
                 imageList.Images.RemoveByKey(fileName.Text);
 
-                var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
+                var listViewer = winForm.ListViews[(int)ListViewerDisplay];
                 listViewer.Items.Remove(fileName);
             }
         }
@@ -70,7 +71,7 @@ namespace Bachelor_app.Manager
         public void RemoveSelectedFromListView(ListView listViewToRemove = null)
         {
             if (listViewToRemove == null)
-                listViewToRemove = _winForm.ListViews[(int)ListViewerDisplay];
+                listViewToRemove = winForm.ListViews[(int)ListViewerDisplay];
 
             foreach (ListViewItem fileName in listViewToRemove.SelectedItems)
             {
@@ -79,10 +80,10 @@ namespace Bachelor_app.Manager
 
                 ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Remove(ListViewModel.ListOfListInputFolder[(int)ListViewerDisplay].Find(x => x.FileName == fileName.Text));
 
-                var imageList = _winForm.ImageList[(int)ListViewerDisplay];
+                var imageList = winForm.ImageList[(int)ListViewerDisplay];
                 imageList.Images.RemoveByKey(fileName.Text);
 
-                var listViewer = _winForm.ListViews[(int)ListViewerDisplay];
+                var listViewer = winForm.ListViews[(int)ListViewerDisplay];
                 listViewer.Items.Remove(fileName);
             }
         }
@@ -92,15 +93,16 @@ namespace Bachelor_app.Manager
         /// </summary>
         public void RemoveAllFromCurrentListView()
         {
-            var currentListView = _winForm.ListViews[(int)ListViewerDisplay];
+            var currentListView = winForm.ListViews[(int)ListViewerDisplay];
             RemoveSelectedFromListView(currentListView);
         }
 
         /// <summary>
         /// Remove all files from all ListViewerDisplay
         /// </summary>
-        public void RemoveAllFromListViews() { 
-            foreach(var item in _winForm.ListViews)
+        public void RemoveAllFromListViews()
+        {
+            foreach (var item in winForm.ListViews)
                 RemoveFromListView(item);
         }
 
@@ -132,14 +134,14 @@ namespace Bachelor_app.Manager
         /// <summary>
         /// Add files from disk into ListView and InputFileModel
         /// </summary>
-        /// <param name="PathToFile">Path to image file</param>
+        /// <param name="pathToFile">Path to image file</param>
         /// <param name="type">Type of ListView gorup</param>
-        public void AddInputFileToList(string PathToFile, EListViewGroup type)
+        public void AddInputFileToList(string pathToFile, EListViewGroup type)
         {
             var id = (int)type;
-            var inputFileLeft = new InputFileModel(PathToFile);
-            var imageList = _winForm.ImageList[id];
-            var listViewer = _winForm.ListViews[id];
+            var inputFileLeft = new InputFileModel(pathToFile);
+            var imageList = winForm.ImageList[id];
+            var listViewer = winForm.ListViews[id];
             AddInputFileToList(inputFileLeft, ListViewModel.ListOfListInputFolder[id], imageList, listViewer);
         }
     }

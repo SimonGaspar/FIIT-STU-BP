@@ -1,13 +1,12 @@
-﻿using Bachelor_app.Enumerate;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
 using Bachelor_app.Manager;
 using Emgu.CV;
-using Emgu.CV.Features2D;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using static Emgu.CV.Features2D.Features2DToolbox;
 
 namespace Bachelor_app.Model
@@ -15,7 +14,9 @@ namespace Bachelor_app.Model
     public class KeyPointModel
     {
         public VectorOfKeyPoint DetectedKeyPoints { get; private set; }
+
         public InputFileModel InputFile { get; private set; }
+
         public int ID { get; private set; }
 
         public KeyPointModel(VectorOfKeyPoint detectedKeyPoints, InputFileModel inputFile, int id)
@@ -26,15 +27,14 @@ namespace Bachelor_app.Model
         }
     }
 
-
     public static class KeyPointExtension
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="model"></param>
         /// <param name="fileManager">Save in FileManager ListViewGroup.</param>
-        public async static Task DrawAndSaveAsync(this KeyPointModel model, FileManager fileManager)
+        public static async Task DrawAndSaveAsync(this KeyPointModel model, FileManager fileManager)
         {
             try
             {
@@ -44,10 +44,10 @@ namespace Bachelor_app.Model
 
                 using (Mat output = new Mat())
                 {
-                    Features2DToolbox.DrawKeypoints(new Mat(filePath), model.DetectedKeyPoints, output, new Bgr(0, 0, 255), KeypointDrawType.DrawRichKeypoints);
+                    DrawKeypoints(new Mat(filePath), model.DetectedKeyPoints, output, new Bgr(0, 0, 255), KeypointDrawType.DrawRichKeypoints);
                     output.Save(savePath);
 
-                    fileManager.ListViewModel._lastDrawnKeypoint = output.ToImageBGR();
+                    fileManager.ListViewModel.LastDrawnKeypoint = output.ToImageBGR();
                     fileManager.AddInputFileToList(savePath, EListViewGroup.DrawnKeyPoint);
                 }
             }

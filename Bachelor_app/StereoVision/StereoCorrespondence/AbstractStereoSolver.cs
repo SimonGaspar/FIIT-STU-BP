@@ -1,7 +1,7 @@
-﻿using Emgu.CV;
-using Emgu.CV.Structure;
-using System;
+﻿using System;
 using System.Drawing;
+using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace Bachelor_app.StereoVision.StereoCorrespondence
 {
@@ -11,10 +11,12 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
     public abstract class AbstractStereoSolver : IStereoSolver
     {
         protected Image<Gray, byte> LeftGrayImage { get; private set; }
-        protected Image<Gray, byte> RightGrayImage { get; private set; }
-        protected dynamic Model { get; private set; }
-        protected dynamic WinForm { get; set; }
 
+        protected Image<Gray, byte> RightGrayImage { get; private set; }
+
+        protected dynamic Model { get; private set; }
+
+        protected dynamic WinForm { get; set; }
 
         public AbstractStereoSolver(dynamic model)
         {
@@ -87,7 +89,8 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         /// <typeparam name="T">Type of image</typeparam>
         /// <param name="leftImage">Left image</param>
         /// <param name="rightImage">Right image</param>
-        protected void ConvertImageToGray<T>(T leftImage, T rightImage) where T : Image<Bgr, byte>
+        protected void ConvertImageToGray<T>(T leftImage, T rightImage)
+            where T : Image<Bgr, byte>
         {
             LeftGrayImage = leftImage.Convert<Gray, byte>();
             RightGrayImage = rightImage.Convert<Gray, byte>();
@@ -97,6 +100,5 @@ namespace Bachelor_app.StereoVision.StereoCorrespondence
         {
             return null;
         }
-
     }
 }

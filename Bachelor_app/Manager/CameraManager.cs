@@ -1,10 +1,10 @@
-﻿using Bachelor_app.Enumerate;
+﻿using System.Collections.Generic;
+using System.IO;
+using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
 using Bachelor_app.Helper;
 using Bachelor_app.Model;
 using Emgu.CV;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Bachelor_app.Manager
 {
@@ -13,16 +13,18 @@ namespace Bachelor_app.Manager
     /// </summary>
     public class CameraManager
     {
-        private FileManager _fileManager;
-        public CameraModel LeftCamera = new CameraModel();
-        public CameraModel RightCamera = new CameraModel();
-        public ECameraResolution resolution;
+        private FileManager fileManager;
+
+        public CameraModel LeftCamera { get; set; } = new CameraModel();
+
+        public CameraModel RightCamera { get; set; } = new CameraModel();
+
+        public ECameraResolution Resolution { get; set; }
 
         public CameraManager(FileManager fileManager)
         {
-            this._fileManager = fileManager;
+            this.fileManager = fileManager;
         }
-
 
         /// <summary>
         /// Create camera model and instance of camera.
@@ -35,7 +37,7 @@ namespace Bachelor_app.Manager
             if (deviceId >= 0)
             {
                 cameraModel.CreateCameraInstance(deviceId, deviceName);
-                cameraModel.Camera.UpdateResolution(resolution);
+                cameraModel.Camera.UpdateResolution(Resolution);
             }
             else
                 if (cameraModel.Camera != null)
@@ -47,39 +49,39 @@ namespace Bachelor_app.Manager
         /// </summary>
         public void UpdateResolution()
         {
-            LeftCamera.Camera.UpdateResolution(resolution);
-            RightCamera.Camera.UpdateResolution(resolution);
+            LeftCamera.Camera.UpdateResolution(Resolution);
+            RightCamera.Camera.UpdateResolution(Resolution);
         }
 
         /// <summary>
         /// Get stereo image for our application and save it in temp folder.
         /// </summary>
-        /// <param name="IsSFM">Using SfM or StereoVision.</param>
+        /// <param name="isSFM">Using SfM or StereoVision.</param>
         /// <param name="countInputFile">Count of saved images.</param>
         /// <returns>List of images, which create stereo image.</returns>
-        public List<InputFileModel> GetInputFromStereoCamera(bool IsSFM, int countInputFile = 0)
+        public List<InputFileModel> GetInputFromStereoCamera(bool isSFM, int countInputFile = 0)
         {
-            string LeftImagePath = Path.Combine($@"{(IsSFM ? Configuration.TempDirectoryPath : Configuration.TempLeftStackDirectoryPath)}", $"Left_{countInputFile}.JPG");
-            string RightImagePath = Path.Combine($@"{(IsSFM ? Configuration.TempDirectoryPath : Configuration.TempRightStackDirectoryPath)}", $"Right_{countInputFile}.JPG");
+            string leftImagePath = Path.Combine($@"{(isSFM ? Configuration.TempDirectoryPath : Configuration.TempLeftStackDirectoryPath)}", $"Left_{countInputFile}.JPG");
+            string rightImagePath = Path.Combine($@"{(isSFM ? Configuration.TempDirectoryPath : Configuration.TempRightStackDirectoryPath)}", $"Right_{countInputFile}.JPG");
 
-            using (Mat LeftImage = new Mat(), RightImage = new Mat())
+            using (Mat leftImage = new Mat(), rightImage = new Mat())
             {
-                CameraHelper.GetStereoImageSync(LeftCamera.Camera, RightCamera.Camera, LeftImage, RightImage);
+                CameraHelper.GetStereoImageSync(LeftCamera.Camera, RightCamera.Camera, leftImage, rightImage);
 
-                if (LeftImage == null || RightImage == null)
+                if (leftImage == null || rightImage == null)
                     throw new EmptyFrameException("Empty frame was captured from camera.");
 
-                LeftImage.Save(LeftImagePath);
-                RightImage.Save(RightImagePath);
+                leftImage.Save(leftImagePath);
+                rightImage.Save(rightImagePath);
             }
 
-            _fileManager.AddInputFileToList(LeftImagePath, EListViewGroup.LeftCameraStack);
-            _fileManager.AddInputFileToList(RightImagePath, EListViewGroup.RightCameraStack);
+            fileManager.AddInputFileToList(leftImagePath, EListViewGroup.LeftCameraStack);
+            fileManager.AddInputFileToList(rightImagePath, EListViewGroup.RightCameraStack);
 
             var returnList = new List<InputFileModel>
             {
-                new InputFileModel(LeftImagePath),
-                new InputFileModel(RightImagePath)
+                new InputFileModel(leftImagePath),
+                new InputFileModel(rightImagePath)
             };
 
             return returnList;
@@ -93,21 +95,21 @@ namespace Bachelor_app.Manager
         /// <returns>Saved image in list.</returns>
         public List<InputFileModel> GetInputFromCamera(VideoCapture camera, int countInputFile = 0)
         {
-            string ImagePath = Path.Combine($@"{Configuration.TempDirectoryPath}", $"Image_{countInputFile}.JPG");
+            string imagePath = Path.Combine($@"{Configuration.TempDirectoryPath}", $"Image_{countInputFile}.JPG");
 
-            using (Mat Image = new Mat())
+            using (Mat image = new Mat())
             {
-                CameraHelper.GetImage(camera, Image);
+                CameraHelper.GetImage(camera, image);
 
-                if (Image == null)
+                if (image == null)
                     throw new EmptyFrameException("Empty frame was captured from camera.");
 
-                Image.Save(ImagePath);
+                image.Save(imagePath);
             }
 
-            _fileManager.AddInputFileToList(ImagePath, EListViewGroup.BasicStack);
+            fileManager.AddInputFileToList(imagePath, EListViewGroup.BasicStack);
 
-            var returnList = new List<InputFileModel> { new InputFileModel(ImagePath) };
+            var returnList = new List<InputFileModel> { new InputFileModel(imagePath) };
 
             return returnList;
         }

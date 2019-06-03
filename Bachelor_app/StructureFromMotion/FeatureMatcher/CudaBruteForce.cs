@@ -10,7 +10,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
     /// </summary>
     public class CudaBruteForce : AbstractMatcher, IFeatureMatcher
     {
-        private static readonly object locker = new object();
+        private static readonly object Locker = new object();
 
         public CudaBruteForce()
             : base(new CudaBruteForceModel())
@@ -20,9 +20,9 @@ namespace Bachelor_app.StructureFromMotion.FeatureMatcher
 
         public override void Match(IInputArray queryDescriptors, IInputArray trainDescriptors, VectorOfVectorOfDMatch matches)
         {
-            using (var _cudaBruteForceMatcher = CreateInstance())
+            using (var cudaBruteForceMatcher = CreateInstance())
             using (GpuMat left = new GpuMat(queryDescriptors as Mat), right = new GpuMat(trainDescriptors as Mat))
-                _cudaBruteForceMatcher.KnnMatch(right, left, matches, 1);
+                cudaBruteForceMatcher.KnnMatch(right, left, matches, 1);
         }
 
         public override dynamic CreateInstance()

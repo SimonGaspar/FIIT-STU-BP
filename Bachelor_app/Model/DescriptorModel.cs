@@ -1,17 +1,19 @@
-﻿using Bachelor_app.Extension;
-using Emgu.CV;
-using Emgu.CV.CvEnum;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Bachelor_app.Extension;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
 
 namespace Bachelor_app.Model
 {
     public class DescriptorModel
     {
         public KeyPointModel KeyPoint { get; private set; }
+
         public Mat Descriptor { get; private set; }
+
         public string FileFormatSIFT { get; private set; }
 
         public DescriptorModel(KeyPointModel keyPointModel, Mat descriptors)
@@ -23,13 +25,11 @@ namespace Bachelor_app.Model
         /// <summary>
         /// Save SIFT format text in model.
         /// </summary>
-        /// <param name="SiftText">Text in SIFT format.</param>
-        public void SaveSiftInModel(string SiftText)
-        {
-            FileFormatSIFT = SiftText;
-        }
+        /// <param name="siftText">Text in SIFT format.</param>
+        public void SaveSiftInModel(string siftText) => FileFormatSIFT = siftText;
 
-        public void SetDescriptor(Mat mat) {
+        public void SetDescriptor(Mat mat)
+        {
             if (Descriptor != null)
                 Descriptor.Dispose();
 
@@ -43,9 +43,9 @@ namespace Bachelor_app.Model
         /// Save descriptor in txt file for VisualSFM.
         /// </summary>
         /// <param name="model"></param>
-        /// <param name="SaveInTempDirectory"></param>
-        /// <param name="SaveInDescriptorNode"></param>
-        public async static Task SaveSiftFileAsync(this DescriptorModel model, bool SaveInTempDirectory = true, bool SaveInDescriptorNode = true,string computedPath = "")
+        /// <param name="saveInTempDirectory"></param>
+        /// <param name="saveInDescriptorNode"></param>
+        public static async Task SaveSiftFileAsync(this DescriptorModel model, bool saveInTempDirectory = true, bool saveInDescriptorNode = true, string computedPath = "")
         {
             var descriptor = model.Descriptor;
             var keyPoints = model.KeyPoint.DetectedKeyPoints;
@@ -61,17 +61,20 @@ namespace Bachelor_app.Model
                 sb.AppendLine($"{keyPoints[i].Point.Y} {keyPoints[i].Point.X} {keyPoints[i].Size} {keyPoints[i].Angle}");
 
                 for (int j = 0; j < 128; j++)
+                {
                     if (j < descriptor.Cols)
                         sb.Append($"{descriptor.GetValue(i, j)} ");
                     else
                         sb.Append("0 ");
+                }
+
                 sb.AppendLine();
             }
 
-            if (SaveInTempDirectory)
+            if (saveInTempDirectory)
                 File.WriteAllText(descriptorSavePath, sb.ToString());
 
-            if (SaveInDescriptorNode)
+            if (saveInDescriptorNode)
                 model.SaveSiftInModel(sb.ToString());
         }
 
@@ -81,7 +84,7 @@ namespace Bachelor_app.Model
         /// <param name="model"></param>
         /// <param name="SaveInTempDirectory"></param>
         /// <param name="SaveInDescriptorNode"></param>
-        public static Mat LoadSiftFile(this DescriptorModel model, bool SaveInNode=false)
+        public static Mat LoadSiftFile(this DescriptorModel model, bool saveInNode = false)
         {
             var siftFile = File.ReadAllLines(Path.Combine(Configuration.TempDirectoryPath, model.KeyPoint.InputFile.FileNameWithoutExtension + ".SIFT"));
             var header = siftFile[0].Split(' ');
@@ -89,14 +92,15 @@ namespace Bachelor_app.Model
             var countColumns = int.Parse(header[1]);
 
             var result = new Mat(new Size(countColumns, countRows), DepthType.Cv8U, 1);
-            
-            for (int i = 2; i < countRows; i+=2) {
+
+            for (int i = 2; i < countRows; i += 2)
+            {
                 var tempRow = siftFile[i].Split(' ');
                 for (int j = 0; j < countColumns; j++)
                     result.SetValue((i - 2) / 2, j, byte.Parse(tempRow[j]));
                     }
 
-            if (SaveInNode)
+            if (saveInNode)
                 model.SetDescriptor(result);
 
             return result;

@@ -6,12 +6,12 @@ namespace Bachelor_app.StereoVision.WindowsForm
 {
     public partial class StereoBMForm : Form
     {
-        private StereoBlockMatching _stereoBlockMatching;
+        private StereoBlockMatching stereoBlockMatching;
         private StereoBlockMatchingModel defaultModel = new StereoBlockMatchingModel();
 
         public StereoBMForm(StereoBlockMatching stereoBlockMatching)
         {
-            this._stereoBlockMatching = stereoBlockMatching;
+            this.stereoBlockMatching = stereoBlockMatching;
 
             InitializeComponent();
             ShowDefaultModelSetting();
@@ -24,14 +24,14 @@ namespace Bachelor_app.StereoVision.WindowsForm
         {
             try
             {
-                var Disparity = int.Parse(textBox1.Text);
-                var BlockSize = int.Parse(textBox2.Text);
+                var disparity = int.Parse(textBox1.Text);
+                var blockSize = int.Parse(textBox2.Text);
 
-                var model = new StereoBlockMatchingModel(Disparity, BlockSize);
+                var model = new StereoBlockMatchingModel(disparity, blockSize);
 
-                _stereoBlockMatching.UpdateModel(model);
+                stereoBlockMatching.UpdateModel(model);
 
-                this.Hide();
+                Hide();
             }
             catch (Exception)
             {
@@ -47,6 +47,7 @@ namespace Bachelor_app.StereoVision.WindowsForm
                 Hide();
             }
         }
+
         private void Button1_Click(object sender, EventArgs e)
         {
             GetPropertiesAndSetModel();
@@ -59,8 +60,8 @@ namespace Bachelor_app.StereoVision.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.textBox1.Text = defaultModel.Disparity.ToString();
-            this.textBox2.Text = defaultModel.BlockSize.ToString();
+            textBox1.Text = defaultModel.Disparity.ToString();
+            textBox2.Text = defaultModel.BlockSize.ToString();
         }
     }
 }

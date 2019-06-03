@@ -13,7 +13,6 @@ namespace Bachelor_app.StructureFromMotion
 
     public static class FeatureMatcherExtension
     {
-
         /// <summary>
         /// Create instance of matcher type.
         /// </summary>
@@ -28,6 +27,7 @@ namespace Bachelor_app.StructureFromMotion
                 case EFeatureMatcher.BruteForce: returnItem = new BruteForce(); break;
                 case EFeatureMatcher.CudaBruteForce: returnItem = new CudaBruteForce(); break;
             }
+
             return returnItem;
         }
     }

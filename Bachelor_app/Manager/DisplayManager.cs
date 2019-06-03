@@ -1,4 +1,11 @@
-﻿using Bachelor_app.Enumerate;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
 using Bachelor_app.Helper;
 using Bachelor_app.Model;
@@ -7,13 +14,6 @@ using Emgu.CV.Structure;
 using Emgu.CV.UI;
 using Kitware.VTK;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace Bachelor_app.Manager
 {
@@ -23,21 +23,24 @@ namespace Bachelor_app.Manager
     public class DisplayManager
     {
         public EDisplayItem LeftViewWindowItem { get; set; }
+
         public EDisplayItem RightViewWindowItem { get; set; }
+
         public bool DisplayRemapImage { get; set; } = false;
 
         public bool DisplayPointCloudImageLeft { get; set; } = true;
+
         public bool DisplayPointCloudImageRight { get; set; } = true;
 
-        private FileManager _fileManager;
-        private MainForm _winForm;
-        private CameraManager _cameraManager;
+        private FileManager fileManager;
+        private MainForm winForm;
+        private CameraManager cameraManager;
 
-        public DisplayManager(MainForm WinForm, FileManager FileManager, CameraManager CameraManager)
+        public DisplayManager(MainForm winForm, FileManager fileManager, CameraManager cameraManager)
         {
-            this._winForm = WinForm;
-            this._fileManager = FileManager;
-            this._cameraManager = CameraManager;
+            this.winForm = winForm;
+            this.fileManager = fileManager;
+            this.cameraManager = cameraManager;
         }
 
         /// <summary>
@@ -48,10 +51,10 @@ namespace Bachelor_app.Manager
         {
             if (item.Focused)
             {
-                var listOfInputFile = _fileManager.ListViewModel.ListOfListInputFolder[(int)_fileManager.ListViewerDisplay];
-                if (_fileManager.ListViewModel._lastImage != null)
-                    _fileManager.ListViewModel._lastImage.Dispose();
-                _fileManager.ListViewModel._lastImage = new Image<Bgr, byte>((Bitmap)Image.FromFile(listOfInputFile.FirstOrDefault(x => x.FileName == item.Text).FullPath));
+                var listOfInputFile = fileManager.ListViewModel.ListOfListInputFolder[(int)fileManager.ListViewerDisplay];
+                if (fileManager.ListViewModel.LastImage != null)
+                    fileManager.ListViewModel.LastImage.Dispose();
+                fileManager.ListViewModel.LastImage = new Image<Bgr, byte>((Bitmap)Image.FromFile(listOfInputFile.FirstOrDefault(x => x.FileName == item.Text).FullPath));
 
                 Display();
             }
@@ -72,8 +75,8 @@ namespace Bachelor_app.Manager
         /// </summary>
         public void Display()
         {
-            ShowItemOnView(_winForm.LeftViewBox, LeftViewWindowItem);
-            ShowItemOnView(_winForm.RightViewBox, RightViewWindowItem);
+            ShowItemOnView(winForm.LeftViewBox, LeftViewWindowItem);
+            ShowItemOnView(winForm.RightViewBox, RightViewWindowItem);
         }
 
         /// <summary>
@@ -86,28 +89,28 @@ namespace Bachelor_app.Manager
             switch (typeOfItem)
             {
                 case EDisplayItem.DepthMap:
-                    imageBox.Image = _fileManager.ListViewModel._lastDepthMapImage;
+                    imageBox.Image = fileManager.ListViewModel.LastDepthMapImage;
                     break;
                 case EDisplayItem.LeftCamera:
-                    imageBox.Image = _cameraManager.LeftCamera.Camera
+                    imageBox.Image = cameraManager.LeftCamera.Camera
                         .GetImageInMat()
                         .RemapMat(true, DisplayRemapImage)
                         .ToImageBGR();
                     break;
                 case EDisplayItem.RightCamera:
-                    imageBox.Image = _cameraManager.RightCamera.Camera
+                    imageBox.Image = cameraManager.RightCamera.Camera
                         .GetImageInMat()
                         .RemapMat(false, DisplayRemapImage)
                         .ToImageBGR();
                     break;
                 case EDisplayItem.Stack:
-                    imageBox.Image = _fileManager.ListViewModel._lastImage;
+                    imageBox.Image = fileManager.ListViewModel.LastImage;
                     break;
                 case EDisplayItem.KeyPoints:
-                    imageBox.Image = _fileManager.ListViewModel._lastDrawnKeypoint;
+                    imageBox.Image = fileManager.ListViewModel.LastDrawnKeypoint;
                     break;
                 case EDisplayItem.DescriptorsMatches:
-                    imageBox.Image = _fileManager.ListViewModel._lastDrawnMatches;
+                    imageBox.Image = fileManager.ListViewModel.LastDrawnMatches;
                     break;
             }
         }
@@ -115,13 +118,13 @@ namespace Bachelor_app.Manager
         /// <summary>
         /// Display item on VTK window renderer.
         /// </summary>
-        /// <param name="LeftViewWindow">Show on left VTK window?</param>
-        public void DisplayPointCloud(bool LeftViewWindow)
+        /// <param name="leftViewWindow">Show on left VTK window?</param>
+        public void DisplayPointCloud(bool leftViewWindow)
         {
-            if (LeftViewWindow)
-                ShowItemOnView(_winForm.renderWindowControl1, LeftViewWindowItem,DisplayPointCloudImageLeft);
+            if (leftViewWindow)
+                ShowItemOnView(winForm.renderWindowControl1, LeftViewWindowItem, DisplayPointCloudImageLeft);
             else
-                ShowItemOnView(_winForm.renderWindowControl2, RightViewWindowItem,DisplayPointCloudImageRight);
+                ShowItemOnView(winForm.renderWindowControl2, RightViewWindowItem, DisplayPointCloudImageRight);
         }
 
         /// <summary>
@@ -129,28 +132,12 @@ namespace Bachelor_app.Manager
         /// </summary>
         /// <param name="renderWindow"></param>
         /// <param name="typeOfItem"></param>
-        public void ShowItemOnView(RenderWindowControl renderWindow, EDisplayItem typeOfItem, bool DisplayImageInPointCloud = false)
+        public void ShowItemOnView(RenderWindowControl renderWindow, EDisplayItem typeOfItem, bool displayImageInPointCloud = false)
         {
             switch (typeOfItem)
             {
-                case EDisplayItem.SfMPointCloud: DisplayPointCloudNVM(renderWindow, DisplayImageInPointCloud); break;
-                case EDisplayItem.DepthMapPointCloud: DisplayDepthMapPointCloud(renderWindow); break; ;
-            }
-        }
-
-        /// <summary>
-        /// Method to display point cloud from depth map.
-        /// </summary>
-        /// <param name="renderWindow"></param>
-        private void DisplayDepthMapPointCloud(RenderWindowControl renderWindow)
-        {
-            ClearVTKRenderer(renderWindow);
-
-            var listView = _winForm.ListViews[(int)EListViewGroup.DepthMap];
-            if (listView.Visible)
-            {
-                var item = listView.SelectedItems;
-                ReadPointFromDepthMap(renderWindow, item[0].Text.Split('.')[0] + ".json");
+                case EDisplayItem.SfMPointCloud: DisplayPointCloudNVM(renderWindow, displayImageInPointCloud); break;
+                case EDisplayItem.DepthMapPointCloud: DisplayDepthMapPointCloud(renderWindow); break;
             }
         }
 
@@ -158,7 +145,7 @@ namespace Bachelor_app.Manager
         /// Method to read and display point cloud from .nvm file.
         /// </summary>
         /// <param name="renderWindowControl"></param>
-        public void DisplayPointCloudNVM(RenderWindowControl renderWindowControl, bool DisplayImageInPointCloud=true)
+        public void DisplayPointCloudNVM(RenderWindowControl renderWindowControl, bool displayImageInPointCloud = true)
         {
             ClearVTKRenderer(renderWindowControl);
 
@@ -169,7 +156,7 @@ namespace Bachelor_app.Manager
             {
                 var model = nvmFile[0];
 
-                if (DisplayImageInPointCloud)
+                if (displayImageInPointCloud)
                 {
                     foreach (var camera in model.ListCameraModel)
                         ReadCameraIntoObject(renderWindowControl, camera);
@@ -179,13 +166,29 @@ namespace Bachelor_app.Manager
             }
 
             // If we want show all models
-            //foreach (var model in nvmFile)
-            //{
+            // foreach (var model in nvmFile)
+            // {
             //    foreach (var camera in model.ListCameraModel)
             //        ReadCameraIntoObject(renderWindowControl, camera);
 
-            //    ReadPointIntoObject(renderWindowControl, model.ListPointModel);
-            //}
+            // ReadPointIntoObject(renderWindowControl, model.ListPointModel);
+            // }
+        }
+
+        /// <summary>
+        /// Method to display point cloud from depth map.
+        /// </summary>
+        /// <param name="renderWindow"></param>
+        private void DisplayDepthMapPointCloud(RenderWindowControl renderWindow)
+        {
+            ClearVTKRenderer(renderWindow);
+
+            var listView = winForm.ListViews[(int)EListViewGroup.DepthMap];
+            if (listView.Visible)
+            {
+                var item = listView.SelectedItems;
+                ReadPointFromDepthMap(renderWindow, item[0].Text.Split('.')[0] + ".json");
+            }
         }
 
         /// <summary>
@@ -200,6 +203,7 @@ namespace Bachelor_app.Manager
         }
 
         #region VTK loading methods
+
         /// <summary>
         /// Reading points from depth map point cloud.
         /// </summary>
@@ -254,14 +258,13 @@ namespace Bachelor_app.Manager
 
             vtkRenderWindow renderWindow = renderWindowControl.RenderWindow;
             vtkRenderer renderer = renderWindow.GetRenderers().GetFirstRenderer();
-            
+
             vtkJPEGReader reader = vtkJPEGReader.New();
             reader.SetFileName(filePath);
             reader.Update();
 
             // Treba poriesit ako nasmerovat obrazky bez pokazenia textury
-            //var vectoris = Vector3.Transform(new Vector3(0, 0, 1), camera.Quaternion);
-
+            // var vectoris = Vector3.Transform(new Vector3(0, 0, 1), camera.Quaternion);
             vtkPlaneSource planeSource = vtkPlaneSource.New();
             vtkTexture texture = new vtkTexture();
             texture.SetInputConnection(reader.GetOutputPort());

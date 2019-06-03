@@ -40,7 +40,7 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                 );
                 orb.UpdateModel(model);
 
-                this.Hide();
+                Hide();
             }
             catch (Exception)
             {
@@ -55,15 +55,15 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.comboBox1.SelectedIndex = (int)defaultModel.ScoreType;
-            this.textBox1.Text = defaultModel.NumberOfFeatures.ToString();
-            this.textBox2.Text = defaultModel.ScaleFactor.ToString();
-            this.textBox3.Text = defaultModel.NLevels.ToString();
-            this.textBox4.Text = defaultModel.EdgeThreshold.ToString();
-            this.textBox5.Text = defaultModel.FirstLevel.ToString();
-            this.textBox6.Text = defaultModel.WTK_A.ToString();
-            this.textBox7.Text = defaultModel.PatchSize.ToString();
-            this.textBox8.Text = defaultModel.FastThreshold.ToString();
+            comboBox1.SelectedIndex = (int)defaultModel.ScoreType;
+            textBox1.Text = defaultModel.NumberOfFeatures.ToString();
+            textBox2.Text = defaultModel.ScaleFactor.ToString();
+            textBox3.Text = defaultModel.NLevels.ToString();
+            textBox4.Text = defaultModel.EdgeThreshold.ToString();
+            textBox5.Text = defaultModel.FirstLevel.ToString();
+            textBox6.Text = defaultModel.WTK_A.ToString();
+            textBox7.Text = defaultModel.PatchSize.ToString();
+            textBox8.Text = defaultModel.FastThreshold.ToString();
         }
 
         private void Button1_Click(object sender, EventArgs e)

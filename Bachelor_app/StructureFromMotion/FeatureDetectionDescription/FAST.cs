@@ -11,7 +11,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class FAST : AbstractFeatureDetectorDescriptor, IFeatureDetector
     {
-        public FAST() : base(new FastModel())
+        public FAST()
+            : base(new FastModel())
         {
             WindowsForm = new FastForm(this);
         }
@@ -20,8 +21,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
         {
             MKeyPoint[] result;
 
-            using (var _fast = CreateInstance())
-                result = _fast.Detect(image);
+            using (var fast = CreateInstance())
+                result = fast.Detect(image);
 
             return result;
         }

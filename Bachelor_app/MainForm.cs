@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -19,8 +20,9 @@ namespace Bachelor_app
         private MainFormManager mainFormManager;
         private CameraManager cameraManager;
 
-        public List<ListView> ListViews = new List<ListView>();
-        public List<ImageList> ImageList = new List<ImageList>();
+        public List<ListView> ListViews { get; set; } = new List<ListView>();
+
+        public List<ImageList> ImageList { get; set; } = new List<ImageList>();
 
         public MainForm()
         {
@@ -93,7 +95,6 @@ namespace Bachelor_app
 
         private void ToolStripComboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             mainFormManager.SetFeatureDetector(sender, e);
         }
 
@@ -124,7 +125,6 @@ namespace Bachelor_app
 
         private void ToolStripButton12_Click(object sender, EventArgs e)
         {
-
             Thread thread = new Thread(mainFormManager.ResumeSFM);
             thread.Start();
         }
@@ -147,10 +147,7 @@ namespace Bachelor_app
 
         private void ToolStripButton14_Click(object sender, EventArgs e)
         {
-            if (toolStripButton14.Checked)
-                toolStripButton14.BackColor = System.Drawing.Color.Black;
-            else
-                toolStripButton14.BackColor = default;
+            toolStripButton14.BackColor = toolStripButton14.Checked ? Color.Black : default;
 
             mainFormManager.SetUsingParallel();
         }
@@ -196,7 +193,6 @@ namespace Bachelor_app
             thread.Start();
         }
 
-
         private void ToolStripButton18_Click(object sender, EventArgs e)
         {
             CalibrationModel.CreateJson();
@@ -219,10 +215,7 @@ namespace Bachelor_app
 
         private void ToolStripButton22_Click(object sender, EventArgs e)
         {
-            if (toolStripButton22.Checked)
-                toolStripButton22.BackColor = System.Drawing.Color.Black;
-            else
-                toolStripButton22.BackColor = default;
+            toolStripButton22.BackColor = toolStripButton22.Checked ? Color.Black : default;
 
             mainFormManager.SetUsingParallelForStereoVision();
         }
@@ -234,29 +227,26 @@ namespace Bachelor_app
 
         private void ToolStripButton24_Click(object sender, EventArgs e)
         {
-            if (toolStripButton24.Checked)
-                toolStripButton24.BackColor = System.Drawing.Color.Black;
-            else
-                toolStripButton24.BackColor = default;
+            toolStripButton24.BackColor = toolStripButton24.Checked ? Color.Black : default;
 
             displayManager.DisplayRemapImage = toolStripButton24.Checked;
         }
 
-        private void toolStripButton25_Click(object sender, EventArgs e)
+        private void ToolStripButton25_Click(object sender, EventArgs e)
         {
             CameraHelper.UpdateCameraList();
-            var firstSelectedItem = this.toolStripComboBox10.SelectedItem;
-            this.toolStripComboBox10.Items.Clear();
-            this.toolStripComboBox10.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
-            this.toolStripComboBox10.SelectedItem = firstSelectedItem;
+            var firstSelectedItem = toolStripComboBox10.SelectedItem;
+            toolStripComboBox10.Items.Clear();
+            toolStripComboBox10.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
+            toolStripComboBox10.SelectedItem = firstSelectedItem;
 
-            var secondSelectedItem = this.toolStripComboBox9.SelectedItem;
-            this.toolStripComboBox9.Items.Clear();
-            this.toolStripComboBox9.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
-            this.toolStripComboBox9.SelectedItem = secondSelectedItem;
+            var secondSelectedItem = toolStripComboBox9.SelectedItem;
+            toolStripComboBox9.Items.Clear();
+            toolStripComboBox9.Items.AddRange(CameraHelper.ListOfCamera.Select(x => x.Value).ToArray());
+            toolStripComboBox9.SelectedItem = secondSelectedItem;
         }
 
-        private void toolStripButton26_Click(object sender, EventArgs e)
+        private void ToolStripButton26_Click(object sender, EventArgs e)
         {
             Configuration.DeleteTempFolder();
             Configuration.GenerateFolders();
@@ -264,14 +254,14 @@ namespace Bachelor_app
             fileManager.RemoveAllFromListViews();
         }
 
-        private void toolStripButton27_Click(object sender, EventArgs e)
+        private void ToolStripButton27_Click(object sender, EventArgs e)
         {
             displayManager.DisplayPointCloudImageLeft = !displayManager.DisplayPointCloudImageLeft;
             toolStripButton27.Checked = displayManager.DisplayPointCloudImageLeft;
             displayManager.DisplayPointCloud(true);
         }
 
-        private void toolStripButton28_Click(object sender, EventArgs e)
+        private void ToolStripButton28_Click(object sender, EventArgs e)
         {
             displayManager.DisplayPointCloudImageRight = !displayManager.DisplayPointCloudImageRight;
             toolStripButton28.Checked = displayManager.DisplayPointCloudImageRight;

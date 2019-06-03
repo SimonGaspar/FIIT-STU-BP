@@ -11,7 +11,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class FREAK : AbstractFeatureDetectorDescriptor, IFeatureDescriptor
     {
-        public FREAK() : base(new FreakModel())
+        public FREAK()
+            : base(new FreakModel())
         {
             WindowsForm = new FreakForm(this);
         }
@@ -21,8 +22,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             Mat result = new Mat();
 
             using (Mat image = new Mat(keyPoints.InputFile.FullPath))
-            using (var _freak = CreateInstance())
-                _freak.Compute(image, keyPoints.DetectedKeyPoints, result);
+            using (var freak = CreateInstance())
+                freak.Compute(image, keyPoints.DetectedKeyPoints, result);
 
             return result;
         }

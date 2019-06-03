@@ -7,12 +7,12 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class FreakForm : Form
     {
-        private FREAK _freak;
+        private FREAK freak;
         private FreakModel defaultModel = new FreakModel();
 
         public FreakForm(FREAK freak)
         {
-            this._freak = freak;
+            this.freak = freak;
             InitializeComponent();
             ShowDefaultModelSetting();
         }
@@ -27,9 +27,9 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                     float.Parse(textBox1.Text),
                     int.Parse(textBox2.Text));
 
-                _freak.UpdateModel(model);
+                freak.UpdateModel(model);
 
-                this.Hide();
+                Hide();
             }
             catch (Exception)
             {
@@ -49,10 +49,10 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.textBox1.Text = defaultModel.PatternScale.ToString();
-            this.textBox2.Text = defaultModel.NOctaves.ToString();
-            this.checkBox1.Checked = defaultModel.OrientationNormalized;
-            this.checkBox2.Checked = defaultModel.ScaleNormalized;
+            textBox1.Text = defaultModel.PatternScale.ToString();
+            textBox2.Text = defaultModel.NOctaves.ToString();
+            checkBox1.Checked = defaultModel.OrientationNormalized;
+            checkBox2.Checked = defaultModel.ScaleNormalized;
         }
 
         private void FreakForm_FormClosing(object sender, FormClosingEventArgs e)

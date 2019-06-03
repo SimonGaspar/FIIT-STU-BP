@@ -9,28 +9,29 @@ namespace Bachelor_app.StereoVision.Calibration
     /// </summary>
     public partial class CalibrationForm : Form
     {
-        private CalibrationManager _calibrationManager;
+        private CalibrationManager calibrationManager;
 
         public CalibrationForm(CalibrationManager calibrationManager, PatternModel patternModel)
         {
-            this._calibrationManager = calibrationManager;
+            this.calibrationManager = calibrationManager;
             InitializeComponent();
             InitializeString(patternModel);
         }
 
-        public delegate void UpateTitleDelgate(String Text);
+        public delegate void UpateTitleDelgate(string text);
+
         /// <summary>
         /// Update title of winform
         /// </summary>
-        /// <param name="Text"></param>
-        public void UpdateTitle(String Text)
+        /// <param name="text"></param>
+        public void UpdateTitle(string text)
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
                 try
                 {
                     UpateTitleDelgate ut = new UpateTitleDelgate(UpdateTitle);
-                    this.BeginInvoke(ut, new object[] { Text });
+                    BeginInvoke(ut, new object[] { text });
                 }
                 catch (Exception ex)
                 {
@@ -39,7 +40,7 @@ namespace Bachelor_app.StereoVision.Calibration
             }
             else
             {
-                this.Text = Text;
+                Text = text;
             }
         }
 
@@ -51,8 +52,8 @@ namespace Bachelor_app.StereoVision.Calibration
         private void ToolStripButton1_Click(object sender, EventArgs e)
         {
             toolStripButton1.Enabled = false;
-            _calibrationManager.UpdatePatternModel();
-            _calibrationManager.StartCalibration();
+            calibrationManager.UpdatePatternModel();
+            calibrationManager.StartCalibration();
         }
     }
 }

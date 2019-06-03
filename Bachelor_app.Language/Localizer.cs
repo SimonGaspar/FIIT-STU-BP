@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 
@@ -13,9 +14,9 @@ namespace Bachelor_app.Resources
             string fullResourseName = resourseBase;
             Assembly assembly = Assembly.GetExecutingAssembly();
 
-            System.Collections.Generic.List<string> ResList = assembly.GetManifestResourceNames().ToList();
+            List<string> resList = assembly.GetManifestResourceNames().ToList();
 
-            if (ResList.
+            if (resList.
                 Where(x => x.Equals(fullResourseName + delimeter + languagePrefix + ".resources"))
                 .Count() == 1)
             {

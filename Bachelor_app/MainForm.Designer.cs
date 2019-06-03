@@ -863,7 +863,7 @@ namespace Bachelor_app
             this.toolStripButton27.Name = "toolStripButton27";
             this.toolStripButton27.Size = new System.Drawing.Size(127, 24);
             this.toolStripButton27.Text = "Camera in model";
-            this.toolStripButton27.Click += new System.EventHandler(this.toolStripButton27_Click);
+            this.toolStripButton27.Click += new System.EventHandler(this.ToolStripButton27_Click);
             // 
             // toolStrip4
             // 
@@ -918,7 +918,7 @@ namespace Bachelor_app
             this.toolStripButton28.Name = "toolStripButton28";
             this.toolStripButton28.Size = new System.Drawing.Size(127, 24);
             this.toolStripButton28.Text = "Camera in model";
-            this.toolStripButton28.Click += new System.EventHandler(this.toolStripButton28_Click);
+            this.toolStripButton28.Click += new System.EventHandler(this.ToolStripButton28_Click);
             // 
             // toolStrip5
             // 
@@ -1105,7 +1105,7 @@ namespace Bachelor_app
             this.toolStripButton25.Name = "toolStripButton25";
             this.toolStripButton25.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton25.Text = "Update list";
-            this.toolStripButton25.Click += new System.EventHandler(this.toolStripButton25_Click);
+            this.toolStripButton25.Click += new System.EventHandler(this.ToolStripButton25_Click);
             // 
             // toolStripSeparator11
             // 
@@ -1151,7 +1151,7 @@ namespace Bachelor_app
             this.toolStripButton26.Size = new System.Drawing.Size(160, 25);
             this.toolStripButton26.Text = "Delete temp folder";
             this.toolStripButton26.ToolTipText = "Clear";
-            this.toolStripButton26.Click += new System.EventHandler(this.toolStripButton26_Click);
+            this.toolStripButton26.Click += new System.EventHandler(this.ToolStripButton26_Click);
             // 
             // MainForm
             // 

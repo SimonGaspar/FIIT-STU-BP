@@ -7,12 +7,12 @@ namespace Bachelor_app.StereoVision.WindowsForm
 {
     public partial class CudaStereoConstantSpaceBPForm : Form
     {
-        private CudaStereoConstantSpaceBeliefPropagation _cudaStereoConstantSpaceBeliefPropagation;
+        private CudaStereoConstantSpaceBeliefPropagation cudaStereoConstantSpaceBeliefPropagation;
         private CudaStereoConstantSpaceBPModel defaultModel = new CudaStereoConstantSpaceBPModel();
 
         public CudaStereoConstantSpaceBPForm(CudaStereoConstantSpaceBeliefPropagation cudaStereoConstantSpaceBeliefPropagation)
         {
-            this._cudaStereoConstantSpaceBeliefPropagation = cudaStereoConstantSpaceBeliefPropagation;
+            this.cudaStereoConstantSpaceBeliefPropagation = cudaStereoConstantSpaceBeliefPropagation;
 
             InitializeComponent();
             ShowDefaultModelSetting();
@@ -34,8 +34,8 @@ namespace Bachelor_app.StereoVision.WindowsForm
         {
             try
             {
-                var Disparity = int.Parse(textBox1.Text);
-                var BlockSize = int.Parse(textBox2.Text);
+                var disparity = int.Parse(textBox1.Text);
+                var blockSize = int.Parse(textBox2.Text);
 
                 var model = new CudaStereoConstantSpaceBPModel(
                     int.Parse(textBox1.Text),
@@ -44,9 +44,9 @@ namespace Bachelor_app.StereoVision.WindowsForm
                     int.Parse(textBox3.Text)
                     );
 
-                _cudaStereoConstantSpaceBeliefPropagation.UpdateModel(model);
+                cudaStereoConstantSpaceBeliefPropagation.UpdateModel(model);
 
-                this.Hide();
+                Hide();
             }
             catch (Exception)
             {
@@ -66,11 +66,10 @@ namespace Bachelor_app.StereoVision.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.textBox1.Text = defaultModel.Disparity.ToString();
-            this.textBox2.Text = defaultModel.Iteration.ToString();
-            this.textBox4.Text = defaultModel.Level.ToString();
-            this.textBox3.Text = defaultModel.Plane.ToString();
+            textBox1.Text = defaultModel.Disparity.ToString();
+            textBox2.Text = defaultModel.Iteration.ToString();
+            textBox4.Text = defaultModel.Level.ToString();
+            textBox3.Text = defaultModel.Plane.ToString();
         }
     }
 }
-

@@ -1,14 +1,15 @@
-﻿using Bachelor_app.Model;
+﻿using System;
+using System.Windows.Forms;
+using Bachelor_app.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
-using System;
-using System.Windows.Forms;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
     public abstract class AbstractFeatureDetectorDescriptor : IFeatureDetector, IFeatureDescriptor
     {
         protected dynamic WindowsForm { get; set; }
+
         protected dynamic Model { get; private set; }
 
         public AbstractFeatureDetectorDescriptor(dynamic model)
@@ -31,7 +32,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             if (WindowsForm != null)
                 WindowsForm.Show();
             else
-                MessageBox.Show("This item hasn't settings.","No settings!",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("This item hasn't settings.", "No settings!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         public virtual void UpdateModel<T>(T model)
@@ -48,6 +49,6 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                 throw new NullReferenceException("Instance is null.");
         }
 
-        public virtual dynamic CreateInstance() { return null; }
+        public virtual dynamic CreateInstance() => null;
     }
 }

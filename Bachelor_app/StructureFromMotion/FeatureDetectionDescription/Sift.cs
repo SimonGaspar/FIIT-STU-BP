@@ -1,11 +1,11 @@
-﻿using Bachelor_app.Extension;
+﻿using System;
+using System.Threading;
+using Bachelor_app.Extension;
 using Bachelor_app.Model;
 using Bachelor_app.StructureFromMotion.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.XFeatures2D;
-using System;
-using System.Threading;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
@@ -15,7 +15,9 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     public class Sift : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
         private static SemaphoreSlim semaphore = new SemaphoreSlim(1);
-        public Sift() : base(new SiftModel())
+
+        public Sift()
+            : base(new SiftModel())
         {
             WindowsForm = null;
         }
@@ -30,8 +32,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                 try
                 {
                     using (Mat image = new Mat(keyPoints.InputFile.FullPath))
-                    using (var _sift = CreateInstance())
-                        _sift.Compute(image, keyPoints.DetectedKeyPoints, result);
+                    using (var sift = CreateInstance())
+                        sift.Compute(image, keyPoints.DetectedKeyPoints, result);
                 }
                 catch (Exception e)
                 {
@@ -41,6 +43,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                 convertedResult = result.ConvertMatForMatching();
                 result.Dispose();
             }
+
             semaphore.Release();
             return convertedResult;
         }
@@ -52,13 +55,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
             try
             {
-                using (var _sift = CreateInstance())
-                    result = _sift.Detect(image);
+                using (var sift = CreateInstance())
+                    result = sift.Detect(image);
             }
             catch (Exception e)
             {
                 throw e;
             }
+
             semaphore.Release();
             return result;
         }

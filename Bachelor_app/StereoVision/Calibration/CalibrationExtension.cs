@@ -12,10 +12,10 @@ namespace Bachelor_app.StereoVision.Calibration
         public static void InitUndistortMatrix(this IntrinsicCameraParameters intrinsicCameraParameters, UndistortCameraParameters undistortCameraParameters)
         {
             var size = CalibrationModel.Resolution;
-            intrinsicCameraParameters.InitUndistortMap(size.Width, size.Height, out Matrix<float> MapX, out Matrix<float> MapY);
+            intrinsicCameraParameters.InitUndistortMap(size.Width, size.Height, out Matrix<float> mapX, out Matrix<float> mapY);
 
-            undistortCameraParameters.MapX = MapX;
-            undistortCameraParameters.MapY = MapY;
+            undistortCameraParameters.MapX = mapX;
+            undistortCameraParameters.MapY = mapY;
         }
     }
 }

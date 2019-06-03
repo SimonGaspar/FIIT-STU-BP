@@ -12,7 +12,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class OrientedFastAndRotatedBrief : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
-        public OrientedFastAndRotatedBrief() : base(new OrientedFastAndRotatedBriefModel())
+        public OrientedFastAndRotatedBrief()
+            : base(new OrientedFastAndRotatedBriefModel())
         {
             WindowsForm = new OrientedFastAndRotatedBriefForm(this);
         }
@@ -22,8 +23,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
             Mat result = new Mat();
 
             using (Mat image = new Mat(keyPoints.InputFile.FullPath))
-            using (var _orb = CreateInstance())
-                _orb.Compute(image, keyPoints.DetectedKeyPoints, result);
+            using (var orb = CreateInstance())
+                orb.Compute(image, keyPoints.DetectedKeyPoints, result);
 
             return result;
         }
@@ -32,8 +33,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
         {
             MKeyPoint[] result;
 
-            using (var _orb = CreateInstance())
-                result = _orb.Detect(image);
+            using (var orb = CreateInstance())
+                result = orb.Detect(image);
 
             return result;
         }

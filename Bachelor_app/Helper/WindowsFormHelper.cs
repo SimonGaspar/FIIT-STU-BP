@@ -8,11 +8,11 @@ namespace Bachelor_app.Helper
     /// </summary>
     public static class WindowsFormHelper
     {
-        private static MainForm _winForm;
+        private static MainForm winForm;
 
         public static void SetWinForm(MainForm winForm)
         {
-            _winForm = winForm;
+            WindowsFormHelper.winForm = winForm;
         }
 
         /// <summary>
@@ -21,17 +21,17 @@ namespace Bachelor_app.Helper
         /// <param name="text">Text with format</param>
         public static void AddLogToConsole(string text)
         {
-            var element = _winForm.richTextBox1;
+            var element = winForm.richTextBox1;
 
             if (element.InvokeRequired)
             {
                 element.Invoke((Action)delegate
                 {
-                    string allText = element.Text + $"[{DateTime.Now}]\n{text}\n";
+                    var allText = element.Text + $"[{DateTime.Now}]\n{text}\n";
                     var allLines = allText.Split('\n');
                     var count = allLines.Length - 1;
                     var result = allLines.Skip(count - 100);
-                    _winForm.richTextBox1.Text = string.Join("\n", result);
+                    winForm.richTextBox1.Text = string.Join("\n", result);
                 });
             }
             else
@@ -40,7 +40,7 @@ namespace Bachelor_app.Helper
                 var allLines = allText.Split('\n');
                 var count = allLines.Length - 1;
                 var result = allLines.Skip(count - 100);
-                element.Text = string.Join("\n",result);
+                element.Text = string.Join("\n", result);
             }
         }
 
@@ -50,13 +50,13 @@ namespace Bachelor_app.Helper
         /// <param name="text">Text with format</param>
         public static void ClearConsole()
         {
-            var element = _winForm.richTextBox1;
+            var element = winForm.richTextBox1;
 
             if (element.InvokeRequired)
             {
                 element.Invoke((Action)delegate
                 {
-                    _winForm.richTextBox1.Text = $"";
+                    winForm.richTextBox1.Text = $"";
                 });
             }
             else

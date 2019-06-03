@@ -8,8 +8,11 @@ namespace Bachelor_app.Model
     public class NvmModel
     {
         public int ImageCount { get; private set; }
+
         public int PointCount { get; private set; }
+
         public List<NvmPointModel> ListPointModel { get; private set; } = new List<NvmPointModel>();
+
         public List<NvmCameraModel> ListCameraModel { get; private set; } = new List<NvmCameraModel>();
 
         public void SetImageCount(int count)

@@ -1,6 +1,6 @@
-﻿using Bachelor_app.Resources;
-using System;
+﻿using System;
 using System.Linq;
+using Bachelor_app.Resources;
 
 namespace Bachelor_app.Extension
 {
@@ -23,11 +23,12 @@ namespace Bachelor_app.Extension
         /// Localization of enum string value.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="EnumStringValue">String of enum value.</param>
+        /// <param name="enumStringValue">String of enum value.</param>
         /// <returns>Enum value</returns>
-        public static T ReturnEnumValue<T>(string EnumStringValue) where T : Enum
+        public static T ReturnEnumValue<T>(string enumStringValue)
+            where T : Enum
         {
-            return Enum.GetValues(typeof(T)).Cast<T>().First(x => x.Display() == EnumStringValue);
+            return Enum.GetValues(typeof(T)).Cast<T>().First(x => x.Display() == enumStringValue);
         }
     }
 }

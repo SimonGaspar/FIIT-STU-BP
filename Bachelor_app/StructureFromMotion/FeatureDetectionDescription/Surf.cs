@@ -1,11 +1,10 @@
-﻿using Bachelor_app.Extension;
+﻿using System;
+using Bachelor_app.Extension;
 using Bachelor_app.Model;
 using Bachelor_app.StructureFromMotion.Model;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.XFeatures2D;
-using System;
-using System.Threading;
 
 namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 {
@@ -14,7 +13,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
     /// </summary>
     public class Surf : AbstractFeatureDetectorDescriptor, IFeatureDetector, IFeatureDescriptor
     {
-        public Surf() : base(new SurfModel())
+        public Surf()
+            : base(new SurfModel())
         {
             WindowsForm = null;
         }
@@ -28,8 +28,8 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                 try
                 {
                     using (Mat image = new Mat(keyPoints.InputFile.FullPath))
-                    using (var _Surf = CreateInstance())
-                        _Surf.Compute(image, keyPoints.DetectedKeyPoints, result);
+                    using (var surf = CreateInstance())
+                        surf.Compute(image, keyPoints.DetectedKeyPoints, result);
                 }
                 catch (Exception e)
                 {
@@ -39,6 +39,7 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
                 convertedResult = result.ConvertMatForMatching();
                 result.Dispose();
             }
+
             return convertedResult;
         }
 
@@ -48,13 +49,14 @@ namespace Bachelor_app.StructureFromMotion.FeatureDetectionDescription
 
             try
             {
-                using (var _Surf = CreateInstance())
-                    result = _Surf.Detect(image);
+                using (var surf = CreateInstance())
+                    result = surf.Detect(image);
             }
             catch (Exception e)
             {
                 throw e;
             }
+
             return result;
         }
 

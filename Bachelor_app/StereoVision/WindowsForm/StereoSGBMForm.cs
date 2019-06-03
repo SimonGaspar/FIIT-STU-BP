@@ -8,12 +8,12 @@ namespace Bachelor_app.StereoVision.WindowsForm
 {
     public partial class StereoSGBMForm : Form
     {
-        private StereoSemiGlobalBlockMatching _stereoSemiGlobalBlockMatching;
+        private StereoSemiGlobalBlockMatching stereoSemiGlobalBlockMatching;
         private StereoSemiGlobalBlockMatchingModel defaultModel = new StereoSemiGlobalBlockMatchingModel();
 
         public StereoSGBMForm(StereoSemiGlobalBlockMatching stereoSemiGlobalBlockMatching)
         {
-            this._stereoSemiGlobalBlockMatching = stereoSemiGlobalBlockMatching;
+            this.stereoSemiGlobalBlockMatching = stereoSemiGlobalBlockMatching;
 
             InitializeComponent();
             ShowDefaultModelSetting();
@@ -40,9 +40,9 @@ namespace Bachelor_app.StereoVision.WindowsForm
                     ModeSGBM.Checked ? StereoSGBM.Mode.SGBM : StereoSGBM.Mode.HH
                 );
 
-                _stereoSemiGlobalBlockMatching.UpdateModel(model);
-                
-                this.Hide();
+                stereoSemiGlobalBlockMatching.UpdateModel(model);
+
+                Hide();
             }
             catch (Exception)
             {
@@ -71,16 +71,16 @@ namespace Bachelor_app.StereoVision.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.textBox1.Text = defaultModel.Disparity.ToString();
-            this.textBox2.Text = defaultModel.BlockSize.ToString();
-            this.textBox3.Text = defaultModel.P1.ToString();
-            this.textBox4.Text = defaultModel.PreFilterCap.ToString();
-            this.textBox5.Text = defaultModel.SpeckleWindowsSize.ToString();
-            this.textBox6.Text = defaultModel.SpeckleRange.ToString();
-            this.textBox7.Text = defaultModel.UniquenessRatio.ToString();
-            this.textBox8.Text = defaultModel.P2.ToString();
-            this.textBox9.Text = defaultModel.Disp12MaxDiff.ToString();
-            this.textBox10.Text = defaultModel.MinDispatiries.ToString();
+            textBox1.Text = defaultModel.Disparity.ToString();
+            textBox2.Text = defaultModel.BlockSize.ToString();
+            textBox3.Text = defaultModel.P1.ToString();
+            textBox4.Text = defaultModel.PreFilterCap.ToString();
+            textBox5.Text = defaultModel.SpeckleWindowsSize.ToString();
+            textBox6.Text = defaultModel.SpeckleRange.ToString();
+            textBox7.Text = defaultModel.UniquenessRatio.ToString();
+            textBox8.Text = defaultModel.P2.ToString();
+            textBox9.Text = defaultModel.Disp12MaxDiff.ToString();
+            textBox10.Text = defaultModel.MinDispatiries.ToString();
 
             ModeSGBM.Checked = defaultModel.Mode == StereoSGBM.Mode.SGBM ? true : false;
         }

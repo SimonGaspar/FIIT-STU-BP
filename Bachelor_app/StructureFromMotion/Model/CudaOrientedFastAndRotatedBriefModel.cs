@@ -9,8 +9,8 @@ namespace Bachelor_app.StructureFromMotion.Model
     {
         public bool BlurForDescriptor { get; private set; }
 
-        public CudaOrientedFastAndRotatedBriefModel(int NumberOfFeatures = 30000, float ScaleFactor = 1.2F, int NLevels = 8, int EdgeThreshold = 31, int FirstLevel = 0, int WTK_A = 2, ScoreType ScoreType = ScoreType.Harris, int PatchSize = 31, int FastThreshold = 20, bool blurForDescriptor = false)
-            : base(NumberOfFeatures, ScaleFactor, NLevels, EdgeThreshold, FirstLevel, WTK_A, ScoreType, PatchSize, FastThreshold)
+        public CudaOrientedFastAndRotatedBriefModel(int numberOfFeatures = 30000, float scaleFactor = 1.2F, int nLevels = 8, int edgeThreshold = 31, int firstLevel = 0, int wTK_A = 2, ScoreType scoreType = ScoreType.Harris, int patchSize = 31, int fastThreshold = 20, bool blurForDescriptor = false)
+            : base(numberOfFeatures, scaleFactor, nLevels, edgeThreshold, firstLevel, wTK_A, scoreType, patchSize, fastThreshold)
         {
             BlurForDescriptor = blurForDescriptor;
         }

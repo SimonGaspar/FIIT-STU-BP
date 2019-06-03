@@ -1,17 +1,21 @@
-﻿using Bachelor_app.Enumerate;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
+using Bachelor_app.Enumerate;
 
 namespace Bachelor_app.Model
 {
     public class InputFileModel
     {
         public Image Image { get; private set; }
+
         public bool UseInSFM { get; set; }
-        public string FullPath { get { return fileInfo.FullName; } }
-        public string FileName { get { return fileInfo.Name; } }
-        public string FileNameWithoutExtension { get { return Path.GetFileNameWithoutExtension(FullPath); } }
+
+        public string FullPath => fileInfo.FullName;
+
+        public string FileName => fileInfo.Name;
+
+        public string FileNameWithoutExtension => Path.GetFileNameWithoutExtension(FullPath);
 
         private FileInfo fileInfo;
 
@@ -23,7 +27,7 @@ namespace Bachelor_app.Model
 
         public InputFileModel(string fileName)
         {
-            this.fileInfo = new FileInfo(fileName);
+            fileInfo = new FileInfo(fileName);
             GetImageFromInputFile();
         }
 
@@ -37,7 +41,7 @@ namespace Bachelor_app.Model
         /// </summary>
         private void GetImageFromInputFile()
         {
-            if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", "").ToUpper()))
+            if (Enum.IsDefined(typeof(EImageFormat), fileInfo.Extension.Replace(".", string.Empty).ToUpper()))
             {
                 var image = Image.FromFile(fileInfo.FullName);
                 Image = new Bitmap(image, new Size(128, 72));

@@ -1,24 +1,23 @@
-﻿using Newtonsoft.Json;
-using System.IO;
+﻿using System.IO;
+using Newtonsoft.Json;
 
 namespace Bachelor_app.Helper
 {
     public static class JSONHelper
     {
-        public static void SaveJson(dynamic JsonObject, string FileName, string FilePath = null)
+        public static void SaveJson(dynamic jsonObject, string fileName, string filePath = null)
         {
+            filePath = filePath ?? Configuration.TempDirectoryPath;
+            var fullPath = Path.Combine(filePath, fileName);
 
-            FilePath = FilePath ?? Configuration.TempDirectoryPath;
-            var fullPath = Path.Combine(FilePath, FileName);
-
-            var json = JsonConvert.SerializeObject(JsonObject);
+            var json = JsonConvert.SerializeObject(jsonObject);
             File.WriteAllText(fullPath, json);
         }
 
-        public static T LoadJson<T>(string FileName, string FilePath = null)
+        public static T LoadJson<T>(string fileName, string filePath = null)
         {
-            FilePath = FilePath ?? Configuration.TempDirectoryPath;
-            var fullPath = Path.Combine(FilePath, FileName);
+            filePath = filePath ?? Configuration.TempDirectoryPath;
+            var fullPath = Path.Combine(filePath, fileName);
 
             var json = File.ReadAllText(fullPath);
             var jsonObject = JsonConvert.DeserializeObject<T>(json);

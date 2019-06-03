@@ -1,7 +1,7 @@
-﻿using Bachelor_app.Enumerate;
+﻿using System.Collections.Generic;
+using Bachelor_app.Enumerate;
 using Emgu.CV;
 using Emgu.CV.Structure;
-using System.Collections.Generic;
 
 namespace Bachelor_app.Model
 {
@@ -10,19 +10,28 @@ namespace Bachelor_app.Model
     /// </summary>
     public class ListViewModel
     {
+        public Image<Bgr, byte> LastBasicStack { get; set; }
 
-        public Image<Bgr, byte> _lastBasicStack { get; set; }
-        public Image<Bgr, byte> _lastCameraStack { get; set; }
-        public Image<Bgr, byte> _lastDepthMapImage { get; set; }
-        public Image<Bgr, byte> _lastDrawnKeypoint { get; set; }
-        public Image<Bgr, byte> _lastDrawnMatches { get; set; }
-        public Image<Bgr, byte> _lastImage { get; set; }
+        public Image<Bgr, byte> LastCameraStack { get; set; }
+
+        public Image<Bgr, byte> LastDepthMapImage { get; set; }
+
+        public Image<Bgr, byte> LastDrawnKeypoint { get; set; }
+
+        public Image<Bgr, byte> LastDrawnMatches { get; set; }
+
+        public Image<Bgr, byte> LastImage { get; set; }
 
         public List<InputFileModel> BasicStack { get; private set; }
+
         public List<InputFileModel> LeftCameraStack { get; private set; }
+
         public List<InputFileModel> RightCameraStack { get; private set; }
+
         public List<InputFileModel> DrawnKeypoint { get; private set; }
+
         public List<InputFileModel> DrawnMatches { get; private set; }
+
         public List<InputFileModel> DepthMap { get; private set; }
 
         public SortedList<int, List<InputFileModel>> ListOfListInputFolder { get; private set; }

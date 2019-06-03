@@ -1,9 +1,9 @@
-﻿using Bachelor_app.Enumerate;
+﻿using System;
+using System.Windows.Forms;
+using Bachelor_app.Enumerate;
 using Bachelor_app.Extension;
 using Bachelor_app.StereoVision;
 using Bachelor_app.StructureFromMotion;
-using System;
-using System.Windows.Forms;
 
 namespace Bachelor_app.Manager
 {
@@ -12,88 +12,91 @@ namespace Bachelor_app.Manager
     /// </summary>
     public class MainFormManager
     {
-        private MainForm _winForm;
-        private DisplayManager _displayManager;
-        private FileManager _fileManager;
-        private StereoVisionManager _stereoVisionManager;
-        private SfM _sfmManager;
-        private CameraManager _cameraManager;
-
         private const float ShowWindowSize = 50F;
         private const float HideWindowSize = 0F;
-        private int LeftCamera = -1;
-        private int RightCamera = -1;
 
-        public MainFormManager(MainForm WinForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager, SfM sfmManager, CameraManager cameraManager)
+        private MainForm winForm;
+        private DisplayManager displayManager;
+        private FileManager fileManager;
+        private StereoVisionManager stereoVisionManager;
+        private SfM sfmManager;
+        private CameraManager cameraManager;
+
+        private int leftCamera = -1;
+        private int rightCamera = -1;
+
+        public MainFormManager(MainForm winForm, DisplayManager displayManager, FileManager fileManager, StereoVisionManager stereoVisionManager, SfM sfmManager, CameraManager cameraManager)
         {
-            this._winForm = WinForm;
-            this._displayManager = displayManager;
-            this._fileManager = fileManager;
-            this._stereoVisionManager = stereoVisionManager;
-            this._sfmManager = sfmManager;
-            this._cameraManager = cameraManager;
+            this.winForm = winForm;
+            this.displayManager = displayManager;
+            this.fileManager = fileManager;
+            this.stereoVisionManager = stereoVisionManager;
+            this.sfmManager = sfmManager;
+            this.cameraManager = cameraManager;
         }
 
         #region Display views in WinForm
-        public void SetDisplaySetting(object sender, EventArgs e, bool LeftWindow)
+        public void SetDisplaySetting(object sender, EventArgs e, bool leftWindow)
         {
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EDisplayItem>(currentItem.SelectedItem.ToString());
 
-            if (LeftWindow)
-                _displayManager.LeftViewWindowItem = enumItem;
+            if (leftWindow)
+                displayManager.LeftViewWindowItem = enumItem;
             else
-                _displayManager.RightViewWindowItem = enumItem;
+                displayManager.RightViewWindowItem = enumItem;
 
             switch (enumItem)
             {
                 case EDisplayItem.SfMPointCloud:
                 case EDisplayItem.DepthMapPointCloud:
-                    ChangeRenderer(LeftWindow, true); ; break;
-                default: ChangeRenderer(LeftWindow, false); break;
+                    ChangeRenderer(leftWindow, true); break;
+                default: ChangeRenderer(leftWindow, false); break;
             }
         }
 
-        private void ChangeRenderer(bool LeftWindow, bool PointCloud)
+        private void ChangeRenderer(bool leftWindow, bool pointCloud)
         {
-            if (PointCloud)
+            if (pointCloud)
             {
-                ShowPointCloudRenderer(LeftWindow);
+                ShowPointCloudRenderer(leftWindow);
             }
             else
             {
-                ShowImageRenderer(LeftWindow);
+                ShowImageRenderer(leftWindow);
             }
         }
 
-        private void ShowImageRenderer(bool LeftWindow)
+        private void ShowImageRenderer(bool leftWindow)
         {
-            if (LeftWindow)
+            if (leftWindow)
             {
-                _winForm.tableLayoutPanel2.ColumnStyles[0].Width = ShowWindowSize;
-                _winForm.tableLayoutPanel2.ColumnStyles[1].Width = HideWindowSize;
+                winForm.tableLayoutPanel2.ColumnStyles[0].Width = ShowWindowSize;
+                winForm.tableLayoutPanel2.ColumnStyles[1].Width = HideWindowSize;
             }
             else
             {
-                _winForm.tableLayoutPanel2.ColumnStyles[2].Width = ShowWindowSize;
-                _winForm.tableLayoutPanel2.ColumnStyles[3].Width = HideWindowSize;
+                winForm.tableLayoutPanel2.ColumnStyles[2].Width = ShowWindowSize;
+                winForm.tableLayoutPanel2.ColumnStyles[3].Width = HideWindowSize;
             }
-            _displayManager.Display();
+
+            displayManager.Display();
         }
 
-        private void ShowPointCloudRenderer(bool LeftWindow)
+        private void ShowPointCloudRenderer(bool leftWindow)
         {
-            if (LeftWindow)
+            if (leftWindow)
             {
-                _winForm.tableLayoutPanel2.ColumnStyles[0].Width = HideWindowSize;
-                _winForm.tableLayoutPanel2.ColumnStyles[1].Width = ShowWindowSize;
+                winForm.tableLayoutPanel2.ColumnStyles[0].Width = HideWindowSize;
+                winForm.tableLayoutPanel2.ColumnStyles[1].Width = ShowWindowSize;
             }
             else
             {
-                _winForm.tableLayoutPanel2.ColumnStyles[2].Width = HideWindowSize;
-                _winForm.tableLayoutPanel2.ColumnStyles[3].Width = ShowWindowSize;
+                winForm.tableLayoutPanel2.ColumnStyles[2].Width = HideWindowSize;
+                winForm.tableLayoutPanel2.ColumnStyles[3].Width = ShowWindowSize;
             }
-            _displayManager.DisplayPointCloud(LeftWindow);
+
+            displayManager.DisplayPointCloud(leftWindow);
         }
         #endregion
 
@@ -103,18 +106,17 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EStereoCorrespondenceAlgorithm>(currentItem.SelectedItem.ToString());
 
-            _stereoVisionManager.SetStereoCorrespondenceAlgorithm(enumItem);
+            stereoVisionManager.SetStereoCorrespondenceAlgorithm(enumItem);
         }
 
         public void ShowStereoVisionSettings()
         {
-            _stereoVisionManager.ShowSettingForStereoSolver();
+            stereoVisionManager.ShowSettingForStereoSolver();
         }
-
 
         public void SetUsingParallelForStereoVision()
         {
-            _stereoVisionManager.UseParallel = _winForm.toolStripButton14.Checked;
+            stereoVisionManager.UseParallel = winForm.toolStripButton14.Checked;
         }
 
         #endregion
@@ -122,12 +124,12 @@ namespace Bachelor_app.Manager
         #region ListViewer
         public void AddToListView(object sender, EventArgs e)
         {
-            switch (_fileManager.ListViewerDisplay)
+            switch (fileManager.ListViewerDisplay)
             {
                 case EListViewGroup.BasicStack:
                 case EListViewGroup.LeftCameraStack:
                 case EListViewGroup.RightCameraStack:
-                    _fileManager.AddToListView(); break;
+                    fileManager.AddToListView(); break;
                 default: break;
             }
         }
@@ -135,32 +137,32 @@ namespace Bachelor_app.Manager
         public void SetListViewerDisplay(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripComboBox;
-            _fileManager.ListViewerDisplay = EnumExtension.ReturnEnumValue<EListViewGroup>(currentItem.SelectedItem.ToString());
-            _winForm.ListViews.ForEach(x => x.Visible = false);
-            if ((int)_fileManager.ListViewerDisplay < _winForm.ListViews.Count)
-                _winForm.ListViews[(int)_fileManager.ListViewerDisplay].Visible = true;
+            fileManager.ListViewerDisplay = EnumExtension.ReturnEnumValue<EListViewGroup>(currentItem.SelectedItem.ToString());
+            winForm.ListViews.ForEach(x => x.Visible = false);
+            if ((int)fileManager.ListViewerDisplay < winForm.ListViews.Count)
+                winForm.ListViews[(int)fileManager.ListViewerDisplay].Visible = true;
         }
 
         public void RemoveFromListView()
         {
-            switch (_fileManager.ListViewerDisplay)
+            switch (fileManager.ListViewerDisplay)
             {
                 case EListViewGroup.BasicStack:
                 case EListViewGroup.LeftCameraStack:
                 case EListViewGroup.RightCameraStack:
-                    _fileManager.RemoveSelectedFromListView(); break;
+                    fileManager.RemoveSelectedFromListView(); break;
                 default: break;
             }
         }
 
         public void RemoveAllFromListView()
         {
-            switch (_fileManager.ListViewerDisplay)
+            switch (fileManager.ListViewerDisplay)
             {
                 case EListViewGroup.BasicStack:
                 case EListViewGroup.LeftCameraStack:
                 case EListViewGroup.RightCameraStack:
-                    _fileManager.RemoveAllFromCurrentListView(); break;
+                    fileManager.RemoveAllFromCurrentListView(); break;
                 default: break;
             }
         }
@@ -169,7 +171,7 @@ namespace Bachelor_app.Manager
         #region SfM
         public void StartSfM()
         {
-            _sfmManager.StartSFM();
+            sfmManager.StartSFM();
         }
 
         public void SetFeatureDetector(object sender, EventArgs e)
@@ -177,7 +179,7 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EFeatureDetector>(currentItem.SelectedItem.ToString());
 
-            _sfmManager.Detector = enumItem.GetDetectorInstance();
+            sfmManager.Detector = enumItem.GetDetectorInstance();
         }
 
         public void SetFeatureDescriptor(object sender, EventArgs e)
@@ -185,7 +187,7 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EFeatureDescriptor>(currentItem.SelectedItem.ToString());
 
-            _sfmManager.Descriptor = enumItem.GetDescriptorInstance();
+            sfmManager.Descriptor = enumItem.GetDescriptorInstance();
         }
 
         public void SetFeatureMatcher(object sender, EventArgs e)
@@ -193,27 +195,27 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EFeatureMatcher>(currentItem.SelectedItem.ToString());
 
-            _sfmManager.Matcher = enumItem.GetMatcherInstance();
+            sfmManager.Matcher = enumItem.GetMatcherInstance();
         }
 
         public void ShowFeatureMatcherSettings(object sender, EventArgs e)
         {
-            _sfmManager.Matcher.ShowSettingForm();
+            sfmManager.Matcher.ShowSettingForm();
         }
 
         public void ShowFeatureDescriptorSettings(object sender, EventArgs e)
         {
-            _sfmManager.Descriptor.ShowSettingForm();
+            sfmManager.Descriptor.ShowSettingForm();
         }
 
         public void ShowFeatureDetectorSettings(object sender, EventArgs e)
         {
-            _sfmManager.Detector.ShowSettingForm();
+            sfmManager.Detector.ShowSettingForm();
         }
 
         public void ResumeSFM()
         {
-            _sfmManager.StartSFM(true);
+            sfmManager.StartSFM(true);
         }
 
         public void SetMatching(object sender, EventArgs e)
@@ -221,56 +223,56 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EMatchingType>(currentItem.SelectedItem.ToString());
 
-            _sfmManager.MatchingType = enumItem;
+            sfmManager.MatchingType = enumItem;
         }
 
         public void SetUsingParallel()
         {
-            _sfmManager.UseParallel = _winForm.toolStripButton14.Checked;
+            sfmManager.UseParallel = winForm.toolStripButton14.Checked;
         }
 
         #endregion
 
-        #region FileManager 
+        #region FileManager
         public void SetInputType(object sender, EventArgs e)
         {
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<EInput>(currentItem.SelectedItem.ToString());
 
-            _fileManager._inputType = enumItem;
+            fileManager.InputType = enumItem;
         }
         #endregion
 
         #region CameraManager
-        public void SetCamera(object sender, EventArgs e, bool IsLeft)
+        public void SetCamera(object sender, EventArgs e, bool isLeft)
         {
             var currentItem = sender as ToolStripComboBox;
             var index = currentItem.SelectedIndex != currentItem.Items.IndexOf("Empty") ? currentItem.SelectedIndex : -1;
 
-            if (IsLeft)
+            if (isLeft)
             {
-                if (RightCamera != index)
+                if (rightCamera != index)
                 {
-                    _cameraManager.SetCamera(_cameraManager.LeftCamera, index, currentItem.SelectedItem.ToString());
-                    LeftCamera = index;
+                    cameraManager.SetCamera(cameraManager.LeftCamera, index, currentItem.SelectedItem.ToString());
+                    leftCamera = index;
                 }
                 else
                 {
-                    currentItem.SelectedItem = currentItem.Items[(LeftCamera == -1 ? currentItem.Items.IndexOf("Empty") : LeftCamera)];
+                    currentItem.SelectedItem = currentItem.Items[leftCamera == -1 ? currentItem.Items.IndexOf("Empty") : leftCamera];
                     if (index != -1)
                         MessageBox.Show("Can't set the same camera. It was set as right camera");
                 }
             }
             else
             {
-                if (LeftCamera != index)
+                if (leftCamera != index)
                 {
-                    _cameraManager.SetCamera(_cameraManager.RightCamera, index, currentItem.SelectedItem.ToString());
-                    RightCamera = index;
+                    cameraManager.SetCamera(cameraManager.RightCamera, index, currentItem.SelectedItem.ToString());
+                    rightCamera = index;
                 }
                 else
                 {
-                    currentItem.SelectedItem = currentItem.Items[(RightCamera == -1 ? currentItem.Items.IndexOf("Empty") : RightCamera)];
+                    currentItem.SelectedItem = currentItem.Items[rightCamera == -1 ? currentItem.Items.IndexOf("Empty") : rightCamera];
                     if (index != -1)
                         MessageBox.Show("Can't set the same camera. It was set as left camera.");
                 }
@@ -282,8 +284,8 @@ namespace Bachelor_app.Manager
             var currentItem = sender as ToolStripComboBox;
             var enumItem = EnumExtension.ReturnEnumValue<ECameraResolution>(currentItem.SelectedItem.ToString());
 
-            _cameraManager.resolution = enumItem;
-            _cameraManager.UpdateResolution();
+            cameraManager.Resolution = enumItem;
+            cameraManager.UpdateResolution();
         }
 
         #endregion

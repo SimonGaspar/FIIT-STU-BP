@@ -10,12 +10,12 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 {
     public partial class CudaOrientedFastAndRotatedBriefForm : Form
     {
-        private CudaOrientedFastAndRotatedBrief _cudaORB;
+        private CudaOrientedFastAndRotatedBrief cudaORB;
         private CudaOrientedFastAndRotatedBriefModel defaultModel = new CudaOrientedFastAndRotatedBriefModel();
 
         public CudaOrientedFastAndRotatedBriefForm(CudaOrientedFastAndRotatedBrief cudaOrientedFastAndRotatedBrief)
         {
-            _cudaORB = cudaOrientedFastAndRotatedBrief;
+            cudaORB = cudaOrientedFastAndRotatedBrief;
             InitializeComponent();
             InitializeStringForComponents();
             ShowDefaultModelSetting();
@@ -40,9 +40,9 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
                     checkBox1.Checked
                     );
 
-                _cudaORB.UpdateModel(model);
+                cudaORB.UpdateModel(model);
 
-                this.Hide();
+                Hide();
             }
             catch (Exception)
             {
@@ -57,16 +57,16 @@ namespace Bachelor_app.StructureFromMotion.WindowsForm
 
         private void ShowDefaultModelSetting()
         {
-            this.comboBox1.SelectedIndex = (int)defaultModel.ScoreType;
-            this.textBox1.Text = defaultModel.NumberOfFeatures.ToString();
-            this.textBox2.Text = defaultModel.ScaleFactor.ToString();
-            this.textBox3.Text = defaultModel.NLevels.ToString();
-            this.textBox4.Text = defaultModel.EdgeThreshold.ToString();
-            this.textBox5.Text = defaultModel.FirstLevel.ToString();
-            this.textBox6.Text = defaultModel.WTK_A.ToString();
-            this.textBox7.Text = defaultModel.PatchSize.ToString();
-            this.textBox8.Text = defaultModel.FastThreshold.ToString();
-            this.checkBox1.Checked = defaultModel.BlurForDescriptor;
+            comboBox1.SelectedIndex = (int)defaultModel.ScoreType;
+            textBox1.Text = defaultModel.NumberOfFeatures.ToString();
+            textBox2.Text = defaultModel.ScaleFactor.ToString();
+            textBox3.Text = defaultModel.NLevels.ToString();
+            textBox4.Text = defaultModel.EdgeThreshold.ToString();
+            textBox5.Text = defaultModel.FirstLevel.ToString();
+            textBox6.Text = defaultModel.WTK_A.ToString();
+            textBox7.Text = defaultModel.PatchSize.ToString();
+            textBox8.Text = defaultModel.FastThreshold.ToString();
+            checkBox1.Checked = defaultModel.BlurForDescriptor;
         }
 
         private void Button1_Click(object sender, EventArgs e)
