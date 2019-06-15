@@ -7,17 +7,7 @@
     {
         public float HessianThreshold { get; private set; }
 
-        private int nOctaves;
-
-        public int GetNOctaves()
-        {
-            return nOctaves;
-        }
-
-        private void SetNOctaves(int value)
-        {
-            nOctaves = value;
-        }
+        public int NOctaves { get; private set; }
 
         public int NOctaveLayers { get; private set; }
 
@@ -30,7 +20,7 @@
         public CudaSurfModel(float hessianThreshold = 100, int nOctaves = 4, int nOctaveLayers = 2, bool extended = true, float featuresRatio = 0.01F, bool upright = false)
         {
             HessianThreshold = hessianThreshold;
-            SetNOctaves(nOctaves);
+            NOctaves = nOctaves;
             NOctaveLayers = nOctaveLayers;
             Extended = extended;
             FeaturesRatio = featuresRatio;
